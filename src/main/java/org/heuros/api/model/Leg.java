@@ -17,6 +17,8 @@ public class Leg extends AModel {
 	private LocalDateTime sibt;
 	private int depOffset;
 	private int arrOffset;
+	private int acSequence = 0;
+	private boolean needsCrew = true;
 
 	public Leg(){
 		super();
@@ -110,6 +112,22 @@ public class Leg extends AModel {
 		this.arrOffset = arrOffset;
 	}
 
+	public int getAcSequence() {
+		return acSequence;
+	}
+
+	public void setAcSequence(int acSequence) {
+		this.acSequence = acSequence;
+	}
+
+	public boolean isNeedsCrew() {
+		return needsCrew;
+	}
+
+	public void setNeedsCrew(boolean needsCrew) {
+		this.needsCrew = needsCrew;
+	}
+
 	@Override
 	public String toString() {
 		return new StringBuilder(carrier)
@@ -118,11 +136,13 @@ public class Leg extends AModel {
 					.append("-[").append(dep)
 					.append("->").append(arr)
 					.append("]-").append(acType)
+					.append("-").append(acSequence)
 					.append("-(").append(sobt)
 					.append("->").append(sibt)
 					.append(")-{").append(depOffset)
 					.append(",").append(arrOffset)
 					.append("}-").append(serviceType)
+					.append("-").append(needsCrew)
 					.toString();
 	}
 }

@@ -43,8 +43,8 @@ public class Director<I extends IModel, O extends IModel> {
 	public void optimize() {
 		if (this.loader != null) {
 			List<I> inputData = this.loader.extractData();
-			if (inputData != null)
-				inputData.forEach(logger::info);
+//			if (inputData != null)
+//				inputData.forEach(logger::info);
 		} else
 			logger.error("Null loader!");
 	}
