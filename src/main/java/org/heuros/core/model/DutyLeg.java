@@ -1,6 +1,6 @@
-package org.heuros.api.model;
+package org.heuros.core.model;
 
-import org.heuros.api.base.AModel;
+import org.heuros.core.modelbase.AModel;
 
 /**
  * <!-- begin-user-doc -->

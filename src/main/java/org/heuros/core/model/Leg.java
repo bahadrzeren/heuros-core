@@ -1,8 +1,8 @@
-package org.heuros.api.model;
+package org.heuros.core.model;
 
 import java.time.LocalDateTime;
 
-import org.heuros.api.base.AModel;
+import org.heuros.core.modelbase.AModel;
 
 public class Leg extends AModel {
 
@@ -18,7 +18,8 @@ public class Leg extends AModel {
 	private int depOffset;
 	private int arrOffset;
 	private int acSequence = 0;
-	private boolean needsCrew = true;
+	private boolean needsCockpitCrew = true;
+	private boolean needsCabinCrew = true;
 
 	public Leg(){
 		super();
@@ -120,12 +121,20 @@ public class Leg extends AModel {
 		this.acSequence = acSequence;
 	}
 
-	public boolean isNeedsCrew() {
-		return needsCrew;
+	public boolean isNeedsCockpitCrew() {
+		return needsCockpitCrew;
 	}
 
-	public void setNeedsCrew(boolean needsCrew) {
-		this.needsCrew = needsCrew;
+	public void setNeedsCockpitCrew(boolean needsCockpitCrew) {
+		this.needsCockpitCrew = needsCockpitCrew;
+	}
+
+	public boolean isNeedsCabinCrew() {
+		return needsCabinCrew;
+	}
+
+	public void setNeedsCabinCrew(boolean needsCabinCrew) {
+		this.needsCabinCrew = needsCabinCrew;
 	}
 
 	@Override
@@ -142,7 +151,8 @@ public class Leg extends AModel {
 					.append(")-{").append(depOffset)
 					.append(",").append(arrOffset)
 					.append("}-").append(serviceType)
-					.append("-").append(needsCrew)
+					.append("-").append(needsCockpitCrew)
+					.append("-").append(needsCabinCrew)
 					.toString();
 	}
 }

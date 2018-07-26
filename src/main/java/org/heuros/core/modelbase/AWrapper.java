@@ -1,4 +1,4 @@
-package org.heuros.api.base;
+package org.heuros.core.modelbase;
 
 public abstract class AWrapper<W, E> {
 	protected W wrappee = null;

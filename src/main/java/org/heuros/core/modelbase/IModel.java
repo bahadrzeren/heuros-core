@@ -1,4 +1,4 @@
-package org.heuros.api.base;
+package org.heuros.core.modelbase;
 
 /**
  * Root interface for all model objects that are stored in arrays/lists/repos.

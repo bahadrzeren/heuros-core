@@ -1,4 +1,4 @@
-package org.heuros.api.loader.ssim;
+package org.heuros.loader.ssim;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -7,10 +7,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.function.Predicate;
 
-import org.heuros.api.model.Leg;
+import org.heuros.core.model.Leg;
 import org.heuros.util.TextFileReader;
 
 /**
@@ -49,8 +50,8 @@ public class CarryinMerger extends TextFileReader<Leg> {
 
 			int ciC = Integer.valueOf(st.nextToken());
 			int ciP = Integer.valueOf(st.nextToken());
-//			int ciA = Integer.valueOf(st.nextToken());
-//			int ciS = Integer.valueOf(st.nextToken());
+			int ciA = Integer.valueOf(st.nextToken());
+			int ciS = Integer.valueOf(st.nextToken());
 
 			Predicate<Leg> p = new Predicate<Leg>() {
 				@Override
@@ -70,12 +71,15 @@ public class CarryinMerger extends TextFileReader<Leg> {
 			else
 			if (numOfLegsFound < 1) {
 //				throw new Exception("No legs are found for " + carrier + flightNo + dep + legDate);
-			} else
-				this.list.stream()
-							.filter(p)
-							.findFirst()
-							.get().setNeedsCrew((ciC == 0) && (ciP == 0));	//	Consider cockpit assignments only!
-
+			} else {
+				Optional<Leg> legOpt = this.list.stream()
+												.filter(p)
+												.findFirst();
+				if (legOpt.isPresent()) {
+					legOpt.get().setNeedsCockpitCrew((ciC == 0) && (ciP == 0));
+					legOpt.get().setNeedsCabinCrew((ciA == 0) && (ciS == 0));
+				}
+			}
 		}		
 	}
 }

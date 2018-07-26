@@ -1,4 +1,4 @@
-package org.heuros.api.loader.ssim;
+package org.heuros.loader.ssim;
 
 import java.io.File;
 import java.time.DayOfWeek;
@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Locale;
 
-import org.heuros.api.model.Leg;
+import org.heuros.core.model.Leg;
 import org.heuros.util.TextFileReader;
 
 /**

@@ -1,5 +1,4 @@
-package org.heuros.core;
+package org.heuros.core.base;
 
 public class RuleContext {
-
 }

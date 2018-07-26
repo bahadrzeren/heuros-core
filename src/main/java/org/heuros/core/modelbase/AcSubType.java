@@ -1,4 +1,4 @@
-package org.heuros.api.base;
+package org.heuros.core.modelbase;
 
 /**
  * Set of aircraft sub types.

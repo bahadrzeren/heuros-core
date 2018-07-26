@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.heuros.api.loader.ssim.SsimParser;
-import org.heuros.api.model.Leg;
+import org.heuros.core.model.Leg;
+import org.heuros.loader.ssim.SsimParser;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

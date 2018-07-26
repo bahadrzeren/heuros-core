@@ -1,4 +1,4 @@
-package org.heuros.api.loader.ssim;
+package org.heuros.loader.ssim;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.heuros.api.model.Leg;
+import org.heuros.core.model.Leg;
 import org.heuros.util.TextFileReader;
 
 /**

@@ -31,7 +31,7 @@ public abstract class TextFileReader<T> {
 	/**
 	 * Reads text file line by line and calls abstract parseLine method.
 	 * 
-	 * @return Number of lines that can not be parsed successfully.
+	 * @return Number of lines that could not be parsed successfully.
 	 */
 	public int parseTextFile() {
 		this.numOfFails = 0;

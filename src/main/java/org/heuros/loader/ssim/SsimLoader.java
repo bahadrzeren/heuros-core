@@ -1,13 +1,14 @@
-package org.heuros.api.loader.ssim;
+package org.heuros.loader.ssim;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.heuros.api.loader.Loader;
-import org.heuros.api.model.Leg;
+import org.heuros.core.base.Loader;
+import org.heuros.core.model.Leg;
 
 /**
  * SSIM based timetable loader. Needs SSIM, Rotation and Carry-in files to extact timetable data. 
@@ -53,6 +54,7 @@ public class SsimLoader implements Loader<Leg> {
 					SsimParser ssimParser = new SsimParser(legs, ssimFile);
 					if (ssimParser.parseTextFile() == 0) {
 						logger.info("Ssim file processed successfully!");
+						logger.info(legs.size() + " number of legs extracted.");
 						/*
 						 * Merge rotation file info
 						 */
@@ -71,6 +73,34 @@ public class SsimLoader implements Loader<Leg> {
 								CarryinMerger carryInMerger = new CarryinMerger(legs, carryInFile);
 								if (carryInMerger.parseTextFile() == 0) {
 									logger.info("Carry-in file processed successfully!");
+									/*
+									 * Sort Leg list
+									 */
+									legs.sort(new Comparator<Leg>() {
+										@Override
+										public int compare(Leg a, Leg b) {
+											if (a.getSobt().isAfter(b.getSobt()))
+												return 1;
+											else
+												if (a.getSobt().isBefore(b.getSobt()))
+													return -1;
+												else
+													if (a.getFligtNo() > b.getFligtNo())
+														return 1;
+													else
+														if (a.getFligtNo() < b.getFligtNo())
+															return -1;
+														else
+															if (a.getDepOffset() > b.getArrOffset())
+																return 1;
+															else
+																if (a.getDepOffset() < b.getArrOffset())
+																	return -1;
+																else 
+																	return a.getDep().compareTo(b.getDep());
+										}
+									});
+									logger.info("Leg data is sorted!");
 									return legs;
 								}
 							}
