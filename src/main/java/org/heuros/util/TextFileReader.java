@@ -49,7 +49,7 @@ public abstract class TextFileReader<T> {
 						}
 					});
 		} catch(Exception ex) {
-			logger.error("Rotation file read exception!", ex);
+			logger.error("File read exception!", ex);
 			this.numOfFails = Integer.MAX_VALUE;
 		}
 		return this.numOfFails;

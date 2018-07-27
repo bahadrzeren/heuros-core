@@ -140,19 +140,19 @@ public class Leg extends AModel {
 	@Override
 	public String toString() {
 		return new StringBuilder(carrier)
-					.append("-").append(fligtNo)
-					.append("-").append(suffix)
-					.append("-[").append(dep)
-					.append("->").append(arr)
-					.append("]-").append(acType)
-					.append("-").append(acSequence)
-					.append("-(").append(sobt)
-					.append("->").append(sibt)
-					.append(")-{").append(depOffset)
+					.append(",").append(fligtNo)
+					.append(",").append(suffix)
+					.append(",").append(dep)
+					.append(",").append(arr)
+					.append(",").append(acType)
+					.append(",").append(acSequence)
+					.append(",").append(sobt)
+					.append(",").append(sibt)
+					.append(",").append(depOffset)
 					.append(",").append(arrOffset)
-					.append("}-").append(serviceType)
-					.append("-").append(needsCockpitCrew)
-					.append("-").append(needsCabinCrew)
+					.append(",").append(serviceType)
+					.append(",").append(needsCockpitCrew)
+					.append(",").append(needsCabinCrew)
 					.toString();
 	}
 }
