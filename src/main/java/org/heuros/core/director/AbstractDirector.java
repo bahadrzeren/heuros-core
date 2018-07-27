@@ -6,7 +6,7 @@ import org.heuros.core.base.Reporter;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with minimum Director<I extends IModel, O extends IModel> implementation.
+ * Abstract class with minimum Director<I, O> implementation.
  * 
  * @author bahadrzeren
  *

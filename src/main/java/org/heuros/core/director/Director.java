@@ -5,7 +5,7 @@ import org.heuros.core.base.Reporter;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * The most basic interface that loads and report data.
+ * The root interface that uses Loader and Reporter implementations to perform basic operations that constitute just loading input data of a generic type <I> and reporting the final data as a generic type <O>.
  * 
  * @author bahadrzeren
  *

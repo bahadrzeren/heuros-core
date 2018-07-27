@@ -18,7 +18,7 @@ public class ReportingDirector<I extends IModel> extends AbstractContextAwareDir
 	public void proceed() {
 		if (this.check()) {
 			List<I> inputData = this.loader.extractData();
-			this.repoContext.buildContext(inputData);
+			this.dataContext.buildContext(inputData);
 			this.reporter.reportData(inputData);
 		}
 	}

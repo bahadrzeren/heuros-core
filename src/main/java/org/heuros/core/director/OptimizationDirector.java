@@ -4,7 +4,7 @@ import org.heuros.core.base.Optimizer;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * Extension interface that runs optimization processes.
+ * An extension interface that uses optimization implementations for processing the data.
  * 
  * @author bahadrzeren
  *

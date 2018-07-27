@@ -1,11 +1,11 @@
 package org.heuros.core.director;
 
-import org.heuros.core.base.RepoContext;
+import org.heuros.core.base.DataContext;
 import org.heuros.core.base.RuleContext;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * Extension interface that uses rule and repository contexts.
+ * An extension interface that uses rule and data contexts for processing/reporting the data.
  * 
  * @author bahadrzeren
  *
@@ -14,5 +14,5 @@ import org.heuros.core.modelbase.IModel;
  */
 public interface ContextAwareDirector<I extends IModel, O extends IModel> extends Director<I, O> {
 	public Director<I, O> registerRuleContext(RuleContext ruleContext);
-	public Director<I, O> registerRepoContext(RepoContext<I, O> reporter);
+	public Director<I, O> registerDataContext(DataContext<I, O> dataContext);
 }

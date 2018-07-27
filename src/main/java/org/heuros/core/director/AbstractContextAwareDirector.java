@@ -1,12 +1,12 @@
 package org.heuros.core.director;
 
 import org.apache.log4j.Logger;
-import org.heuros.core.base.RepoContext;
+import org.heuros.core.base.DataContext;
 import org.heuros.core.base.RuleContext;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with ContextAwareDirector<I extends IModel, O extends IModel> implementation.
+ * Abstract class with minimum ContextAwareDirector<I, O> implementation.
  * 
  * @author bahadrzeren
  *
@@ -20,7 +20,7 @@ public abstract class AbstractContextAwareDirector<I extends IModel, O extends I
 	private static Logger logger = Logger.getLogger(AbstractContextAwareDirector.class);
 
 	protected RuleContext ruleContext = null;
-	protected RepoContext<I, O> repoContext = null;
+	protected DataContext<I, O> dataContext = null;
 
 	@Override
 	public Director<I, O> registerRuleContext(RuleContext ruleContext) {
@@ -29,8 +29,8 @@ public abstract class AbstractContextAwareDirector<I extends IModel, O extends I
 	}
 
 	@Override
-	public Director<I, O> registerRepoContext(RepoContext<I, O> repoContext) {
-		this.repoContext = repoContext;
+	public Director<I, O> registerDataContext(DataContext<I, O> dataContext) {
+		this.dataContext = dataContext;
 		return this;
 	}
 
@@ -39,8 +39,8 @@ public abstract class AbstractContextAwareDirector<I extends IModel, O extends I
 		if (super.check()) {
 			if (this.ruleContext == null)
 				logger.error("Null ruleContext!");
-			if (this.repoContext == null)
-				logger.error("Null repoContext!");
+			if (this.dataContext == null)
+				logger.error("Null dataContext!");
 			else
 				return true;
 		}

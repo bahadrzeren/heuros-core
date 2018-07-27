@@ -20,8 +20,8 @@ public class OptimizationDirector<I extends IModel, O extends IModel>
 	public void proceed() {
 		if (this.check()) {
 			List<I> inputData = this.loader.extractData();
-			this.repoContext.buildContext(inputData);
-			List<O> optimizedData = this.optimizer.optimize(this.repoContext, this.ruleContext);
+			this.dataContext.buildContext(inputData);
+			List<O> optimizedData = this.optimizer.optimize(this.dataContext, this.ruleContext);
 			this.reporter.reportData(optimizedData);
 		}
 	}

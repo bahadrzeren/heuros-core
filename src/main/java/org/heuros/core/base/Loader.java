@@ -9,7 +9,7 @@ import org.heuros.core.modelbase.IModel;
  * 
  * @author bahadrzeren
  *
- * @param <T> Class type of the information that will be extracted.
+ * @param <T> Class type of the information that will be extracted from the resource.
  */
 public interface Loader<T extends IModel> {
 	public List<T> extractData();

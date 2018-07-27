@@ -5,7 +5,7 @@ import org.heuros.core.base.Optimizer;
 import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with OptimizationDirector<I extends IModel, O extends IModel> implementation.
+ * Abstract class with minimum OptimizationDirector<I, O> implementation.
  * 
  * @author bahadrzeren
  *
