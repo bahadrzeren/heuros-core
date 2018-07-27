@@ -48,6 +48,8 @@ public abstract class TextFileReader<T> {
 							this.numOfFails++;
 						}
 					});
+
+			logger.info("Text file " + textFile.getCanonicalPath() + " is parsed.");
 		} catch(Exception ex) {
 			logger.error("File read exception!", ex);
 			this.numOfFails = Integer.MAX_VALUE;

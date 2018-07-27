@@ -33,6 +33,7 @@ public class TextFileWriter<T> {
 
 			writer.close();
 
+			logger.info("Text file " + textFileName + " is generated.");
 		} catch(Exception ex) {
 			logger.error("File write exception!", ex);
 		}

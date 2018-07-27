@@ -18,7 +18,8 @@ public class DataTransformDirector<I extends IModel> extends AbstractDirector<I,
 	public void proceed() {
 		if (this.check()) {
 			List<I> inputData = this.loader.extractData();
-			this.reporter.reportData(inputData);
+			if (inputData != null)
+				this.reporter.reportData(inputData);
 		}
 	}
 }

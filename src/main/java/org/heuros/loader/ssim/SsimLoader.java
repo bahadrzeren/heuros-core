@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
@@ -60,49 +59,45 @@ public class SsimLoader implements Loader<Leg> {
 						 */
 						AcRotationMerger acRotationMerger = new AcRotationMerger(legs, acRotationFile);
 						if (acRotationMerger.parseTextFile() == 0) {
-							Optional<Leg> legOpt = legs.parallelStream()
-														.filter((l) -> l.getAcSequence() == 0)
-														.findFirst();
-							if (legOpt.isPresent())
-								logger.error("No Ac Rotation info found for " + legOpt.get());
-							else {
-								logger.info("AcRotation file processed successfully!");
+							legs.parallelStream()
+									.filter((l) -> l.getAcSequence() == 0)
+									.forEach((l) -> logger.error("No Ac Rotation info found for " + l));
+							logger.info("AcRotation file ise processed!");
+							/*
+							 * Merge carry-in info
+							 */
+							CarryinMerger carryInMerger = new CarryinMerger(legs, carryInFile);
+							if (carryInMerger.parseTextFile() == 0) {
+								logger.info("Carry-in file processed successfully!");
 								/*
-								 * Merge carry-in info
+								 * Sort Leg list
 								 */
-								CarryinMerger carryInMerger = new CarryinMerger(legs, carryInFile);
-								if (carryInMerger.parseTextFile() == 0) {
-									logger.info("Carry-in file processed successfully!");
-									/*
-									 * Sort Leg list
-									 */
-									legs.sort(new Comparator<Leg>() {
-										@Override
-										public int compare(Leg a, Leg b) {
-											if (a.getSobt().isAfter(b.getSobt()))
-												return 1;
+								legs.sort(new Comparator<Leg>() {
+									@Override
+									public int compare(Leg a, Leg b) {
+										if (a.getSobt().isAfter(b.getSobt()))
+											return 1;
+										else
+											if (a.getSobt().isBefore(b.getSobt()))
+												return -1;
 											else
-												if (a.getSobt().isBefore(b.getSobt()))
-													return -1;
+												if (a.getFligtNo() > b.getFligtNo())
+													return 1;
 												else
-													if (a.getFligtNo() > b.getFligtNo())
-														return 1;
+													if (a.getFligtNo() < b.getFligtNo())
+														return -1;
 													else
-														if (a.getFligtNo() < b.getFligtNo())
-															return -1;
+														if (a.getDepOffset() > b.getArrOffset())
+															return 1;
 														else
-															if (a.getDepOffset() > b.getArrOffset())
-																return 1;
-															else
-																if (a.getDepOffset() < b.getArrOffset())
-																	return -1;
-																else 
-																	return a.getDep().compareTo(b.getDep());
-										}
-									});
-									logger.info("Leg data is sorted!");
-									return legs;
-								}
+															if (a.getDepOffset() < b.getArrOffset())
+																return -1;
+															else 
+																return a.getDep().compareTo(b.getDep());
+									}
+								});
+								logger.info("Leg data is sorted!");
+								return legs;
 							}
 						}
 					}
