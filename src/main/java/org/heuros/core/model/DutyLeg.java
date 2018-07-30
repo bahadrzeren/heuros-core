@@ -1,14 +1,12 @@
 package org.heuros.core.model;
 
-import org.heuros.core.modelbase.AModel;
-
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
  * @generated
  */
 
-public class DutyLeg extends AModel {
+public class DutyLeg {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->

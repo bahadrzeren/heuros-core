@@ -2,8 +2,6 @@ package org.heuros.core.base;
 
 import java.util.List;
 
-import org.heuros.core.modelbase.IModel;
-
 /**
  * Generic interface for reporting the final data and creating its artifacts.
  * 
@@ -11,6 +9,6 @@ import org.heuros.core.modelbase.IModel;
  *
  * @param <T> Class type of the final data that will be reported.
  */
-public interface Reporter<T extends IModel> {
+public interface Reporter<T> {
 	public void reportData(List<T> data);
 }

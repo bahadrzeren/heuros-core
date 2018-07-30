@@ -2,9 +2,7 @@ package org.heuros.core.model;
 
 import java.time.LocalDateTime;
 
-import org.heuros.core.modelbase.AModel;
-
-public class Leg extends AModel {
+public class Leg {
 
 	private String carrier;
 	private int fligtNo;

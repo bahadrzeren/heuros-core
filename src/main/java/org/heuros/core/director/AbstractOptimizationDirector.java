@@ -2,17 +2,16 @@ package org.heuros.core.director;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Optimizer;
-import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with minimum OptimizationDirector<I, O> implementation.
+ * Partial implementation of the interface OptimizationDirector<I, O>.
  * 
  * @author bahadrzeren
  *
  * @param <I> Type of the input model.
  * @param <O> Type of the output model.
  */
-public abstract class AbstractOptimizationDirector<I extends IModel, O extends IModel>
+public abstract class AbstractOptimizationDirector<I, O>
 						extends AbstractContextAwareDirector<I, O>
 						implements OptimizationDirector<I, O>{
 

@@ -3,17 +3,16 @@ package org.heuros.core.director;
 import org.apache.log4j.Logger;
 import org.heuros.core.base.DataContext;
 import org.heuros.core.base.RuleContext;
-import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with minimum ContextAwareDirector<I, O> implementation.
+ * Partial implementation of the interface ContextAwareDirector<I, O>.
  * 
  * @author bahadrzeren
  *
  * @param <I> Type of the input model.
  * @param <O> Type of the output model.
  */
-public abstract class AbstractContextAwareDirector<I extends IModel, O extends IModel>
+public abstract class AbstractContextAwareDirector<I, O>
 						extends AbstractDirector<I, O>
 						implements ContextAwareDirector<I, O> {
 

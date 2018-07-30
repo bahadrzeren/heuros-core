@@ -3,7 +3,6 @@ package org.heuros.director;
 import java.util.List;
 
 import org.heuros.core.director.AbstractOptimizationDirector;
-import org.heuros.core.modelbase.IModel;
 
 /**
  * Implementation to use for optimization runs.
@@ -13,7 +12,7 @@ import org.heuros.core.modelbase.IModel;
  * @param <I> Type of the input model.
  * @param <O> Type of the optimized model.
  */
-public class OptimizationDirector<I extends IModel, O extends IModel>
+public class OptimizationDirector<I, O>
 				extends AbstractOptimizationDirector<I, O> {
 
 	@Override

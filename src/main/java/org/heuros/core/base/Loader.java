@@ -2,8 +2,6 @@ package org.heuros.core.base;
 
 import java.util.List;
 
-import org.heuros.core.modelbase.IModel;
-
 /**
  * Generic interface for the input data loaders.
  * 
@@ -11,6 +9,6 @@ import org.heuros.core.modelbase.IModel;
  *
  * @param <T> Class type of the information that will be extracted from the resource.
  */
-public interface Loader<T extends IModel> {
+public interface Loader<T> {
 	public List<T> extractData();
 }

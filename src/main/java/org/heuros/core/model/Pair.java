@@ -2,15 +2,13 @@ package org.heuros.core.model;
 
 import java.util.List;
 
-import org.heuros.core.modelbase.AModel;
-
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
  * @generated
  */
 
-public class Pair extends AModel {
+public class Pair {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->

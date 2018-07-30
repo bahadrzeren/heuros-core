@@ -3,17 +3,16 @@ package org.heuros.core.director;
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
 import org.heuros.core.base.Reporter;
-import org.heuros.core.modelbase.IModel;
 
 /**
- * Abstract class with minimum Director<I, O> implementation.
+ * Partial implementation of the interface Director<I, O>.
  * 
  * @author bahadrzeren
  *
  * @param <I> Type of the input model.
  * @param <O> Type of the output model.
  */
-public abstract class AbstractDirector<I extends IModel, O extends IModel> implements Director<I, O> {
+public abstract class AbstractDirector<I, O> implements Director<I, O> {
 
 	private static Logger logger = Logger.getLogger(AbstractDirector.class);
 
