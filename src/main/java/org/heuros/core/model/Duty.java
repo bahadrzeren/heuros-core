@@ -24,7 +24,6 @@ public class Duty {
 	 * @generated
 	 */
 	public Duty(){
-		super();
 	}
 
 	public List<DutyLeg> getDutyLegs() {

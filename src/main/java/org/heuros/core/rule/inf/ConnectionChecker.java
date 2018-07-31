@@ -1,5 +1,5 @@
 package org.heuros.core.rule.inf;
 
-public interface ConnectionChecker<T> {
-	public boolean areConnectable(T prev, T next);
+public interface ConnectionChecker<M> extends Rule<M> {
+	public boolean areConnectable(M prev, M next);
 }

@@ -20,7 +20,6 @@ public class Leg {
 	private boolean needsCabinCrew = true;
 
 	public Leg(){
-		super();
 	}
 
 	public String getCarrier() {

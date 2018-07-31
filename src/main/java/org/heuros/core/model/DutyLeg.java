@@ -31,7 +31,6 @@ public class DutyLeg {
 	 * @generated
 	 */
 	public DutyLeg(){
-		super();
 	}
 
 	public Duty getDuty() {

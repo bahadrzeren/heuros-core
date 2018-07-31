@@ -1,5 +1,5 @@
 package org.heuros.core.rule.inf;
 
-public interface ExtensibilityChecker<T, P> {
-	public boolean isExtensible(T item, P parent);
+public interface ExtensibilityChecker<M, C> extends Rule<M> {
+	public boolean isExtensible(M model, C child);
 }

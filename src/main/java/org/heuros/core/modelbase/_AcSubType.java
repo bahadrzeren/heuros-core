@@ -6,7 +6,7 @@ package org.heuros.core.modelbase;
  * @author B_ZEREN
  *
  */
-public enum AcSubType {
+public enum _AcSubType {
 	acst333,
 	acst78D,
 	acst78G,

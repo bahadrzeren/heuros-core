@@ -24,7 +24,6 @@ public class Pair {
 	 * @generated
 	 */
 	public Pair(){
-		super();
 	}
 
 	public List<Duty> getDuties() {

@@ -2,11 +2,11 @@ package org.heuros.core.rule;
 
 import org.heuros.core.rule.inf.ValidationStatus;
 
-public class RuleProxy<M, C> implements RuleComplete<M, C> {
+public class RuleCompleteProxy<M, C> implements RuleComplete<M, C> {
 
 	private RuleRepo<M, C> ruleRepo;
 
-	public RuleProxy(RuleRepo<M, C> ruleRepo) {
+	public RuleCompleteProxy(RuleRepo<M, C> ruleRepo) {
 		this.ruleRepo = ruleRepo;
 	}
 
