@@ -1,45 +1,29 @@
 package org.heuros.pair;
 
-import org.heuros.core.base.RuleContext;
 import org.heuros.core.model.Duty;
 import org.heuros.core.model.Leg;
 import org.heuros.core.model.Pair;
-import org.heuros.core.rule.RuleCompleteProxy;
+import org.heuros.core.rule.inf.ConnectionChecker;
+import org.heuros.core.rule.inf.ExtensibilityChecker;
 import org.heuros.core.rule.inf.Introducer;
-import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.inf.Validator;
 import org.heuros.core.rule.repo.RuleRepo;
-import org.heuros.core.rule.repo.RuleRepository;
 
-public class PairingRuleContext implements RuleContext {
+public class PairingRuleContext {
 
 	private RuleRepo<Introducer<Leg>> legRuleIntroducerRepo;
-	private RuleRepo<Duty, Pair> dutyRuleRepo;
-	private RuleRepo<Pair, Pair> pairRuleRepo;
+	private RuleRepo<ConnectionChecker<Leg>> legRuleConnectionCheckRepo;
 
-	private RuleCompleteProxy<Leg, Duty> legRuleProxy;
-	private RuleCompleteProxy<Duty, Pair> dutyRuleProxy;
-	private RuleCompleteProxy<Pair, Pair> pairRuleProxy;
+	private RuleRepo<Introducer<Duty>> dutyRuleIntroducerRepo;
+	private RuleRepo<ConnectionChecker<Duty>> dutyRuleConnectionCheckRepo;
+	private RuleRepo<ExtensibilityChecker<Duty, Leg>> dutyExtensibilityCheckerRepo; 
+	private RuleRepo<Validator<Duty>> dutyRuleValidatorRepo;
+
+	private RuleRepo<Introducer<Pair>> pairRuleIntroducerRepo;
+	private RuleRepo<ConnectionChecker<Pair>> pairRuleConnectionCheckRepo;
+	private RuleRepo<ExtensibilityChecker<Pair, Duty>> pairExtensibilityCheckerRepo; 
+	private RuleRepo<Validator<Pair>> pairRuleValidatorRepo;
 
 	public PairingRuleContext() {
-		this.legRuleRepo = new RuleRepository<Leg, Duty>();
-		this.dutyRuleRepo = new RuleRepository<Duty, Pair>();
-		this.pairRuleRepo = new RuleRepository<Pair, Pair>();
-		this.legRuleProxy = new RuleCompleteProxy<Leg, Duty>(legRuleRepo);
-		this.dutyRuleProxy = new RuleCompleteProxy<Duty, Pair>(dutyRuleRepo);
-		this.pairRuleProxy = new RuleCompleteProxy<Pair, Pair>(pairRuleRepo);
 	}
-
-	@Override
-	public <T, P> RuleRepo<T, P> getRuleRepo(Class<T> t) {
-		return null;
-	}
-
-	@Override
-	public <T, P> RuleCompleteProxy<T, P> getRuleProxy(Class<T> t) {
-		return null;
-	}
-
-	@Override
-	public void registerRule(Rule rule) {
-	}	
 }
