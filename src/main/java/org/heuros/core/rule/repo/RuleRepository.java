@@ -7,6 +7,14 @@ import org.apache.log4j.Logger;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
+/**
+ * Rule repository generic implementation.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <R>
+ * @param <M>
+ */
 public class RuleRepository<R extends Rule, M> implements RuleRepo<R, M> {
 
 	private Logger logger = Logger.getLogger(RuleRepository.class);
@@ -15,6 +23,14 @@ public class RuleRepository<R extends Rule, M> implements RuleRepo<R, M> {
 	protected Class<M> modelType;
 	protected List<R> rules = new ArrayList<R>();
 
+	/**
+	 * Class<R> did not work for ruleInterfaceType!
+	 * To make it working Class<?> is used.
+	 * Design should be rethought.
+	 * 
+	 * @param ruleInterfaceType
+	 * @param modelType
+	 */
 	public RuleRepository(Class<?> ruleInterfaceType, Class<M> modelType) {
 		this.ruleInterfaceType = ruleInterfaceType;
 		this.modelType = modelType;

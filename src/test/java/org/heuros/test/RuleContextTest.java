@@ -88,7 +88,7 @@ public class RuleContextTest extends TestCase {
     														Leg.class);
 
     	try {
-//    		ruleContext.registerRule(rule);
+    		ruleContext.registerRule(rule);
     	} catch (RuleRepoIsMissing ex) {
     		assertTrue(true);
     	} catch (Exception ex) {

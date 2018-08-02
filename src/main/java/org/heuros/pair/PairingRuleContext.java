@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.heuros.core.base.RuleContext;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.repo.RuleRepo;
+import org.heuros.core.rule.repo.RuleRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.exception.RuleRepoIsMissing;
 
 public class PairingRuleContext implements RuleContext {
+
+	private Logger logger = Logger.getLogger(PairingRuleContext.class);
 
 	private List<RuleRepo<Rule, ?>> repos = new ArrayList<RuleRepo<Rule, ?>>();
 
@@ -40,6 +44,17 @@ public class PairingRuleContext implements RuleContext {
 //		this.pairRuleIntroducerRepo = new RuleRepository<Introducer<Pair>>();
 //		this.pairExtensibilityCheckerRepo = new RuleRepository<ExtensibilityChecker<Pair, Duty>>();
 //		this.pairRuleValidatorRepo = new RuleRepository<Validator<Pair>>();
+	}
+
+	public <M> RuleContext registerRepo(RuleRepository<Rule, M> ruleRepository) {
+		Optional<RuleRepo<Rule, ?>> repoOpt =
+						repos.stream().filter((repo) -> repo == ruleRepository)
+															.findFirst();
+		if (repoOpt.isPresent())
+			logger.error("Rule repository is already registered!");
+		else
+			repos.add(ruleRepository);
+		return this;
 	}
 
 	public RuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing, RuleRepoIsMissing {

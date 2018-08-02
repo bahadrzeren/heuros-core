@@ -1,10 +1,12 @@
 package org.heuros.core.base;
 
 import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.repo.RuleRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.exception.RuleRepoIsMissing;
 
 public interface RuleContext {
+	public <M> RuleContext registerRepo(RuleRepository<Rule, M> ruleRepository);
 	public RuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing, RuleRepoIsMissing;
 
 //	public <M> RuleContext registerIntroducer(Introducer<M> rule) throws Exception;
