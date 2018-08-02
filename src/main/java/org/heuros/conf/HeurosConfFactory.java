@@ -91,8 +91,9 @@ public class HeurosConfFactory<C> {
 						f.setAccessible(true);
 						logger.info(f.getName() + ": " + f.get(confObject));
 						f.setAccessible(false);
-					} catch (Exception e) {
+					} catch (Exception ex) {
 						logger.info(f.getName() + ": ???");
+						logger.error(ex);
 					}
 				});
 	}

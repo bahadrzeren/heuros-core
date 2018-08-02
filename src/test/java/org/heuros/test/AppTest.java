@@ -1,4 +1,4 @@
-package org.heuros.api;
+package org.heuros.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

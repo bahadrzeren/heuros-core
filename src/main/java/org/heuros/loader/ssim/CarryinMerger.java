@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 import java.util.function.Predicate;
 
 import org.heuros.core.model.Leg;
+import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
@@ -34,7 +35,7 @@ public class CarryinMerger extends TextFileReader<Leg> {
 	}
 
 	@Override
-	public void parseLine(String s) throws Exception {
+	public void parseLine(String s) throws InputParseException {
 		/*
 		 * Extract LEG data only.
 		 */
@@ -67,10 +68,10 @@ public class CarryinMerger extends TextFileReader<Leg> {
 
 			long numOfLegsFound = this.list.stream().filter(p).count();
 			if (numOfLegsFound > 1)
-				throw new Exception("Multiple legs are found for " + carrier + flightNo + dep + legDate);
+				throw new InputParseException("Multiple legs are found for " + carrier + flightNo + dep + legDate);
 			else
 			if (numOfLegsFound < 1) {
-//				throw new Exception("No legs are found for " + carrier + flightNo + dep + legDate);
+//				throw new InputParseException("No legs are found for " + carrier + flightNo + dep + legDate);
 			} else {
 				Optional<Leg> legOpt = this.list.stream()
 												.filter(p)

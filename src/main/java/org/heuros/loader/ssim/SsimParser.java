@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.heuros.core.model.Leg;
+import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
@@ -38,7 +39,7 @@ public class SsimParser extends TextFileReader<Leg> {
 	}
 
 	@Override
-	public void parseLine(String s) throws Exception {
+	public void parseLine(String s) throws InputParseException {
 		/*
 		 * Extract LEG data only.
 		 */

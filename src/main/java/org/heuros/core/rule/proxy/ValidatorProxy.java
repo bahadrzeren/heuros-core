@@ -1,12 +1,13 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
 import org.heuros.core.rule.repo.RuleRepo;
 
-public class ValidatorProxy<M> implements Validator<M> {
+public class ValidatorProxy<M> extends AbstractRule implements Validator<M> {
 
-	private RuleRepo<Validator<M>> repo;
+	private RuleRepo<Validator<M>, M> repo;
 
 	@Override
 	public ValidationStatus isValid(M t) {

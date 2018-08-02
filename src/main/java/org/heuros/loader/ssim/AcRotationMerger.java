@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.heuros.core.model.Leg;
+import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
@@ -37,7 +38,7 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 	}
 
 	@Override
-	public void parseLine(String s) throws Exception {
+	public void parseLine(String s) throws InputParseException {
 		/*
 		 * Skip first line.
 		 */
@@ -89,10 +90,10 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 
 				long numOfLegsFound = this.list.parallelStream().filter(p).count();
 				if (numOfLegsFound > 1)
-					throw new Exception("Multiple legs are found for " + carrier + flightNo + dep + depDateTime);
+					throw new InputParseException("Multiple legs are found for " + carrier + flightNo + dep + depDateTime);
 				else
 				if (numOfLegsFound < 1) {
-//					throw new Exception("No legs are found for " + carrier + flightNo + dep + depDateTime);
+//					throw new InputParseException("No legs are found for " + carrier + flightNo + dep + depDateTime);
 				} else
 					this.list.parallelStream()
 								.filter(p)

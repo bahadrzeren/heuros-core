@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.heuros.exception.InputParseException;
 
 /**
  * General purpose text file reader.
@@ -16,7 +17,7 @@ public abstract class TextFileReader<T> {
 
 	protected static Logger logger = Logger.getLogger(TextFileReader.class);
 
-	protected abstract void parseLine(String s) throws Exception;
+	protected abstract void parseLine(String s) throws InputParseException;
 
 	protected File textFile = null;
 	protected List<T> list = null;

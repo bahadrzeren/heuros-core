@@ -1,4 +1,4 @@
-package org.heuros.api;
+package org.heuros.test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

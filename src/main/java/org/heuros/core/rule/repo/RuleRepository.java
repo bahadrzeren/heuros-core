@@ -4,27 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.heuros.core.rule.inf.RuleImpl;
+import org.heuros.core.rule.inf.Rule;
+import org.heuros.exception.RuleAnnotationIsMissing;
 
-public class RuleRepository<R> implements RuleRepo<R> {
+public class RuleRepository<R extends Rule, M> implements RuleRepo<R, M> {
 
 	private Logger logger = Logger.getLogger(RuleRepository.class);
 
-	protected RuleImpl ruleMeta;
+	protected Class<?> ruleInterfaceType;
+	protected Class<M> modelType;
 	protected List<R> rules = new ArrayList<R>();
 
+	public RuleRepository(Class<?> ruleInterfaceType, Class<M> modelType) {
+		this.ruleInterfaceType = ruleInterfaceType;
+		this.modelType = modelType;
+	}
+
 	@Override
-	public void registerRule(R rule) throws Exception {
-		if (rules.stream().filter((i) -> i == rule)
-				.findFirst()
-				.isPresent())
+	public void registerRule(R rule) throws RuleAnnotationIsMissing {
+		if (this.rules.stream()
+						.filter((i) -> i == rule)
+						.findFirst()
+						.isPresent())
 			logger.error("Rule impl is already registered!");
 		else {
-			RuleImpl ruleMeta = rule.getClass().getAnnotation(RuleImpl.class);
-			if (ruleMeta == null)
-				throw new Exception("@Rule annotation could not be found!");
-			this.ruleMeta = ruleMeta;
-			rules.add(rule);
+			if (rule.getAnnotation() == null)
+				throw new RuleAnnotationIsMissing("@Rule annotation could not be found!");
+			this.rules.add(rule);
 		}
 	}
 
@@ -34,7 +40,12 @@ public class RuleRepository<R> implements RuleRepo<R> {
 	}
 
 	@Override
-	public RuleImpl getRuleMeta() {
-		return this.ruleMeta;
+	public Class<?> getRuleInterfaceType() {
+		return this.ruleInterfaceType;
+	}
+
+	@Override
+	public Class<M> getModelType() {
+		return this.modelType;
 	}
 }
