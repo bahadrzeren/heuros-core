@@ -1,12 +1,11 @@
 package org.heuros.core.rule.proxy;
 
-import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.ConnectionChecker;
-import org.heuros.core.rule.repo.RuleRepo;
+import org.heuros.core.rule.repo.RuleRepository;
 
-public class ConnectionCheckerProxy<M> extends AbstractRule implements ConnectionChecker<M> {
+public class ConnectionCheckerProxy<M> implements ConnectionChecker<M> {
 
-	private RuleRepo<ConnectionChecker<M>, M> repo;
+	private RuleRepository<ConnectionChecker<M>, M> repo;
 
 	@Override
 	public boolean areConnectable(M prev, M next) {

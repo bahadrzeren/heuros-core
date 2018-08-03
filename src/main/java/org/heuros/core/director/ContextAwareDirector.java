@@ -1,7 +1,7 @@
 package org.heuros.core.director;
 
 import org.heuros.core.base.DataContext;
-import org.heuros.core.base.RuleContext;
+import org.heuros.core.rule.context.RuleContext;
 
 /**
  * An extension of Director<I, O> interface which will be used for special implementations that need rule and data contexts.

@@ -1,15 +1,18 @@
 package org.heuros.test;
 
-import org.heuros.core.base.RuleContext;
 import org.heuros.core.model.Leg;
+import org.heuros.core.rule.context.LegRuleContext;
+import org.heuros.core.rule.context.RuleContext;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.proxy.IntroducerProxy;
-import org.heuros.core.rule.repo.RuleRepo;
+import org.heuros.core.rule.repo.IntroducerRepository;
+import org.heuros.core.rule.repo.RuleRepository;
 import org.heuros.core.rule.repo.RuleRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.exception.RuleRepoIsMissing;
-import org.heuros.pair.PairingRuleContext;
+import org.heuros.test.rule.repo.RuleWithAnnotationLeg;
+import org.heuros.test.rule.repo.RuleWithoutAnnotation;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -43,9 +46,9 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleAnnotationMissingCase()
     {
-    	RuleContext ruleContext = new PairingRuleContext();
+    	RuleContext ruleContext = new LegRuleContext();
 
-    	Rule rule = new RuleWithoutAnnotation();
+    	Introducer<Leg> rule = new RuleWithoutAnnotation();
 
     	try {
     		ruleContext.registerRule(rule);
@@ -61,9 +64,9 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleRepoMissingCase()
     {
-    	RuleContext ruleContext = new PairingRuleContext();
+    	RuleContext ruleContext = new LegRuleContext();
 
-    	Rule rule = new RuleWithAnnotationLeg();
+    	Introducer<Leg> rule = new RuleWithAnnotationLeg();
 
     	try {
     		ruleContext.registerRule(rule);
@@ -79,16 +82,15 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleWithAnnotationLegRegistration()
     {
-    	RuleContext ruleContext = new PairingRuleContext();
+    	RuleContext ruleContext = new LegRuleContext();
 
 //    	Rule rule = new RuleWithAnnotationLeg();
 
-    	RuleRepo<Introducer<Leg>, Leg> legIntroducerRepo =
-    			new RuleRepository<Introducer<Leg>, Leg>(Introducer.class,
-    														Leg.class);
+    	RuleRepository<Introducer<Leg>, Leg> legIntroducerRepo =
+    			new IntroducerRepository<Leg>(Leg.class);
 
     	try {
-    		ruleContext.registerRule(rule);
+    		ruleContext.registerRepo(legIntroducerRepo);
     	} catch (RuleRepoIsMissing ex) {
     		assertTrue(true);
     	} catch (Exception ex) {

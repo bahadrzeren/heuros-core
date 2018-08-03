@@ -1,12 +1,11 @@
 package org.heuros.core.rule.proxy;
 
-import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.Introducer;
-import org.heuros.core.rule.repo.RuleRepo;
+import org.heuros.core.rule.repo.RuleRepository;
 
-public class IntroducerProxy<M> extends AbstractRule implements Introducer<M> {
+public class IntroducerProxy<M> implements Introducer<M> {
 
-	private RuleRepo<Introducer<M>, M> repo;
+	private RuleRepository<Introducer<M>, M> repo;
 
 	@Override
 	public boolean introduce(M t) {

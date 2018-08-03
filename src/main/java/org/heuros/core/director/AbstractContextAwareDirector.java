@@ -2,7 +2,7 @@ package org.heuros.core.director;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.DataContext;
-import org.heuros.core.base.RuleContext;
+import org.heuros.core.rule.context.RuleContext;
 
 /**
  * Partial implementation of the interface ContextAwareDirector<I, O>.
