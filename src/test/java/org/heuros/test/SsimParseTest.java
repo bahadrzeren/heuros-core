@@ -19,7 +19,7 @@ public class SsimParseTest
 {
 	private static String testSsimLine = "3 TK  0010101J20DEC1306JAN141 3 56  IST11251125+0200  JFK22202220-0500  77C                                                              TK  012                            F63C28Y246            000003";
 
-    /**
+	/**
      * Create the test case
      *
      * @param testName name of the test case
@@ -38,9 +38,9 @@ public class SsimParseTest
     }
 
     /**
-     * Rigourous Test :-)
+     * Test SSIM line parse.
      */
-    public void testApp()
+    public void testSsimLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
     	SsimParser ssimParser = new SsimParser(legs, null);

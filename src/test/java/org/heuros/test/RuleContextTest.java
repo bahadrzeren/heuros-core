@@ -1,18 +1,18 @@
 package org.heuros.test;
 
+import org.heuros.core.model.Duty;
 import org.heuros.core.model.Leg;
-import org.heuros.core.rule.context.LegRuleContext;
+import org.heuros.core.rule.context.ExtendedRuleContext;
 import org.heuros.core.rule.context.RuleContext;
-import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.Rule;
-import org.heuros.core.rule.proxy.IntroducerProxy;
-import org.heuros.core.rule.repo.IntroducerRepository;
-import org.heuros.core.rule.repo.RuleRepository;
-import org.heuros.core.rule.repo.RuleRepository;
+import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.exception.RuleAnnotationIsMissing;
-import org.heuros.exception.RuleRepoIsMissing;
-import org.heuros.test.rule.repo.RuleWithAnnotationLeg;
-import org.heuros.test.rule.repo.RuleWithoutAnnotation;
+import org.heuros.pair.DutyRuleContext;
+import org.heuros.pair.LegRuleContext;
+import org.heuros.test.rule.DutyRuleFull;
+import org.heuros.test.rule.LegIntroducer;
+import org.heuros.test.rule.LegRuleExtended;
+import org.heuros.test.rule.LegRuleWithoutAnnotation;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -42,16 +42,17 @@ public class RuleContextTest extends TestCase {
     }
 
     /**
-     * Rule Annotation is missing exception test.
+     * Test Rule Annotation is missing exception test.
+     * Rule classes must use @RuleImplementation annotation!
      */
     public void testRuleAnnotationMissingCase()
     {
-    	RuleContext ruleContext = new LegRuleContext();
+    	RuleContext<Leg> context = new LegRuleContext();
 
-    	Introducer<Leg> rule = new RuleWithoutAnnotation();
+    	Rule rule = new LegRuleWithoutAnnotation();
 
     	try {
-    		ruleContext.registerRule(rule);
+    		context.registerRule(rule);
     	} catch (RuleAnnotationIsMissing ex) {
     		assertTrue(true);
     	} catch (Exception ex) {
@@ -60,41 +61,94 @@ public class RuleContextTest extends TestCase {
     }
 
     /**
-     * Rule Repo is missing exception test.
+     * Test LegIntroducer rule registration.
+     * Other repositories must not include the rule that implements Introducer interface only. 
      */
-    public void testRuleRepoMissingCase()
+    public void testLegIntroducerRegistration()
     {
-    	RuleContext ruleContext = new LegRuleContext();
+    	RuleContext<Leg> context = new LegRuleContext();
 
-    	Introducer<Leg> rule = new RuleWithAnnotationLeg();
+    	Rule rule = new LegIntroducer();
 
     	try {
-    		ruleContext.registerRule(rule);
-    	} catch (RuleRepoIsMissing ex) {
-    		assertTrue(true);
+    		context.registerRule(rule);
+
+    		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
+    		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 0);
+    		assertTrue(context.getValidatorRepo().getRules().size() == 0);
+
     	} catch (Exception ex) {
     		assertTrue(false);
     	}
     }
 
     /**
-     * Leg introducer rule registration test.
+     * Test Leg Introducer and ConnectionChecker rule registration.
+     * Validator repository must not include the rule.
      */
-    public void testRuleWithAnnotationLegRegistration()
+    public void testLegIntroducerAndConnectionCheckerRegistration()
     {
-    	RuleContext ruleContext = new LegRuleContext();
+    	RuleContext<Leg> context = new LegRuleContext();
 
-//    	Rule rule = new RuleWithAnnotationLeg();
-
-    	RuleRepository<Introducer<Leg>, Leg> legIntroducerRepo =
-    			new IntroducerRepository<Leg>(Leg.class);
+    	Rule rule = new LegRuleExtended();
 
     	try {
-    		ruleContext.registerRepo(legIntroducerRepo);
-    	} catch (RuleRepoIsMissing ex) {
-    		assertTrue(true);
+    		context.registerRule(rule);
+
+    		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
+    		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
+    		assertTrue(context.getValidatorRepo().getRules().size() == 0);
+
     	} catch (Exception ex) {
     		assertTrue(false);
     	}
+    }
+
+    /**
+     * Test Duty rule registration.
+     * Since the rule implements all the interfaces, all repos must have the rule.
+     */
+    public void testDutyRuleRegistration()
+    {
+    	ExtendedRuleContext<Duty, Leg> context = new DutyRuleContext();
+
+    	Rule rule = new DutyRuleFull();
+
+    	try {
+    		context.registerRule(rule);
+
+    		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
+    		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
+    		assertTrue(context.getExtensibilityCheckerRepo().getRules().size() == 1);
+    		assertTrue(context.getValidatorRepo().getRules().size() == 1);
+
+    	} catch (Exception ex) {
+    		assertTrue(false);
+    	}
+    }
+
+    /**
+     * Test Leg and Duty rule proxies.
+     */
+    public void testLegAndDutyRules()
+    {
+    	RuleContext<Leg> legContext = new LegRuleContext();
+    	ExtendedRuleContext<Duty, Leg> dutyContext = new DutyRuleContext();
+
+    	Rule legRule = new LegRuleExtended();
+    	Rule dutyRule = new DutyRuleFull();
+
+    	try {
+    		legContext.registerRule(legRule);
+    		dutyContext.registerRule(dutyRule);
+    	} catch (Exception ex) {
+    		assertTrue(false);
+    	}
+
+		assertTrue(legContext.getIntroducerProxy().introduce(null));
+		assertTrue(dutyContext.getIntroducerProxy().introduce(null));
+		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(null, null));
+		assertTrue(dutyContext.getExtensibilityCheckerProxy().isExtensible(null, null));
+		assertTrue(dutyContext.getValidatorProxy().isValid(null) == ValidationStatus.valid);
     }
 }

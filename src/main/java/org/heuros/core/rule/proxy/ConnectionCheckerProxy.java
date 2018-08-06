@@ -7,6 +7,10 @@ public class ConnectionCheckerProxy<M> implements ConnectionChecker<M> {
 
 	private RuleRepository<ConnectionChecker<M>, M> repo;
 
+	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<M>, M> repo) {
+		this.repo = repo;
+	}
+
 	@Override
 	public boolean areConnectable(M prev, M next) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)

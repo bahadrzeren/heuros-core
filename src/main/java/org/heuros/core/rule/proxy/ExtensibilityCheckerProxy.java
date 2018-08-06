@@ -7,6 +7,10 @@ public class ExtensibilityCheckerProxy<M, C> implements ExtensibilityChecker<M, 
 
 	private RuleRepository<ExtensibilityChecker<M, C>, M> repo;
 
+	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<M, C>, M> repo) {
+		this.repo = repo;
+	}
+
 	@Override
 	public boolean isExtensible(M model, C child) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)

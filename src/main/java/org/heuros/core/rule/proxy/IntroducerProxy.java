@@ -7,6 +7,10 @@ public class IntroducerProxy<M> implements Introducer<M> {
 
 	private RuleRepository<Introducer<M>, M> repo;
 
+	public IntroducerProxy(RuleRepository<Introducer<M>, M> repo) {
+		this.repo = repo;
+	}
+
 	@Override
 	public boolean introduce(M t) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)

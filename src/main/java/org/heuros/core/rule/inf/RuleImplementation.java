@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
 public @interface RuleImplementation {
-	public Class<?> modelType();
 	public String ruleName();
 	public String description();
 	public String violationMessage();

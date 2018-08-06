@@ -8,6 +8,10 @@ public class ValidatorProxy<M> implements Validator<M> {
 
 	private RuleRepository<Validator<M>, M> repo;
 
+	public ValidatorProxy(RuleRepository<Validator<M>, M> repo) {
+		this.repo = repo;
+	}
+
 	@Override
 	public ValidationStatus isValid(M t) {
 		ValidationStatus res = ValidationStatus.valid;
