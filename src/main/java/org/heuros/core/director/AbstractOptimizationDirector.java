@@ -12,7 +12,7 @@ import org.heuros.core.base.Optimizer;
  * @param <O> Type of the output model.
  */
 public abstract class AbstractOptimizationDirector<I, O>
-						extends AbstractContextAwareDirector<I, O>
+						extends AbstractDirector<I, O>
 						implements OptimizationDirector<I, O>{
 
 	private static Logger logger = Logger.getLogger(AbstractOptimizationDirector.class);

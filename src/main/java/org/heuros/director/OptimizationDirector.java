@@ -19,8 +19,7 @@ public class OptimizationDirector<I, O>
 	public void proceed() {
 		if (this.check()) {
 			List<I> inputData = this.loader.extractData();
-			this.dataContext.buildContext(inputData);
-			List<O> optimizedData = this.optimizer.optimize(this.dataContext);
+			List<O> optimizedData = this.optimizer.optimize();
 			this.reporter.reportData(optimizedData);
 		}
 	}
