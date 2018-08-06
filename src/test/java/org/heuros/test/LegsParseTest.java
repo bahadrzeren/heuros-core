@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.heuros.core.model.Leg;
-import org.heuros.loader.ssim.SsimParser;
+import org.heuros.loader.legs.LegsParser;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class SsimParseTest 
+public class LegsParseTest 
     extends TestCase
 {
 
@@ -23,7 +23,7 @@ public class SsimParseTest
      *
      * @param testName name of the test case
      */
-    public SsimParseTest( String testName )
+    public LegsParseTest( String testName )
     {
         super( testName );
     }
@@ -33,36 +33,39 @@ public class SsimParseTest
      */
     public static Test suite()
     {
-        return new TestSuite( SsimParseTest.class );
+        return new TestSuite( LegsParseTest.class );
     }
 
-	private static String sampleSsimLine = "3 TK  0010101J20DEC1306JAN141 3 56  IST11251125+0200  JFK22202220-0500  77C                                                              TK  012                            F63C28Y246            000003";
+	private static String sampleLegsLine = "TK,882,,IST,TBZ,316,4,2013-12-20T01:40,2013-12-20T04:15,120,210,J,true,true";
 
-    /**
-     * Test SSIM line parse.
+	/**
+     * Test LEGS line parse.
      */
-    public void testSsimLineParse()
+    public void testLegsLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
-    	SsimParser ssimParser = new SsimParser(legs, null);
+    	LegsParser legsParser = new LegsParser(legs, null);
     	try {
-			ssimParser.parseLine(SsimParseTest.sampleSsimLine);
+			legsParser.parseLine(LegsParseTest.sampleLegsLine);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
-        assertTrue(legs.size() == 11);
+        assertTrue(legs.size() == 1);
         Leg leg = legs.get(0);
         assertTrue(leg.getCarrier().equals("TK"));
-        assertTrue(leg.getAcType().equals("77C"));
+        assertTrue(leg.getAcType().equals("316"));
+        assertTrue(leg.getAcSequence() == 4);
         assertTrue(leg.getDep().equals("IST"));
-        assertTrue(leg.getArr().equals("JFK"));
+        assertTrue(leg.getArr().equals("TBZ"));
         assertTrue(leg.getServiceType().equals("J"));
         assertTrue((leg.getSuffix() == null) || leg.getSuffix().equals(""));
-        assertTrue(leg.getSobt().isEqual(LocalDateTime.of(2013, 12, 20, 11, 25)));
-        assertTrue(leg.getSibt().isEqual(LocalDateTime.of(2013, 12, 20, 22, 20)));
-        assertTrue(leg.getFligtNo() == 1);
+        assertTrue(leg.getSobt().isEqual(LocalDateTime.of(2013, 12, 20, 1, 40)));
+        assertTrue(leg.getSibt().isEqual(LocalDateTime.of(2013, 12, 20, 4, 15)));
+        assertTrue(leg.getFligtNo() == 882);
         assertTrue(leg.getDepOffset() == 120);
-        assertTrue(leg.getArrOffset() == -300);
+        assertTrue(leg.getArrOffset() == 210);
+        assertTrue(leg.isNeedsCockpitCrew());
+        assertTrue(leg.isNeedsCabinCrew());
     }
 }

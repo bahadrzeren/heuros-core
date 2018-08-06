@@ -1,4 +1,4 @@
-package org.heuros.pair;
+package org.heuros.rule;
 
 import org.heuros.core.model.Duty;
 import org.heuros.core.model.Leg;
