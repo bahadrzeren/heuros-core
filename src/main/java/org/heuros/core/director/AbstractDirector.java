@@ -2,6 +2,7 @@ package org.heuros.core.director;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
+import org.heuros.core.base.Processor;
 import org.heuros.core.base.Reporter;
 
 /**
@@ -17,11 +18,18 @@ public abstract class AbstractDirector<I, O> implements Director<I, O> {
 	private static Logger logger = Logger.getLogger(AbstractDirector.class);
 
 	protected Loader<I> loader = null;
+	protected Processor<O> processor = null;
 	protected Reporter<O> reporter = null;
 
 	@Override
 	public Director<I, O> registerLoader(Loader<I> loader) {
 		this.loader = loader;
+		return this;
+	}
+
+	@Override
+	public Director<I, O> registerProcessor(Processor<O> processor) {
+		this.processor = processor;
 		return this;
 	}
 
@@ -35,10 +43,14 @@ public abstract class AbstractDirector<I, O> implements Director<I, O> {
 	public boolean check() {
 		if (this.loader == null)
 			logger.error("Null loader!");
-		if (this.reporter == null)
-			logger.error("Null reporter!");
 		else
-			return true;
+			if (this.processor == null)
+				logger.error("Null processor!");
+			else
+				if (this.reporter == null)
+					logger.error("Null reporter!");
+				else
+					return true;
 		return false;
 	}
 }

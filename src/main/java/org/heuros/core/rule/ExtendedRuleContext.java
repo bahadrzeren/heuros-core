@@ -1,4 +1,4 @@
-package org.heuros.core.rule.context;
+package org.heuros.core.rule;
 
 import org.heuros.core.rule.inf.ExtensibilityChecker;
 import org.heuros.core.rule.proxy.ExtensibilityCheckerProxy;

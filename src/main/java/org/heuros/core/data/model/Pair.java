@@ -1,0 +1,16 @@
+package org.heuros.core.data.model;
+
+import java.util.List;
+
+public class Pair {
+	
+	private List<Duty> duties;
+
+	public List<Duty> getDuties() {
+		return duties;
+	}
+
+	public void setDuties(List<Duty> duties) {
+		this.duties = duties;
+	}
+}

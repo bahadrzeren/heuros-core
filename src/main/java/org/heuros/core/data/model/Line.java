@@ -1,12 +1,10 @@
-package org.heuros.core.model;
+package org.heuros.core.data.model;
 
 import java.util.List;
 
 public class Line {
-	private List<Pair> pairs;
 
-	public Line() {
-	}
+	private List<Pair> pairs;
 
 	public List<Pair> getPairs() {
 		return pairs;

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
-import org.heuros.core.model.Leg;
+import org.heuros.core.data.model.Leg;
 
 /**
  * Legs file loader. 

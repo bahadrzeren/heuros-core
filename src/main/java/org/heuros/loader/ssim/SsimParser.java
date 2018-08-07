@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Locale;
 
-import org.heuros.core.model.Leg;
+import org.heuros.core.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 

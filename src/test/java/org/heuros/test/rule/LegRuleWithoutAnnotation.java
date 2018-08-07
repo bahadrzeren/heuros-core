@@ -1,6 +1,6 @@
 package org.heuros.test.rule;
 
-import org.heuros.core.model.Leg;
+import org.heuros.core.data.model.Leg;
 import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.Introducer;
 

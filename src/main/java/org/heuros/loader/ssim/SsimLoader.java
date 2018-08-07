@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
-import org.heuros.core.model.Leg;
+import org.heuros.core.data.model.Leg;
 
 /**
  * SSIM based timetable loader. Needs SSIM, Rotation and Carry-in files to extact timetable data. 

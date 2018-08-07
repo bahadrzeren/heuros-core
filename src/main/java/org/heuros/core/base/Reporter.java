@@ -7,8 +7,8 @@ import java.util.List;
  * 
  * @author bahadrzeren
  *
- * @param <T> Class type of the final data that will be reported.
+ * @param <M> Class type of the final data that will be reported.
  */
-public interface Reporter<T> {
-	public void reportData(List<T> data);
+public interface Reporter<M> {
+	public void reportData(List<M> data);
 }

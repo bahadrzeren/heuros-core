@@ -1,4 +1,4 @@
-package org.heuros.core.rule.context;
+package org.heuros.core.rule;
 
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.inf.Introducer;

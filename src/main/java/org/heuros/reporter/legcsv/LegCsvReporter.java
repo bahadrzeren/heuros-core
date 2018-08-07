@@ -3,7 +3,7 @@ package org.heuros.reporter.legcsv;
 import java.util.List;
 
 import org.heuros.core.base.Reporter;
-import org.heuros.core.model.Leg;
+import org.heuros.core.data.model.Leg;
 import org.heuros.util.TextFileWriter;
 
 public class LegCsvReporter implements Reporter<Leg> {

@@ -1,4 +1,4 @@
-package org.heuros.core.model;
+package org.heuros.core.data.model;
 
 import java.time.LocalDateTime;
 

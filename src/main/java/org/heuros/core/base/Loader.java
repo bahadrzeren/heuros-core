@@ -7,8 +7,8 @@ import java.util.List;
  * 
  * @author bahadrzeren
  *
- * @param <T> Class type of the information that will be extracted from the resource.
+ * @param <M> Class type of the information that will be extracted from the resource.
  */
-public interface Loader<T> {
-	public List<T> extractData();
+public interface Loader<M> {
+	public List<M> extractData();
 }

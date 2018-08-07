@@ -1,6 +1,7 @@
 package org.heuros.core.director;
 
 import org.heuros.core.base.Loader;
+import org.heuros.core.base.Processor;
 import org.heuros.core.base.Reporter;
 
 /**
@@ -13,6 +14,7 @@ import org.heuros.core.base.Reporter;
  */
 public interface Director<I, O> {
 	public Director<I, O> registerLoader(Loader<I> loader);
+	public Director<I, O> registerProcessor(Processor<O> processor);
 	public Director<I, O> registerReporter(Reporter<O> reporter);
 	public boolean check();
 	public void proceed();
