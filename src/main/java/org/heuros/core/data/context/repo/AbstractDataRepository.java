@@ -3,7 +3,15 @@ package org.heuros.core.data.context.repo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractDataRepository<W> implements DataRepository<W> {
-	protected List<W> list = new ArrayList<W>();
+import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.Wrapper;
 
+public class AbstractDataRepository<M extends Model> implements DataRepository<M> {
+	protected List<Wrapper<M>> list = new ArrayList<Wrapper<M>>();
+
+	@Override
+	public int addToRepo(M m) {
+		// TODO Auto-generated method stub
+		return this.list.size() - 1;
+	}
 }

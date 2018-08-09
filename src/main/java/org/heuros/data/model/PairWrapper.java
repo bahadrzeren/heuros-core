@@ -11,15 +11,15 @@ public class PairWrapper extends AbstractWrapper<Pair> implements ModelListHolde
 	}
 
 	@Override
-	public void addToTheFront(Duty c) {
+	public ModelListHolder<Duty> addToTheFront(Duty c) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void addToTheEnd(Duty c) {
+	public ModelListHolder<Duty> addToTheEnd(Duty c) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override

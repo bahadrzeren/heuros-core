@@ -11,15 +11,15 @@ public class DutyWrapper extends AbstractWrapper<Duty> implements ModelListHolde
 	}
 
 	@Override
-	public void addToTheFront(Leg c) {
+	public ModelListHolder<Leg> addToTheFront(Leg c) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void addToTheEnd(Leg c) {
+	public ModelListHolder<Leg> addToTheEnd(Leg c) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
