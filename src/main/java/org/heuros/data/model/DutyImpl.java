@@ -1,8 +1,8 @@
-package org.heuros.core.data.model;
+package org.heuros.data.model;
 
 import java.util.List;
 
-public class Duty {
+public class DutyImpl {
 
 	private List<DutyLeg> dutyLegs;
 

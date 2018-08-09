@@ -1,8 +1,8 @@
 package org.heuros.core.data.base;
 
-public interface ModelListHolder<M extends Model> {
-	public void addToTheFront(M m);
-	public void addToTheEnd(M m);
-	public M removeFirst();
-	public M removeLast();
+public interface ModelListHolder<C extends Model> {
+	public void addToTheFront(C c);
+	public void addToTheEnd(C c);
+	public C removeFirst();
+	public C removeLast();
 }

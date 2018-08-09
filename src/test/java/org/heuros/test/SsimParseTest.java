@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.heuros.core.data.model.Leg;
+import org.heuros.data.model.LegImpl;
 import org.heuros.loader.ssim.SsimParser;
 
 import junit.framework.Test;
@@ -43,7 +43,7 @@ public class SsimParseTest
      */
     public void testSsimLineParse()
     {
-    	List<Leg> legs = new ArrayList<Leg>();
+    	List<LegImpl> legs = new ArrayList<LegImpl>();
     	SsimParser ssimParser = new SsimParser(legs, null);
     	try {
 			ssimParser.parseLine(SsimParseTest.sampleSsimLine);
@@ -52,7 +52,7 @@ public class SsimParseTest
 			assertTrue(false);
 		}
         assertTrue(legs.size() == 11);
-        Leg leg = legs.get(0);
+        LegImpl leg = legs.get(0);
         assertTrue(leg.getCarrier().equals("TK"));
         assertTrue(leg.getAcType().equals("77C"));
         assertTrue(leg.getDep().equals("IST"));

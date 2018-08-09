@@ -1,8 +1,8 @@
-package org.heuros.core.data.model;
+package org.heuros.data.model;
 
 import java.time.LocalDateTime;
 
-public class Leg {
+public class LegImpl {
 
 	private String carrier;
 	private int fligtNo;
@@ -19,7 +19,7 @@ public class Leg {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
-	public Leg(){
+	public LegImpl(){
 	}
 
 	public String getCarrier() {

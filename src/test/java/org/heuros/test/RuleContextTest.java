@@ -1,11 +1,11 @@
 package org.heuros.test;
 
-import org.heuros.core.data.model.Duty;
-import org.heuros.core.data.model.Leg;
 import org.heuros.core.rule.ExtendedRuleContext;
 import org.heuros.core.rule.RuleContext;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.inf.ValidationStatus;
+import org.heuros.data.model.Duty;
+import org.heuros.data.model.Leg;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;

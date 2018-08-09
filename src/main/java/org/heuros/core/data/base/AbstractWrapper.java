@@ -1,27 +1,16 @@
 package org.heuros.core.data.base;
 
-/**
- * Implementation of the Wrapper interface.
- * 
- * @author bahadrzeren
- *
- * @param <M> Type of the model to be wrapped.
- * @param <E> Type of the extension class to be wrapped.
- */
-public abstract class AbstractWrapper<M, E> implements Extension<M, E> {
-	protected int ndx = -1;
-	protected M wrappee = null;
-	protected E extension = null;
+public abstract class AbstractWrapper<M extends Model> implements Wrapper<M> {
 
-	public int getNdx() {
-		return ndx;
+	protected M wrappee;
+
+	public AbstractWrapper(M wrappee) {
+		this.wrappee = wrappee;
 	}
 
+	@Override
 	public M getWrappee() {
-		return this.wrappee;
+		return wrappee;
 	}
 
-	public E getExtension() {
-		return this.extension;
-	}
 }

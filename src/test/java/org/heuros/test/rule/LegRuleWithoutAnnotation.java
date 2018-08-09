@@ -1,8 +1,8 @@
 package org.heuros.test.rule;
 
-import org.heuros.core.data.model.Leg;
 import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.Introducer;
+import org.heuros.data.model.Leg;
 
 public class LegRuleWithoutAnnotation extends AbstractRule
 									implements Introducer<Leg> {

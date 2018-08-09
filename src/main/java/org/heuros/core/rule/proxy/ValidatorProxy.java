@@ -1,10 +1,11 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ValidatorProxy<M> implements Validator<M> {
+public class ValidatorProxy<M extends Model> implements Validator<M> {
 
 	private RuleRepository<Validator<M>, M> repo;
 

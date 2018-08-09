@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.heuros.core.data.model.Leg;
+import org.heuros.data.model.LegImpl;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
@@ -22,7 +22,7 @@ import org.heuros.util.TextFileReader;
  * @author bahadrzeren
  *
  */
-public class AcRotationMerger extends TextFileReader<Leg> {
+public class AcRotationMerger extends TextFileReader<LegImpl> {
 
 	private static String datePattern = "yyyyMMdd";
 	private static String timePattern = "HHmm";
@@ -33,7 +33,7 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(AcRotationMerger.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public AcRotationMerger(List<Leg> list, File textFile) {
+	public AcRotationMerger(List<LegImpl> list, File textFile) {
 		super(list, textFile);
 	}
 
@@ -75,9 +75,9 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 //				LocalTime arrTime = LocalTime.parse(match.group(13), timeFormatter);
 				LocalDateTime depDateTime = LocalDateTime.of(legDate, depTime);
 
-				Predicate<Leg> p = new Predicate<Leg>() {
+				Predicate<LegImpl> p = new Predicate<LegImpl>() {
 					@Override
-					public boolean test(Leg l) {
+					public boolean test(LegImpl l) {
 						return l.getCarrier().equals(carrier)
 								&& (l.getFligtNo() == flightNo)
 								&& l.getDep().equals(dep)

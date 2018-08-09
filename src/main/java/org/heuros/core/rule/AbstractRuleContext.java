@@ -1,5 +1,6 @@
 package org.heuros.core.rule;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.Rule;
@@ -12,7 +13,7 @@ import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.core.rule.repo.ValidatorRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public abstract class AbstractRuleContext<M> implements RuleContext<M> {
+public abstract class AbstractRuleContext<M extends Model> implements RuleContext<M> {
 
 	protected IntroducerRepository<M> introducerRepo = new IntroducerRepository<M>();
 	protected ConnectionCheckerRepository<M> connectionCheckerRepo = new ConnectionCheckerRepository<M>();

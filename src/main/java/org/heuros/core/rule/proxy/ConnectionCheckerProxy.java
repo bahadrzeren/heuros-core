@@ -1,9 +1,10 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ConnectionCheckerProxy<M> implements ConnectionChecker<M> {
+public class ConnectionCheckerProxy<M extends Model> implements ConnectionChecker<M> {
 
 	private RuleRepository<ConnectionChecker<M>, M> repo;
 

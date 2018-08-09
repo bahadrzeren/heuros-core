@@ -1,9 +1,10 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class IntroducerProxy<M> implements Introducer<M> {
+public class IntroducerProxy<M extends Model> implements Introducer<M> {
 
 	private RuleRepository<Introducer<M>, M> repo;
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
-import org.heuros.core.data.model.Leg;
+import org.heuros.data.model.LegImpl;
 
 /**
  * Legs file loader. 
@@ -15,7 +15,7 @@ import org.heuros.core.data.model.Leg;
  * @author bahadrzeren
  *
  */
-public class LegsLoader implements Loader<Leg> {
+public class LegsLoader implements Loader<LegImpl> {
 
 	private static Logger logger = Logger.getLogger(LegsLoader.class);
 
@@ -26,7 +26,7 @@ public class LegsLoader implements Loader<Leg> {
 	}
 
 	@Override
-	public List<Leg> extractData() {
+	public List<LegImpl> extractData() {
 		File legsFile = new File(this.legsFileName);
 
 		if (!legsFile.exists()) {
@@ -35,7 +35,7 @@ public class LegsLoader implements Loader<Leg> {
 			/*
 			 * Parse ssim.
 			 */
-			List<Leg> legs = new ArrayList<Leg>();
+			List<LegImpl> legs = new ArrayList<LegImpl>();
 			LegsParser legsParser = new LegsParser(legs, legsFile);
 			if (legsParser.parseTextFile() == 0) {
 				logger.info("Legs file processed successfully!");
@@ -43,9 +43,9 @@ public class LegsLoader implements Loader<Leg> {
 				/*
 				 * Sort Leg list
 				 */
-				legs.sort(new Comparator<Leg>() {
+				legs.sort(new Comparator<LegImpl>() {
 					@Override
-					public int compare(Leg a, Leg b) {
+					public int compare(LegImpl a, LegImpl b) {
 						if (a.getSobt().isAfter(b.getSobt()))
 							return 1;
 						else

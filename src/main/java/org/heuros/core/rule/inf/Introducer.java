@@ -1,5 +1,7 @@
 package org.heuros.core.rule.inf;
 
-public interface Introducer<M> {
+import org.heuros.core.data.base.Model;
+
+public interface Introducer<M extends Model> {
 	public boolean introduce(M m);
 }

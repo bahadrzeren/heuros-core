@@ -1,12 +1,13 @@
 package org.heuros.core.rule;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.ExtensibilityChecker;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.proxy.ExtensibilityCheckerProxy;
 import org.heuros.core.rule.repo.ExtensibilityCheckerRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public abstract class AbstractExtendedRuleContext<M, C> extends AbstractRuleContext<M>
+public abstract class AbstractExtendedRuleContext<M extends Model, C extends Model> extends AbstractRuleContext<M>
 														implements ExtendedRuleContext<M, C> {
 
 	protected ExtensibilityCheckerRepository<M, C> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<M, C>();

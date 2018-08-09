@@ -1,9 +1,10 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Model;
 import org.heuros.core.rule.inf.ExtensibilityChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ExtensibilityCheckerProxy<M, C> implements ExtensibilityChecker<M, C> {
+public class ExtensibilityCheckerProxy<M extends Model, C extends Model> implements ExtensibilityChecker<M, C> {
 
 	private RuleRepository<ExtensibilityChecker<M, C>, M> repo;
 

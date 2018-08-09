@@ -7,11 +7,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-import org.heuros.core.data.model.Leg;
+import org.heuros.data.model.LegImpl;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
-public class LegsParser extends TextFileReader<Leg> {
+public class LegsParser extends TextFileReader<LegImpl> {
 
 	private static String datetimePattern = "yyyy-MM-dd'T'HH:mm";
 
@@ -19,7 +19,7 @@ public class LegsParser extends TextFileReader<Leg> {
 																			Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public LegsParser(List<Leg> list, File textFile) {
+	public LegsParser(List<LegImpl> list, File textFile) {
 		super(list, textFile);
 	}
 
@@ -28,7 +28,7 @@ public class LegsParser extends TextFileReader<Leg> {
 
 		String[] st = s.split(",");
 
-		Leg leg = new Leg();
+		LegImpl leg = new LegImpl();
 
 		leg.setCarrier(st[0]);
 		leg.setFligtNo(Integer.valueOf(st[1]));

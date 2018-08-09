@@ -1,5 +1,7 @@
 package org.heuros.core.rule.inf;
 
-public interface ConnectionChecker<M> {
+import org.heuros.core.data.base.Model;
+
+public interface ConnectionChecker<M extends Model> {
 	public boolean areConnectable(M prev, M next);
 }

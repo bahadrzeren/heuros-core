@@ -1,7 +1,5 @@
 package org.heuros.test.rule;
 
-import org.heuros.core.data.model.Duty;
-import org.heuros.core.data.model.Leg;
 import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.inf.ExtensibilityChecker;
@@ -9,6 +7,8 @@ import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.RuleImplementation;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
+import org.heuros.data.model.Duty;
+import org.heuros.data.model.Leg;
 
 @RuleImplementation(ruleName = "test rule"
 					, violationMessage = "test rule violated"
