@@ -8,6 +8,7 @@ public abstract class AbstractWrapper<M extends Model> implements Wrapper<M> {
 	protected M wrappee;
 
 	public AbstractWrapper(RuleContext<M> ruleContext, M wrappee) {
+		this.ruleContext = ruleContext;
 		this.wrappee = wrappee;
 	}
 
