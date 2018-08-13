@@ -1,9 +1,10 @@
 package org.heuros.core.data.base;
 
-public abstract class AbstractWrapper<M extends Model> implements Wrapper<M> {
+public class AbstractWrapper<M extends Model, E extends Extension> implements Wrapper<M, E> {
 
 //	protected RuleContext<Wrapper<M>, M> ruleContext;
 	protected M wrappee;
+	protected E extension;
 
 	public AbstractWrapper(//	RuleContext<Wrapper<M>, M> ruleContext, 
 							M wrappee) {
@@ -13,7 +14,11 @@ public abstract class AbstractWrapper<M extends Model> implements Wrapper<M> {
 
 	@Override
 	public M getWrappee() {
-		return wrappee;
+		return this.wrappee;
 	}
 
+	@Override
+	public E getExtension() {
+		return this.extension;
+	}
 }

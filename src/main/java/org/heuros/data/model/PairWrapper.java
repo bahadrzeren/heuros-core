@@ -3,7 +3,8 @@ package org.heuros.data.model;
 import org.heuros.core.data.base.AbstractWrapper;
 import org.heuros.core.data.base.ModelListHolder;
 
-public class PairWrapper extends AbstractWrapper<PairModel> implements ModelListHolder<DutyModel> {
+public class PairWrapper extends AbstractWrapper<PairModel, PairExtension>
+										implements ModelListHolder<DutyModel> {
 
 	public PairWrapper(//	PairRuleContext pairRuleContext, 
 						PairModel wrappee) {

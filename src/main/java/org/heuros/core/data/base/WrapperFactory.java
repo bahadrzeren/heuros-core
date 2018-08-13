@@ -1,5 +1,5 @@
 package org.heuros.core.data.base;
 
-public interface WrapperFactory<M extends Model> {
-	public Wrapper<M> createWrapper(M m);
+public interface WrapperFactory<M extends Model, E extends Extension> {
+	public Wrapper<M, E> createWrapper(M m);
 }

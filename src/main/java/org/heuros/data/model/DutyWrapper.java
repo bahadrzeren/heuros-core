@@ -3,7 +3,8 @@ package org.heuros.data.model;
 import org.heuros.core.data.base.AbstractWrapper;
 import org.heuros.core.data.base.ModelListHolder;
 
-public class DutyWrapper extends AbstractWrapper<DutyModel> implements ModelListHolder<LegModel> {
+public class DutyWrapper extends AbstractWrapper<DutyModel, DutyExtension>
+										implements ModelListHolder<LegModel> {
 
 	public DutyWrapper(//	DutyRuleContext dutyRuleContext, 
 						DutyModel wrappee) {
