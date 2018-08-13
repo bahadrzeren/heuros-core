@@ -23,12 +23,19 @@ public class SsimLoader implements Loader<LegImpl> {
 	private String acRotationFileName = null;
 	private String carryInFileName = null;
 
-	public SsimLoader(String ssimFileName
-						, String acRotationFileName
-						, String carryInFileName) {
+	public SsimLoader setSsimFileName(String ssimFileName) {
 		this.ssimFileName = ssimFileName;
+		return this;
+	}
+
+	public SsimLoader setAcRotationFileName(String acRotationFileName) {
 		this.acRotationFileName = acRotationFileName;
+		return this;
+	}
+
+	public SsimLoader setCarryInFileName(String carryInFileName) {
 		this.carryInFileName = carryInFileName;
+		return this;
 	}
 
 	@Override

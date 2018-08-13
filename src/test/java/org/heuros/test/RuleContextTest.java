@@ -5,7 +5,9 @@ import org.heuros.core.rule.RuleContext;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.data.model.Duty;
+import org.heuros.data.model.DutyWrapper;
 import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegWrapper;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
@@ -47,7 +49,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleAnnotationMissingCase()
     {
-    	RuleContext<Leg> context = new LegRuleContext();
+    	RuleContext<LegWrapper, Leg> context = new LegRuleContext();
 
     	Rule rule = new LegRuleWithoutAnnotation();
 
@@ -66,7 +68,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerRegistration()
     {
-    	RuleContext<Leg> context = new LegRuleContext();
+    	RuleContext<LegWrapper, Leg> context = new LegRuleContext();
 
     	Rule rule = new LegIntroducer();
 
@@ -88,7 +90,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerAndConnectionCheckerRegistration()
     {
-    	RuleContext<Leg> context = new LegRuleContext();
+    	RuleContext<LegWrapper, Leg> context = new LegRuleContext();
 
     	Rule rule = new LegRuleExtended();
 
@@ -110,7 +112,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testDutyRuleRegistration()
     {
-    	ExtendedRuleContext<Duty, Leg> context = new DutyRuleContext();
+    	ExtendedRuleContext<DutyWrapper, Duty, LegWrapper, Leg> context = new DutyRuleContext();
 
     	Rule rule = new DutyRuleFull();
 
@@ -132,8 +134,8 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegAndDutyRules()
     {
-    	RuleContext<Leg> legContext = new LegRuleContext();
-    	ExtendedRuleContext<Duty, Leg> dutyContext = new DutyRuleContext();
+    	RuleContext<LegWrapper, Leg> legContext = new LegRuleContext();
+    	ExtendedRuleContext<DutyWrapper, Duty, LegWrapper, Leg> dutyContext = new DutyRuleContext();
 
     	Rule legRule = new LegRuleExtended();
     	Rule dutyRule = new DutyRuleFull();

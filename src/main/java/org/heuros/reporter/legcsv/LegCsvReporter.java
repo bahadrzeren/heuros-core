@@ -10,8 +10,9 @@ public class LegCsvReporter implements Reporter<LegImpl> {
 
 	private String outputFileName = null;
 
-	public LegCsvReporter(String outputFileName) {
+	public LegCsvReporter setLegCsvReporter(String outputFileName) {
 		this.outputFileName = outputFileName;
+		return this;
 	}
 
 	@Override

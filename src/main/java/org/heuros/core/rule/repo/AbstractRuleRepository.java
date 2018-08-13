@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public class AbstractRuleRepository<R, M> implements RuleRepository<R, M> {
+public class AbstractRuleRepository<R> implements RuleRepository<R> {
 
 	private Logger logger = Logger.getLogger(AbstractRuleRepository.class);
 

@@ -21,8 +21,9 @@ public class LegsLoader implements Loader<LegImpl> {
 
 	private String legsFileName = null;
 
-	public LegsLoader(String legsFileName) {
+	public LegsLoader setLegsFileName(String legsFileName) {
 		this.legsFileName = legsFileName;
+		return this;
 	}
 
 	@Override

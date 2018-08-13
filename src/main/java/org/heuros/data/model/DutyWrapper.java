@@ -2,12 +2,13 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.AbstractWrapper;
 import org.heuros.core.data.base.ModelListHolder;
-import org.heuros.rule.DutyRuleContext;
 
 public class DutyWrapper extends AbstractWrapper<Duty> implements ModelListHolder<Leg> {
 
-	public DutyWrapper(DutyRuleContext dutyRuleContext, Duty wrappee) {
-		super(dutyRuleContext, wrappee);
+	public DutyWrapper(//	DutyRuleContext dutyRuleContext, 
+						Duty wrappee) {
+		super(//	dutyRuleContext, 
+				wrappee);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -5,13 +5,22 @@ import java.util.List;
 
 import org.heuros.core.data.base.Model;
 import org.heuros.core.data.base.Wrapper;
+import org.heuros.core.data.base.WrapperFactory;
 
-public class AbstractDataRepository<M extends Model> implements DataRepository<M> {
+public abstract class AbstractDataRepository<M extends Model> implements DataRepository<M> {
+
 	protected List<Wrapper<M>> list = new ArrayList<Wrapper<M>>();
+
+	protected WrapperFactory<M> wrapperFactory;
+
+	public AbstractDataRepository(WrapperFactory<M> wrapperFactory) {
+		this.wrapperFactory = wrapperFactory;
+	}
 
 	@Override
 	public int addToRepo(M m) {
-		// TODO Auto-generated method stub
+		Wrapper<M> w = this.wrapperFactory.createWrapper(m);
+		this.list.add(w);
 		return this.list.size() - 1;
 	}
 }

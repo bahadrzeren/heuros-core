@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public interface RuleRepository<R, M> {
+public interface RuleRepository<R> {
 	public void registerRule(R rule) throws RuleAnnotationIsMissing;
 	public List<R> getRules();
 }
