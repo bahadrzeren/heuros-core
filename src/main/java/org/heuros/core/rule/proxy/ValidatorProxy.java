@@ -1,24 +1,24 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.Wrapper;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ValidatorProxy<W extends Wrapper<M>, M extends Model> implements Validator<W, M> {
+public class ValidatorProxy<M extends Model, E extends Extension> implements Validator<M, E> {
 
-	private RuleRepository<Validator<W, M>> repo;
+	private RuleRepository<Validator<M, E>> repo;
 
-	public ValidatorProxy(RuleRepository<Validator<W, M>> repo) {
+	public ValidatorProxy(RuleRepository<Validator<M, E>> repo) {
 		this.repo = repo;
 	}
 
 	@Override
-	public ValidationStatus isValid(W t) {
+	public ValidationStatus isValid(M m, E e) {
 		ValidationStatus res = ValidationStatus.valid;
 		for (int i = 0; i < this.repo.getRules().size(); i++) {
-			ValidationStatus valState = this.repo.getRules().get(i).isValid(t);
+			ValidationStatus valState = this.repo.getRules().get(i).isValid(m, e);
 			if (valState == ValidationStatus.invalid)
 				return ValidationStatus.invalid;
 			else

@@ -1,8 +1,8 @@
 package org.heuros.core.rule.inf;
 
+import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.Wrapper;
 
-public interface Introducer<W extends Wrapper<M>, M extends Model> {
-	public boolean introduce(W w);
+public interface Introducer<M extends Model, E extends Extension> {
+	public boolean introduce(M m, E e);
 }

@@ -1,22 +1,31 @@
 package org.heuros.core.rule.proxy;
 
+import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.Wrapper;
 import org.heuros.core.rule.inf.ExtensibilityChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ExtensibilityCheckerProxy<W extends Wrapper<M>, M extends Model, R extends Wrapper<C>, C extends Model> implements ExtensibilityChecker<W, M, R, C> {
+public class ExtensibilityCheckerProxy<M extends Model, 
+										E extends Extension, 
+										C extends Model, 
+										X extends Extension> implements ExtensibilityChecker<M, E, C, X> {
 
-	private RuleRepository<ExtensibilityChecker<W, M, R, C>> repo;
+	private RuleRepository<ExtensibilityChecker<M, E, C, X>> repo;
 
-	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<W, M, R, C>> repo) {
+	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<M, E, C, X>> repo) {
 		this.repo = repo;
 	}
 
 	@Override
-	public boolean isExtensible(W model, R child) {
+	public boolean isExtensible(M parentModel, 
+								E parentExtension, 
+								C childModel, 
+								X childExtension) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).isExtensible(model, child))
+			if (!this.repo.getRules().get(i).isExtensible(parentModel, 
+															parentExtension, 
+															childModel,
+															childExtension))
 				return false;
 		return true;
 	}

@@ -1,8 +1,11 @@
 package org.heuros.core.rule.inf;
 
+import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.Wrapper;
 
-public interface ConnectionChecker<W extends Wrapper<M>, M extends Model> {
-	public boolean areConnectable(W prev, W next);
+public interface ConnectionChecker<M extends Model, E extends Extension> {
+	public boolean areConnectable(M prevModel, 
+									E prevExtension, 
+									M nextModel, 
+									E nextExtension);
 }

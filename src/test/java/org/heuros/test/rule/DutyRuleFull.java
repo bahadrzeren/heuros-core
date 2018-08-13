@@ -7,40 +7,49 @@ import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.RuleImplementation;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
-import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyWrapper;
-import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegWrapper;
+import org.heuros.data.model.DutyExtension;
+import org.heuros.data.model.DutyModel;
+import org.heuros.data.model.LegExtension;
+import org.heuros.data.model.LegModel;
 
 @RuleImplementation(ruleName = "test rule"
 					, violationMessage = "test rule violated"
 					, description = "test rule details")
 public class DutyRuleFull extends AbstractRule
-									implements Introducer<DutyWrapper, Duty>
-												, ConnectionChecker<DutyWrapper, Duty>
-												, ExtensibilityChecker<DutyWrapper, Duty, LegWrapper, Leg>
-												, Validator<DutyWrapper, Duty> {
+									implements Introducer<DutyModel, DutyExtension>
+												, ConnectionChecker<DutyModel, DutyExtension>
+												, ExtensibilityChecker<DutyModel, 
+																		DutyExtension, 
+																		LegModel, 
+																		LegExtension>
+												, Validator<DutyModel, DutyExtension> {
 
 	@Override
-	public boolean areConnectable(DutyWrapper prev, DutyWrapper next) {
+	public boolean areConnectable(DutyModel prevModel,
+									DutyExtension prevExtension, 
+									DutyModel nextModel,
+									DutyExtension nextExtension) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean introduce(DutyWrapper m) {
+	public boolean introduce(DutyModel m, DutyExtension e) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public ValidationStatus isValid(DutyWrapper m) {
+	public ValidationStatus isValid(DutyModel m, DutyExtension e) {
 		// TODO Auto-generated method stub
 		return ValidationStatus.valid;
 	}
 
 	@Override
-	public boolean isExtensible(DutyWrapper model, LegWrapper child) {
+	public boolean isExtensible(DutyModel parentModel, 
+								DutyExtension parentExtension,
+								LegModel childModel,
+								LegExtension childExtension) {
 		// TODO Auto-generated method stub
 		return true;
 	}

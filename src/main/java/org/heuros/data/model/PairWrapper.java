@@ -3,35 +3,35 @@ package org.heuros.data.model;
 import org.heuros.core.data.base.AbstractWrapper;
 import org.heuros.core.data.base.ModelListHolder;
 
-public class PairWrapper extends AbstractWrapper<Pair> implements ModelListHolder<Duty> {
+public class PairWrapper extends AbstractWrapper<PairModel> implements ModelListHolder<DutyModel> {
 
 	public PairWrapper(//	PairRuleContext pairRuleContext, 
-						Pair wrappee) {
+						PairModel wrappee) {
 		super(//	pairRuleContext, 
 				wrappee);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public ModelListHolder<Duty> addToTheFront(Duty c) {
+	public ModelListHolder<DutyModel> addToTheFront(DutyModel c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ModelListHolder<Duty> addToTheEnd(Duty c) {
+	public ModelListHolder<DutyModel> addToTheEnd(DutyModel c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Duty removeFirst() {
+	public DutyModel removeFirst() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Duty removeLast() {
+	public DutyModel removeLast() {
 		// TODO Auto-generated method stub
 		return null;
 	}

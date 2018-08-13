@@ -2,22 +2,22 @@ package org.heuros.data.model;
 
 public class DutyLeg {
 	
-	private DutyImpl duty;
-	private LegImpl leg;
+	private Duty duty;
+	private Leg leg;
 
-	public DutyImpl getDuty() {
+	public Duty getDuty() {
 		return duty;
 	}
 
-	public void setDuty(DutyImpl duty) {
+	public void setDuty(Duty duty) {
 		this.duty = duty;
 	}
 
-	public LegImpl getLeg() {
+	public Leg getLeg() {
 		return leg;
 	}
 
-	public void setLeg(LegImpl leg) {
+	public void setLeg(Leg leg) {
 		this.leg = leg;
 	}
 }

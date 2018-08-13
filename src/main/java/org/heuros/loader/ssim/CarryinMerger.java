@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.function.Predicate;
 
-import org.heuros.data.model.LegImpl;
+import org.heuros.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
@@ -21,7 +21,7 @@ import org.heuros.util.TextFileReader;
  * @author bahadrzeren
  *
  */
-public class CarryinMerger extends TextFileReader<LegImpl> {
+public class CarryinMerger extends TextFileReader<Leg> {
 
 	private static String datePattern = "ddMMMyyyy";
 
@@ -30,7 +30,7 @@ public class CarryinMerger extends TextFileReader<LegImpl> {
 																			.toFormatter(Locale.ENGLISH)
 																			.withZone(ZoneOffset.UTC);
 
-	public CarryinMerger(List<LegImpl> list, File textFile) {
+	public CarryinMerger(List<Leg> list, File textFile) {
 		super(list, textFile);
 	}
 
@@ -54,9 +54,9 @@ public class CarryinMerger extends TextFileReader<LegImpl> {
 			int ciA = Integer.valueOf(st.nextToken());
 			int ciS = Integer.valueOf(st.nextToken());
 
-			Predicate<LegImpl> p = new Predicate<LegImpl>() {
+			Predicate<Leg> p = new Predicate<Leg>() {
 				@Override
-				public boolean test(LegImpl l) {
+				public boolean test(Leg l) {
 					return l.getCarrier().equals(carrier)
 							&& (l.getFligtNo() == flightNo)
 							&& l.getDep().equals(dep)
@@ -73,7 +73,7 @@ public class CarryinMerger extends TextFileReader<LegImpl> {
 			if (numOfLegsFound < 1) {
 //				throw new InputParseException("No legs are found for " + carrier + flightNo + dep + legDate);
 			} else {
-				Optional<LegImpl> legOpt = this.list.stream()
+				Optional<Leg> legOpt = this.list.stream()
 												.filter(p)
 												.findFirst();
 				if (legOpt.isPresent()) {

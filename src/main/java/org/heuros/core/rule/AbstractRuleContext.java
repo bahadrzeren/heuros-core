@@ -1,7 +1,7 @@
 package org.heuros.core.rule;
 
+import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.Wrapper;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.Rule;
@@ -14,76 +14,77 @@ import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.core.rule.repo.ValidatorRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public abstract class AbstractRuleContext<W extends Wrapper<M>, M extends Model> implements RuleContext<W, M> {
+public abstract class AbstractRuleContext<M extends Model, E extends Extension> 
+													implements RuleContext<M, E> {
 
-	protected IntroducerRepository<W, M> introducerRepo = new IntroducerRepository<W, M>();
-	protected ConnectionCheckerRepository<W, M> connectionCheckerRepo = new ConnectionCheckerRepository<W, M>();
-	protected ValidatorRepository<W, M> validatorRepo = new ValidatorRepository<W, M>();
+	protected IntroducerRepository<M, E> introducerRepo = new IntroducerRepository<M, E>();
+	protected ConnectionCheckerRepository<M, E> connectionCheckerRepo = new ConnectionCheckerRepository<M, E>();
+	protected ValidatorRepository<M, E> validatorRepo = new ValidatorRepository<M, E>();
 
-	protected IntroducerProxy<W, M> introducerProxy = new IntroducerProxy<W, M>(this.introducerRepo);
-	protected ConnectionCheckerProxy<W, M> connectionCheckerProxy = new ConnectionCheckerProxy<W, M>(this.connectionCheckerRepo);
-	protected ValidatorProxy<W, M> validatorProxy = new ValidatorProxy<W, M>(this.validatorRepo);
+	protected IntroducerProxy<M, E> introducerProxy = new IntroducerProxy<M, E>(this.introducerRepo);
+	protected ConnectionCheckerProxy<M, E> connectionCheckerProxy = new ConnectionCheckerProxy<M, E>(this.connectionCheckerRepo);
+	protected ValidatorProxy<M, E> validatorProxy = new ValidatorProxy<M, E>(this.validatorRepo);
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public RuleContext<W, M> registerRule(Rule rule) throws RuleAnnotationIsMissing {
+	public RuleContext<M, E> registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		if (rule.isImplemented(Introducer.class))
-			this.registerIntroducerRule((Introducer<W, M>) rule);
+			this.registerIntroducerRule((Introducer<M, E>) rule);
 		if (rule.isImplemented(ConnectionChecker.class))
-			this.registerConnectionCheckerRule((ConnectionChecker<W, M>) rule);
+			this.registerConnectionCheckerRule((ConnectionChecker<M, E>) rule);
 		if (rule.isImplemented(Validator.class))
-			this.registerValidatorRule((Validator<W, M>) rule);
+			this.registerValidatorRule((Validator<M, E>) rule);
 		return this;
 	}
 
 	@Override
-	public RuleContext<W, M> registerIntroducerRule(Introducer<W, M> rule)
+	public RuleContext<M, E> registerIntroducerRule(Introducer<M, E> rule)
 			throws RuleAnnotationIsMissing {
 		this.introducerRepo.registerRule(rule);
 		return this;
 	}
 
 	@Override
-	public RuleContext<W, M> registerConnectionCheckerRule(ConnectionChecker<W, M> rule)
+	public RuleContext<M, E> registerConnectionCheckerRule(ConnectionChecker<M, E> rule)
 			throws RuleAnnotationIsMissing {
 		this.connectionCheckerRepo.registerRule(rule);
 		return this;
 	}
 
 	@Override
-	public RuleContext<W, M> registerValidatorRule(Validator<W, M> rule)
+	public RuleContext<M, E> registerValidatorRule(Validator<M, E> rule)
 			throws RuleAnnotationIsMissing {
 		this.validatorRepo.registerRule(rule);
 		return this;
 	}
 
 	@Override
-	public IntroducerRepository<W, M> getIntroducerRepo() {
+	public IntroducerRepository<M, E> getIntroducerRepo() {
 		return this.introducerRepo;
 	}
 
 	@Override
-	public ConnectionCheckerRepository<W, M> getConnectionCheckerRepo() {
+	public ConnectionCheckerRepository<M, E> getConnectionCheckerRepo() {
 		return this.connectionCheckerRepo;
 	}
 
 	@Override
-	public ValidatorRepository<W, M> getValidatorRepo() {
+	public ValidatorRepository<M, E> getValidatorRepo() {
 		return this.validatorRepo;
 	}
 
 	@Override
-	public IntroducerProxy<W, M> getIntroducerProxy() {
+	public IntroducerProxy<M, E> getIntroducerProxy() {
 		return this.introducerProxy;
 	}
 
 	@Override
-	public ConnectionCheckerProxy<W, M> getConnectionCheckerProxy() {
+	public ConnectionCheckerProxy<M, E> getConnectionCheckerProxy() {
 		return this.connectionCheckerProxy;
 	}
 
 	@Override
-	public ValidatorProxy<W, M> getValidatorProxy() {
+	public ValidatorProxy<M, E> getValidatorProxy() {
 		return this.validatorProxy;
 	}
 }
