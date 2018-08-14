@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegModel;
 import org.heuros.loader.legs.LegsParser;
 
 import junit.framework.Test;
@@ -43,7 +43,7 @@ public class LegsParseTest
      */
     public void testLegsLineParse()
     {
-    	List<Leg> legs = new ArrayList<Leg>();
+    	List<LegModel> legs = new ArrayList<LegModel>();
     	LegsParser legsParser = new LegsParser(legs, null);
     	try {
 			legsParser.parseLine(LegsParseTest.sampleLegsLine);
@@ -52,7 +52,7 @@ public class LegsParseTest
 			assertTrue(false);
 		}
         assertTrue(legs.size() == 1);
-        Leg leg = legs.get(0);
+        LegModel leg = legs.get(0);
         assertTrue(leg.getCarrier().equals("TK"));
         assertTrue(leg.getAcType().equals("316"));
         assertTrue(leg.getAcSequence() == 4);

@@ -11,7 +11,7 @@ import org.heuros.data.model.LegWrapper;
 import org.heuros.data.model.LegWrapperFactory;
 import org.heuros.rule.LegRuleContext;
 
-public class LegProcessor implements Processor<LegModel, LegWrapper, LegModel, LegExtension>{
+public class LegProcessor implements Processor<LegModel, LegWrapper, LegModel, LegExtension> {
 
 	protected LegRuleContext ruleContext;
 	protected LegExtensionFactory extensionFactory;

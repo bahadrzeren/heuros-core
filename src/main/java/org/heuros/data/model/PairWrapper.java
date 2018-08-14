@@ -2,14 +2,15 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.AbstractWrapper;
 import org.heuros.core.data.base.ModelListHolder;
-import org.heuros.rule.PairRuleContext;
+import org.heuros.core.rule.RuleContext;
 
 public class PairWrapper extends AbstractWrapper<PairModel, PairExtension>
 										implements ModelListHolder<DutyModel> {
 
-	public PairWrapper(PairRuleContext pairRuleContext, PairModel wrappee) {
-		super(pairRuleContext, wrappee);
-		// TODO Auto-generated constructor stub
+	public PairWrapper(RuleContext<PairModel, PairExtension> pairRuleContext, 
+						PairModel wrappee,
+						PairExtension extension) {
+		super(pairRuleContext, wrappee, extension);
 	}
 
 	@Override

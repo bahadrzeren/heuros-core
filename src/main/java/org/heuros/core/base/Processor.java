@@ -6,7 +6,7 @@ import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
 import org.heuros.core.data.base.Wrapper;
 
-public interface Processor<I extends Model, 
+public interface Processor<I, 
 							O extends Wrapper<M, E>, 
 							M extends Model, 
 							E extends Extension> {

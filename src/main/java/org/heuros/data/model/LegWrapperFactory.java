@@ -13,7 +13,7 @@ public class LegWrapperFactory extends AbstractWrapperFactory<LegModel, LegExten
 
 	@Override
 	public LegWrapper createWrapper(LegModel m) {
-		return new LegWrapper(this.ruleContext, m);
+		return new LegWrapper(this.ruleContext, m, this.extensionFactory.createExtension());
 	}
 
 }

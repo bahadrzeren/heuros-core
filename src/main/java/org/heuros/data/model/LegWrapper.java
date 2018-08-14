@@ -5,8 +5,10 @@ import org.heuros.core.rule.RuleContext;
 
 public class LegWrapper extends AbstractWrapper<LegModel, LegExtension> {
 
-	public LegWrapper(RuleContext<LegModel, LegExtension> legRuleContext, LegModel wrappee) {
-		super(legRuleContext, wrappee);
+	public LegWrapper(RuleContext<LegModel, LegExtension> legRuleContext,
+						LegModel wrappee,
+						LegExtension extension) {
+		super(legRuleContext, wrappee, extension);
 	}
 
 	@Override
