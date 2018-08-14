@@ -2,7 +2,7 @@ package org.heuros.data.model;
 
 import java.util.List;
 
-public class Duty {
+public class Duty implements DutyModel {
 
 	private List<DutyLeg> dutyLegs;
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
-import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegModel;
 
 /**
  * SSIM based timetable loader. Needs SSIM, Rotation and Carry-in files to extact timetable data. 
@@ -15,7 +15,7 @@ import org.heuros.data.model.Leg;
  * @author bahadrzeren
  *
  */
-public class SsimLoader implements Loader<Leg> {
+public class SsimLoader implements Loader<LegModel> {
 
 	private static Logger logger = Logger.getLogger(SsimLoader.class);
 
@@ -39,7 +39,7 @@ public class SsimLoader implements Loader<Leg> {
 	}
 
 	@Override
-	public List<Leg> extractData() {
+	public List<LegModel> extractData() {
 		File ssimFile = new File(this.ssimFileName);
 		File acRotationFile = new File(this.acRotationFileName);
 		File carryInFile = new File(carryInFileName);
@@ -56,7 +56,7 @@ public class SsimLoader implements Loader<Leg> {
 					/*
 					 * Parse ssim.
 					 */
-					List<Leg> legs = new ArrayList<Leg>();
+					List<LegModel> legs = new ArrayList<LegModel>();
 					SsimParser ssimParser = new SsimParser(legs, ssimFile);
 					if (ssimParser.parseTextFile() == 0) {
 						logger.info("Ssim file processed successfully!");
@@ -79,9 +79,9 @@ public class SsimLoader implements Loader<Leg> {
 								/*
 								 * Sort Leg list
 								 */
-								legs.sort(new Comparator<Leg>() {
+								legs.sort(new Comparator<LegModel>() {
 									@Override
-									public int compare(Leg a, Leg b) {
+									public int compare(LegModel a, LegModel b) {
 										if (a.getSobt().isAfter(b.getSobt()))
 											return 1;
 										else
