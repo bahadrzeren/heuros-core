@@ -6,9 +6,9 @@ import org.heuros.core.rule.RuleContext;
 
 public class LegWrapperFactory extends AbstractWrapperFactory<LegModel, LegExtension> {
 
-	public LegWrapperFactory(ExtensionFactory<LegExtension> extensionFactory,
-								RuleContext<LegModel, LegExtension> ruleContext) {
-		super(extensionFactory, ruleContext);
+	public LegWrapperFactory(RuleContext<LegModel, LegExtension> ruleContext,
+								ExtensionFactory<LegExtension> extensionFactory) {
+		super(ruleContext, extensionFactory);
 	}
 
 	@Override

@@ -5,12 +5,12 @@ import org.heuros.core.rule.RuleContext;
 public abstract class AbstractWrapperFactory<M extends Model, E extends Extension> 
 														implements WrapperFactory<M, E> {
 
-	protected ExtensionFactory<E> extensionFactory;
 	protected RuleContext<M, E> ruleContext;
+	protected ExtensionFactory<E> extensionFactory;
 
-	public AbstractWrapperFactory(ExtensionFactory<E> extensionFactory,
-									RuleContext<M, E> ruleContext) {
-		this.extensionFactory = extensionFactory;
+	public AbstractWrapperFactory(RuleContext<M, E> ruleContext,
+									ExtensionFactory<E> extensionFactory) {
 		this.ruleContext = ruleContext;
+		this.extensionFactory = extensionFactory;
 	}
 }

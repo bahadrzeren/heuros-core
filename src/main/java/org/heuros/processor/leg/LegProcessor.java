@@ -1,4 +1,4 @@
-package org.heuros.processor.legwrapper;
+package org.heuros.processor.leg;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +13,24 @@ import org.heuros.rule.LegRuleContext;
 
 public class LegProcessor implements Processor<LegModel, LegWrapper, LegModel, LegExtension>{
 
-	protected LegExtensionFactory extensionFactory = new LegExtensionFactory();
+	protected LegRuleContext ruleContext;
+	protected LegExtensionFactory extensionFactory;
+	protected LegWrapperFactory wrapperFactory;
 
-	protected LegRuleContext ruleContext = new LegRuleContext();
+	public LegProcessor setRuleContext(LegRuleContext ruleContext) {
+		this.ruleContext = ruleContext;
+		return this;
+	}
 
-	protected LegWrapperFactory wrapperFactory = new LegWrapperFactory(extensionFactory, ruleContext);
+	public LegProcessor setExtensionFactory(LegExtensionFactory extensionFactory) {
+		this.extensionFactory = extensionFactory;
+		return this;
+	}
+
+	public LegProcessor setWrapperFactory(LegWrapperFactory wrapperFactory) {
+		this.wrapperFactory = wrapperFactory;
+		return this;
+	}
 
 	@Override
 	public List<LegWrapper> proceed(List<LegModel> input) {
@@ -25,5 +38,4 @@ public class LegProcessor implements Processor<LegModel, LegWrapper, LegModel, L
 				.map((legModel) -> wrapperFactory.createWrapper(legModel))
 				.collect(Collectors.toList());
 	}
-
 }
