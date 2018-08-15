@@ -2,7 +2,9 @@ package org.heuros.data.model;
 
 import java.time.LocalDateTime;
 
-public class Leg implements LegModel {
+import org.heuros.core.data.base.Model;
+
+public class Leg implements Model, LegView {
 
 	private String carrier;
 	private int fligtNo;

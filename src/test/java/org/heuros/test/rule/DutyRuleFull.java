@@ -7,49 +7,39 @@ import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.RuleImplementation;
 import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
-import org.heuros.data.model.DutyExtension;
-import org.heuros.data.model.DutyModel;
-import org.heuros.data.model.LegExtension;
-import org.heuros.data.model.LegModel;
+import org.heuros.data.model.Duty;
+import org.heuros.data.model.DutyView;
+import org.heuros.data.model.LegView;
 
 @RuleImplementation(ruleName = "test rule"
 					, violationMessage = "test rule violated"
 					, description = "test rule details")
 public class DutyRuleFull extends AbstractRule
-									implements Introducer<DutyModel, DutyExtension>
-												, ConnectionChecker<DutyModel, DutyExtension>
-												, ExtensibilityChecker<DutyModel, 
-																		DutyExtension, 
-																		LegModel, 
-																		LegExtension>
-												, Validator<DutyModel, DutyExtension> {
+									implements Introducer<Duty>
+												, ConnectionChecker<DutyView>
+												, ExtensibilityChecker<DutyView, LegView>
+												, Validator<DutyView> {
 
 	@Override
-	public boolean areConnectable(DutyModel prevModel,
-									DutyExtension prevExtension, 
-									DutyModel nextModel,
-									DutyExtension nextExtension) {
+	public boolean areConnectable(DutyView prevModel, DutyView nextModel) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean introduce(DutyModel m, DutyExtension e) {
+	public boolean introduce(Duty m) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public ValidationStatus isValid(DutyModel m, DutyExtension e) {
+	public ValidationStatus isValid(DutyView m) {
 		// TODO Auto-generated method stub
 		return ValidationStatus.valid;
 	}
 
 	@Override
-	public boolean isExtensible(DutyModel parentModel, 
-								DutyExtension parentExtension,
-								LegModel childModel,
-								LegExtension childExtension) {
+	public boolean isExtensible(DutyView parentModel, LegView childModel) {
 		// TODO Auto-generated method stub
 		return true;
 	}

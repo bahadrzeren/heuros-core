@@ -1,8 +1,7 @@
 package org.heuros.core.rule.inf;
 
-import org.heuros.core.data.base.Extension;
-import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.View;
 
-public interface Validator<M extends Model, E extends Extension> {
-	public ValidationStatus isValid(M m, E e);
+public interface Validator<M extends View> {
+	public ValidationStatus isValid(M m);
 }

@@ -2,9 +2,9 @@ package org.heuros.data.model;
 
 import java.time.LocalDateTime;
 
-import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.View;
 
-public interface LegModel extends Model {
+public interface LegView extends View {
 	public String getCarrier();
 	public int getFligtNo();
 	public String getSuffix();

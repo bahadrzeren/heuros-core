@@ -1,8 +1,8 @@
 package org.heuros.rule;
 
 import org.heuros.core.rule.AbstractRuleContext;
-import org.heuros.data.model.LegExtension;
-import org.heuros.data.model.LegModel;
+import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegView;
 
-public class LegRuleContext extends AbstractRuleContext<LegModel, LegExtension> {
+public class LegRuleContext extends AbstractRuleContext<Leg, LegView> {
 }

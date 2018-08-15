@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegModel;
+import org.heuros.data.model.LegView;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
@@ -23,7 +23,7 @@ import org.heuros.util.TextFileReader;
  * @author bahadrzeren
  *
  */
-public class AcRotationMerger extends TextFileReader<LegModel> {
+public class AcRotationMerger extends TextFileReader<Leg> {
 
 	private static String datePattern = "yyyyMMdd";
 	private static String timePattern = "HHmm";
@@ -34,7 +34,7 @@ public class AcRotationMerger extends TextFileReader<LegModel> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(AcRotationMerger.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public AcRotationMerger(List<LegModel> list, File textFile) {
+	public AcRotationMerger(List<Leg> list, File textFile) {
 		super(list, textFile);
 	}
 
@@ -76,9 +76,9 @@ public class AcRotationMerger extends TextFileReader<LegModel> {
 //				LocalTime arrTime = LocalTime.parse(match.group(13), timeFormatter);
 				LocalDateTime depDateTime = LocalDateTime.of(legDate, depTime);
 
-				Predicate<LegModel> p = new Predicate<LegModel>() {
+				Predicate<LegView> p = new Predicate<LegView>() {
 					@Override
-					public boolean test(LegModel l) {
+					public boolean test(LegView l) {
 						return l.getCarrier().equals(carrier)
 								&& (l.getFligtNo() == flightNo)
 								&& l.getDep().equals(dep)
@@ -96,7 +96,7 @@ public class AcRotationMerger extends TextFileReader<LegModel> {
 				if (numOfLegsFound < 1) {
 //					throw new InputParseException("No legs are found for " + carrier + flightNo + dep + depDateTime);
 				} else {
-					Leg leg = (Leg) this.list.parallelStream()
+					Leg leg = this.list.parallelStream()
 												.filter(p)
 												.findFirst()
 												.get();

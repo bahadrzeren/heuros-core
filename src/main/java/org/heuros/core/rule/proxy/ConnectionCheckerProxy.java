@@ -1,29 +1,21 @@
 package org.heuros.core.rule.proxy;
 
-import org.heuros.core.data.base.Extension;
-import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.View;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
-public class ConnectionCheckerProxy<M extends Model, E extends Extension> 
-				implements ConnectionChecker<M, E> {
+public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker<V> {
 
-	private RuleRepository<ConnectionChecker<M, E>> repo;
+	private RuleRepository<ConnectionChecker<V>> repo;
 
-	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<M, E>> repo) {
+	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<V>> repo) {
 		this.repo = repo;
 	}
 
 	@Override
-	public boolean areConnectable(M prevModel, 
-									E prevExtension, 
-									M nextModel, 
-									E nextExtension) {
+	public boolean areConnectable(V prevModel, V nextModel) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).areConnectable(prevModel, 
-															prevExtension, 
-															nextModel, 
-															nextExtension))
+			if (!this.repo.getRules().get(i).areConnectable(prevModel, nextModel))
 				return false;
 		return true;
 	}

@@ -4,10 +4,10 @@ import org.heuros.core.rule.ExtendedRuleContext;
 import org.heuros.core.rule.RuleContext;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.inf.ValidationStatus;
-import org.heuros.data.model.DutyExtension;
-import org.heuros.data.model.DutyModel;
-import org.heuros.data.model.LegExtension;
-import org.heuros.data.model.LegModel;
+import org.heuros.data.model.Duty;
+import org.heuros.data.model.DutyView;
+import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
@@ -49,7 +49,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleAnnotationMissingCase()
     {
-    	RuleContext<LegModel, LegExtension> context = new LegRuleContext();
+    	RuleContext<Leg, LegView> context = new LegRuleContext();
 
     	Rule rule = new LegRuleWithoutAnnotation();
 
@@ -68,7 +68,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerRegistration()
     {
-    	RuleContext<LegModel, LegExtension> context = new LegRuleContext();
+    	RuleContext<Leg, LegView> context = new LegRuleContext();
 
     	Rule rule = new LegIntroducer();
 
@@ -90,7 +90,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerAndConnectionCheckerRegistration()
     {
-    	RuleContext<LegModel, LegExtension> context = new LegRuleContext();
+    	RuleContext<Leg, LegView> context = new LegRuleContext();
 
     	Rule rule = new LegRuleExtended();
 
@@ -112,7 +112,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testDutyRuleRegistration()
     {
-    	ExtendedRuleContext<DutyModel, DutyExtension, LegModel, LegExtension> context = new DutyRuleContext();
+    	ExtendedRuleContext<Duty, DutyView, LegView> context = new DutyRuleContext();
 
     	Rule rule = new DutyRuleFull();
 
@@ -134,8 +134,8 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegAndDutyRules()
     {
-    	RuleContext<LegModel, LegExtension> legContext = new LegRuleContext();
-    	ExtendedRuleContext<DutyModel, DutyExtension, LegModel, LegExtension> dutyContext = new DutyRuleContext();
+    	RuleContext<Leg, LegView> legContext = new LegRuleContext();
+    	ExtendedRuleContext<Duty, DutyView, LegView> dutyContext = new DutyRuleContext();
 
     	Rule legRule = new LegRuleExtended();
     	Rule dutyRule = new DutyRuleFull();
@@ -147,10 +147,10 @@ public class RuleContextTest extends TestCase {
     		assertTrue(false);
     	}
 
-		assertTrue(legContext.getIntroducerProxy().introduce(null, null));
-		assertTrue(dutyContext.getIntroducerProxy().introduce(null, null));
-		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(null, null, null, null));
-		assertTrue(dutyContext.getExtensibilityCheckerProxy().isExtensible(null, null, null, null));
-		assertTrue(dutyContext.getValidatorProxy().isValid(null, null) == ValidationStatus.valid);
+		assertTrue(legContext.getIntroducerProxy().introduce(null));
+		assertTrue(dutyContext.getIntroducerProxy().introduce(null));
+		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(null, null));
+		assertTrue(dutyContext.getExtensibilityCheckerProxy().isExtensible(null, null));
+		assertTrue(dutyContext.getValidatorProxy().isValid(null) == ValidationStatus.valid);
     }
 }

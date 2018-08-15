@@ -1,10 +1,9 @@
 package org.heuros.rule;
 
 import org.heuros.core.rule.AbstractExtendedRuleContext;
-import org.heuros.data.model.DutyExtension;
-import org.heuros.data.model.DutyModel;
-import org.heuros.data.model.LegExtension;
-import org.heuros.data.model.LegModel;
+import org.heuros.data.model.Duty;
+import org.heuros.data.model.DutyView;
+import org.heuros.data.model.LegView;
 
-public class DutyRuleContext extends AbstractExtendedRuleContext<DutyModel, DutyExtension, LegModel, LegExtension> {
+public class DutyRuleContext extends AbstractExtendedRuleContext<Duty, DutyView, LegView> {
 }

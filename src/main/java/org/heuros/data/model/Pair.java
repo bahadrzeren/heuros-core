@@ -2,7 +2,9 @@ package org.heuros.data.model;
 
 import java.util.List;
 
-public class Pair implements PairModel {
+import org.heuros.core.data.base.Model;
+
+public class Pair implements Model, PairView {
 	
 	private List<Duty> duties;
 

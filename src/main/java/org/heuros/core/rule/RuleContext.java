@@ -1,7 +1,7 @@
 package org.heuros.core.rule;
 
-import org.heuros.core.data.base.Extension;
 import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.View;
 import org.heuros.core.rule.inf.ConnectionChecker;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.Rule;
@@ -14,17 +14,17 @@ import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.core.rule.repo.ValidatorRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public interface RuleContext<M extends Model, E extends Extension> {
-	public RuleContext<M, E> registerRule(Rule rule) throws RuleAnnotationIsMissing;
-	public RuleContext<M, E> registerIntroducerRule(Introducer<M, E> rule) throws RuleAnnotationIsMissing;
-	public RuleContext<M, E> registerConnectionCheckerRule(ConnectionChecker<M, E> rule) throws RuleAnnotationIsMissing;
-	public RuleContext<M, E> registerValidatorRule(Validator<M, E> rule) throws RuleAnnotationIsMissing;
+public interface RuleContext<M extends Model, V extends View> {
+	public RuleContext<M, V> registerRule(Rule rule) throws RuleAnnotationIsMissing;
+	public RuleContext<M, V> registerIntroducerRule(Introducer<M> rule) throws RuleAnnotationIsMissing;
+	public RuleContext<M, V> registerConnectionCheckerRule(ConnectionChecker<V> rule) throws RuleAnnotationIsMissing;
+	public RuleContext<M, V> registerValidatorRule(Validator<V> rule) throws RuleAnnotationIsMissing;
 
-	public IntroducerRepository<M, E> getIntroducerRepo();
-	public ConnectionCheckerRepository<M, E> getConnectionCheckerRepo();
-	public ValidatorRepository<M, E> getValidatorRepo();
+	public IntroducerRepository<M> getIntroducerRepo();
+	public ConnectionCheckerRepository<V> getConnectionCheckerRepo();
+	public ValidatorRepository<V> getValidatorRepo();
 
-	public IntroducerProxy<M, E> getIntroducerProxy();
-	public ConnectionCheckerProxy<M, E> getConnectionCheckerProxy();
-	public ValidatorProxy<M, E> getValidatorProxy();
+	public IntroducerProxy<M> getIntroducerProxy();
+	public ConnectionCheckerProxy<V> getConnectionCheckerProxy();
+	public ValidatorProxy<V> getValidatorProxy();
 }

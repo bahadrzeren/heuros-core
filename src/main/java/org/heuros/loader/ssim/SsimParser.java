@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegModel;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
@@ -22,7 +21,7 @@ import org.heuros.util.TextFileReader;
  * @author bahadrzeren
  *
  */
-public class SsimParser extends TextFileReader<LegModel> {
+public class SsimParser extends TextFileReader<Leg> {
 
 	private static String datePattern = "ddMMMyy";
 	private static String timePattern = "HHmm";
@@ -35,7 +34,7 @@ public class SsimParser extends TextFileReader<LegModel> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(SsimParser.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public SsimParser(List<LegModel> list, File textFile) {
+	public SsimParser(List<Leg> list, File textFile) {
 		super(list, textFile);
 	}
 
