@@ -10,6 +10,8 @@ public interface LegView extends View {
 	public String getSuffix();
 	public String getDep();
 	public String getArr();
+	public AirportView getDepAirport();
+	public AirportView getArrAirport();
 	public String getAcType();
 	public String getServiceType();
 	public LocalDateTime getSobt();

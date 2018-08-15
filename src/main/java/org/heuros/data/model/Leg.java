@@ -2,15 +2,17 @@ package org.heuros.data.model;
 
 import java.time.LocalDateTime;
 
-import org.heuros.core.data.base.Model;
+import org.heuros.core.data.base.AbstractModel;
 
-public class Leg implements Model, LegView {
+public class Leg extends AbstractModel implements LegView {
 
 	private String carrier;
 	private int fligtNo;
 	private String suffix;
 	private String dep;
 	private String arr;
+	private AirportView depAirport;
+	private AirportView arrAirport;
 	private String acType;
 	private String serviceType;
 	private LocalDateTime sobt;
@@ -62,6 +64,22 @@ public class Leg implements Model, LegView {
 
 	public void setArr(String arr) {
 		this.arr = arr;
+	}
+
+	public AirportView getDepAirport() {
+		return depAirport;
+	}
+
+	public void setDepAirport(AirportView depAirport) {
+		this.depAirport = depAirport;
+	}
+
+	public AirportView getArrAirport() {
+		return arrAirport;
+	}
+
+	public void setArrAirport(AirportView arrAirport) {
+		this.arrAirport = arrAirport;
 	}
 
 	public String getAcType() {
