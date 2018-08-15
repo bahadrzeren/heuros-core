@@ -1,6 +1,8 @@
 package org.heuros.data.model;
 
-public class DutyLeg {
+import org.heuros.core.data.base.AbstractModel;
+
+public class DutyLeg extends AbstractModel implements DutyLegView {
 	
 	private Duty duty;
 	private Leg leg;

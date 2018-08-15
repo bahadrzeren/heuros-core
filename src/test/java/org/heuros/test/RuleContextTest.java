@@ -1,13 +1,7 @@
 package org.heuros.test;
 
-import org.heuros.core.rule.ExtendedRuleContext;
-import org.heuros.core.rule.RuleContext;
 import org.heuros.core.rule.inf.Rule;
 import org.heuros.core.rule.inf.ValidationStatus;
-import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
-import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
@@ -49,7 +43,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleAnnotationMissingCase()
     {
-    	RuleContext<Leg, LegView> context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext();
 
     	Rule rule = new LegRuleWithoutAnnotation();
 
@@ -68,7 +62,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerRegistration()
     {
-    	RuleContext<Leg, LegView> context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext();
 
     	Rule rule = new LegIntroducer();
 
@@ -77,7 +71,6 @@ public class RuleContextTest extends TestCase {
 
     		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 0);
-    		assertTrue(context.getValidatorRepo().getRules().size() == 0);
 
     	} catch (Exception ex) {
     		assertTrue(false);
@@ -90,7 +83,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerAndConnectionCheckerRegistration()
     {
-    	RuleContext<Leg, LegView> context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext();
 
     	Rule rule = new LegRuleExtended();
 
@@ -99,7 +92,6 @@ public class RuleContextTest extends TestCase {
 
     		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
-    		assertTrue(context.getValidatorRepo().getRules().size() == 0);
 
     	} catch (Exception ex) {
     		assertTrue(false);
@@ -112,14 +104,13 @@ public class RuleContextTest extends TestCase {
      */
     public void testDutyRuleRegistration()
     {
-    	ExtendedRuleContext<Duty, DutyView, LegView> context = new DutyRuleContext();
+    	DutyRuleContext context = new DutyRuleContext();
 
     	Rule rule = new DutyRuleFull();
 
     	try {
     		context.registerRule(rule);
 
-    		assertTrue(context.getIntroducerRepo().getRules().size() == 1);
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getExtensibilityCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getValidatorRepo().getRules().size() == 1);
@@ -134,8 +125,8 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegAndDutyRules()
     {
-    	RuleContext<Leg, LegView> legContext = new LegRuleContext();
-    	ExtendedRuleContext<Duty, DutyView, LegView> dutyContext = new DutyRuleContext();
+    	LegRuleContext legContext = new LegRuleContext();
+    	DutyRuleContext dutyContext = new DutyRuleContext();
 
     	Rule legRule = new LegRuleExtended();
     	Rule dutyRule = new DutyRuleFull();
@@ -148,7 +139,7 @@ public class RuleContextTest extends TestCase {
     	}
 
 		assertTrue(legContext.getIntroducerProxy().introduce(null));
-		assertTrue(dutyContext.getIntroducerProxy().introduce(null));
+		assertTrue(legContext.getConnectionCheckerProxy().areConnectable(null, null));
 		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(null, null));
 		assertTrue(dutyContext.getExtensibilityCheckerProxy().isExtensible(null, null));
 		assertTrue(dutyContext.getValidatorProxy().isValid(null) == ValidationStatus.valid);
