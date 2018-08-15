@@ -9,4 +9,13 @@ public abstract class AbstractModel implements Model {
 		return this.ndx;
 	}
 
+	@Override
+	public void setNdx(int ndx) {
+		this.ndx = ndx;
+	}
+
+	@Override
+	public boolean isRegistered() {
+		return ndx >= 0;
+	}
 }

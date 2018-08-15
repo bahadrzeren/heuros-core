@@ -23,8 +23,10 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
-	public Leg(){
-	}
+	private boolean inPlanningArea = false;
+	private boolean inOptimizationPeriod = false;
+	private boolean deadheadable = true;
+	private boolean specFlight = false;
 
 	public String getCarrier() {
 		return carrier;
@@ -152,6 +154,38 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setNeedsCabinCrew(boolean needsCabinCrew) {
 		this.needsCabinCrew = needsCabinCrew;
+	}
+
+	public boolean isInPlanningArea() {
+		return inPlanningArea;
+	}
+
+	public void setInPlanningArea(boolean inPlanningArea) {
+		this.inPlanningArea = inPlanningArea;
+	}
+
+	public boolean isInOptimizationPeriod() {
+		return inOptimizationPeriod;
+	}
+
+	public void setInOptimizationPeriod(boolean inOptimizationPeriod) {
+		this.inOptimizationPeriod = inOptimizationPeriod;
+	}
+
+	public boolean isDeadheadable() {
+		return deadheadable;
+	}
+
+	public void setDeadheadable(boolean deadheadable) {
+		this.deadheadable = deadheadable;
+	}
+
+	public boolean isSpecFlight() {
+		return specFlight;
+	}
+
+	public void setSpecFlight(boolean specFlight) {
+		this.specFlight = specFlight;
 	}
 
 	@Override

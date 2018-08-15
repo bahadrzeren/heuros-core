@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.exception.InputParseException;
@@ -34,8 +35,8 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(AcRotationMerger.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public AcRotationMerger(List<Leg> list, File textFile) {
-		super(list, textFile);
+	public AcRotationMerger(List<Leg> list, ModelFactory<Leg> modelFactory, File textFile) {
+		super(list, modelFactory, textFile);
 	}
 
 	@Override

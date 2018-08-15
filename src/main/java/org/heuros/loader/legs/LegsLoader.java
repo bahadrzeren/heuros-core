@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
+import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 
 /**
@@ -20,9 +21,15 @@ public class LegsLoader implements Loader<Leg> {
 	private static Logger logger = Logger.getLogger(LegsLoader.class);
 
 	private String legsFileName = null;
+	private ModelFactory<Leg> modelFactory = null;
 
 	public LegsLoader setLegsFileName(String legsFileName) {
 		this.legsFileName = legsFileName;
+		return this;
+	}
+
+	public LegsLoader setModelFactory(ModelFactory<Leg> modelFactory) {
+		this.modelFactory = modelFactory;
 		return this;
 	}
 
@@ -37,7 +44,7 @@ public class LegsLoader implements Loader<Leg> {
 			 * Parse ssim.
 			 */
 			List<Leg> legs = new ArrayList<Leg>();
-			LegsParser legsParser = new LegsParser(legs, legsFile);
+			LegsParser legsParser = new LegsParser(legs, this.modelFactory, legsFile);
 			if (legsParser.parseTextFile() == 0) {
 				logger.info("Legs file processed successfully!");
 				logger.info(legs.size() + " number of legs extracted.");

@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Locale;
 
+import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
@@ -34,8 +35,8 @@ public class SsimParser extends TextFileReader<Leg> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(SsimParser.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public SsimParser(List<Leg> list, File textFile) {
-		super(list, textFile);
+	public SsimParser(List<Leg> list, ModelFactory<Leg> modelFactory, File textFile) {
+		super(list, modelFactory, textFile);
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class SsimParser extends TextFileReader<Leg> {
 									&& (days.substring(6, 7).equals("7"))));
 
 				if (add) {
-					Leg leg = new Leg();
+					Leg leg = this.modelFactory.generateModel();
 					leg.setSuffix(s.substring(1, 1).trim());
 					leg.setCarrier(s.substring(2, 5).trim());
 					leg.setFligtNo(Integer.parseInt(s.substring(5, 9).trim()));

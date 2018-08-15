@@ -12,8 +12,9 @@ public abstract class AbstractDataRepository<M extends Model>
 
 	@Override
 	public int addToRepo(M m) {
+		m.setNdx(this.list.size());
 		this.list.add(m);
-		return this.list.size() - 1;
+		return m.getNdx();
 	}
 
 	@Override

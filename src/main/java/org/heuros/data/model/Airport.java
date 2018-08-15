@@ -9,9 +9,9 @@ public class Airport extends AbstractModel implements AirportView {
 	private boolean hb = false;
 	private boolean nonHB = true;
 	private boolean domestic = false;
-	private boolean international = false;
+	private boolean international = true;
 
-	private boolean dhAlowedIfHBDepOrArr = false;
+	private boolean dhNotAllowedIfHBDepOrArr = false;
 	private boolean critical = false;
 	private boolean agDg = false;
 	private boolean oneDutyStat = false;
@@ -70,12 +70,12 @@ public class Airport extends AbstractModel implements AirportView {
 
 
 
-	public boolean isDhAlowedIfHBDepOrArr() {
-		return dhAlowedIfHBDepOrArr;
+	public boolean isDhNotAllowedIfHBDepOrArr() {
+		return dhNotAllowedIfHBDepOrArr;
 	}
 
-	public void setDhAlowedIfHBDepOrArr(boolean dhAlowedIfHBDepOrArr) {
-		this.dhAlowedIfHBDepOrArr = dhAlowedIfHBDepOrArr;
+	public void setDhNotAllowedIfHBDepOrArr(boolean dhAlowedIfHBDepOrArr) {
+		this.dhNotAllowedIfHBDepOrArr = dhAlowedIfHBDepOrArr;
 	}
 
 	public boolean isCritical() {

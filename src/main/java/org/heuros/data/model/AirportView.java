@@ -10,7 +10,7 @@ public interface AirportView extends View {
 	public boolean isDomestic();
 	public boolean isInternational();
 
-	public boolean isDhAlowedIfHBDepOrArr();
+	public boolean isDhNotAllowedIfHBDepOrArr();
 	public boolean isCritical();
 	public boolean isAgDg();
 	public boolean isOneDutyStat();

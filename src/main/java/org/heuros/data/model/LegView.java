@@ -21,4 +21,9 @@ public interface LegView extends View {
 	public int getAcSequence();
 	public boolean isNeedsCockpitCrew();
 	public boolean isNeedsCabinCrew();
+
+	public boolean isInPlanningArea();
+	public boolean isInOptimizationPeriod();
+	public boolean isDeadheadable();
+	public boolean isSpecFlight();
 }

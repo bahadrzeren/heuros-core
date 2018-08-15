@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Loader;
+import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 
 /**
@@ -22,6 +23,7 @@ public class SsimLoader implements Loader<Leg> {
 	private String ssimFileName = null;
 	private String acRotationFileName = null;
 	private String carryInFileName = null;
+	private ModelFactory<Leg> modelFactory = null;
 
 	public SsimLoader setSsimFileName(String ssimFileName) {
 		this.ssimFileName = ssimFileName;
@@ -35,6 +37,11 @@ public class SsimLoader implements Loader<Leg> {
 
 	public SsimLoader setCarryInFileName(String carryInFileName) {
 		this.carryInFileName = carryInFileName;
+		return this;
+	}
+
+	public SsimLoader setModelFactory(ModelFactory<Leg> modelFactory) {
+		this.modelFactory = modelFactory;
 		return this;
 	}
 
@@ -57,14 +64,14 @@ public class SsimLoader implements Loader<Leg> {
 					 * Parse ssim.
 					 */
 					List<Leg> legs = new ArrayList<Leg>();
-					SsimParser ssimParser = new SsimParser(legs, ssimFile);
+					SsimParser ssimParser = new SsimParser(legs, this.modelFactory, ssimFile);
 					if (ssimParser.parseTextFile() == 0) {
 						logger.info("Ssim file processed successfully!");
 						logger.info(legs.size() + " number of legs extracted.");
 						/*
 						 * Merge rotation file info
 						 */
-						AcRotationMerger acRotationMerger = new AcRotationMerger(legs, acRotationFile);
+						AcRotationMerger acRotationMerger = new AcRotationMerger(legs, null, acRotationFile);
 						if (acRotationMerger.parseTextFile() == 0) {
 							legs.parallelStream()
 									.filter((l) -> l.getAcSequence() == 0)
@@ -73,7 +80,7 @@ public class SsimLoader implements Loader<Leg> {
 							/*
 							 * Merge carry-in info
 							 */
-							CarryinMerger carryInMerger = new CarryinMerger(legs, carryInFile);
+							CarryinMerger carryInMerger = new CarryinMerger(legs, null, carryInFile);
 							if (carryInMerger.parseTextFile() == 0) {
 								logger.info("Carry-in file processed successfully!");
 								/*

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.heuros.data.model.Leg;
+import org.heuros.data.model.LegFactory;
 import org.heuros.loader.ssim.SsimParser;
 
 import junit.framework.Test;
@@ -44,7 +45,7 @@ public class SsimParseTest
     public void testSsimLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
-    	SsimParser ssimParser = new SsimParser(legs, null);
+    	SsimParser ssimParser = new SsimParser(legs, new LegFactory(), null);
     	try {
 			ssimParser.parseLine(SsimParseTest.sampleSsimLine);
 		} catch (Exception e) {
