@@ -13,13 +13,12 @@ public interface AirportView extends View {
 	public boolean isDhNotAllowedIfHBDepOrArr();
 	public boolean isCritical();
 	public boolean isAgDg();
-	public boolean isOneDutyStat();
+	public boolean isOneDutyStation();
 	public boolean isAcChangeAllowed();
-	public boolean isSpecEuroStat();
+	public boolean isSpecialEuroStation();
 	public boolean isLayoverAllowed();
 	public boolean isEndDutyIfTouches();
 	public boolean isMandatoryFirstLayover();
 	public int getGroupId();
-	public boolean isLegConnExcStation();
-	public boolean isHaccStat();
+	public boolean isLegConnectionExceptionStation();
 }

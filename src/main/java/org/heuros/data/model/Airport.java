@@ -14,15 +14,14 @@ public class Airport extends AbstractModel implements AirportView {
 	private boolean dhNotAllowedIfHBDepOrArr = false;
 	private boolean critical = false;
 	private boolean agDg = false;
-	private boolean oneDutyStat = false;
+	private boolean oneDutyStation = false;
 	private boolean acChangeAllowed = false;
-	private boolean specEuroStat = false;
+	private boolean specialEuroStation = false;
 	private boolean layoverAllowed = false;
 	private boolean endDutyIfTouches = false;
 	private boolean mandatoryFirstLayover = false;
 	private int groupId = 0;
-	private boolean legConnExcStation = false;
-	private boolean haccStat = false;
+	private boolean legConnectionExceptionStation = false;
 
 	public String getCode() {
 		return code;
@@ -94,12 +93,12 @@ public class Airport extends AbstractModel implements AirportView {
 		this.agDg = agDg;
 	}
 
-	public boolean isOneDutyStat() {
-		return oneDutyStat;
+	public boolean isOneDutyStation() {
+		return oneDutyStation;
 	}
 
-	public void setOneDutyStat(boolean oneDutyStat) {
-		this.oneDutyStat = oneDutyStat;
+	public void setOneDutyStation(boolean oneDutyStation) {
+		this.oneDutyStation = oneDutyStation;
 	}
 
 	public boolean isAcChangeAllowed() {
@@ -110,12 +109,12 @@ public class Airport extends AbstractModel implements AirportView {
 		this.acChangeAllowed = acChangeAllowed;
 	}
 
-	public boolean isSpecEuroStat() {
-		return specEuroStat;
+	public boolean isSpecialEuroStation() {
+		return specialEuroStation;
 	}
 
-	public void setSpecEuroStat(boolean specEuroStat) {
-		this.specEuroStat = specEuroStat;
+	public void setSpecialEuroStation(boolean specialEuroStation) {
+		this.specialEuroStation = specialEuroStation;
 	}
 
 	public boolean isLayoverAllowed() {
@@ -150,19 +149,11 @@ public class Airport extends AbstractModel implements AirportView {
 		this.groupId = groupId;
 	}
 
-	public boolean isLegConnExcStation() {
-		return legConnExcStation;
+	public boolean isLegConnectionExceptionStation() {
+		return legConnectionExceptionStation;
 	}
 
-	public void setLegConnExcStation(boolean legConnExcStation) {
-		this.legConnExcStation = legConnExcStation;
-	}
-
-	public boolean isHaccStat() {
-		return haccStat;
-	}
-
-	public void setHaccStat(boolean haccStat) {
-		this.haccStat = haccStat;
+	public void setLegConnectionExceptionStation(boolean legConnectionExceptionStation) {
+		this.legConnectionExceptionStation = legConnectionExceptionStation;
 	}
 }

@@ -6,7 +6,7 @@ import org.heuros.core.data.base.View;
 
 public interface LegView extends View {
 	public String getCarrier();
-	public int getFligtNo();
+	public int getFlightNo();
 	public String getSuffix();
 	public String getDep();
 	public String getArr();
@@ -25,5 +25,5 @@ public interface LegView extends View {
 	public boolean isInPlanningArea();
 	public boolean isInOptimizationPeriod();
 	public boolean isDeadheadable();
-	public boolean isSpecFlight();
+	public boolean isSpecialFlight();
 }

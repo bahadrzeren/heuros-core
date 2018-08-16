@@ -7,7 +7,7 @@ import org.heuros.core.data.base.AbstractModel;
 public class Leg extends AbstractModel implements LegView {
 
 	private String carrier;
-	private int fligtNo;
+	private int flightNo;
 	private String suffix;
 	private String dep;
 	private String arr;
@@ -26,7 +26,7 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean inPlanningArea = false;
 	private boolean inOptimizationPeriod = false;
 	private boolean deadheadable = true;
-	private boolean specFlight = false;
+	private boolean specialFlight = false;
 
 	public String getCarrier() {
 		return carrier;
@@ -36,12 +36,12 @@ public class Leg extends AbstractModel implements LegView {
 		this.carrier = carrier;
 	}
 
-	public int getFligtNo() {
-		return fligtNo;
+	public int getFlightNo() {
+		return flightNo;
 	}
 
-	public void setFligtNo(int fligtNo) {
-		this.fligtNo = fligtNo;
+	public void setFlightNo(int flightNo) {
+		this.flightNo = flightNo;
 	}
 
 	public String getSuffix() {
@@ -180,18 +180,18 @@ public class Leg extends AbstractModel implements LegView {
 		this.deadheadable = deadheadable;
 	}
 
-	public boolean isSpecFlight() {
-		return specFlight;
+	public boolean isSpecialFlight() {
+		return specialFlight;
 	}
 
-	public void setSpecFlight(boolean specFlight) {
-		this.specFlight = specFlight;
+	public void setSpecialFlight(boolean specialFlight) {
+		this.specialFlight = specialFlight;
 	}
 
 	@Override
 	public String toString() {
 		return new StringBuilder(carrier)
-					.append(",").append(fligtNo)
+					.append(",").append(flightNo)
 					.append(",").append(suffix)
 					.append(",").append(dep)
 					.append(",").append(arr)
