@@ -24,7 +24,6 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCabinCrew = true;
 
 	private boolean inFleet = false;
-	private boolean inOptimizationPeriod = false;
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
@@ -164,14 +163,6 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setInFleet(boolean inFleet) {
 		this.inFleet = inFleet;
-	}
-
-	public boolean isInOptimizationPeriod() {
-		return inOptimizationPeriod;
-	}
-
-	public void setInOptimizationPeriod(boolean inOptimizationPeriod) {
-		this.inOptimizationPeriod = inOptimizationPeriod;
 	}
 
 	public boolean isDeadheadable() {
