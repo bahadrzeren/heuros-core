@@ -22,8 +22,10 @@ public interface LegView extends View {
 	public boolean isNeedsCockpitCrew();
 	public boolean isNeedsCabinCrew();
 
-	public boolean isInPlanningArea();
+	public boolean isInFleet();
 	public boolean isInOptimizationPeriod();
 	public boolean isDeadheadable();
 	public boolean isSpecialFlight();
+
+	public boolean isCover();
 }

@@ -23,10 +23,12 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
-	private boolean inPlanningArea = false;
+	private boolean inFleet = false;
 	private boolean inOptimizationPeriod = false;
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
+
+	private boolean cover = false;
 
 	public String getCarrier() {
 		return carrier;
@@ -156,12 +158,12 @@ public class Leg extends AbstractModel implements LegView {
 		this.needsCabinCrew = needsCabinCrew;
 	}
 
-	public boolean isInPlanningArea() {
-		return inPlanningArea;
+	public boolean isInFleet() {
+		return inFleet;
 	}
 
-	public void setInPlanningArea(boolean inPlanningArea) {
-		this.inPlanningArea = inPlanningArea;
+	public void setInFleet(boolean inFleet) {
+		this.inFleet = inFleet;
 	}
 
 	public boolean isInOptimizationPeriod() {
@@ -186,6 +188,14 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setSpecialFlight(boolean specialFlight) {
 		this.specialFlight = specialFlight;
+	}
+
+	public boolean isCover() {
+		return cover;
+	}
+
+	public void setCover(boolean cover) {
+		this.cover = cover;
 	}
 
 	@Override
