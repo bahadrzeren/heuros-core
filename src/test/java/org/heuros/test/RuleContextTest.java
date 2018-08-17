@@ -52,6 +52,7 @@ public class RuleContextTest extends TestCase {
     	} catch (RuleAnnotationIsMissing ex) {
     		assertTrue(true);
     	} catch (Exception ex) {
+    		ex.printStackTrace();
     		assertTrue(false);
     	}
     }
@@ -73,6 +74,7 @@ public class RuleContextTest extends TestCase {
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 0);
 
     	} catch (Exception ex) {
+    		ex.printStackTrace();
     		assertTrue(false);
     	}
     }
@@ -94,6 +96,7 @@ public class RuleContextTest extends TestCase {
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
 
     	} catch (Exception ex) {
+    		ex.printStackTrace();
     		assertTrue(false);
     	}
     }
@@ -116,6 +119,7 @@ public class RuleContextTest extends TestCase {
     		assertTrue(context.getValidatorRepo().getRules().size() == 1);
 
     	} catch (Exception ex) {
+    		ex.printStackTrace();
     		assertTrue(false);
     	}
     }
@@ -135,6 +139,7 @@ public class RuleContextTest extends TestCase {
     		legContext.registerRule(legRule);
     		dutyContext.registerRule(dutyRule);
     	} catch (Exception ex) {
+    		ex.printStackTrace();
     		assertTrue(false);
     	}
 

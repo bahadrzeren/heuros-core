@@ -63,7 +63,7 @@ public class LegsParseTest
         assertTrue((leg.getSuffix() == null) || leg.getSuffix().equals(""));
         assertTrue(leg.getSobt().isEqual(LocalDateTime.of(2013, 12, 20, 1, 40)));
         assertTrue(leg.getSibt().isEqual(LocalDateTime.of(2013, 12, 20, 4, 15)));
-        assertTrue(leg.getFligtNo() == 882);
+        assertTrue(leg.getFlightNo() == 882);
         assertTrue(leg.getDepOffset() == 120);
         assertTrue(leg.getArrOffset() == 210);
         assertTrue(leg.isNeedsCockpitCrew());

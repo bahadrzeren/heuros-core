@@ -62,7 +62,7 @@ public class SsimParseTest
         assertTrue((leg.getSuffix() == null) || leg.getSuffix().equals(""));
         assertTrue(leg.getSobt().isEqual(LocalDateTime.of(2013, 12, 20, 11, 25)));
         assertTrue(leg.getSibt().isEqual(LocalDateTime.of(2013, 12, 20, 22, 20)));
-        assertTrue(leg.getFligtNo() == 1);
+        assertTrue(leg.getFlightNo() == 1);
         assertTrue(leg.getDepOffset() == 120);
         assertTrue(leg.getArrOffset() == -300);
     }

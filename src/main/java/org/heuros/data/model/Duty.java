@@ -9,61 +9,61 @@ public class Duty extends AbstractModel implements DutyView {
 
 	private List<DutyLeg> dutyLegs;
 
-	private int _augmHb = 0;
-	private int _augmNonHb = 0;
-	private boolean _erHb = false;
-	private boolean _erNonHb = false;
-	private int _restDurationHb = 0;
-	private int _restDurationNonHb = 0;
+	private boolean validHb = true;
+	private boolean validNonHb = true;
 
-	private int _totDutyDurationHb = 0;
-	private int _totDutyDurationNonHb = 0;
+	private int augmentedHb = 0;
+	private int augmentedNonHb = 0;
+	private boolean erHb = false;
+	private boolean erNonHb = false;
 
-	private int _totBlockTime = 0;
-	private int _totBlockTimeActive = 0;
-	private int _totBlockTimePassive = 0;
+	private int restDurationHb = 0;
+	private int restDurationNonHb = 0;
 
-	private int _totNumOfLegs = 0;
-	private int _totNumOfLegsActive = 0;
-	private int _totNumOfLegsPassive = 0;
+	private int dutyDurationHb = 0;
+	private int dutyDurationNonHb = 0;
 
-	private int _totNumOfDaysTouched = 0;
-	private int _totNumOfLegsIntToDom = 0;
-	private int _totNumOfLegsDomToInt = 0;
+	private int blockTime = 0;
+	private int blockTimeActive = 0;
+	private int blockTimePassive = 0;
+
+	private int numOfLegs = 0;
+	private int numOfLegsActive = 0;
+	private int numOfLegsPassive = 0;
+	private int numOfLegsIntToDom = 0;
+	private int numOfLegsDomToInt = 0;
+
+	private int numOfDaysTouched = 0;
 
 	private int[] longestBlockTimes = new int[10];
-	private int _longestBlockTime = 0;
+	private int longestBlockTime = 0;
 
-	private int _numOfAnyHomebaseTouch = 0;
-	private int _numOfDomTouch = 0;
-	private int _numOfIntTouch = 0;
+	private int numOfAnyHomebaseTouch = 0;
+	private int numOfDomTouch = 0;
+	private int numOfIntTouch = 0;
 
-//	private boolean _validHb = true;
-//	private boolean _validNonHb = true;
+	private LocalDateTime briefTimeHb = null;
+	private LocalDateTime briefTimeNonHb = null;
+	private LocalDateTime debriefTime = null;
 
-	private LocalDateTime _briefTimeHb = null;
-	private LocalDateTime _briefTimeNonHb = null;
-	private LocalDateTime _debriefTime = null;
+	private LocalDateTime briefDayBeginningHb = null;
+	private LocalDateTime briefDayBeginningNonHb = null;
+	private LocalDateTime debriefDayEnding = null;
+	private int briefDayHb = 0;
+	private int briefDayNonHb = 0;
+	private int debriefDay = 0;
 
-	private LocalDateTime _briefDayBeginningHb = null;
-	private LocalDateTime _briefDayBeginningNonHb = null;
-	private LocalDateTime _debriefDayEnding = null;
+	private int briefDurationHb = 0;
+	private int briefDurationNonHb = 0;
+	private int debriefDuration = 0;
 
-	private int _briefDurationHb = 0;
-	private int _briefDurationNonHb = 0;
-	private int _debriefDuration = 0;
+	private LocalDateTime nextBriefTimeHb = null;
+	private LocalDateTime nextBriefTimeNonHb = null;
 
-	private LocalDateTime _nextBriefTimeHb = null;
-	private LocalDateTime _nextBriefTimeNonHb = null;
+	private boolean hard = false;
+	private boolean early = false;
 
-	private boolean _isHard = false;
-	private boolean _isEarly = false;
-
-	private int _briefDayHb = 0;
-	private int _briefDayNonHb = 0;
-	private int _debriefDay = 0;
-
-	private int numOfCritLegs = 0;
+	private int numOfCriticalLegs = 0;
 	private int numOfAgDg = 0;
 	private int numOfSpecFlights = 0;
 
@@ -78,4 +78,373 @@ public class Duty extends AbstractModel implements DutyView {
 	public void setDutyLegs(List<DutyLeg> dutyLegs) {
 		this.dutyLegs = dutyLegs;
 	}
+
+	public boolean isValidHb() {
+		return validHb;
+	}
+
+	public void setValidHb(boolean validHb) {
+		this.validHb = validHb;
+	}
+
+	public boolean isValidNonHb() {
+		return validNonHb;
+	}
+
+	public void setValidNonHb(boolean validNonHb) {
+		this.validNonHb = validNonHb;
+	}
+
+	public int getAugmentedHb() {
+		return augmentedHb;
+	}
+
+	public void setAugmentedHb(int augmentedHb) {
+		this.augmentedHb = augmentedHb;
+	}
+
+	public int getAugmentedNonHb() {
+		return augmentedNonHb;
+	}
+
+	public void setAugmentedNonHb(int augmentedNonHb) {
+		this.augmentedNonHb = augmentedNonHb;
+	}
+
+	public boolean isErHb() {
+		return erHb;
+	}
+
+	public void setErHb(boolean erHb) {
+		this.erHb = erHb;
+	}
+
+	public boolean isErNonHb() {
+		return erNonHb;
+	}
+
+	public void setErNonHb(boolean erNonHb) {
+		this.erNonHb = erNonHb;
+	}
+
+	public int getRestDurationHb() {
+		return restDurationHb;
+	}
+
+	public void setRestDurationHb(int restDurationHb) {
+		this.restDurationHb = restDurationHb;
+	}
+
+	public int getRestDurationNonHb() {
+		return restDurationNonHb;
+	}
+
+	public void setRestDurationNonHb(int restDurationNonHb) {
+		this.restDurationNonHb = restDurationNonHb;
+	}
+
+	public int getDutyDurationHb() {
+		return dutyDurationHb;
+	}
+
+	public void setDutyDurationHb(int dutyDurationHb) {
+		this.dutyDurationHb = dutyDurationHb;
+	}
+
+	public int getDutyDurationNonHb() {
+		return dutyDurationNonHb;
+	}
+
+	public void setDutyDurationNonHb(int dutyDurationNonHb) {
+		this.dutyDurationNonHb = dutyDurationNonHb;
+	}
+
+	public int getBlockTime() {
+		return blockTime;
+	}
+
+	public void setBlockTime(int blockTime) {
+		this.blockTime = blockTime;
+	}
+
+	public int getBlockTimeActive() {
+		return blockTimeActive;
+	}
+
+	public void setBlockTimeActive(int blockTimeActive) {
+		this.blockTimeActive = blockTimeActive;
+	}
+
+	public int getBlockTimePassive() {
+		return blockTimePassive;
+	}
+
+	public void setBlockTimePassive(int blockTimePassive) {
+		this.blockTimePassive = blockTimePassive;
+	}
+
+	public int getNumOfLegs() {
+		return numOfLegs;
+	}
+
+	public void setNumOfLegs(int numOfLegs) {
+		this.numOfLegs = numOfLegs;
+	}
+
+	public int getNumOfLegsActive() {
+		return numOfLegsActive;
+	}
+
+	public void setNumOfLegsActive(int numOfLegsActive) {
+		this.numOfLegsActive = numOfLegsActive;
+	}
+
+	public int getNumOfLegsPassive() {
+		return numOfLegsPassive;
+	}
+
+	public void setNumOfLegsPassive(int numOfLegsPassive) {
+		this.numOfLegsPassive = numOfLegsPassive;
+	}
+
+	public int getNumOfLegsIntToDom() {
+		return numOfLegsIntToDom;
+	}
+
+	public void setNumOfLegsIntToDom(int numOfLegsIntToDom) {
+		this.numOfLegsIntToDom = numOfLegsIntToDom;
+	}
+
+	public int getNumOfLegsDomToInt() {
+		return numOfLegsDomToInt;
+	}
+
+	public void setNumOfLegsDomToInt(int numOfLegsDomToInt) {
+		this.numOfLegsDomToInt = numOfLegsDomToInt;
+	}
+
+	public int getNumOfDaysTouched() {
+		return numOfDaysTouched;
+	}
+
+	public void setNumOfDaysTouched(int numOfDaysTouched) {
+		this.numOfDaysTouched = numOfDaysTouched;
+	}
+
+	public int[] getLongestBlockTimes() {
+		return longestBlockTimes;
+	}
+
+	public void setLongestBlockTimes(int[] longestBlockTimes) {
+		this.longestBlockTimes = longestBlockTimes;
+	}
+
+	public int getLongestBlockTime() {
+		return longestBlockTime;
+	}
+
+	public void setLongestBlockTime(int longestBlockTime) {
+		this.longestBlockTime = longestBlockTime;
+	}
+
+	public int getNumOfAnyHomebaseTouch() {
+		return numOfAnyHomebaseTouch;
+	}
+
+	public void setNumOfAnyHomebaseTouch(int numOfAnyHomebaseTouch) {
+		this.numOfAnyHomebaseTouch = numOfAnyHomebaseTouch;
+	}
+
+	public int getNumOfDomTouch() {
+		return numOfDomTouch;
+	}
+
+	public void setNumOfDomTouch(int numOfDomTouch) {
+		this.numOfDomTouch = numOfDomTouch;
+	}
+
+	public int getNumOfIntTouch() {
+		return numOfIntTouch;
+	}
+
+	public void setNumOfIntTouch(int numOfIntTouch) {
+		this.numOfIntTouch = numOfIntTouch;
+	}
+
+	public LocalDateTime getBriefTimeHb() {
+		return briefTimeHb;
+	}
+
+	public void setBriefTimeHb(LocalDateTime briefTimeHb) {
+		this.briefTimeHb = briefTimeHb;
+	}
+
+	public LocalDateTime getBriefTimeNonHb() {
+		return briefTimeNonHb;
+	}
+
+	public void setBriefTimeNonHb(LocalDateTime briefTimeNonHb) {
+		this.briefTimeNonHb = briefTimeNonHb;
+	}
+
+	public LocalDateTime getDebriefTime() {
+		return debriefTime;
+	}
+
+	public void setDebriefTime(LocalDateTime debriefTime) {
+		this.debriefTime = debriefTime;
+	}
+
+	public LocalDateTime getBriefDayBeginningHb() {
+		return briefDayBeginningHb;
+	}
+
+	public void setBriefDayBeginningHb(LocalDateTime briefDayBeginningHb) {
+		this.briefDayBeginningHb = briefDayBeginningHb;
+	}
+
+	public LocalDateTime getBriefDayBeginningNonHb() {
+		return briefDayBeginningNonHb;
+	}
+
+	public void setBriefDayBeginningNonHb(LocalDateTime briefDayBeginningNonHb) {
+		this.briefDayBeginningNonHb = briefDayBeginningNonHb;
+	}
+
+	public LocalDateTime getDebriefDayEnding() {
+		return debriefDayEnding;
+	}
+
+	public void setDebriefDayEnding(LocalDateTime debriefDayEnding) {
+		this.debriefDayEnding = debriefDayEnding;
+	}
+
+	public int getBriefDayHb() {
+		return briefDayHb;
+	}
+
+	public void setBriefDayHb(int briefDayHb) {
+		this.briefDayHb = briefDayHb;
+	}
+
+	public int getBriefDayNonHb() {
+		return briefDayNonHb;
+	}
+
+	public void setBriefDayNonHb(int briefDayNonHb) {
+		this.briefDayNonHb = briefDayNonHb;
+	}
+
+	public int getDebriefDay() {
+		return debriefDay;
+	}
+
+	public void setDebriefDay(int debriefDay) {
+		this.debriefDay = debriefDay;
+	}
+
+	public int getBriefDurationHb() {
+		return briefDurationHb;
+	}
+
+	public void setBriefDurationHb(int briefDurationHb) {
+		this.briefDurationHb = briefDurationHb;
+	}
+
+	public int getBriefDurationNonHb() {
+		return briefDurationNonHb;
+	}
+
+	public void setBriefDurationNonHb(int briefDurationNonHb) {
+		this.briefDurationNonHb = briefDurationNonHb;
+	}
+
+	public int getDebriefDuration() {
+		return debriefDuration;
+	}
+
+	public void setDebriefDuration(int debriefDuration) {
+		this.debriefDuration = debriefDuration;
+	}
+
+	public LocalDateTime getNextBriefTimeHb() {
+		return nextBriefTimeHb;
+	}
+
+	public void setNextBriefTimeHb(LocalDateTime nextBriefTimeHb) {
+		this.nextBriefTimeHb = nextBriefTimeHb;
+	}
+
+	public LocalDateTime getNextBriefTimeNonHb() {
+		return nextBriefTimeNonHb;
+	}
+
+	public void setNextBriefTimeNonHb(LocalDateTime nextBriefTimeNonHb) {
+		this.nextBriefTimeNonHb = nextBriefTimeNonHb;
+	}
+
+	public boolean isHard() {
+		return hard;
+	}
+
+	public void setHard(boolean hard) {
+		this.hard = hard;
+	}
+
+	public boolean isEarly() {
+		return early;
+	}
+
+	public void setEarly(boolean early) {
+		this.early = early;
+	}
+
+	public int getNumOfCriticalLegs() {
+		return numOfCriticalLegs;
+	}
+
+	public void setNumOfCriticalLegs(int numOfCriticalLegs) {
+		this.numOfCriticalLegs = numOfCriticalLegs;
+	}
+
+	public int getNumOfAgDg() {
+		return numOfAgDg;
+	}
+
+	public void setNumOfAgDg(int numOfAgDg) {
+		this.numOfAgDg = numOfAgDg;
+	}
+
+	public int getNumOfSpecFlights() {
+		return numOfSpecFlights;
+	}
+
+	public void setNumOfSpecFlights(int numOfSpecFlights) {
+		this.numOfSpecFlights = numOfSpecFlights;
+	}
+
+	public int getLongConnDiff() {
+		return longConnDiff;
+	}
+
+	public void setLongConnDiff(int longConnDiff) {
+		this.longConnDiff = longConnDiff;
+	}
+
+	public int getNumOfAcChanges() {
+		return numOfAcChanges;
+	}
+
+	public void setNumOfAcChanges(int numOfAcChanges) {
+		this.numOfAcChanges = numOfAcChanges;
+	}
+
+	public int getNumOfSpecialDHs() {
+		return numOfSpecialDHs;
+	}
+
+	public void setNumOfSpecialDHs(int numOfSpecialDHs) {
+		this.numOfSpecialDHs = numOfSpecialDHs;
+	}
+
 }

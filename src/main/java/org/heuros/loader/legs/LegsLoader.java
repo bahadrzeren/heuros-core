@@ -60,10 +60,10 @@ public class LegsLoader implements Loader<Leg> {
 							if (a.getSobt().isBefore(b.getSobt()))
 								return -1;
 							else
-								if (a.getFligtNo() > b.getFligtNo())
+								if (a.getFlightNo() > b.getFlightNo())
 									return 1;
 								else
-									if (a.getFligtNo() < b.getFligtNo())
+									if (a.getFlightNo() < b.getFlightNo())
 										return -1;
 									else
 										if (a.getDepOffset() > b.getArrOffset())

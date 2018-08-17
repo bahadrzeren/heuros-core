@@ -81,7 +81,7 @@ public class AcRotationMerger extends TextFileReader<Leg> {
 					@Override
 					public boolean test(LegView l) {
 						return l.getCarrier().equals(carrier)
-								&& (l.getFligtNo() == flightNo)
+								&& (l.getFlightNo() == flightNo)
 								&& l.getDep().equals(dep)
 								&& l.getSobt().equals(depDateTime)
 								&& ((((l.getSuffix() == null) || (l.getSuffix().length() == 0))

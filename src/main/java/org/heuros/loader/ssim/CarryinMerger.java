@@ -59,7 +59,7 @@ public class CarryinMerger extends TextFileReader<Leg> {
 				@Override
 				public boolean test(Leg l) {
 					return l.getCarrier().equals(carrier)
-							&& (l.getFligtNo() == flightNo)
+							&& (l.getFlightNo() == flightNo)
 							&& l.getDep().equals(dep)
 							&& (l.getSobt().getYear() == legDate.getYear())
 							&& (l.getSobt().getMonth() == legDate.getMonth())

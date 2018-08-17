@@ -80,7 +80,7 @@ public class SsimParser extends TextFileReader<Leg> {
 					Leg leg = this.modelFactory.generateModel();
 					leg.setSuffix(s.substring(1, 1).trim());
 					leg.setCarrier(s.substring(2, 5).trim());
-					leg.setFligtNo(Integer.parseInt(s.substring(5, 9).trim()));
+					leg.setFlightNo(Integer.parseInt(s.substring(5, 9).trim()));
 					leg.setDep(s.substring(36, 39).trim());
 					leg.setArr(s.substring(54, 57).trim());
 					leg.setServiceType(s.substring(13, 14));

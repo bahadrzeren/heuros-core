@@ -6,7 +6,7 @@ public interface AirportView extends View {
 	public String getCode();
 
 	public boolean isHb();
-	public boolean isNonHB();
+	public boolean isNonHb();
 	public boolean isDomestic();
 	public boolean isInternational();
 

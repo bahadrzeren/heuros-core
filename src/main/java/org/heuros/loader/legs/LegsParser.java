@@ -32,7 +32,7 @@ public class LegsParser extends TextFileReader<Leg> {
 		Leg leg = this.modelFactory.generateModel();
 
 		leg.setCarrier(st[0]);
-		leg.setFligtNo(Integer.valueOf(st[1]));
+		leg.setFlightNo(Integer.valueOf(st[1]));
 		leg.setSuffix(st[2]);
 		leg.setDep(st[3]);
 		leg.setArr(st[4]);
