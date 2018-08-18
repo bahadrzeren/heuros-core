@@ -1,5 +1,6 @@
 package org.heuros.rule;
 
+import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.ExtensibilityCheckerRuleContext;
 import org.heuros.core.rule.ValidatorRuleContext;
@@ -17,9 +18,10 @@ import org.heuros.data.model.PairView;
 import org.heuros.data.model.DutyView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public class PairRuleContext implements ConnectionCheckerRuleContext<PairView>,
-										ExtensibilityCheckerRuleContext<PairView, DutyView>,
-										ValidatorRuleContext<PairView> {
+public class PairRuleContext extends AbstractRuleContext
+								implements ConnectionCheckerRuleContext<PairView>,
+											ExtensibilityCheckerRuleContext<PairView, DutyView>,
+											ValidatorRuleContext<PairView> {
 	protected ConnectionCheckerRepository<PairView> connectionCheckerRepo = new ConnectionCheckerRepository<PairView>();
 	protected ExtensibilityCheckerRepository<PairView, DutyView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<PairView, DutyView>();
 	protected ValidatorRepository<PairView> validatorRepo = new ValidatorRepository<PairView>();
@@ -30,6 +32,7 @@ public class PairRuleContext implements ConnectionCheckerRuleContext<PairView>,
 
 	@SuppressWarnings("unchecked")
 	public PairRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
+		super.registerRule(rule);
 		if (rule.isImplemented(ConnectionChecker.class))
 			this.registerConnectionCheckerRule((ConnectionChecker<PairView>) rule);
 		if (rule.isImplemented(Validator.class))

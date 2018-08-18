@@ -7,7 +7,34 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Duty extends AbstractModel implements DutyView {
 
-	private List<DutyLeg> dutyLegs;
+	private List<DutyLegView> dutyLegs;
+
+	private int blockTimeInMins = 0;
+	private int blockTimeInMinsActive = 0;
+	private int blockTimeInMinsPassive = 0;
+
+	private int numOfLegs = 0;
+	private int numOfLegsActive = 0;
+	private int numOfLegsPassive = 0;
+	private int numOfLegsIntToDom = 0;
+	private int numOfLegsDomToInt = 0;
+
+	private int numOfCriticalLegs = 0;
+	private int numOfAgDg = 0;
+	private int numOfSpecFlights = 0;
+
+	private int numOfAnyHomebaseTouch = 0;
+	private int numOfDomTouch = 0;
+	private int numOfIntTouch = 0;
+
+	private int numOfAcChanges = 0;
+
+	private int longConnDiff = 0;
+
+	private int[] longestBlockTimesInMins = new int[15];
+	private int longestBlockTimeInMins = 0;
+
+
 
 	private boolean validHb = true;
 	private boolean validNonHb = true;
@@ -17,30 +44,13 @@ public class Duty extends AbstractModel implements DutyView {
 	private boolean erHb = false;
 	private boolean erNonHb = false;
 
-	private int restDurationHb = 0;
-	private int restDurationNonHb = 0;
+	private int restDurationInMinsHb = 0;
+	private int restDurationInMinsNonHb = 0;
 
-	private int dutyDurationHb = 0;
-	private int dutyDurationNonHb = 0;
-
-	private int blockTime = 0;
-	private int blockTimeActive = 0;
-	private int blockTimePassive = 0;
-
-	private int numOfLegs = 0;
-	private int numOfLegsActive = 0;
-	private int numOfLegsPassive = 0;
-	private int numOfLegsIntToDom = 0;
-	private int numOfLegsDomToInt = 0;
+	private int dutyDurationInMinsHb = 0;
+	private int dutyDurationInMinsNonHb = 0;
 
 	private int numOfDaysTouched = 0;
-
-	private int[] longestBlockTimes = new int[10];
-	private int longestBlockTime = 0;
-
-	private int numOfAnyHomebaseTouch = 0;
-	private int numOfDomTouch = 0;
-	private int numOfIntTouch = 0;
 
 	private LocalDateTime briefTimeHb = null;
 	private LocalDateTime briefTimeNonHb = null;
@@ -53,9 +63,9 @@ public class Duty extends AbstractModel implements DutyView {
 	private int briefDayNonHb = 0;
 	private int debriefDay = 0;
 
-	private int briefDurationHb = 0;
-	private int briefDurationNonHb = 0;
-	private int debriefDuration = 0;
+	private int briefDurationInMinsHb = 0;
+	private int briefDurationInMinsNonHb = 0;
+	private int debriefDurationInMins = 0;
 
 	private LocalDateTime nextBriefTimeHb = null;
 	private LocalDateTime nextBriefTimeNonHb = null;
@@ -63,20 +73,249 @@ public class Duty extends AbstractModel implements DutyView {
 	private boolean hard = false;
 	private boolean early = false;
 
-	private int numOfCriticalLegs = 0;
-	private int numOfAgDg = 0;
-	private int numOfSpecFlights = 0;
+	public void append(DutyLegView dutyLegView) {
+		this.dutyLegs.add(dutyLegView);
+	}
+	public DutyLegView removeLast() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.remove(this.dutyLegs.size() - 1);
+		return null;
+	}
+	public DutyLegView getFirstDutyLeg() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(0);
+		return null;
+	}
+	public DutyLegView getLastDutyLeg() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(this.dutyLegs.size() - 1);
+		return null;		
+	}
+	public LegView getFirstLeg() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(0).getLeg();
+		return null;		
+	}
+	public LegView getLastLeg() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(this.dutyLegs.size() - 1).getLeg();
+		return null;		
+	}
 
-	private int longConnDiff = 0;
-	private int numOfAcChanges = 0;
-	private int numOfSpecialDHs = 0;
-
-	public List<DutyLeg> getDutyLegs() {
+	public List<DutyLegView> getDutyLegs() {
 		return dutyLegs;
 	}
 
-	public void setDutyLegs(List<DutyLeg> dutyLegs) {
+	public void setDutyLegs(List<DutyLegView> dutyLegs) {
 		this.dutyLegs = dutyLegs;
+	}
+
+	public int getBlockTimeInMins() {
+		return blockTimeInMins;
+	}
+
+	public void setBlockTimeInMins(int blockTimeInMins) {
+		this.blockTimeInMins = blockTimeInMins;
+	}
+
+	public void incBlockTimeInMins(int blockTimeInMins) {
+		this.blockTimeInMins += blockTimeInMins;
+	}
+
+	public int getBlockTimeInMinsActive() {
+		return blockTimeInMinsActive;
+	}
+
+	public void setBlockTimeInMinsActive(int blockTimeInMinsActive) {
+		this.blockTimeInMinsActive = blockTimeInMinsActive;
+	}
+
+	public void incBlockTimeInMinsActive(int blockTimeInMinsActive) {
+		this.blockTimeInMinsActive += blockTimeInMinsActive;
+	}
+
+	public int getBlockTimeInMinsPassive() {
+		return blockTimeInMinsPassive;
+	}
+
+	public void setBlockTimeInMinsPassive(int blockTimeInMinsPassive) {
+		this.blockTimeInMinsPassive = blockTimeInMinsPassive;
+	}
+
+	public void incBlockTimeInMinsPassive(int blockTimeInMinsPassive) {
+		this.blockTimeInMinsPassive += blockTimeInMinsPassive;
+	}
+
+	public int getNumOfLegs() {
+		return numOfLegs;
+	}
+
+	public void setNumOfLegs(int numOfLegs) {
+		this.numOfLegs = numOfLegs;
+	}
+
+	public void incNumOfLegs(int numOfLegs) {
+		this.numOfLegs += numOfLegs;
+	}
+
+	public int getNumOfLegsActive() {
+		return numOfLegsActive;
+	}
+
+	public void setNumOfLegsActive(int numOfLegsActive) {
+		this.numOfLegsActive = numOfLegsActive;
+	}
+
+	public void incNumOfLegsActive(int numOfLegsActive) {
+		this.numOfLegsActive += numOfLegsActive;
+	}
+
+	public int getNumOfLegsPassive() {
+		return numOfLegsPassive;
+	}
+
+	public void setNumOfLegsPassive(int numOfLegsPassive) {
+		this.numOfLegsPassive = numOfLegsPassive;
+	}
+
+	public void incNumOfLegsPassive(int numOfLegsPassive) {
+		this.numOfLegsPassive += numOfLegsPassive;
+	}
+
+	public int getNumOfLegsIntToDom() {
+		return numOfLegsIntToDom;
+	}
+
+	public void setNumOfLegsIntToDom(int numOfLegsIntToDom) {
+		this.numOfLegsIntToDom = numOfLegsIntToDom;
+	}
+
+	public void incNumOfLegsIntToDom(int numOfLegsIntToDom) {
+		this.numOfLegsIntToDom += numOfLegsIntToDom;
+	}
+
+	public int getNumOfLegsDomToInt() {
+		return numOfLegsDomToInt;
+	}
+
+	public void setNumOfLegsDomToInt(int numOfLegsDomToInt) {
+		this.numOfLegsDomToInt = numOfLegsDomToInt;
+	}
+
+	public void incNumOfLegsDomToInt(int numOfLegsDomToInt) {
+		this.numOfLegsDomToInt += numOfLegsDomToInt;
+	}
+
+	public int getNumOfCriticalLegs() {
+		return numOfCriticalLegs;
+	}
+
+	public void setNumOfCriticalLegs(int numOfCriticalLegs) {
+		this.numOfCriticalLegs = numOfCriticalLegs;
+	}
+
+	public void incNumOfCriticalLegs(int numOfCriticalLegs) {
+		this.numOfCriticalLegs += numOfCriticalLegs;
+	}
+
+	public int getNumOfAgDg() {
+		return numOfAgDg;
+	}
+
+	public void setNumOfAgDg(int numOfAgDg) {
+		this.numOfAgDg = numOfAgDg;
+	}
+
+	public void incNumOfAgDg(int numOfAgDg) {
+		this.numOfAgDg += numOfAgDg;
+	}
+
+	public int getNumOfSpecFlights() {
+		return numOfSpecFlights;
+	}
+
+	public void setNumOfSpecFlights(int numOfSpecFlights) {
+		this.numOfSpecFlights = numOfSpecFlights;
+	}
+
+	public void incNumOfSpecFlights(int numOfSpecFlights) {
+		this.numOfSpecFlights += numOfSpecFlights;
+	}
+
+	public int getNumOfAnyHomebaseTouch() {
+		return numOfAnyHomebaseTouch;
+	}
+
+	public void setNumOfAnyHomebaseTouch(int numOfAnyHomebaseTouch) {
+		this.numOfAnyHomebaseTouch = numOfAnyHomebaseTouch;
+	}
+
+	public void incNumOfAnyHomebaseTouch(int numOfAnyHomebaseTouch) {
+		this.numOfAnyHomebaseTouch += numOfAnyHomebaseTouch;
+	}
+
+	public int getNumOfDomTouch() {
+		return numOfDomTouch;
+	}
+
+	public void setNumOfDomTouch(int numOfDomTouch) {
+		this.numOfDomTouch = numOfDomTouch;
+	}
+
+	public void incNumOfDomTouch(int numOfDomTouch) {
+		this.numOfDomTouch += numOfDomTouch;
+	}
+
+	public int getNumOfIntTouch() {
+		return numOfIntTouch;
+	}
+
+	public void setNumOfIntTouch(int numOfIntTouch) {
+		this.numOfIntTouch = numOfIntTouch;
+	}
+
+	public void incNumOfIntTouch(int numOfIntTouch) {
+		this.numOfIntTouch += numOfIntTouch;
+	}
+
+	public int getNumOfAcChanges() {
+		return numOfAcChanges;
+	}
+
+	public void setNumOfAcChanges(int numOfAcChanges) {
+		this.numOfAcChanges = numOfAcChanges;
+	}
+
+	public void incNumOfAcChanges(int numOfAcChanges) {
+		this.numOfAcChanges += numOfAcChanges;
+	}
+
+	public int getLongConnDiff() {
+		return longConnDiff;
+	}
+
+	public void setLongConnDiff(int longConnDiff) {
+		this.longConnDiff = longConnDiff;
+	}
+
+	public void incLongConnDiff(int longConnDiff) {
+		this.longConnDiff += longConnDiff;
+	}
+
+	public int[] getLongestBlockTimesInMins() {
+		return longestBlockTimesInMins;
+	}
+
+	public void setLongestBlockTimesInMins(int[] longestBlockTimesInMins) {
+		this.longestBlockTimesInMins = longestBlockTimesInMins;
+	}
+
+	public int getLongestBlockTimeInMins() {
+		return longestBlockTimeInMins;
+	}
+
+	public void setLongestBlockTimeInMins(int longestBlockTimeInMins) {
+		this.longestBlockTimeInMins = longestBlockTimeInMins;
 	}
 
 	public boolean isValidHb() {
@@ -127,100 +366,36 @@ public class Duty extends AbstractModel implements DutyView {
 		this.erNonHb = erNonHb;
 	}
 
-	public int getRestDurationHb() {
-		return restDurationHb;
+	public int getRestDurationInMinsHb() {
+		return restDurationInMinsHb;
 	}
 
-	public void setRestDurationHb(int restDurationHb) {
-		this.restDurationHb = restDurationHb;
+	public void setRestDurationInMinsHb(int restDurationInMinsHb) {
+		this.restDurationInMinsHb = restDurationInMinsHb;
 	}
 
-	public int getRestDurationNonHb() {
-		return restDurationNonHb;
+	public int getRestDurationInMinsNonHb() {
+		return restDurationInMinsNonHb;
 	}
 
-	public void setRestDurationNonHb(int restDurationNonHb) {
-		this.restDurationNonHb = restDurationNonHb;
+	public void setRestDurationInMinsNonHb(int restDurationInMinsNonHb) {
+		this.restDurationInMinsNonHb = restDurationInMinsNonHb;
 	}
 
-	public int getDutyDurationHb() {
-		return dutyDurationHb;
+	public int getDutyDurationInMinsHb() {
+		return dutyDurationInMinsHb;
 	}
 
-	public void setDutyDurationHb(int dutyDurationHb) {
-		this.dutyDurationHb = dutyDurationHb;
+	public void setDutyDurationInMinsHb(int dutyDurationInMinsHb) {
+		this.dutyDurationInMinsHb = dutyDurationInMinsHb;
 	}
 
-	public int getDutyDurationNonHb() {
-		return dutyDurationNonHb;
+	public int getDutyDurationInMinsNonHb() {
+		return dutyDurationInMinsNonHb;
 	}
 
-	public void setDutyDurationNonHb(int dutyDurationNonHb) {
-		this.dutyDurationNonHb = dutyDurationNonHb;
-	}
-
-	public int getBlockTime() {
-		return blockTime;
-	}
-
-	public void setBlockTime(int blockTime) {
-		this.blockTime = blockTime;
-	}
-
-	public int getBlockTimeActive() {
-		return blockTimeActive;
-	}
-
-	public void setBlockTimeActive(int blockTimeActive) {
-		this.blockTimeActive = blockTimeActive;
-	}
-
-	public int getBlockTimePassive() {
-		return blockTimePassive;
-	}
-
-	public void setBlockTimePassive(int blockTimePassive) {
-		this.blockTimePassive = blockTimePassive;
-	}
-
-	public int getNumOfLegs() {
-		return numOfLegs;
-	}
-
-	public void setNumOfLegs(int numOfLegs) {
-		this.numOfLegs = numOfLegs;
-	}
-
-	public int getNumOfLegsActive() {
-		return numOfLegsActive;
-	}
-
-	public void setNumOfLegsActive(int numOfLegsActive) {
-		this.numOfLegsActive = numOfLegsActive;
-	}
-
-	public int getNumOfLegsPassive() {
-		return numOfLegsPassive;
-	}
-
-	public void setNumOfLegsPassive(int numOfLegsPassive) {
-		this.numOfLegsPassive = numOfLegsPassive;
-	}
-
-	public int getNumOfLegsIntToDom() {
-		return numOfLegsIntToDom;
-	}
-
-	public void setNumOfLegsIntToDom(int numOfLegsIntToDom) {
-		this.numOfLegsIntToDom = numOfLegsIntToDom;
-	}
-
-	public int getNumOfLegsDomToInt() {
-		return numOfLegsDomToInt;
-	}
-
-	public void setNumOfLegsDomToInt(int numOfLegsDomToInt) {
-		this.numOfLegsDomToInt = numOfLegsDomToInt;
+	public void setDutyDurationInMinsNonHb(int dutyDurationInMinsNonHb) {
+		this.dutyDurationInMinsNonHb = dutyDurationInMinsNonHb;
 	}
 
 	public int getNumOfDaysTouched() {
@@ -231,44 +406,8 @@ public class Duty extends AbstractModel implements DutyView {
 		this.numOfDaysTouched = numOfDaysTouched;
 	}
 
-	public int[] getLongestBlockTimes() {
-		return longestBlockTimes;
-	}
-
-	public void setLongestBlockTimes(int[] longestBlockTimes) {
-		this.longestBlockTimes = longestBlockTimes;
-	}
-
-	public int getLongestBlockTime() {
-		return longestBlockTime;
-	}
-
-	public void setLongestBlockTime(int longestBlockTime) {
-		this.longestBlockTime = longestBlockTime;
-	}
-
-	public int getNumOfAnyHomebaseTouch() {
-		return numOfAnyHomebaseTouch;
-	}
-
-	public void setNumOfAnyHomebaseTouch(int numOfAnyHomebaseTouch) {
-		this.numOfAnyHomebaseTouch = numOfAnyHomebaseTouch;
-	}
-
-	public int getNumOfDomTouch() {
-		return numOfDomTouch;
-	}
-
-	public void setNumOfDomTouch(int numOfDomTouch) {
-		this.numOfDomTouch = numOfDomTouch;
-	}
-
-	public int getNumOfIntTouch() {
-		return numOfIntTouch;
-	}
-
-	public void setNumOfIntTouch(int numOfIntTouch) {
-		this.numOfIntTouch = numOfIntTouch;
+	public void incNumOfDaysTouched(int numOfDaysTouched) {
+		this.numOfDaysTouched += numOfDaysTouched;
 	}
 
 	public LocalDateTime getBriefTimeHb() {
@@ -343,28 +482,28 @@ public class Duty extends AbstractModel implements DutyView {
 		this.debriefDay = debriefDay;
 	}
 
-	public int getBriefDurationHb() {
-		return briefDurationHb;
+	public int getBriefDurationInMinsHb() {
+		return briefDurationInMinsHb;
 	}
 
-	public void setBriefDurationHb(int briefDurationHb) {
-		this.briefDurationHb = briefDurationHb;
+	public void setBriefDurationInMinsHb(int briefDurationInMinsHb) {
+		this.briefDurationInMinsHb = briefDurationInMinsHb;
 	}
 
-	public int getBriefDurationNonHb() {
-		return briefDurationNonHb;
+	public int getBriefDurationInMinsNonHb() {
+		return briefDurationInMinsNonHb;
 	}
 
-	public void setBriefDurationNonHb(int briefDurationNonHb) {
-		this.briefDurationNonHb = briefDurationNonHb;
+	public void setBriefDurationInMinsNonHb(int briefDurationInMinsNonHb) {
+		this.briefDurationInMinsNonHb = briefDurationInMinsNonHb;
 	}
 
-	public int getDebriefDuration() {
-		return debriefDuration;
+	public int getDebriefDurationInMins() {
+		return debriefDurationInMins;
 	}
 
-	public void setDebriefDuration(int debriefDuration) {
-		this.debriefDuration = debriefDuration;
+	public void setDebriefDurationInMins(int debriefDurationInMins) {
+		this.debriefDurationInMins = debriefDurationInMins;
 	}
 
 	public LocalDateTime getNextBriefTimeHb() {
@@ -398,53 +537,4 @@ public class Duty extends AbstractModel implements DutyView {
 	public void setEarly(boolean early) {
 		this.early = early;
 	}
-
-	public int getNumOfCriticalLegs() {
-		return numOfCriticalLegs;
-	}
-
-	public void setNumOfCriticalLegs(int numOfCriticalLegs) {
-		this.numOfCriticalLegs = numOfCriticalLegs;
-	}
-
-	public int getNumOfAgDg() {
-		return numOfAgDg;
-	}
-
-	public void setNumOfAgDg(int numOfAgDg) {
-		this.numOfAgDg = numOfAgDg;
-	}
-
-	public int getNumOfSpecFlights() {
-		return numOfSpecFlights;
-	}
-
-	public void setNumOfSpecFlights(int numOfSpecFlights) {
-		this.numOfSpecFlights = numOfSpecFlights;
-	}
-
-	public int getLongConnDiff() {
-		return longConnDiff;
-	}
-
-	public void setLongConnDiff(int longConnDiff) {
-		this.longConnDiff = longConnDiff;
-	}
-
-	public int getNumOfAcChanges() {
-		return numOfAcChanges;
-	}
-
-	public void setNumOfAcChanges(int numOfAcChanges) {
-		this.numOfAcChanges = numOfAcChanges;
-	}
-
-	public int getNumOfSpecialDHs() {
-		return numOfSpecialDHs;
-	}
-
-	public void setNumOfSpecialDHs(int numOfSpecialDHs) {
-		this.numOfSpecialDHs = numOfSpecialDHs;
-	}
-
 }

@@ -29,6 +29,8 @@ public class Leg extends AbstractModel implements LegView {
 
 	private boolean cover = false;
 
+	private int blockTimeInMins = 0;
+
 	public String getCarrier() {
 		return carrier;
 	}
@@ -187,6 +189,14 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setCover(boolean cover) {
 		this.cover = cover;
+	}
+
+	public int getBlockTimeInMins() {
+		return blockTimeInMins;
+	}
+
+	public void setBlockTimeInMins(int blockTimeInMins) {
+		this.blockTimeInMins = blockTimeInMins;
 	}
 
 	@Override

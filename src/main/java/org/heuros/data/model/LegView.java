@@ -27,4 +27,6 @@ public interface LegView extends View {
 	public boolean isSpecialFlight();
 
 	public boolean isCover();
+
+	public int getBlockTimeInMins();
 }

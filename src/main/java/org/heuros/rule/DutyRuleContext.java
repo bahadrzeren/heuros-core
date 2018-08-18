@@ -1,5 +1,7 @@
 package org.heuros.rule;
 
+import org.apache.log4j.Logger;
+import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.AggregatorRuleContext;
 import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.ExtensibilityCheckerRuleContext;
@@ -13,7 +15,6 @@ import org.heuros.core.rule.proxy.AggregatorProxy;
 import org.heuros.core.rule.proxy.ConnectionCheckerProxy;
 import org.heuros.core.rule.proxy.ExtensibilityCheckerProxy;
 import org.heuros.core.rule.proxy.ValidatorProxy;
-import org.heuros.core.rule.repo.AggregatorRepository;
 import org.heuros.core.rule.repo.ConnectionCheckerRepository;
 import org.heuros.core.rule.repo.ExtensibilityCheckerRepository;
 import org.heuros.core.rule.repo.ValidatorRepository;
@@ -22,22 +23,28 @@ import org.heuros.data.model.DutyView;
 import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public class DutyRuleContext implements AggregatorRuleContext<Duty, DutyView>,
-										ConnectionCheckerRuleContext<DutyView>,
-										ExtensibilityCheckerRuleContext<DutyView, LegView>,
-										ValidatorRuleContext<DutyView> {
-	protected AggregatorRepository<Duty, DutyView> aggregatorRepo = new AggregatorRepository<Duty, DutyView>();
+public class DutyRuleContext extends AbstractRuleContext
+								implements AggregatorRuleContext<Duty, DutyView>,
+											ConnectionCheckerRuleContext<DutyView>,
+											ExtensibilityCheckerRuleContext<DutyView, LegView>,
+											ValidatorRuleContext<DutyView> {
+
+	private static Logger logger = Logger.getLogger(DutyRuleContext.class);
+
+	protected Aggregator<Duty, DutyView> aggregatorImpl;
 	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
 	protected ExtensibilityCheckerRepository<DutyView, LegView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView, LegView>();
 	protected ValidatorRepository<DutyView> validatorRepo = new ValidatorRepository<DutyView>();
 
-	protected AggregatorProxy<Duty, DutyView> aggregatorProxy = new AggregatorProxy<Duty, DutyView>(this.aggregatorRepo);
+	protected AggregatorProxy<Duty, DutyView> aggregatorProxy;
 	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo);
 	protected ExtensibilityCheckerProxy<DutyView, LegView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView, LegView>(this.extensibilityCheckerRepo);
 	protected ValidatorProxy<DutyView> validatorProxy = new ValidatorProxy<DutyView>(this.validatorRepo);
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public DutyRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
+		super.registerRule(rule);
 		if (rule.isImplemented(Aggregator.class))
 			this.registerAggregatorRule((Aggregator<Duty, DutyView>) rule);
 		if (rule.isImplemented(ConnectionChecker.class))
@@ -52,7 +59,11 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, DutyView>,
 	@Override
 	public AggregatorRuleContext<Duty, DutyView> registerAggregatorRule(Aggregator<Duty, DutyView> rule)
 			throws RuleAnnotationIsMissing {
-		this.aggregatorRepo.registerRule(rule);
+		if (this.aggregatorProxy == null) {
+			this.aggregatorImpl = rule;
+			this.aggregatorProxy = new AggregatorProxy<Duty, DutyView>(rule);
+		} else
+			logger.error("Rule impl is already registered!");
 		return this;
 	}
 
@@ -78,8 +89,8 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, DutyView>,
 	}
 
 	@Override
-	public AggregatorRepository<Duty, DutyView> getAggregatorRepo() {
-		return this.aggregatorRepo;
+	public Aggregator<Duty, DutyView> getAggregatorImpl() {
+		return this.aggregatorImpl;
 	}
 
 	@Override

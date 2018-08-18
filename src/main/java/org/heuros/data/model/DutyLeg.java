@@ -4,22 +4,31 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class DutyLeg extends AbstractModel implements DutyLegView {
 	
-	private Duty duty;
-	private Leg leg;
+	private DutyView duty;
+	private LegView leg;
+	private boolean active;
 
-	public Duty getDuty() {
+	public DutyView getDuty() {
 		return duty;
 	}
 
-	public void setDuty(Duty duty) {
+	public void setDuty(DutyView duty) {
 		this.duty = duty;
 	}
 
-	public Leg getLeg() {
+	public LegView getLeg() {
 		return leg;
 	}
 
-	public void setLeg(Leg leg) {
+	public void setLeg(LegView leg) {
 		this.leg = leg;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

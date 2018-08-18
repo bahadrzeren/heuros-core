@@ -6,7 +6,7 @@ import org.heuros.core.rule.proxy.ValidatorProxy;
 import org.heuros.core.rule.repo.ValidatorRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public interface ValidatorRuleContext<V extends View> extends RuleContext {
+public interface ValidatorRuleContext<V extends View> {
 	public ValidatorRuleContext<V> registerValidatorRule(Validator<V> rule) throws RuleAnnotationIsMissing;
 	public ValidatorRepository<V> getValidatorRepo();
 	public ValidatorProxy<V> getValidatorProxy();

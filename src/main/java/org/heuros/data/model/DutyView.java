@@ -6,6 +6,38 @@ import org.heuros.core.data.base.View;
 
 public interface DutyView extends View {
 
+	public void append(DutyLegView dutyLegView);
+	public DutyLegView removeLast();
+	public DutyLegView getFirstDutyLeg();
+	public DutyLegView getLastDutyLeg();
+	public LegView getFirstLeg();
+	public LegView getLastLeg();
+
+	public int getBlockTimeInMins();
+	public int getBlockTimeInMinsActive();
+	public int getBlockTimeInMinsPassive();
+
+	public int getNumOfLegs();
+	public int getNumOfLegsActive();
+	public int getNumOfLegsPassive();
+	public int getNumOfLegsIntToDom();
+	public int getNumOfLegsDomToInt();
+
+	public int getNumOfCriticalLegs();
+	public int getNumOfAgDg();
+	public int getNumOfSpecFlights();
+
+	public int getNumOfAnyHomebaseTouch();
+	public int getNumOfDomTouch();
+	public int getNumOfIntTouch();
+
+	public int getNumOfAcChanges();
+
+	public int[] getLongestBlockTimesInMins();
+	public int getLongestBlockTimeInMins();
+
+
+
 	public boolean isValidHb();
 	public boolean isValidNonHb();
 
@@ -14,30 +46,13 @@ public interface DutyView extends View {
 	public boolean isErHb();
 	public boolean isErNonHb();
 
-	public int getRestDurationHb();
-	public int getRestDurationNonHb();
+	public int getRestDurationInMinsHb();
+	public int getRestDurationInMinsNonHb();
 
-	public int getDutyDurationHb();
-	public int getDutyDurationNonHb();
-
-	public int getBlockTime();
-	public int getBlockTimeActive();
-	public int getBlockTimePassive();
-
-	public int getNumOfLegs();
-	public int getNumOfLegsActive();
-	public int getNumOfLegsPassive();
-	public int getNumOfLegsIntToDom();
-	public int getNumOfLegsDomToInt();
+	public int getDutyDurationInMinsHb();
+	public int getDutyDurationInMinsNonHb();
 
 	public int getNumOfDaysTouched();
-
-	public int[] getLongestBlockTimes();
-	public int getLongestBlockTime();
-
-	public int getNumOfAnyHomebaseTouch();
-	public int getNumOfDomTouch();
-	public int getNumOfIntTouch();
 
 	public LocalDateTime getBriefTimeHb();
 	public LocalDateTime getBriefTimeNonHb();
@@ -50,9 +65,9 @@ public interface DutyView extends View {
 	public int getBriefDayNonHb();
 	public int getDebriefDay();
 
-	public int getBriefDurationHb();
-	public int getBriefDurationNonHb();
-	public int getDebriefDuration();
+	public int getBriefDurationInMinsHb();
+	public int getBriefDurationInMinsNonHb();
+	public int getDebriefDurationInMins();
 
 	public LocalDateTime getNextBriefTimeHb();
 	public LocalDateTime getNextBriefTimeNonHb();
@@ -60,11 +75,5 @@ public interface DutyView extends View {
 	public boolean isHard();
 	public boolean isEarly();
 
-	public int getNumOfCriticalLegs();
-	public int getNumOfAgDg();
-	public int getNumOfSpecFlights();
-
 	public int getLongConnDiff();
-	public int getNumOfAcChanges();
-	public int getNumOfSpecialDHs();
 }
