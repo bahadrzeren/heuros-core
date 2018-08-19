@@ -1,5 +1,6 @@
 package org.heuros.data.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Duty extends AbstractModel implements DutyView {
 
 	private int numOfCriticalLegs = 0;
 	private int numOfAgDg = 0;
-	private int numOfSpecFlights = 0;
+	private int numOfSpecialFlights = 0;
 
 	private int numOfAnyHomebaseTouch = 0;
 	private int numOfDomTouch = 0;
@@ -31,27 +32,6 @@ public class Duty extends AbstractModel implements DutyView {
 
 	private int longConnDiff = 0;
 
-	private int[] longestBlockTimesInMins = new int[15];
-	private int longestBlockTimeInMins = 0;
-
-
-
-	private boolean validHb = true;
-	private boolean validNonHb = true;
-
-	private int augmentedHb = 0;
-	private int augmentedNonHb = 0;
-	private boolean erHb = false;
-	private boolean erNonHb = false;
-
-	private int restDurationInMinsHb = 0;
-	private int restDurationInMinsNonHb = 0;
-
-	private int dutyDurationInMinsHb = 0;
-	private int dutyDurationInMinsNonHb = 0;
-
-	private int numOfDaysTouched = 0;
-
 	private LocalDateTime briefTimeHb = null;
 	private LocalDateTime briefTimeNonHb = null;
 	private LocalDateTime debriefTime = null;
@@ -59,19 +39,46 @@ public class Duty extends AbstractModel implements DutyView {
 	private LocalDateTime briefDayBeginningHb = null;
 	private LocalDateTime briefDayBeginningNonHb = null;
 	private LocalDateTime debriefDayEnding = null;
-	private int briefDayHb = 0;
-	private int briefDayNonHb = 0;
-	private int debriefDay = 0;
+
+	private LocalDate briefDayHb = null;
+	private LocalDate briefDayNonHb = null;
+	private LocalDate debriefDay = null;
 
 	private int briefDurationInMinsHb = 0;
 	private int briefDurationInMinsNonHb = 0;
 	private int debriefDurationInMins = 0;
 
-	private LocalDateTime nextBriefTimeHb = null;
-	private LocalDateTime nextBriefTimeNonHb = null;
+	private int dutyDurationInMinsHb = 0;
+	private int dutyDurationInMinsNonHb = 0;
 
-	private boolean hard = false;
-	private boolean early = false;
+	private int numOfDaysTouchedHb = 0;
+	private int numOfDaysTouchedNonHb = 0;
+
+	private boolean er = false;
+
+	private int restDurationInMinsHbToHb = 0;
+	private int restDurationInMinsHbToNonHb = 0;
+	private int restDurationInMinsNonHbToHb = 0;
+	private int restDurationInMinsNonHbToNonHb = 0;
+
+	private LocalDateTime nextBriefTimeHbToHb = null;
+	private LocalDateTime nextBriefTimeHbToNonHb = null;
+	private LocalDateTime nextBriefTimeNonHbToHb = null;
+	private LocalDateTime nextBriefTimeNonHbToNonHb = null;
+
+	private int augmentedHb = 0;
+	private int augmentedNonHb = 0;
+
+	private boolean earlyHb = false;
+	private boolean earlyNonHb = false;
+	private boolean hardHb = false;
+	private boolean hardNonHb = false;
+
+	private int[] longestBlockTimesInMins = new int[15];
+	private int longestBlockTimeInMins = 0;
+
+	private boolean validHb = true;
+	private boolean validNonHb = true;
 
 	public void append(DutyLegView dutyLegView) {
 		this.dutyLegs.add(dutyLegView);
@@ -230,16 +237,16 @@ public class Duty extends AbstractModel implements DutyView {
 		this.numOfAgDg += numOfAgDg;
 	}
 
-	public int getNumOfSpecFlights() {
-		return numOfSpecFlights;
+	public int getNumOfSpecialFlights() {
+		return numOfSpecialFlights;
 	}
 
-	public void setNumOfSpecFlights(int numOfSpecFlights) {
-		this.numOfSpecFlights = numOfSpecFlights;
+	public void setNumOfSpecialFlights(int numOfSpecialFlights) {
+		this.numOfSpecialFlights = numOfSpecialFlights;
 	}
 
-	public void incNumOfSpecFlights(int numOfSpecFlights) {
-		this.numOfSpecFlights += numOfSpecFlights;
+	public void incNumOfSpecialFlights(int numOfSpecialFlights) {
+		this.numOfSpecialFlights += numOfSpecialFlights;
 	}
 
 	public int getNumOfAnyHomebaseTouch() {
@@ -302,114 +309,6 @@ public class Duty extends AbstractModel implements DutyView {
 		this.longConnDiff += longConnDiff;
 	}
 
-	public int[] getLongestBlockTimesInMins() {
-		return longestBlockTimesInMins;
-	}
-
-	public void setLongestBlockTimesInMins(int[] longestBlockTimesInMins) {
-		this.longestBlockTimesInMins = longestBlockTimesInMins;
-	}
-
-	public int getLongestBlockTimeInMins() {
-		return longestBlockTimeInMins;
-	}
-
-	public void setLongestBlockTimeInMins(int longestBlockTimeInMins) {
-		this.longestBlockTimeInMins = longestBlockTimeInMins;
-	}
-
-	public boolean isValidHb() {
-		return validHb;
-	}
-
-	public void setValidHb(boolean validHb) {
-		this.validHb = validHb;
-	}
-
-	public boolean isValidNonHb() {
-		return validNonHb;
-	}
-
-	public void setValidNonHb(boolean validNonHb) {
-		this.validNonHb = validNonHb;
-	}
-
-	public int getAugmentedHb() {
-		return augmentedHb;
-	}
-
-	public void setAugmentedHb(int augmentedHb) {
-		this.augmentedHb = augmentedHb;
-	}
-
-	public int getAugmentedNonHb() {
-		return augmentedNonHb;
-	}
-
-	public void setAugmentedNonHb(int augmentedNonHb) {
-		this.augmentedNonHb = augmentedNonHb;
-	}
-
-	public boolean isErHb() {
-		return erHb;
-	}
-
-	public void setErHb(boolean erHb) {
-		this.erHb = erHb;
-	}
-
-	public boolean isErNonHb() {
-		return erNonHb;
-	}
-
-	public void setErNonHb(boolean erNonHb) {
-		this.erNonHb = erNonHb;
-	}
-
-	public int getRestDurationInMinsHb() {
-		return restDurationInMinsHb;
-	}
-
-	public void setRestDurationInMinsHb(int restDurationInMinsHb) {
-		this.restDurationInMinsHb = restDurationInMinsHb;
-	}
-
-	public int getRestDurationInMinsNonHb() {
-		return restDurationInMinsNonHb;
-	}
-
-	public void setRestDurationInMinsNonHb(int restDurationInMinsNonHb) {
-		this.restDurationInMinsNonHb = restDurationInMinsNonHb;
-	}
-
-	public int getDutyDurationInMinsHb() {
-		return dutyDurationInMinsHb;
-	}
-
-	public void setDutyDurationInMinsHb(int dutyDurationInMinsHb) {
-		this.dutyDurationInMinsHb = dutyDurationInMinsHb;
-	}
-
-	public int getDutyDurationInMinsNonHb() {
-		return dutyDurationInMinsNonHb;
-	}
-
-	public void setDutyDurationInMinsNonHb(int dutyDurationInMinsNonHb) {
-		this.dutyDurationInMinsNonHb = dutyDurationInMinsNonHb;
-	}
-
-	public int getNumOfDaysTouched() {
-		return numOfDaysTouched;
-	}
-
-	public void setNumOfDaysTouched(int numOfDaysTouched) {
-		this.numOfDaysTouched = numOfDaysTouched;
-	}
-
-	public void incNumOfDaysTouched(int numOfDaysTouched) {
-		this.numOfDaysTouched += numOfDaysTouched;
-	}
-
 	public LocalDateTime getBriefTimeHb() {
 		return briefTimeHb;
 	}
@@ -458,27 +357,27 @@ public class Duty extends AbstractModel implements DutyView {
 		this.debriefDayEnding = debriefDayEnding;
 	}
 
-	public int getBriefDayHb() {
+	public LocalDate getBriefDayHb() {
 		return briefDayHb;
 	}
 
-	public void setBriefDayHb(int briefDayHb) {
+	public void setBriefDayHb(LocalDate briefDayHb) {
 		this.briefDayHb = briefDayHb;
 	}
 
-	public int getBriefDayNonHb() {
+	public LocalDate getBriefDayNonHb() {
 		return briefDayNonHb;
 	}
 
-	public void setBriefDayNonHb(int briefDayNonHb) {
+	public void setBriefDayNonHb(LocalDate briefDayNonHb) {
 		this.briefDayNonHb = briefDayNonHb;
 	}
 
-	public int getDebriefDay() {
+	public LocalDate getDebriefDay() {
 		return debriefDay;
 	}
 
-	public void setDebriefDay(int debriefDay) {
+	public void setDebriefDay(LocalDate debriefDay) {
 		this.debriefDay = debriefDay;
 	}
 
@@ -506,35 +405,167 @@ public class Duty extends AbstractModel implements DutyView {
 		this.debriefDurationInMins = debriefDurationInMins;
 	}
 
-	public LocalDateTime getNextBriefTimeHb() {
-		return nextBriefTimeHb;
+	public int getDutyDurationInMinsHb() {
+		return dutyDurationInMinsHb;
 	}
 
-	public void setNextBriefTimeHb(LocalDateTime nextBriefTimeHb) {
-		this.nextBriefTimeHb = nextBriefTimeHb;
+	public void setDutyDurationInMinsHb(int dutyDurationInMinsHb) {
+		this.dutyDurationInMinsHb = dutyDurationInMinsHb;
 	}
 
-	public LocalDateTime getNextBriefTimeNonHb() {
-		return nextBriefTimeNonHb;
+	public int getDutyDurationInMinsNonHb() {
+		return dutyDurationInMinsNonHb;
 	}
 
-	public void setNextBriefTimeNonHb(LocalDateTime nextBriefTimeNonHb) {
-		this.nextBriefTimeNonHb = nextBriefTimeNonHb;
+	public void setDutyDurationInMinsNonHb(int dutyDurationInMinsNonHb) {
+		this.dutyDurationInMinsNonHb = dutyDurationInMinsNonHb;
 	}
 
-	public boolean isHard() {
-		return hard;
+	public int getNumOfDaysTouchedHb() {
+		return numOfDaysTouchedHb;
 	}
 
-	public void setHard(boolean hard) {
-		this.hard = hard;
+	public void setNumOfDaysTouchedHb(int numOfDaysTouchedHb) {
+		this.numOfDaysTouchedHb = numOfDaysTouchedHb;
 	}
 
-	public boolean isEarly() {
-		return early;
+	public int getNumOfDaysTouchedNonHb() {
+		return numOfDaysTouchedNonHb;
 	}
 
-	public void setEarly(boolean early) {
-		this.early = early;
+	public void setNumOfDaysTouchedNonHb(int numOfDaysTouchedNonHb) {
+		this.numOfDaysTouchedNonHb = numOfDaysTouchedNonHb;
 	}
+
+	public boolean isEr() {
+		return er;
+	}
+
+	public void setEr(boolean er) {
+		this.er = er;
+	}
+
+	public int getRestDurationInMinsHbToHb() {
+		return restDurationInMinsHbToHb;
+	}
+	public void setRestDurationInMinsHbToHb(int restDurationInMinsHbToHb) {
+		this.restDurationInMinsHbToHb = restDurationInMinsHbToHb;
+	}
+	public int getRestDurationInMinsHbToNonHb() {
+		return restDurationInMinsHbToNonHb;
+	}
+	public void setRestDurationInMinsHbToNonHb(int restDurationInMinsHbToNonHb) {
+		this.restDurationInMinsHbToNonHb = restDurationInMinsHbToNonHb;
+	}
+	public int getRestDurationInMinsNonHbToHb() {
+		return restDurationInMinsNonHbToHb;
+	}
+	public void setRestDurationInMinsNonHbToHb(int restDurationInMinsNonHbToHb) {
+		this.restDurationInMinsNonHbToHb = restDurationInMinsNonHbToHb;
+	}
+	public int getRestDurationInMinsNonHbToNonHb() {
+		return restDurationInMinsNonHbToNonHb;
+	}
+	public void setRestDurationInMinsNonHbToNonHb(int restDurationInMinsNonHbToNonHb) {
+		this.restDurationInMinsNonHbToNonHb = restDurationInMinsNonHbToNonHb;
+	}
+
+	public LocalDateTime getNextBriefTimeHbToHb() {
+		return nextBriefTimeHbToHb;
+	}
+	public void setNextBriefTimeHbToHb(LocalDateTime nextBriefTimeHbToHb) {
+		this.nextBriefTimeHbToHb = nextBriefTimeHbToHb;
+	}
+	public LocalDateTime getNextBriefTimeHbToNonHb() {
+		return nextBriefTimeHbToNonHb;
+	}
+	public void setNextBriefTimeHbToNonHb(LocalDateTime nextBriefTimeHbToNonHb) {
+		this.nextBriefTimeHbToNonHb = nextBriefTimeHbToNonHb;
+	}
+	public LocalDateTime getNextBriefTimeNonHbToHb() {
+		return nextBriefTimeNonHbToHb;
+	}
+	public void setNextBriefTimeNonHbToHb(LocalDateTime nextBriefTimeNonHbToHb) {
+		this.nextBriefTimeNonHbToHb = nextBriefTimeNonHbToHb;
+	}
+	public LocalDateTime getNextBriefTimeNonHbToNonHb() {
+		return nextBriefTimeNonHbToNonHb;
+	}
+	public void setNextBriefTimeNonHbToNonHb(LocalDateTime nextBriefTimeNonHbToNonHb) {
+		this.nextBriefTimeNonHbToNonHb = nextBriefTimeNonHbToNonHb;
+	}
+
+	public int getAugmentedHb() {
+		return augmentedHb;
+	}
+
+	public void setAugmentedHb(int augmentedHb) {
+		this.augmentedHb = augmentedHb;
+	}
+
+	public int getAugmentedNonHb() {
+		return augmentedNonHb;
+	}
+
+	public void setAugmentedNonHb(int augmentedNonHb) {
+		this.augmentedNonHb = augmentedNonHb;
+	}
+
+	public boolean isEarlyHb() {
+		return earlyHb;
+	}
+	public void setEarlyHb(boolean earlyHb) {
+		this.earlyHb = earlyHb;
+	}
+	public boolean isEarlyNonHb() {
+		return earlyNonHb;
+	}
+	public void setEarlyNonHb(boolean earlyNonHb) {
+		this.earlyNonHb = earlyNonHb;
+	}
+	public boolean isHardHb() {
+		return hardHb;
+	}
+	public void setHardHb(boolean hardHb) {
+		this.hardHb = hardHb;
+	}
+	public boolean isHardNonHb() {
+		return hardNonHb;
+	}
+	public void setHardNonHb(boolean hardNonHb) {
+		this.hardNonHb = hardNonHb;
+	}
+
+	public int[] getLongestBlockTimesInMins() {
+		return longestBlockTimesInMins;
+	}
+
+	public void setLongestBlockTimesInMins(int[] longestBlockTimesInMins) {
+		this.longestBlockTimesInMins = longestBlockTimesInMins;
+	}
+
+	public int getLongestBlockTimeInMins() {
+		return longestBlockTimeInMins;
+	}
+
+	public void setLongestBlockTimeInMins(int longestBlockTimeInMins) {
+		this.longestBlockTimeInMins = longestBlockTimeInMins;
+	}
+
+	public boolean isValidHb() {
+		return validHb;
+	}
+
+	public void setValidHb(boolean validHb) {
+		this.validHb = validHb;
+	}
+
+	public boolean isValidNonHb() {
+		return validNonHb;
+	}
+
+	public void setValidNonHb(boolean validNonHb) {
+		this.validNonHb = validNonHb;
+	}
+
 }

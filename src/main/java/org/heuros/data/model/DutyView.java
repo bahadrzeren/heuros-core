@@ -1,5 +1,6 @@
 package org.heuros.data.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.heuros.core.data.base.View;
@@ -25,7 +26,7 @@ public interface DutyView extends View {
 
 	public int getNumOfCriticalLegs();
 	public int getNumOfAgDg();
-	public int getNumOfSpecFlights();
+	public int getNumOfSpecialFlights();
 
 	public int getNumOfAnyHomebaseTouch();
 	public int getNumOfDomTouch();
@@ -33,26 +34,11 @@ public interface DutyView extends View {
 
 	public int getNumOfAcChanges();
 
-	public int[] getLongestBlockTimesInMins();
-	public int getLongestBlockTimeInMins();
+	public int getLongConnDiff();
 
-
-
-	public boolean isValidHb();
-	public boolean isValidNonHb();
-
-	public int getAugmentedHb();
-	public int getAugmentedNonHb();
-	public boolean isErHb();
-	public boolean isErNonHb();
-
-	public int getRestDurationInMinsHb();
-	public int getRestDurationInMinsNonHb();
-
-	public int getDutyDurationInMinsHb();
-	public int getDutyDurationInMinsNonHb();
-
-	public int getNumOfDaysTouched();
+	public int getBriefDurationInMinsHb();
+	public int getBriefDurationInMinsNonHb();
+	public int getDebriefDurationInMins();
 
 	public LocalDateTime getBriefTimeHb();
 	public LocalDateTime getBriefTimeNonHb();
@@ -61,19 +47,42 @@ public interface DutyView extends View {
 	public LocalDateTime getBriefDayBeginningHb();
 	public LocalDateTime getBriefDayBeginningNonHb();
 	public LocalDateTime getDebriefDayEnding();
-	public int getBriefDayHb();
-	public int getBriefDayNonHb();
-	public int getDebriefDay();
 
-	public int getBriefDurationInMinsHb();
-	public int getBriefDurationInMinsNonHb();
-	public int getDebriefDurationInMins();
+	public LocalDate getBriefDayHb();
+	public LocalDate getBriefDayNonHb();
+	public LocalDate getDebriefDay();
 
-	public LocalDateTime getNextBriefTimeHb();
-	public LocalDateTime getNextBriefTimeNonHb();
+	public int getDutyDurationInMinsHb();
+	public int getDutyDurationInMinsNonHb();
 
-	public boolean isHard();
-	public boolean isEarly();
+	public int getNumOfDaysTouchedHb();
+	public int getNumOfDaysTouchedNonHb();
 
-	public int getLongConnDiff();
+	public boolean isEr();
+
+	public int getRestDurationInMinsHbToHb();
+	public int getRestDurationInMinsHbToNonHb();
+	public int getRestDurationInMinsNonHbToHb();
+	public int getRestDurationInMinsNonHbToNonHb();
+
+	public LocalDateTime getNextBriefTimeHbToHb();
+	public LocalDateTime getNextBriefTimeHbToNonHb();
+	public LocalDateTime getNextBriefTimeNonHbToHb();
+	public LocalDateTime getNextBriefTimeNonHbToNonHb();
+
+	public int getAugmentedHb();
+	public int getAugmentedNonHb();
+
+	public boolean isEarlyHb();
+	public boolean isEarlyNonHb();
+	public boolean isHardHb();
+	public boolean isHardNonHb();
+
+	public int[] getLongestBlockTimesInMins();
+	public int getLongestBlockTimeInMins();
+
+
+
+	public boolean isValidHb();
+	public boolean isValidNonHb();
 }

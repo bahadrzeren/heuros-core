@@ -23,7 +23,7 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	}
 
 	@Override
-	public void reset() {
-		this.aggregatorImpl.reset();
+	public void reset(P p) {
+		this.aggregatorImpl.reset(p);
 	}
 }
