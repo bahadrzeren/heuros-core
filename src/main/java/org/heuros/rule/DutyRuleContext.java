@@ -24,19 +24,19 @@ import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
 public class DutyRuleContext extends AbstractRuleContext
-								implements AggregatorRuleContext<Duty, DutyView>,
+								implements AggregatorRuleContext<Duty, LegView>,
 											ConnectionCheckerRuleContext<DutyView>,
 											ExtensibilityCheckerRuleContext<DutyView, LegView>,
 											ValidatorRuleContext<DutyView> {
 
 	private static Logger logger = Logger.getLogger(DutyRuleContext.class);
 
-	protected Aggregator<Duty, DutyView> aggregatorImpl;
+	protected Aggregator<Duty, LegView> aggregatorImpl;
 	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
 	protected ExtensibilityCheckerRepository<DutyView, LegView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView, LegView>();
 	protected ValidatorRepository<DutyView> validatorRepo = new ValidatorRepository<DutyView>();
 
-	protected AggregatorProxy<Duty, DutyView> aggregatorProxy;
+	protected AggregatorProxy<Duty, LegView> aggregatorProxy;
 	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo);
 	protected ExtensibilityCheckerProxy<DutyView, LegView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView, LegView>(this.extensibilityCheckerRepo);
 	protected ValidatorProxy<DutyView> validatorProxy = new ValidatorProxy<DutyView>(this.validatorRepo);
@@ -46,7 +46,7 @@ public class DutyRuleContext extends AbstractRuleContext
 	public DutyRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		super.registerRule(rule);
 		if (rule.isImplemented(Aggregator.class))
-			this.registerAggregatorRule((Aggregator<Duty, DutyView>) rule);
+			this.registerAggregatorRule((Aggregator<Duty, LegView>) rule);
 		if (rule.isImplemented(ConnectionChecker.class))
 			this.registerConnectionCheckerRule((ConnectionChecker<DutyView>) rule);
 		if (rule.isImplemented(Validator.class))
@@ -57,11 +57,11 @@ public class DutyRuleContext extends AbstractRuleContext
 	}
 
 	@Override
-	public AggregatorRuleContext<Duty, DutyView> registerAggregatorRule(Aggregator<Duty, DutyView> rule)
+	public AggregatorRuleContext<Duty, LegView> registerAggregatorRule(Aggregator<Duty, LegView> rule)
 			throws RuleAnnotationIsMissing {
 		if (this.aggregatorProxy == null) {
 			this.aggregatorImpl = rule;
-			this.aggregatorProxy = new AggregatorProxy<Duty, DutyView>(rule);
+			this.aggregatorProxy = new AggregatorProxy<Duty, LegView>(rule);
 		} else
 			logger.error("Rule impl is already registered!");
 		return this;
@@ -89,7 +89,7 @@ public class DutyRuleContext extends AbstractRuleContext
 	}
 
 	@Override
-	public Aggregator<Duty, DutyView> getAggregatorImpl() {
+	public Aggregator<Duty, LegView> getAggregatorImpl() {
 		return this.aggregatorImpl;
 	}
 
@@ -109,7 +109,7 @@ public class DutyRuleContext extends AbstractRuleContext
 	}
 
 	@Override
-	public AggregatorProxy<Duty, DutyView> getAggregatorProxy() {
+	public AggregatorProxy<Duty, LegView> getAggregatorProxy() {
 		return this.aggregatorProxy;
 	}
 

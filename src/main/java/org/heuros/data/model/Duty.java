@@ -567,5 +567,65 @@ public class Duty extends AbstractModel implements DutyView {
 	public void setValidNonHb(boolean validNonHb) {
 		this.validNonHb = validNonHb;
 	}
+	@Override
+	public int getBriefDurationInMins(Airport hb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public LocalDateTime getBriefTime(Airport hb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public LocalDateTime getBriefDayBeginning(Airport hb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public LocalDate getBriefDay(Airport hb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int getDutyDurationInMins(Airport hb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int getNumOfDaysTouched(Airport hb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int getRestDurationInMins(Airport hb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public LocalDateTime getNextBriefTimeHbTo(Airport hb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int getAugmented(Airport hb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public boolean isEarly(Airport hb) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isHard(Airport hb) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isValid(Airport hb) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

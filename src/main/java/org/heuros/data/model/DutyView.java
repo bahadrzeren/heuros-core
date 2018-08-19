@@ -38,25 +38,31 @@ public interface DutyView extends View {
 
 	public int getBriefDurationInMinsHb();
 	public int getBriefDurationInMinsNonHb();
+	public int getBriefDurationInMins(Airport hb);
 	public int getDebriefDurationInMins();
 
 	public LocalDateTime getBriefTimeHb();
 	public LocalDateTime getBriefTimeNonHb();
+	public LocalDateTime getBriefTime(Airport hb);
 	public LocalDateTime getDebriefTime();
 
 	public LocalDateTime getBriefDayBeginningHb();
 	public LocalDateTime getBriefDayBeginningNonHb();
+	public LocalDateTime getBriefDayBeginning(Airport hb);
 	public LocalDateTime getDebriefDayEnding();
 
 	public LocalDate getBriefDayHb();
 	public LocalDate getBriefDayNonHb();
+	public LocalDate getBriefDay(Airport hb);
 	public LocalDate getDebriefDay();
 
 	public int getDutyDurationInMinsHb();
 	public int getDutyDurationInMinsNonHb();
+	public int getDutyDurationInMins(Airport hb);
 
 	public int getNumOfDaysTouchedHb();
 	public int getNumOfDaysTouchedNonHb();
+	public int getNumOfDaysTouched(Airport hb);
 
 	public boolean isEr();
 
@@ -64,19 +70,24 @@ public interface DutyView extends View {
 	public int getRestDurationInMinsHbToNonHb();
 	public int getRestDurationInMinsNonHbToHb();
 	public int getRestDurationInMinsNonHbToNonHb();
+	public int getRestDurationInMins(Airport hb);
 
 	public LocalDateTime getNextBriefTimeHbToHb();
 	public LocalDateTime getNextBriefTimeHbToNonHb();
 	public LocalDateTime getNextBriefTimeNonHbToHb();
 	public LocalDateTime getNextBriefTimeNonHbToNonHb();
+	public LocalDateTime getNextBriefTimeHbTo(Airport hb);
 
 	public int getAugmentedHb();
 	public int getAugmentedNonHb();
+	public int getAugmented(Airport hb);
 
 	public boolean isEarlyHb();
 	public boolean isEarlyNonHb();
+	public boolean isEarly(Airport hb);
 	public boolean isHardHb();
 	public boolean isHardNonHb();
+	public boolean isHard(Airport hb);
 
 	public int[] getLongestBlockTimesInMins();
 	public int getLongestBlockTimeInMins();
@@ -85,4 +96,5 @@ public interface DutyView extends View {
 
 	public boolean isValidHb();
 	public boolean isValidNonHb();
+	public boolean isValid(Airport hb);
 }
