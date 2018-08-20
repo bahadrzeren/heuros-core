@@ -7,12 +7,12 @@ import org.heuros.core.data.base.View;
 
 public interface DutyView extends View {
 
-	public void append(DutyLegView dutyLegView);
-	public DutyLegView removeLast();
 	public DutyLegView getFirstDutyLeg();
 	public DutyLegView getLastDutyLeg();
 	public LegView getFirstLeg();
 	public LegView getLastLeg();
+	public AirportView getFirstDepAirport();
+	public AirportView getLastArrAirport();
 
 	public int getBlockTimeInMins();
 	public int getBlockTimeInMinsActive();
@@ -82,6 +82,7 @@ public interface DutyView extends View {
 	public int getAugmentedNonHb();
 	public int getAugmented(Airport hb);
 
+	public boolean isInternational();
 	public boolean isEarlyHb();
 	public boolean isEarlyNonHb();
 	public boolean isEarly(Airport hb);
@@ -91,8 +92,6 @@ public interface DutyView extends View {
 
 	public int[] getLongestBlockTimesInMins();
 	public int getLongestBlockTimeInMins();
-
-
 
 	public boolean isValidHb();
 	public boolean isValidNonHb();

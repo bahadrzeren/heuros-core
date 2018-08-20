@@ -69,6 +69,7 @@ public class Duty extends AbstractModel implements DutyView {
 	private int augmentedHb = 0;
 	private int augmentedNonHb = 0;
 
+	private boolean international = false;
 	private boolean earlyHb = false;
 	private boolean earlyNonHb = false;
 	private boolean hardHb = false;
@@ -101,12 +102,22 @@ public class Duty extends AbstractModel implements DutyView {
 	public LegView getFirstLeg() {
 		if (this.dutyLegs.size() > 0)
 			return this.dutyLegs.get(0).getLeg();
-		return null;		
+		return null;
 	}
 	public LegView getLastLeg() {
 		if (this.dutyLegs.size() > 0)
 			return this.dutyLegs.get(this.dutyLegs.size() - 1).getLeg();
 		return null;		
+	}
+	public AirportView getFirstDepAirport() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(0).getLeg().getDepAirport();
+		return null;
+	}
+	public AirportView getLastArrAirport() {
+		if (this.dutyLegs.size() > 0)
+			return this.dutyLegs.get(this.dutyLegs.size() - 1).getLeg().getArrAirport();
+		return null;
 	}
 
 	public List<DutyLegView> getDutyLegs() {
@@ -511,6 +522,12 @@ public class Duty extends AbstractModel implements DutyView {
 		this.augmentedNonHb = augmentedNonHb;
 	}
 
+	public boolean isInternational() {
+		return international;
+	}
+	public void setInternational(boolean international) {
+		this.international = international;
+	}
 	public boolean isEarlyHb() {
 		return earlyHb;
 	}
