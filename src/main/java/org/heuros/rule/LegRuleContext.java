@@ -34,6 +34,15 @@ public class LegRuleContext extends AbstractRuleContext
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void removeRule(Rule rule) {
+		if (rule.isImplemented(Introducer.class))
+			this.introducerRepo.removeRule((Introducer<Leg>) rule);
+		if (rule.isImplemented(ConnectionChecker.class))
+			this.connectionCheckerRepo.removeRule((ConnectionChecker<LegView>) rule);
+	}
+
 	@Override
 	public LegRuleContext registerIntroducerRule(Introducer<Leg> rule)
 			throws RuleAnnotationIsMissing {

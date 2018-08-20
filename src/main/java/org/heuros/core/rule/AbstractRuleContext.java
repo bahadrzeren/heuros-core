@@ -10,4 +10,6 @@ public abstract class AbstractRuleContext implements RuleContext {
 			throw new RuleAnnotationIsMissing("@Rule annotation could not be found!");
 		return this;
 	}
+
+	public abstract void removeRule(Rule rule);
 }

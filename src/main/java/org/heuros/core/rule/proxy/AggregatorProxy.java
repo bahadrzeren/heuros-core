@@ -26,4 +26,9 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	public void reset(P p) {
 		this.aggregatorImpl.reset(p);
 	}
+
+	@Override
+	public void reCalculate(P p) {
+		this.aggregatorImpl.reset(p);
+	}
 }

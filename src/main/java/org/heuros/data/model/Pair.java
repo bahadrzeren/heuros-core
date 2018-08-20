@@ -33,37 +33,37 @@ public class Pair extends AbstractModel implements PairView {
 		this.duties.add(dutyView);
 	}
 	public DutyView removeLast() {
-		if (this.duties.size() > 0)
-			return this.duties.remove(this.duties.size() - 1);
+		if (this.numOfDuties > 0)
+			return this.duties.remove(this.numOfDuties - 1);
 		return null;
 	}
 	public DutyView getFirstDuty() {
-		if (this.duties.size() > 0)
+		if (this.numOfDuties > 0)
 			return this.duties.get(0);
 		return null;
 	}
 	public DutyView getLastDuty() {
-		if (this.duties.size() > 0)
-			return this.duties.get(this.duties.size() - 1);
+		if (this.numOfDuties > 0)
+			return this.duties.get(this.numOfDuties - 1);
 		return null;		
 	}
 	public LegView getFirstLeg() {
-		if (this.duties.size() > 0)
+		if (this.numOfDuties > 0)
 			return getFirstDuty().getFirstLeg();
 		return null;
 	}
 	public LegView getLastLeg() {
-		if (this.duties.size() > 0)
+		if (this.numOfDuties > 0)
 			return getLastDuty().getLastLeg();
 		return null;
 	}
 	public AirportView getFirstDepAirport() {
-		if (this.duties.size() > 0)
+		if (this.numOfDuties > 0)
 			return getFirstDuty().getFirstDepAirport();
 		return null;
 	}
 	public AirportView getLastArrAirport() {
-		if (this.duties.size() > 0)
+		if (this.numOfDuties > 0)
 			return getLastDuty().getLastArrAirport();
 		return null;
 	}

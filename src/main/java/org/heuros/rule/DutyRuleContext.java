@@ -56,6 +56,19 @@ public class DutyRuleContext extends AbstractRuleContext
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void removeRule(Rule rule) {
+		if (rule.isImplemented(Aggregator.class))
+			this.aggregatorImpl = null;
+		if (rule.isImplemented(ConnectionChecker.class))
+			this.connectionCheckerRepo.removeRule((ConnectionChecker<DutyView>) rule);
+		if (rule.isImplemented(Validator.class))
+			this.validatorRepo.removeRule((Validator<DutyView>) rule);
+		if (rule.isImplemented(ExtensibilityChecker.class))
+			this.extensibilityCheckerRepo.removeRule((ExtensibilityChecker<DutyView, LegView>) rule);
+	}
+
 	@Override
 	public AggregatorRuleContext<Duty, LegView> registerAggregatorRule(Aggregator<Duty, LegView> rule)
 			throws RuleAnnotationIsMissing {

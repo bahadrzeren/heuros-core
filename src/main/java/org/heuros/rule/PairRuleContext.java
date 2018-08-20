@@ -55,6 +55,19 @@ public class PairRuleContext extends AbstractRuleContext
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void removeRule(Rule rule) {
+		if (rule.isImplemented(Aggregator.class))
+			this.aggregatorImpl = null;
+		if (rule.isImplemented(ConnectionChecker.class))
+			this.connectionCheckerRepo.removeRule((ConnectionChecker<PairView>) rule);
+		if (rule.isImplemented(Validator.class))
+			this.validatorRepo.removeRule((Validator<PairView>) rule);
+		if (rule.isImplemented(ExtensibilityChecker.class))
+			this.extensibilityCheckerRepo.removeRule((ExtensibilityChecker<PairView, DutyView>) rule);
+	}
+
 	@Override
 	public AggregatorRuleContext<Pair, DutyView> registerAggregatorRule(Aggregator<Pair, DutyView> rule)
 			throws RuleAnnotationIsMissing {

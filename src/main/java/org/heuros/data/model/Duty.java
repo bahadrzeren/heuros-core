@@ -85,38 +85,38 @@ public class Duty extends AbstractModel implements DutyView {
 		this.dutyLegs.add(dutyLegView);
 	}
 	public DutyLegView removeLast() {
-		if (this.dutyLegs.size() > 0)
-			return this.dutyLegs.remove(this.dutyLegs.size() - 1);
+		if (this.numOfLegs > 0)
+			return this.dutyLegs.remove(this.numOfLegs - 1);
 		return null;
 	}
 	public DutyLegView getFirstDutyLeg() {
-		if (this.dutyLegs.size() > 0)
+		if (this.numOfLegs > 0)
 			return this.dutyLegs.get(0);
 		return null;
 	}
 	public DutyLegView getLastDutyLeg() {
-		if (this.dutyLegs.size() > 0)
-			return this.dutyLegs.get(this.dutyLegs.size() - 1);
+		if (this.numOfLegs > 0)
+			return this.dutyLegs.get(this.numOfLegs - 1);
 		return null;		
 	}
 	public LegView getFirstLeg() {
-		if (this.dutyLegs.size() > 0)
+		if (this.numOfLegs > 0)
 			return this.dutyLegs.get(0).getLeg();
 		return null;
 	}
 	public LegView getLastLeg() {
-		if (this.dutyLegs.size() > 0)
-			return this.dutyLegs.get(this.dutyLegs.size() - 1).getLeg();
+		if (this.numOfLegs > 0)
+			return this.dutyLegs.get(this.numOfLegs - 1).getLeg();
 		return null;		
 	}
 	public AirportView getFirstDepAirport() {
-		if (this.dutyLegs.size() > 0)
+		if (this.numOfLegs > 0)
 			return this.dutyLegs.get(0).getLeg().getDepAirport();
 		return null;
 	}
 	public AirportView getLastArrAirport() {
-		if (this.dutyLegs.size() > 0)
-			return this.dutyLegs.get(this.dutyLegs.size() - 1).getLeg().getArrAirport();
+		if (this.numOfLegs > 0)
+			return this.dutyLegs.get(this.numOfLegs - 1).getLeg().getArrAirport();
 		return null;
 	}
 

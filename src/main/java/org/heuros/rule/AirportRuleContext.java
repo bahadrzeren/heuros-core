@@ -22,6 +22,13 @@ public class AirportRuleContext extends AbstractRuleContext implements Introduce
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void removeRule(Rule rule) {
+		if (rule.isImplemented(Introducer.class))
+			this.introducerRepo.removeRule((Introducer<Airport>) rule);
+	}
+
 	@Override
 	public AirportRuleContext registerIntroducerRule(Introducer<Airport> rule)
 			throws RuleAnnotationIsMissing {

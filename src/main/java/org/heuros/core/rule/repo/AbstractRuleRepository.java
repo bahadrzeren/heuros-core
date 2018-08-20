@@ -31,4 +31,16 @@ public class AbstractRuleRepository<R> implements RuleRepository<R> {
 	public List<R> getRules() {
 		return this.rules;
 	}
+
+	@Override
+	public void removeRule(R rule) {
+		if (this.rules.stream()
+				.filter((i) -> i == rule)
+				.findFirst()
+				.isPresent()) {
+			this.rules.remove(rule);			
+		} else {
+			logger.error("Rule is not registered!");
+		}
+	}
 }
