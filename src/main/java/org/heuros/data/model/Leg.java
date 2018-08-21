@@ -199,6 +199,10 @@ public class Leg extends AbstractModel implements LegView {
 		this.blockTimeInMins = blockTimeInMins;
 	}
 
+	public boolean hasAcChangeWith(LegView nl) {
+		return (!getAcType().equals(nl.getAcType())) || (getAcSequence() != nl.getAcSequence());
+	}
+
 	@Override
 	public String toString() {
 		return new StringBuilder(carrier)

@@ -16,13 +16,11 @@ public class LegRuleExtended extends AbstractRule
 
 	@Override
 	public boolean areConnectable(LegView prevModel, LegView nextModel) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean introduce(Leg m) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

@@ -9,7 +9,6 @@ public class LegRuleWithoutAnnotation extends AbstractRule
 
 	@Override
 	public boolean introduce(Leg m) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

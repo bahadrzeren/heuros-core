@@ -1,7 +1,6 @@
 package org.heuros.test;
 
 import org.heuros.core.rule.inf.Rule;
-import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
@@ -115,7 +114,7 @@ public class RuleContextTest extends TestCase {
     		context.registerRule(rule);
 
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
-    		assertTrue(context.getExtensibilityCheckerRepo().getRules().size() == 1);
+    		assertTrue(context.getAppendabilityCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getValidatorRepo().getRules().size() == 1);
 
     	} catch (Exception ex) {
@@ -146,7 +145,7 @@ public class RuleContextTest extends TestCase {
 		assertTrue(legContext.getIntroducerProxy().introduce(null));
 		assertTrue(legContext.getConnectionCheckerProxy().areConnectable(null, null));
 		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(null, null));
-		assertTrue(dutyContext.getExtensibilityCheckerProxy().isExtensible(null, null));
-		assertTrue(dutyContext.getValidatorProxy().isValid(null) == ValidationStatus.valid);
+		assertTrue(dutyContext.getAppendabilityCheckerProxy().isAppendable(null, null));
+		assertTrue(dutyContext.getValidatorProxy().isValid(null));
     }
 }

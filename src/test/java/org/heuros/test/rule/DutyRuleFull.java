@@ -2,10 +2,9 @@ package org.heuros.test.rule;
 
 import org.heuros.core.rule.inf.AbstractRule;
 import org.heuros.core.rule.inf.ConnectionChecker;
-import org.heuros.core.rule.inf.ExtensibilityChecker;
+import org.heuros.core.rule.inf.AppendabilityChecker;
 import org.heuros.core.rule.inf.Introducer;
 import org.heuros.core.rule.inf.RuleImplementation;
-import org.heuros.core.rule.inf.ValidationStatus;
 import org.heuros.core.rule.inf.Validator;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
@@ -17,30 +16,26 @@ import org.heuros.data.model.LegView;
 public class DutyRuleFull extends AbstractRule
 									implements Introducer<Duty>
 												, ConnectionChecker<DutyView>
-												, ExtensibilityChecker<DutyView, LegView>
+												, AppendabilityChecker<DutyView, LegView>
 												, Validator<DutyView> {
 
 	@Override
 	public boolean areConnectable(DutyView prevModel, DutyView nextModel) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean introduce(Duty m) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public ValidationStatus isValid(DutyView m) {
-		// TODO Auto-generated method stub
-		return ValidationStatus.valid;
+	public boolean isValid(DutyView m) {
+		return true;
 	}
 
 	@Override
-	public boolean isExtensible(DutyView parentModel, LegView childModel) {
-		// TODO Auto-generated method stub
+	public boolean isAppendable(DutyView parentModel, LegView childModel) {
 		return true;
 	}
 

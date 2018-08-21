@@ -29,4 +29,6 @@ public interface LegView extends View {
 	public boolean isCover();
 
 	public int getBlockTimeInMins();
+
+	public boolean hasAcChangeWith(LegView nl);
 }
