@@ -1,7 +1,7 @@
 package org.heuros.core.rule;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.ConnectionChecker;
+import org.heuros.core.rule.intf.ConnectionChecker;
 import org.heuros.core.rule.proxy.ConnectionCheckerProxy;
 import org.heuros.core.rule.repo.ConnectionCheckerRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;

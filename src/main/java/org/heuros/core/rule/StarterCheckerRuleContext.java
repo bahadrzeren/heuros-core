@@ -1,7 +1,7 @@
 package org.heuros.core.rule;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.StarterChecker;
+import org.heuros.core.rule.intf.StarterChecker;
 import org.heuros.core.rule.proxy.StarterCheckerProxy;
 import org.heuros.core.rule.repo.StarterCheckerRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;

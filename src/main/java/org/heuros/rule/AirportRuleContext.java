@@ -2,12 +2,13 @@ package org.heuros.rule;
 
 import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.IntroducerRuleContext;
-import org.heuros.core.rule.inf.Introducer;
-import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.intf.Introducer;
+import org.heuros.core.rule.intf.Rule;
 import org.heuros.core.rule.proxy.IntroducerProxy;
 import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.data.model.Airport;
 import org.heuros.exception.RuleAnnotationIsMissing;
+import org.heuros.util.RuleUtil;
 
 public class AirportRuleContext extends AbstractRuleContext implements IntroducerRuleContext<Airport> {
 
@@ -17,7 +18,8 @@ public class AirportRuleContext extends AbstractRuleContext implements Introduce
 	@SuppressWarnings("unchecked")
 	public AirportRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		super.registerRule(rule);
-		if (rule.isImplemented(Introducer.class))
+//		if (rule.isImplemented(Introducer.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
 			this.registerIntroducerRule((Introducer<Airport>) rule);
 		return this;
 	}
@@ -25,7 +27,8 @@ public class AirportRuleContext extends AbstractRuleContext implements Introduce
 	@SuppressWarnings("unchecked")
 	@Override
 	public void removeRule(Rule rule) {
-		if (rule.isImplemented(Introducer.class))
+//		if (rule.isImplemented(Introducer.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
 			this.introducerRepo.removeRule((Introducer<Airport>) rule);
 	}
 

@@ -1,7 +1,7 @@
 package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.Validator;
+import org.heuros.core.rule.intf.Validator;
 import org.heuros.core.rule.repo.RuleRepository;
 
 public class ValidatorProxy<V extends View> implements Validator<V> {

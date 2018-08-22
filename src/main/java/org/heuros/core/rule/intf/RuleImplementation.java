@@ -1,4 +1,4 @@
-package org.heuros.core.rule.inf;
+package org.heuros.core.rule.intf;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,7 +2,7 @@ package org.heuros.core.rule;
 
 import org.heuros.core.data.base.Model;
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.Aggregator;
+import org.heuros.core.rule.intf.Aggregator;
 import org.heuros.core.rule.proxy.AggregatorProxy;
 import org.heuros.exception.RuleAnnotationIsMissing;
 

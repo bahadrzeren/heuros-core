@@ -1,7 +1,7 @@
 package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.AppendabilityChecker;
+import org.heuros.core.rule.intf.AppendabilityChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
 public class AppendabilityCheckerProxy<P extends View, C extends View>

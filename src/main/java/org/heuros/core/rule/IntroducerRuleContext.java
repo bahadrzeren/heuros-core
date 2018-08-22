@@ -1,7 +1,7 @@
 package org.heuros.core.rule;
 
 import org.heuros.core.data.base.Model;
-import org.heuros.core.rule.inf.Introducer;
+import org.heuros.core.rule.intf.Introducer;
 import org.heuros.core.rule.proxy.IntroducerProxy;
 import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;

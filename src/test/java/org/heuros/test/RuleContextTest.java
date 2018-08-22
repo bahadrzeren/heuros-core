@@ -1,6 +1,6 @@
 package org.heuros.test;
 
-import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.intf.Rule;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;

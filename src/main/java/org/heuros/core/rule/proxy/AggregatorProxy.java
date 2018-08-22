@@ -2,7 +2,7 @@ package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.Model;
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.Aggregator;
+import org.heuros.core.rule.intf.Aggregator;
 
 public class AggregatorProxy<P extends Model, C extends View> implements Aggregator<P, C> {
 

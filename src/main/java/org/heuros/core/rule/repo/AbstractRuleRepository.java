@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.intf.Rule;
 import org.heuros.exception.RuleAnnotationIsMissing;
+import org.heuros.util.RuleUtil;
 
 public class AbstractRuleRepository<R> implements RuleRepository<R> {
 
@@ -21,7 +22,8 @@ public class AbstractRuleRepository<R> implements RuleRepository<R> {
 						.isPresent())
 			logger.error("Rule impl is already registered!");
 		else {
-			if (((Rule) rule).getAnnotation() == null)
+//			if (((Rule) rule).getAnnotation() == null)
+			if (RuleUtil.ruleAnnotationGetter.getRuleImplementation(((Rule) rule)) == null)
 				throw new RuleAnnotationIsMissing("@Rule annotation could not be found!");
 			this.rules.add(rule);
 		}

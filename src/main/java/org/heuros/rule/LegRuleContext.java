@@ -3,9 +3,9 @@ package org.heuros.rule;
 import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.IntroducerRuleContext;
-import org.heuros.core.rule.inf.ConnectionChecker;
-import org.heuros.core.rule.inf.Introducer;
-import org.heuros.core.rule.inf.Rule;
+import org.heuros.core.rule.intf.ConnectionChecker;
+import org.heuros.core.rule.intf.Introducer;
+import org.heuros.core.rule.intf.Rule;
 import org.heuros.core.rule.proxy.ConnectionCheckerProxy;
 import org.heuros.core.rule.proxy.IntroducerProxy;
 import org.heuros.core.rule.repo.ConnectionCheckerRepository;
@@ -13,6 +13,7 @@ import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
+import org.heuros.util.RuleUtil;
 
 public class LegRuleContext extends AbstractRuleContext
 							implements IntroducerRuleContext<Leg>,
@@ -27,9 +28,11 @@ public class LegRuleContext extends AbstractRuleContext
 	@SuppressWarnings("unchecked")
 	public LegRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		super.registerRule(rule);
-		if (rule.isImplemented(Introducer.class))
+//		if (rule.isImplemented(Introducer.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
 			this.registerIntroducerRule((Introducer<Leg>) rule);
-		if (rule.isImplemented(ConnectionChecker.class))
+//		if (rule.isImplemented(ConnectionChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
 			this.registerConnectionCheckerRule((ConnectionChecker<LegView>) rule);
 		return this;
 	}
@@ -37,9 +40,11 @@ public class LegRuleContext extends AbstractRuleContext
 	@SuppressWarnings("unchecked")
 	@Override
 	public void removeRule(Rule rule) {
-		if (rule.isImplemented(Introducer.class))
+//		if (rule.isImplemented(Introducer.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
 			this.introducerRepo.removeRule((Introducer<Leg>) rule);
-		if (rule.isImplemented(ConnectionChecker.class))
+//		if (rule.isImplemented(ConnectionChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
 			this.connectionCheckerRepo.removeRule((ConnectionChecker<LegView>) rule);
 	}
 

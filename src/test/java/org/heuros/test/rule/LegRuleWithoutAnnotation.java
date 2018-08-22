@@ -1,11 +1,9 @@
 package org.heuros.test.rule;
 
-import org.heuros.core.rule.inf.AbstractRule;
-import org.heuros.core.rule.inf.Introducer;
+import org.heuros.core.rule.intf.Introducer;
 import org.heuros.data.model.Leg;
 
-public class LegRuleWithoutAnnotation extends AbstractRule
-									implements Introducer<Leg> {
+public class LegRuleWithoutAnnotation implements Introducer<Leg> {
 
 	@Override
 	public boolean introduce(Leg m) {

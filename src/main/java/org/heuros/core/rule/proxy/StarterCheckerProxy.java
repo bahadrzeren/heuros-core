@@ -1,7 +1,7 @@
 package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.inf.StarterChecker;
+import org.heuros.core.rule.intf.StarterChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
 public class StarterCheckerProxy<P extends View, C extends View>

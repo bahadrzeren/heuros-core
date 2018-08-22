@@ -8,13 +8,13 @@ import org.heuros.core.rule.ExtensibilityCheckerRuleContext;
 import org.heuros.core.rule.StarterCheckerRuleContext;
 import org.heuros.core.rule.AppendabilityCheckerRuleContext;
 import org.heuros.core.rule.ValidatorRuleContext;
-import org.heuros.core.rule.inf.Aggregator;
-import org.heuros.core.rule.inf.ConnectionChecker;
-import org.heuros.core.rule.inf.ExtensibilityChecker;
-import org.heuros.core.rule.inf.AppendabilityChecker;
-import org.heuros.core.rule.inf.Rule;
-import org.heuros.core.rule.inf.StarterChecker;
-import org.heuros.core.rule.inf.Validator;
+import org.heuros.core.rule.intf.Aggregator;
+import org.heuros.core.rule.intf.AppendabilityChecker;
+import org.heuros.core.rule.intf.ConnectionChecker;
+import org.heuros.core.rule.intf.ExtensibilityChecker;
+import org.heuros.core.rule.intf.Rule;
+import org.heuros.core.rule.intf.StarterChecker;
+import org.heuros.core.rule.intf.Validator;
 import org.heuros.core.rule.proxy.AggregatorProxy;
 import org.heuros.core.rule.proxy.ConnectionCheckerProxy;
 import org.heuros.core.rule.proxy.ExtensibilityCheckerProxy;
@@ -30,6 +30,7 @@ import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
+import org.heuros.util.RuleUtil;
 
 public class DutyRuleContext extends AbstractRuleContext
 								implements AggregatorRuleContext<Duty, LegView>,
@@ -59,17 +60,23 @@ public class DutyRuleContext extends AbstractRuleContext
 	@Override
 	public DutyRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		super.registerRule(rule);
-		if (rule.isImplemented(Aggregator.class))
+//		if (rule.isImplemented(Aggregator.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class))
 			this.registerAggregatorRule((Aggregator<Duty, LegView>) rule);
-		if (rule.isImplemented(StarterChecker.class))
+//		if (rule.isImplemented(StarterChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class))
 			this.registerStarterCheckerRule((StarterChecker<DutyView, LegView>) rule);
-		if (rule.isImplemented(ExtensibilityChecker.class))
+//		if (rule.isImplemented(ExtensibilityChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class))
 			this.registerExtensibilityCheckerRule((ExtensibilityChecker<DutyView>) rule);
-		if (rule.isImplemented(ConnectionChecker.class))
+//		if (rule.isImplemented(ConnectionChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
 			this.registerConnectionCheckerRule((ConnectionChecker<DutyView>) rule);
-		if (rule.isImplemented(AppendabilityChecker.class))
+//		if (rule.isImplemented(AppendabilityChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class))
 			this.registerAppendabilityCheckerRule((AppendabilityChecker<DutyView, LegView>) rule);
-		if (rule.isImplemented(Validator.class))
+//		if (rule.isImplemented(Validator.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Validator.class))
 			this.registerValidatorRule((Validator<DutyView>) rule);
 		return this;
 	}
@@ -77,17 +84,23 @@ public class DutyRuleContext extends AbstractRuleContext
 	@SuppressWarnings("unchecked")
 	@Override
 	public void removeRule(Rule rule) {
-		if (rule.isImplemented(Aggregator.class))
+//		if (rule.isImplemented(Aggregator.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class))
 			this.aggregatorImpl = null;
-		if (rule.isImplemented(StarterChecker.class))
+//		if (rule.isImplemented(StarterChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class))
 			this.starterCheckerRepo.removeRule((StarterChecker<DutyView, LegView>) rule);
-		if (rule.isImplemented(ExtensibilityChecker.class))
+//		if (rule.isImplemented(ExtensibilityChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class))
 			this.extensibilityCheckerRepo.removeRule((ExtensibilityChecker<DutyView>) rule);
-		if (rule.isImplemented(ConnectionChecker.class))
+//		if (rule.isImplemented(ConnectionChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
 			this.connectionCheckerRepo.removeRule((ConnectionChecker<DutyView>) rule);
-		if (rule.isImplemented(AppendabilityChecker.class))
+//		if (rule.isImplemented(AppendabilityChecker.class))
+		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class))
 			this.appendabilityCheckerRepo.removeRule((AppendabilityChecker<DutyView, LegView>) rule);
-		if (rule.isImplemented(Validator.class))
+//		if (rule.isImplemented(Validator.class))
+		if (RuleUtil.implChecker.isImplemented(rule, Validator.class))
 			this.validatorRepo.removeRule((Validator<DutyView>) rule);
 	}
 
