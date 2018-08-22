@@ -6,12 +6,9 @@ import org.heuros.util.RuleUtil;
 
 public abstract class AbstractRuleContext implements RuleContext {
 
-	public RuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
-//		if (((Rule) rule).getAnnotation() == null)
+	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		if (RuleUtil.ruleAnnotationGetter.getRuleImplementation(((Rule) rule)) == null)
 			throw new RuleAnnotationIsMissing("@Rule annotation could not be found!");
-		return this;
+		return 0;
 	}
-
-	public abstract void removeRule(Rule rule);
 }

@@ -15,28 +15,27 @@ public class AirportRuleContext extends AbstractRuleContext implements Introduce
 	protected IntroducerRepository<Airport> introducerRepo = new IntroducerRepository<Airport>();
 	protected IntroducerProxy<Airport> introducerProxy = new IntroducerProxy<Airport>(this.introducerRepo);
 
+	private static Class<?>[] airportClass = {Airport.class};
+
 	@SuppressWarnings("unchecked")
-	public AirportRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		super.registerRule(rule);
-//		if (rule.isImplemented(Introducer.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
-			this.registerIntroducerRule((Introducer<Airport>) rule);
-		return this;
+	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
+		int res = super.registerRule(rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, airportClass))
+			res += this.registerIntroducerRule((Introducer<Airport>) rule);
+		return res;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void removeRule(Rule rule) {
-//		if (rule.isImplemented(Introducer.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
-			this.introducerRepo.removeRule((Introducer<Airport>) rule);
+	public int removeRule(Rule rule) {
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, airportClass))
+			return this.introducerRepo.removeRule((Introducer<Airport>) rule);
+		return 0;
 	}
 
 	@Override
-	public AirportRuleContext registerIntroducerRule(Introducer<Airport> rule)
-			throws RuleAnnotationIsMissing {
-		this.introducerRepo.registerRule(rule);
-		return this;
+	public int registerIntroducerRule(Introducer<Airport> rule) throws RuleAnnotationIsMissing {
+		return this.introducerRepo.registerRule(rule);
 	}
 
 	@Override

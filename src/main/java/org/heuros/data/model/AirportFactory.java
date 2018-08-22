@@ -8,5 +8,10 @@ public class AirportFactory extends AbstractModelFactory<Airport> {
 	public Airport generateModel() {
 		return new Airport();
 	}
-	
+
+	public Airport generateModel(String airportCode) {
+		Airport airport = this.generateModel();
+		airport.setCode(airportCode);
+		return airport;
+	}
 }

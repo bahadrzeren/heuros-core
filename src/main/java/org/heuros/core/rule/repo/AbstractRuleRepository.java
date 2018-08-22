@@ -15,17 +15,18 @@ public class AbstractRuleRepository<R> implements RuleRepository<R> {
 	protected List<R> rules = new ArrayList<R>();
 
 	@Override
-	public void registerRule(R rule) throws RuleAnnotationIsMissing {
+	public int registerRule(R rule) throws RuleAnnotationIsMissing {
 		if (this.rules.stream()
 						.filter((i) -> i == rule)
 						.findFirst()
-						.isPresent())
+						.isPresent()) {
 			logger.error("Rule impl is already registered!");
-		else {
-//			if (((Rule) rule).getAnnotation() == null)
+			return 0;
+		} else {
 			if (RuleUtil.ruleAnnotationGetter.getRuleImplementation(((Rule) rule)) == null)
 				throw new RuleAnnotationIsMissing("@Rule annotation could not be found!");
 			this.rules.add(rule);
+			return 1;
 		}
 	}
 
@@ -35,14 +36,15 @@ public class AbstractRuleRepository<R> implements RuleRepository<R> {
 	}
 
 	@Override
-	public void removeRule(R rule) {
+	public int removeRule(R rule) {
 		if (this.rules.stream()
 				.filter((i) -> i == rule)
 				.findFirst()
 				.isPresent()) {
-			this.rules.remove(rule);			
-		} else {
-			logger.error("Rule is not registered!");
+			this.rules.remove(rule);
+			return 1;
 		}
+		logger.warn("Rule is not registered!");
+		return 0;
 	}
 }

@@ -1,4 +1,4 @@
-package org.heuros.core.data.context.repo;
+package org.heuros.core.entity.context.repo;
 
 import org.heuros.core.data.base.Model;
 

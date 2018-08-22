@@ -25,41 +25,40 @@ public class LegRuleContext extends AbstractRuleContext
 	protected IntroducerProxy<Leg> introducerProxy = new IntroducerProxy<Leg>(this.introducerRepo);
 	protected ConnectionCheckerProxy<LegView> connectionCheckerProxy = new ConnectionCheckerProxy<LegView>(this.connectionCheckerRepo);
 
-	@SuppressWarnings("unchecked")
-	public LegRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		super.registerRule(rule);
-//		if (rule.isImplemented(Introducer.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
-			this.registerIntroducerRule((Introducer<Leg>) rule);
-//		if (rule.isImplemented(ConnectionChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
-			this.registerConnectionCheckerRule((ConnectionChecker<LegView>) rule);
-		return this;
-	}
+	private static Class<?>[] legClass = {Leg.class};
+	private static Class<?>[] legViewClass = {LegView.class};
 
 	@SuppressWarnings("unchecked")
+	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
+		int res = super.registerRule(rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, legClass))
+			res += this.registerIntroducerRule((Introducer<Leg>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class, legViewClass))
+			res += this.registerConnectionCheckerRule((ConnectionChecker<LegView>) rule);
+		return res;
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public void removeRule(Rule rule) {
-//		if (rule.isImplemented(Introducer.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class))
-			this.introducerRepo.removeRule((Introducer<Leg>) rule);
-//		if (rule.isImplemented(ConnectionChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
-			this.connectionCheckerRepo.removeRule((ConnectionChecker<LegView>) rule);
+	public int removeRule(Rule rule) {
+		int res = 0;
+		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, legClass))
+			res += this.introducerRepo.removeRule((Introducer<Leg>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class, legViewClass))
+			res += this.connectionCheckerRepo.removeRule((ConnectionChecker<LegView>) rule);
+		return res;
 	}
 
 	@Override
-	public LegRuleContext registerIntroducerRule(Introducer<Leg> rule)
+	public int registerIntroducerRule(Introducer<Leg> rule)
 			throws RuleAnnotationIsMissing {
-		this.introducerRepo.registerRule(rule);
-		return this;
+		return this.introducerRepo.registerRule(rule);
 	}
 
 	@Override
-	public LegRuleContext registerConnectionCheckerRule(ConnectionChecker<LegView> rule)
+	public int registerConnectionCheckerRule(ConnectionChecker<LegView> rule)
 			throws RuleAnnotationIsMissing {
-		this.connectionCheckerRepo.registerRule(rule);
-		return this;
+		return this.connectionCheckerRepo.registerRule(rule);
 	}
 
 	@Override

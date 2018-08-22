@@ -7,7 +7,7 @@ import org.heuros.core.rule.proxy.AggregatorProxy;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
 public interface AggregatorRuleContext<P extends Model, C extends View> {
-	public AggregatorRuleContext<P, C> registerAggregatorRule(Aggregator<P, C> rule) throws RuleAnnotationIsMissing;
+	public int registerAggregatorRule(Aggregator<P, C> rule) throws RuleAnnotationIsMissing;
 	public Aggregator<P, C> getAggregatorImpl();
 	public AggregatorProxy<P, C> getAggregatorProxy();
 }

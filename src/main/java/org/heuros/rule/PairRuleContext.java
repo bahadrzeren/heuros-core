@@ -56,65 +56,63 @@ public class PairRuleContext extends AbstractRuleContext
 	protected AppendabilityCheckerProxy<PairView, DutyView> appendabilityCheckerProxy = new AppendabilityCheckerProxy<PairView, DutyView>(this.appendabilityCheckerRepo);
 	protected ValidatorProxy<PairView> validatorProxy = new ValidatorProxy<PairView>(this.validatorRepo);
 
+	private static Class<?>[] pairViewClass = {PairView.class};
+	private static Class<?>[] pairDutyViewClasses = {Pair.class, DutyView.class};
+	private static Class<?>[] pairViewDutyViewClasses = {PairView.class, DutyView.class};
+
 	@SuppressWarnings("unchecked")
-	public PairRuleContext registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		super.registerRule(rule);
-//		if (rule.isImplemented(Aggregator.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class))
-			this.registerAggregatorRule((Aggregator<Pair, DutyView>) rule);
-//		if (rule.isImplemented(StarterChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class))
-			this.registerStarterCheckerRule((StarterChecker<PairView, DutyView>) rule);
-//		if (rule.isImplemented(ExtensibilityChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class))
-			this.registerExtensibilityCheckerRule((ExtensibilityChecker<PairView>) rule);
-//		if (rule.isImplemented(ConnectionChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
-			this.registerConnectionCheckerRule((ConnectionChecker<PairView>) rule);
-//		if (rule.isImplemented(AppendabilityChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class))
-			this.registerAppendabilityCheckerRule((AppendabilityChecker<PairView, DutyView>) rule);
-//		if (rule.isImplemented(Validator.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Validator.class))
-			this.registerValidatorRule((Validator<PairView>) rule);
-		return this;
+	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
+		int res = super.registerRule(rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyViewClasses))
+			res += this.registerAggregatorRule((Aggregator<Pair, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class, pairViewDutyViewClasses))
+			res += this.registerStarterCheckerRule((StarterChecker<PairView, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class, pairViewClass))
+			res += this.registerExtensibilityCheckerRule((ExtensibilityChecker<PairView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class, pairViewClass))
+			res += this.registerConnectionCheckerRule((ConnectionChecker<PairView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class, pairViewDutyViewClasses))
+			res += this.registerAppendabilityCheckerRule((AppendabilityChecker<PairView, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Validator.class, pairViewClass))
+			res += this.registerValidatorRule((Validator<PairView>) rule);
+		return res;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void removeRule(Rule rule) {
-//		if (rule.isImplemented(Aggregator.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class))
-			this.aggregatorImpl = null;
-//		if (rule.isImplemented(StarterChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class))
-			this.starterCheckerRepo.removeRule((StarterChecker<PairView, DutyView>) rule);
-//		if (rule.isImplemented(ExtensibilityChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class))
-			this.extensibilityCheckerRepo.removeRule((ExtensibilityChecker<PairView>) rule);
-//		if (rule.isImplemented(ConnectionChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class))
-			this.connectionCheckerRepo.removeRule((ConnectionChecker<PairView>) rule);
-//		if (rule.isImplemented(AppendabilityChecker.class))
-		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class))
-			this.appendabilityCheckerRepo.removeRule((AppendabilityChecker<PairView, DutyView>) rule);
-//		if (rule.isImplemented(Validator.class))
-		if (RuleUtil.implChecker.isImplemented(rule, Validator.class))
-			this.validatorRepo.removeRule((Validator<PairView>) rule);
+	public int removeRule(Rule rule) {
+		int res = 0;
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyViewClasses))
+			if (this.aggregatorImpl != null) {
+				this.aggregatorImpl = null;
+				res++;
+			}
+		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class, pairViewDutyViewClasses))
+			res += this.starterCheckerRepo.removeRule((StarterChecker<PairView, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class, pairViewClass))
+			res += this.extensibilityCheckerRepo.removeRule((ExtensibilityChecker<PairView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class, pairViewClass))
+			res += this.connectionCheckerRepo.removeRule((ConnectionChecker<PairView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class, pairViewDutyViewClasses))
+			res += this.appendabilityCheckerRepo.removeRule((AppendabilityChecker<PairView, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Validator.class, pairViewClass))
+			res += this.validatorRepo.removeRule((Validator<PairView>) rule);
+		return res;
 	}
 
 	/*
 	 * Aggregator context impl.
 	 */
 	@Override
-	public AggregatorRuleContext<Pair, DutyView> registerAggregatorRule(Aggregator<Pair, DutyView> rule)
+	public int registerAggregatorRule(Aggregator<Pair, DutyView> rule)
 			throws RuleAnnotationIsMissing {
 		if (this.aggregatorProxy == null) {
 			this.aggregatorImpl = rule;
 			this.aggregatorProxy = new AggregatorProxy<Pair, DutyView>(rule);
+			return 1;
 		} else
 			logger.error("Rule impl is already registered!");
-		return this;
+		return 0;
 	}
 
 	@Override
@@ -131,10 +129,9 @@ public class PairRuleContext extends AbstractRuleContext
 	 * Starter context impl.
 	 */
 	@Override
-	public PairRuleContext registerStarterCheckerRule(StarterChecker<PairView, DutyView> rule)
+	public int registerStarterCheckerRule(StarterChecker<PairView, DutyView> rule)
 			throws RuleAnnotationIsMissing {
-		this.starterCheckerRepo.registerRule(rule);
-		return this;
+		return this.starterCheckerRepo.registerRule(rule);
 	}
 
 	@Override
@@ -151,10 +148,9 @@ public class PairRuleContext extends AbstractRuleContext
 	 * ExtensibilityChecker context impl.
 	 */
 	@Override
-	public PairRuleContext registerExtensibilityCheckerRule(ExtensibilityChecker<PairView> rule)
+	public int registerExtensibilityCheckerRule(ExtensibilityChecker<PairView> rule)
 			throws RuleAnnotationIsMissing {
-		this.extensibilityCheckerRepo.registerRule(rule);
-		return this;
+		return this.extensibilityCheckerRepo.registerRule(rule);
 	}
 
 	@Override
@@ -171,10 +167,9 @@ public class PairRuleContext extends AbstractRuleContext
 	 * ConnectionChecker context impl.
 	 */
 	@Override
-	public PairRuleContext registerConnectionCheckerRule(ConnectionChecker<PairView> rule)
+	public int registerConnectionCheckerRule(ConnectionChecker<PairView> rule)
 			throws RuleAnnotationIsMissing {
-		this.connectionCheckerRepo.registerRule(rule);
-		return this;
+		return this.connectionCheckerRepo.registerRule(rule);
 	}
 
 	@Override
@@ -191,10 +186,9 @@ public class PairRuleContext extends AbstractRuleContext
 	 * AppendabilityChecker context impl.
 	 */
 	@Override
-	public PairRuleContext registerAppendabilityCheckerRule(AppendabilityChecker<PairView, DutyView> rule)
+	public int registerAppendabilityCheckerRule(AppendabilityChecker<PairView, DutyView> rule)
 			throws RuleAnnotationIsMissing {
-		this.appendabilityCheckerRepo.registerRule(rule);
-		return this;
+		return this.appendabilityCheckerRepo.registerRule(rule);
 	}
 
 	@Override
@@ -211,10 +205,8 @@ public class PairRuleContext extends AbstractRuleContext
 	 * Validator context impl.
 	 */
 	@Override
-	public PairRuleContext registerValidatorRule(Validator<PairView> rule)
-			throws RuleAnnotationIsMissing {
-		this.validatorRepo.registerRule(rule);
-		return this;
+	public int registerValidatorRule(Validator<PairView> rule) throws RuleAnnotationIsMissing {
+		return this.validatorRepo.registerRule(rule);
 	}
 
 	@Override
