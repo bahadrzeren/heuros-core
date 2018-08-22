@@ -8,7 +8,7 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Duty extends AbstractModel implements DutyView {
 
-	private List<DutyLegView> dutyLegs;
+	private List<LegView> legs;
 
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
@@ -81,51 +81,41 @@ public class Duty extends AbstractModel implements DutyView {
 	private boolean validHb = true;
 	private boolean validNonHb = true;
 
-	public void append(DutyLegView dutyLegView) {
-		this.dutyLegs.add(dutyLegView);
+	public void append(LegView legView) {
+		this.legs.add(legView);
 	}
-	public DutyLegView removeLast() {
+	public LegView removeLast() {
 		if (this.numOfLegs > 0)
-			return this.dutyLegs.remove(this.numOfLegs - 1);
+			return this.legs.remove(this.numOfLegs - 1);
 		return null;
-	}
-	public DutyLegView getFirstDutyLeg() {
-		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(0);
-		return null;
-	}
-	public DutyLegView getLastDutyLeg() {
-		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(this.numOfLegs - 1);
-		return null;		
 	}
 	public LegView getFirstLeg() {
 		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(0).getLeg();
+			return this.legs.get(0);
 		return null;
 	}
 	public LegView getLastLeg() {
 		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(this.numOfLegs - 1).getLeg();
+			return this.legs.get(this.numOfLegs - 1);
 		return null;		
 	}
 	public AirportView getFirstDepAirport() {
 		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(0).getLeg().getDepAirport();
+			return this.legs.get(0).getDepAirport();
 		return null;
 	}
 	public AirportView getLastArrAirport() {
 		if (this.numOfLegs > 0)
-			return this.dutyLegs.get(this.numOfLegs - 1).getLeg().getArrAirport();
+			return this.legs.get(this.numOfLegs - 1).getArrAirport();
 		return null;
 	}
 
-	public List<DutyLegView> getDutyLegs() {
-		return dutyLegs;
+	public List<LegView> getLegs() {
+		return legs;
 	}
 
-	public void setDutyLegs(List<DutyLegView> dutyLegs) {
-		this.dutyLegs = dutyLegs;
+	public void setLegs(List<LegView> legs) {
+		this.legs = legs;
 	}
 
 	public int getBlockTimeInMins() {

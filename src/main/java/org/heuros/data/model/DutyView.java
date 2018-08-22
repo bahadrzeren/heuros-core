@@ -7,8 +7,6 @@ import org.heuros.core.data.base.View;
 
 public interface DutyView extends View {
 
-	public DutyLegView getFirstDutyLeg();
-	public DutyLegView getLastDutyLeg();
 	public LegView getFirstLeg();
 	public LegView getLastLeg();
 	public AirportView getFirstDepAirport();
