@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Processor;
+import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyFactory;
 import org.heuros.data.model.DutyView;
@@ -20,6 +21,7 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
 	private static Logger logger = Logger.getLogger(DutyGenerator.class);
 
 	private List<Leg> legs;
+	private OneDimIndexInt<Leg> legConnectionIndex;
 	private DutyFactory dutyFactory;
 	private DutyRuleContext dutyRuleContext;
 
@@ -27,6 +29,11 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
 
 	public DutyGenerator setLegRepository(LegRepository legRepository) {
 		this.legs = legRepository.getModels();
+		return this;
+	}
+
+	public DutyGenerator setLegConnectionIndex(OneDimIndexInt<Leg> legConnectionIndex) {
+		this.legConnectionIndex = legConnectionIndex;
 		return this;
 	}
 
@@ -94,39 +101,35 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
 		return this.dl;
 	}
 
-    private void examineDutyFW(Duty d, LegView lastLegInDuty) throws CloneNotSupportedException {
+    private void examineDutyFW(Duty d, LegView lastLegOfTheDuty) throws CloneNotSupportedException {
 
-//        Leg[] ls = null;
-//
-//    	fa = SourceStore.getFs_LegConnArr().getArray(lastLegInDuty.ndx);
-//
-//    	if (fa != null) {
-//
-//            for (Flight f: fa) {
-//
-//                if (f.isCover() || f.crpas) {
-//                    if (ruleManager._isFlightAddable(d, f)
-//                    		&& ruleManager._areFlightsConnectable(lf, f)) {
-//
-//                    	d.ue(calendar, repo, f, f.isCover());
-//
-//	                    if (ruleManager._isDutyValid(d)) {
-//	                    	if (ruleManager._canDutyEnd(d)
-//	                    			&& ruleManager._canADutyEndAt(f)) {
-////	                    		if (f.getScheduledOffblockUtc().before(lastDayBegin) || f.getArrAirport()._hb())
-//	                    			if (isDutyQualitySufficient(d))
-//	                    				addDuty((Duty) d.clone(), f);
-//	                    	}
-//
-//                    		if (ruleManager._canDutyContinue(d))
-//                    			examineDutyFW(calendar, d);
-//	                    }
-//
-//	                    d.us(calendar, repo);
-//                    }
-//    			}
-//            }
-//        }
+        Leg[] connLs = legConnectionIndex.getArray(lastLegOfTheDuty.getNdx());
+
+    	if (connLs != null) {
+
+            for (Leg l: connLs) {
+
+                if (l.isCover() || l.isDeadheadable()) {
+                	/*
+                	 * We already checked legs connectibility on LegConnectionIndex generation phase.
+                	 */
+                    if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l)) {
+
+                    	dutyRuleContext.getAggregatorImpl().append(d, l);
+
+	                    if (dutyRuleContext.getValidatorProxy().isValid(d)) {
+	                    	addDuty((Duty) d.clone());
+	                    }
+
+	                    if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
+                   			examineDutyFW(d, l);
+	                    }
+
+	                    dutyRuleContext.getAggregatorImpl().removeLast(d);
+                    }
+    			}
+            }
+        }
     }
 
 	public void addDuty(Duty d) {
