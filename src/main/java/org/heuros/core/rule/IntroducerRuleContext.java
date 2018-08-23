@@ -6,7 +6,7 @@ import org.heuros.core.rule.proxy.IntroducerProxy;
 import org.heuros.core.rule.repo.IntroducerRepository;
 import org.heuros.exception.RuleAnnotationIsMissing;
 
-public interface IntroducerRuleContext<M extends Model> {
+public interface IntroducerRuleContext<M extends Model> extends RuleContext {
 	public int registerIntroducerRule(Introducer<M> rule) throws RuleAnnotationIsMissing;
 	public IntroducerRepository<M> getIntroducerRepo();
 	public IntroducerProxy<M> getIntroducerProxy();

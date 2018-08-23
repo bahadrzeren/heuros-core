@@ -31,4 +31,13 @@ public interface LegView extends View {
 	public int getBlockTimeInMins();
 
 	public boolean hasAcChangeWith(LegView nl);
+
+	/*
+	 * TODO HB impl will be changed!
+	 */
+	public int getNumOfDutiesIncludes();
+	public int getNumOfDutiesIncludesHbDep();
+	public int getNumOfDutiesIncludesHbArr();
+	public int getNumOfDutiesIncludesNonHbDep();
+	public int getNumOfDutiesIncludesNonHbArr();
 }

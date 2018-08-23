@@ -23,6 +23,12 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
+	private int numOfDutiesIncludes = 0;
+	private int numOfDutiesIncludesHbDep = 0;
+	private int numOfDutiesIncludesHbArr = 0;
+	private int numOfDutiesIncludesNonHbDep = 0;
+	private int numOfDutiesIncludesNonHbArr = 0;
+
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
@@ -165,6 +171,66 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setInFleet(boolean inFleet) {
 		this.inFleet = inFleet;
+	}
+
+	public int getNumOfDutiesIncludes() {
+		return numOfDutiesIncludes;
+	}
+
+	public void setNumOfDutiesIncludes(int numOfDutiesIncludes) {
+		this.numOfDutiesIncludes = numOfDutiesIncludes;
+	}
+
+	public void incNumOfDutiesIncludes() {
+		this.numOfDutiesIncludes++;
+	}
+
+	public int getNumOfDutiesIncludesHbDep() {
+		return numOfDutiesIncludesHbDep;
+	}
+
+	public void setNumOfDutiesIncludesHbDep(int numOfDutiesIncludesHbDep) {
+		this.numOfDutiesIncludesHbDep = numOfDutiesIncludesHbDep;
+	}
+
+	public void incNumOfDutiesIncludesHbDep() {
+		this.numOfDutiesIncludesHbDep++;
+	}
+
+	public int getNumOfDutiesIncludesHbArr() {
+		return numOfDutiesIncludesHbArr;
+	}
+
+	public void setNumOfDutiesIncludesHbArr(int numOfDutiesIncludesHbArr) {
+		this.numOfDutiesIncludesHbArr = numOfDutiesIncludesHbArr;
+	}
+
+	public void incNumOfDutiesIncludesHbArr() {
+		this.numOfDutiesIncludesHbArr++;
+	}
+
+	public int getNumOfDutiesIncludesNonHbDep() {
+		return numOfDutiesIncludesNonHbDep;
+	}
+
+	public void setNumOfDutiesIncludesNonHbDep(int numOfDutiesIncludesNonHbDep) {
+		this.numOfDutiesIncludesNonHbDep = numOfDutiesIncludesNonHbDep;
+	}
+
+	public void incNumOfDutiesIncludesNonHbDep() {
+		this.numOfDutiesIncludesNonHbDep++;
+	}
+
+	public int getNumOfDutiesIncludesNonHbArr() {
+		return numOfDutiesIncludesNonHbArr;
+	}
+
+	public void setNumOfDutiesIncludesNonHbArr(int numOfDutiesIncludesNonHbArr) {
+		this.numOfDutiesIncludesNonHbArr = numOfDutiesIncludesNonHbArr;
+	}
+
+	public void incNumOfDutiesIncludesNonHbArr() {
+		this.numOfDutiesIncludesNonHbArr++;
 	}
 
 	public boolean isDeadheadable() {

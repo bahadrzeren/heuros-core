@@ -5,8 +5,7 @@ import java.util.List;
 
 import org.heuros.core.data.base.Model;
 
-public abstract class AbstractDataRepository<M extends Model> 
-														implements DataRepository<M> {
+public abstract class AbstractDataRepository<M extends Model> implements DataRepository<M> {
 
 	protected List<M> list = new ArrayList<M>();
 
@@ -20,5 +19,10 @@ public abstract class AbstractDataRepository<M extends Model>
 	@Override
 	public M getModel(int ndx) {
 		return this.list.get(ndx);
+	}
+
+	@Override
+	public List<M> getModels() {
+		return this.list;
 	}
 }

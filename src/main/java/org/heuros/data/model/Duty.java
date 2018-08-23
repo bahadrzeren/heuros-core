@@ -2,11 +2,12 @@ package org.heuros.data.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.heuros.core.data.base.AbstractModel;
 
-public class Duty extends AbstractModel implements DutyView {
+public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private List<LegView> legs;
 
@@ -81,8 +82,19 @@ public class Duty extends AbstractModel implements DutyView {
 	private boolean validHb = true;
 	private boolean validNonHb = true;
 
-	public void append(LegView legView) {
-		this.legs.add(legView);
+	@Override
+    public Object clone() throws CloneNotSupportedException {
+        Duty d = (Duty) super.clone();
+        d.legs = new ArrayList<LegView>(this.legs.size());
+        for (int i = 0; i < this.legs.size(); i++) {
+            d.legs.add(this.legs.get(i));
+        }
+        d.longestBlockTimesInMins = this.longestBlockTimesInMins.clone();
+        return d;
+    }
+
+	public void append(LegView leg) {
+		this.legs.add(leg);
 	}
 	public LegView removeLast() {
 		if (this.numOfLegs > 0)
@@ -574,6 +586,9 @@ public class Duty extends AbstractModel implements DutyView {
 	public void setValidNonHb(boolean validNonHb) {
 		this.validNonHb = validNonHb;
 	}
+	/*
+	 * TODO HB
+	 */
 	@Override
 	public int getBriefDurationInMins(Airport hb) {
 		// TODO Auto-generated method stub
@@ -634,5 +649,4 @@ public class Duty extends AbstractModel implements DutyView {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
