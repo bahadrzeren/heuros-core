@@ -1,6 +1,5 @@
 package org.heuros.rule;
 
-import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.IntroducerRuleContext;
 import org.heuros.core.rule.intf.Introducer;
 import org.heuros.core.rule.intf.Rule;
@@ -10,7 +9,7 @@ import org.heuros.data.model.Airport;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
-public class AirportRuleContext extends AbstractRuleContext implements IntroducerRuleContext<Airport> {
+public class AirportRuleContext implements IntroducerRuleContext<Airport> {
 
 	protected IntroducerRepository<Airport> introducerRepo = new IntroducerRepository<Airport>();
 	protected IntroducerProxy<Airport> introducerProxy = new IntroducerProxy<Airport>(this.introducerRepo);
@@ -18,8 +17,9 @@ public class AirportRuleContext extends AbstractRuleContext implements Introduce
 	private static Class<?>[] airportClass = {Airport.class};
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		int res = super.registerRule(rule);
+		int res = 0;
 		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, airportClass))
 			res += this.registerIntroducerRule((Introducer<Airport>) rule);
 		return res;

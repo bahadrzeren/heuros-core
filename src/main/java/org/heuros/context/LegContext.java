@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.entity.context.AbstractEntityContext;
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegView;
 import org.heuros.rule.LegRuleContext;
 
 public class LegContext extends AbstractEntityContext<Leg> {
@@ -22,9 +21,9 @@ public class LegContext extends AbstractEntityContext<Leg> {
 		return false;
 	}
 
-	private OneDimIndexInt<LegView> connectionLegsIndex;
+	private OneDimIndexInt<Leg> connectionLegsIndex;
 
-	public OneDimIndexInt<LegView> getConnectionLegsIndex() {
+	public OneDimIndexInt<Leg> getConnectionLegsIndex() {
 		return this.connectionLegsIndex;
 	}
 
@@ -32,7 +31,7 @@ public class LegContext extends AbstractEntityContext<Leg> {
 		LegRuleContext legRuleContext = (LegRuleContext) this.ruleContext;
 		List<Leg> legs = this.getDataRepository().getModels();
 
-		this.connectionLegsIndex = new OneDimIndexInt<LegView>(new LegView[legs.size()][0]);
+		this.connectionLegsIndex = new OneDimIndexInt<Leg>(new Leg[legs.size()][0]);
 
 		int numOfConnectionsChecked = 0;
 		int numOfConnectionsIndexed = 0;

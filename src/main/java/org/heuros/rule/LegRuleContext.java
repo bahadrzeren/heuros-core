@@ -1,6 +1,5 @@
 package org.heuros.rule;
 
-import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.IntroducerRuleContext;
 import org.heuros.core.rule.intf.ConnectionChecker;
@@ -15,8 +14,7 @@ import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
-public class LegRuleContext extends AbstractRuleContext
-							implements IntroducerRuleContext<Leg>,
+public class LegRuleContext implements IntroducerRuleContext<Leg>,
 										ConnectionCheckerRuleContext<LegView>{
 
 	protected IntroducerRepository<Leg> introducerRepo = new IntroducerRepository<Leg>();
@@ -29,8 +27,9 @@ public class LegRuleContext extends AbstractRuleContext
 	private static Class<?>[] legViewClass = {LegView.class};
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		int res = super.registerRule(rule);
+		int res = 0;
 		if (RuleUtil.implChecker.isImplemented(rule, Introducer.class, legClass))
 			res += this.registerIntroducerRule((Introducer<Leg>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, ConnectionChecker.class, legViewClass))

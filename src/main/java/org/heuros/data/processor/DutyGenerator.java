@@ -7,27 +7,27 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Processor;
+import org.heuros.core.data.base.ModelFactory;
 import org.heuros.core.data.ndx.OneDimIndexInt;
+import org.heuros.core.entity.context.repo.DataRepository;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyFactory;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
-import org.heuros.data.repo.LegRepository;
 import org.heuros.rule.DutyRuleContext;
 
-public class DutyGenerator implements Processor<Leg, DutyView> {
+public class DutyGenerator implements Processor<LegView, DutyView> {
 
 	private static Logger logger = Logger.getLogger(DutyGenerator.class);
 
 	private List<Leg> legs;
 	private OneDimIndexInt<Leg> legConnectionIndex;
-	private DutyFactory dutyFactory;
+	private ModelFactory<Duty> dutyFactory;
 	private DutyRuleContext dutyRuleContext;
 
 	private List<DutyView> dl = new LinkedList<DutyView>();
 
-	public DutyGenerator setLegRepository(LegRepository legRepository) {
+	public DutyGenerator setLegRepository(DataRepository<Leg> legRepository) {
 		this.legs = legRepository.getModels();
 		return this;
 	}
@@ -37,7 +37,7 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
 		return this;
 	}
 
-	public DutyGenerator setDutyFactory(DutyFactory dutyFactory) {
+	public DutyGenerator setDutyFactory(ModelFactory<Duty> dutyFactory) {
 		this.dutyFactory = dutyFactory;
 		return this;
 	}
@@ -69,7 +69,7 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
 
 						if (dutyRuleContext.getValidatorProxy().isValid(d)) {
 							try {
-								addDuty((Duty) d.clone());
+								dl.add((Duty) d.clone());
 								if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d))
 									examineDutyFW(d, l);
 							} catch (CloneNotSupportedException e) {
@@ -118,7 +118,7 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
                     	dutyRuleContext.getAggregatorImpl().append(d, l);
 
 	                    if (dutyRuleContext.getValidatorProxy().isValid(d)) {
-	                    	addDuty((Duty) d.clone());
+	                    	dl.add((Duty) d.clone());
 	                    }
 
 	                    if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
@@ -129,28 +129,6 @@ public class DutyGenerator implements Processor<Leg, DutyView> {
                     }
     			}
             }
-        }
-    }
-
-	public void addDuty(Duty d) {
-		dl.add(d);
-
-		Leg l = null;
-
-        for (int i = 0; i < d.getLegs().size(); i++) {
-			l = (Leg) d.getLegs().get(i);
-			l.incNumOfDutiesIncludes();
-			/*
-			 * TODO HB impl will be changed!
-			 */
-			if (d.getFirstDepAirport().isHb())
-				l.incNumOfDutiesIncludesHbDep();
-			else
-				l.incNumOfDutiesIncludesNonHbDep();
-			if (d.getLastArrAirport().isHb())
-				l.incNumOfDutiesIncludesHbArr();
-			else
-				l.incNumOfDutiesIncludesNonHbArr();
         }
     }
 }

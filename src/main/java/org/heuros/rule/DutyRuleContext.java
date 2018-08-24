@@ -1,7 +1,6 @@
 package org.heuros.rule;
 
 import org.apache.log4j.Logger;
-import org.heuros.core.rule.AbstractRuleContext;
 import org.heuros.core.rule.AggregatorRuleContext;
 import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.ExtensibilityCheckerRuleContext;
@@ -32,8 +31,7 @@ import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
-public class DutyRuleContext extends AbstractRuleContext
-								implements AggregatorRuleContext<Duty, LegView>,
+public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 											StarterCheckerRuleContext<DutyView, LegView>,
 											ExtensibilityCheckerRuleContext<DutyView>,
 											ConnectionCheckerRuleContext<DutyView>,
@@ -63,7 +61,7 @@ public class DutyRuleContext extends AbstractRuleContext
 	@SuppressWarnings("unchecked")
 	@Override
 	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
-		int res = super.registerRule(rule);
+		int res = 0;
 		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, dutyLegViewClasses))
 			res += this.registerAggregatorRule((Aggregator<Duty, LegView>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class, dutyViewLegViewClasses))
