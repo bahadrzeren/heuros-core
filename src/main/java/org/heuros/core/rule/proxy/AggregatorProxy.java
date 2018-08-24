@@ -31,4 +31,9 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	public void reCalculate(P p) {
 		this.aggregatorImpl.reset(p);
 	}
+
+	@Override
+	public void softAppend(P p, C c) {
+		this.aggregatorImpl.softAppend(p, c);
+	}
 }

@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.heuros.core.base.Processor;
 import org.heuros.core.data.base.ModelFactory;
 import org.heuros.core.data.ndx.OneDimIndexInt;
-import org.heuros.core.entity.context.repo.DataRepository;
+import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;

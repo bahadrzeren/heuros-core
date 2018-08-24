@@ -2,7 +2,7 @@ package org.heuros.data.repo;
 
 import java.util.Optional;
 
-import org.heuros.core.entity.context.repo.AbstractDataRepository;
+import org.heuros.core.data.repo.AbstractDataRepository;
 import org.heuros.data.model.Airport;
 
 public class AirportRepository extends AbstractDataRepository<Airport> {

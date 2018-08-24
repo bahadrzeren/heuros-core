@@ -1,4 +1,4 @@
-package org.heuros.core.entity.context.repo;
+package org.heuros.core.data.repo;
 
 import java.util.List;
 
