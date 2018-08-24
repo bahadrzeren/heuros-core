@@ -11,12 +11,11 @@ import org.heuros.core.data.base.ModelFactory;
 import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.entity.context.repo.DataRepository;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.rule.DutyRuleContext;
 
-public class DutyGenerator implements Processor<LegView, DutyView> {
+public class DutyGenerator implements Processor<LegView, Duty> {
 
 	private static Logger logger = Logger.getLogger(DutyGenerator.class);
 
@@ -25,7 +24,7 @@ public class DutyGenerator implements Processor<LegView, DutyView> {
 	private ModelFactory<Duty> dutyFactory;
 	private DutyRuleContext dutyRuleContext;
 
-	private List<DutyView> dl = new LinkedList<DutyView>();
+	private List<Duty> dl = new LinkedList<Duty>();
 
 	public DutyGenerator setLegRepository(DataRepository<Leg> legRepository) {
 		this.legs = legRepository.getModels();
@@ -48,7 +47,7 @@ public class DutyGenerator implements Processor<LegView, DutyView> {
 	}
 
 	@Override
-	public List<DutyView> proceed() {
+	public List<Duty> proceed() {
 		Duty d = this.dutyFactory.generateModel();
 
 		/*

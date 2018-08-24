@@ -111,6 +111,11 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 			return this.legs.get(this.numOfLegs - 1);
 		return null;		
 	}
+	public LegView getSecondToLastLeg() {
+		if (this.numOfLegs > 1)
+			return this.legs.get(this.numOfLegs - 2);
+		return null;		
+	}
 	public AirportView getFirstDepAirport() {
 		if (this.numOfLegs > 0)
 			return this.legs.get(0).getDepAirport();

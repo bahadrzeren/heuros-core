@@ -2,7 +2,9 @@ package org.heuros.core.data.ndx;
 
 import java.util.Arrays;
 
-public abstract class OneDimIndex<T, N> {
+import org.heuros.core.data.base.View;
+
+public abstract class OneDimIndex<T extends View, N> {
 
     protected int rootNdx = 0;
     protected int indexedElementCount = 0;

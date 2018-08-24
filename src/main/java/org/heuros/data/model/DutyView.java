@@ -9,6 +9,7 @@ public interface DutyView extends View {
 
 	public LegView getFirstLeg();
 	public LegView getLastLeg();
+	public LegView getSecondToLastLeg();
 	public AirportView getFirstDepAirport();
 	public AirportView getLastArrAirport();
 

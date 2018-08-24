@@ -1,6 +1,8 @@
 package org.heuros.core.data.ndx;
 
-public class OneDimIndexInt<T> extends OneDimIndex<T, Integer> {
+import org.heuros.core.data.base.View;
+
+public class OneDimIndexInt<T extends View> extends OneDimIndex<T, Integer> {
 
 	public OneDimIndexInt(T[][] arry) {
 		super(arry);
