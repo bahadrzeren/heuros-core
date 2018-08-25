@@ -187,7 +187,7 @@ public class PairOptimizationContext {
 		return false;
 	}
 
-	public void registerAirportsAndLegs(List<Leg> legs, LocalDateTime dataPeriodStartInc) {
+	public void registerAirportsAndLegs(List<Leg> legs, LocalDateTime dataPeriodStartInc, int maxLegConnectionTimeInMins) {
 		legs.forEach((l) -> {
 			l.setDepAirport(this.getAirport(l.getDep()));
 			l.setArrAirport(this.getAirport(l.getArr()));
@@ -196,9 +196,10 @@ public class PairOptimizationContext {
 					logger.warn("Leg " + l + " is ignored!");	//	Flight legs that are not going to be used.
 			}
 		});
+		this.buildLegConnectionIndex(maxLegConnectionTimeInMins);
 	}
 
-	public void buildLegConnectionIndex(int maxLegConnectionTimeInMins) {
+	private void buildLegConnectionIndex(int maxLegConnectionTimeInMins) {
 		List<Leg> legs = this.legRepository.getModels();
 
 		this.connectionLegsIndex = new OneDimIndexInt<Leg>(new Leg[legs.size()][0]);
