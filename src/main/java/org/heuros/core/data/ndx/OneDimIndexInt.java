@@ -10,6 +10,6 @@ public class OneDimIndexInt<T extends View> extends OneDimIndex<T, Integer> {
 
 	@Override
 	public int convert(Integer value) {
-		return value;
+		return value - rootNdx;
 	}
 }

@@ -6,14 +6,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.OneDimIndexInt;
+import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.data.model.Airport;
 import org.heuros.data.model.AirportFactory;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyFactory;
+import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegFactory;
-import org.heuros.data.model.LegView;
 import org.heuros.data.model.PairFactory;
 import org.heuros.data.repo.AirportRepository;
 import org.heuros.data.repo.DutyRepository;
@@ -25,9 +26,9 @@ import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
 import org.heuros.rule.PairRuleContext;
 
-public class PairContext {
+public class PairOptimizationContext {
 
-	private static Logger logger = Logger.getLogger(PairContext.class);
+	private static Logger logger = Logger.getLogger(PairOptimizationContext.class);
 
 	private AirportFactory airportFactory;
 	private AirportRepository airportRepository;
@@ -44,6 +45,25 @@ public class PairContext {
 	private DutyFactory dutyFactory;
 	private DutyRepository dutyRepository;
 	private DutyRuleContext dutyRuleContext;
+	/*
+	 * TODO HB impl will be changed!
+	 */
+	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx;
+	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx;
+	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime;
+	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime;
+	public OneDimIndexInt<DutyView> getHbDepDutyIndexByLegNdx() {
+		return hbDepDutyIndexByLegNdx;
+	}
+	public OneDimIndexInt<DutyView> getHbDepHbArrDutyIndexByLegNdx() {
+		return hbDepHbArrDutyIndexByLegNdx;
+	}
+	public TwoDimIndexIntXLocalDateTime<DutyView> getNonHbArrDutyIndexByDepAirportNdxBrieftime() {
+		return dutyIndexByDepAirportNdxBrieftime;
+	}
+	public TwoDimIndexIntXLocalDateTime<DutyView> getHbArrDutyIndexByDepAirportNdxBrieftime() {
+		return hbArrDutyIndexByDepAirportNdxBrieftime;
+	}
 
 	private PairFactory pairFactory;
 	private PairRuleContext pairRuleContext;
@@ -51,77 +71,77 @@ public class PairContext {
 	public AirportFactory getAirportFactory() {
 		return airportFactory;
 	}
-	public PairContext setAirportFactory(AirportFactory airportFactory) {
+	public PairOptimizationContext setAirportFactory(AirportFactory airportFactory) {
 		this.airportFactory = airportFactory;
 		return this;
 	}
 	public AirportRepository getAirportRepository() {
 		return airportRepository;
 	}
-	public PairContext setAirportRepository(AirportRepository airportRepository) {
+	public PairOptimizationContext setAirportRepository(AirportRepository airportRepository) {
 		this.airportRepository = airportRepository;
 		return this;
 	}
 	public AirportRuleContext getAirportRuleContext() {
 		return airportRuleContext;
 	}
-	public PairContext setAirportRuleContext(AirportRuleContext airportRuleContext) {
+	public PairOptimizationContext setAirportRuleContext(AirportRuleContext airportRuleContext) {
 		this.airportRuleContext = airportRuleContext;
 		return this;
 	}
 	public LegFactory getLegFactory() {
 		return legFactory;
 	}
-	public PairContext setLegFactory(LegFactory legFactory) {
+	public PairOptimizationContext setLegFactory(LegFactory legFactory) {
 		this.legFactory = legFactory;
 		return this;
 	}
 	public LegRepository getLegRepository() {
 		return legRepository;
 	}
-	public PairContext setLegRepository(LegRepository legRepository) {
+	public PairOptimizationContext setLegRepository(LegRepository legRepository) {
 		this.legRepository = legRepository;
 		return this;
 	}
 	public LegRuleContext getLegRuleContext() {
 		return legRuleContext;
 	}
-	public PairContext setLegRuleContext(LegRuleContext legRuleContext) {
+	public PairOptimizationContext setLegRuleContext(LegRuleContext legRuleContext) {
 		this.legRuleContext = legRuleContext;
 		return this;
 	}
 	public DutyFactory getDutyFactory() {
 		return dutyFactory;
 	}
-	public PairContext setDutyFactory(DutyFactory dutyFactory) {
+	public PairOptimizationContext setDutyFactory(DutyFactory dutyFactory) {
 		this.dutyFactory = dutyFactory;
 		return this;
 	}
 	public DutyRepository getDutyRepository() {
 		return dutyRepository;
 	}
-	public PairContext setDutyRepository(DutyRepository dutyRepository) {
+	public PairOptimizationContext setDutyRepository(DutyRepository dutyRepository) {
 		this.dutyRepository = dutyRepository;
 		return this;
 	}
 	public DutyRuleContext getDutyRuleContext() {
 		return dutyRuleContext;
 	}
-	public PairContext setDutyRuleContext(DutyRuleContext dutyRuleContext) {
+	public PairOptimizationContext setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
 		return this;
 	}
 	public PairFactory getPairFactory() {
 		return pairFactory;
 	}
-	public PairContext setPairFactory(PairFactory pairFactory) {
+	public PairOptimizationContext setPairFactory(PairFactory pairFactory) {
 		this.pairFactory = pairFactory;
 		return this;
 	}
 	public PairRuleContext getPairRuleContext() {
 		return pairRuleContext;
 	}
-	public PairContext setPairRuleContext(PairRuleContext pairRuleContext) {
+	public PairOptimizationContext setPairRuleContext(PairRuleContext pairRuleContext) {
 		this.pairRuleContext = pairRuleContext;
 		return this;
 	}
@@ -173,7 +193,7 @@ public class PairContext {
 			l.setArrAirport(this.getAirport(l.getArr()));
 			if (!this.registerLeg(l)) {
 				if (!l.getSobt().isBefore(dataPeriodStartInc))
-					logger.warn("Leg " + l + " is not registered!");	//	Flight legs that are not going to be used.
+					logger.warn("Leg " + l + " is ignored!");	//	Flight legs that are not going to be used.
 			}
 		});
 	}
@@ -201,45 +221,74 @@ public class PairContext {
 				}
 			}
 		}
-		PairContext.logger.info(numOfConnectionsChecked + " numbers of leg connections are checked!");
-		PairContext.logger.info(numOfConnectionsIndexed + " numbers of leg connections are found!");
-		PairContext.logger.info(this.connectionLegsIndex.getNumOfIndexedElements() + " numbers of leg connections are indexed!");
+		PairOptimizationContext.logger.info(numOfConnectionsChecked + " numbers of leg connections are checked!");
+		PairOptimizationContext.logger.info(numOfConnectionsIndexed + " numbers of leg connections are found!");
+		PairOptimizationContext.logger.info(this.connectionLegsIndex.getNumOfIndexedElements() + " numbers of leg connections are indexed!");
 	}
 
-	/*
-	 * TODO HB impl will be changed!
-	 */
-	public boolean reValidateDuty(Duty d) {
-		if (d == null)
-			return false;
-		if (d.getLegs() == null)
-			return false;
-		if (d.getLegs().size() == 0)
-			return false;
-		LegView nl = d.getLegs().get(0);
-		if (nl == null)
-			return false;
-		LegView pl;
-		if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl)) {
-			dutyRuleContext.getAggregatorImpl().reset(d);
-			dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
-			for (int i = 1; i < d.getLegs().size(); i++) {
-				pl = nl;
-				nl = d.getLegs().get(i);
-				if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl)) {
-					if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
-						if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl)) {
-							dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
-						} else
-							return false;
-					} else
-						return false;
-				} else
-					return false;
+	public void registerDuties(List<Duty> duties) {
+		List<Leg> legs = this.legRepository.getModels();
+		List<Airport> airports = this.airportRepository.getModels();
+
+		int secondNdxSize = 50 * 24;	//	In a one month period there is around flight legs of 50 days.
+
+		this.hbDepDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
+		this.hbDepHbArrDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
+		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
+		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
+
+		/*
+		 * TODO HB impl will be changed!
+		 */
+		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTimeHb().minusHours(1));
+		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTimeHb().minusHours(1));
+
+		duties.forEach((d) -> {
+			/*
+			 * TODO HB impl will be changed!
+			 */
+			int depAirportNdx = d.getFirstDepAirport().getNdx();
+			boolean hbDep = d.getFirstDepAirport().isHb();
+			boolean hbArr = d.getLastArrAirport().isHb();
+			d.getLegs().forEach((l) -> {
+				Leg leg = (Leg) l;
+				leg.incNumOfDutiesIncludes();
+				/*
+				 * TODO HB impl will be changed!
+				 */
+				if (hbDep)
+					leg.incNumOfDutiesIncludesHbDep();
+				else
+					leg.incNumOfDutiesIncludesNonHbDep();
+				if (hbArr)
+					leg.incNumOfDutiesIncludesHbArr();
+				else
+					leg.incNumOfDutiesIncludesNonHbArr();
+				if (hbDep) {
+					this.hbDepDutyIndexByLegNdx.add(leg.getNdx(), d);
+//if (this.hbDepDutyIndexByLegNdx.getArray(leg.getNdx())[this.hbDepDutyIndexByLegNdx.getArray(leg.getNdx()).length - 1] != d)
+//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+					if (hbArr) {
+						this.hbDepHbArrDutyIndexByLegNdx.add(leg.getNdx(), d);
+//if (this.hbDepHbArrDutyIndexByLegNdx.getArray(leg.getNdx())[this.hbDepHbArrDutyIndexByLegNdx.getArray(leg.getNdx()).length - 1] != d)
+//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+					}
+				}
+			});
+			this.dutyRepository.addToRepo(d);
+			/*
+			 * TODO HB impl will be changed!
+			 */
+			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
+//if (this.dutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb())[this.dutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb()).length - 1] != d)
+//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+			if (hbArr) {
+				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
+//if (this.hbArrDutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb())[this.hbArrDutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb()).length - 1] != d)
+//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
 			}
-			if (dutyRuleContext.getValidatorProxy().isValid(d))
-				return true;
-		}
-		return false;
+		}); 
+
+		PairOptimizationContext.logger.info("Duties are registered and indexed!");
 	}
 }

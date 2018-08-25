@@ -21,8 +21,8 @@ public abstract class OneDimIndex<T extends View, N> {
         return rootNdx;
     }
 
-    public void setRootNdx(Integer val) {
-    	this.rootNdx = val;
+    public void setRootNdx(N val) {
+    	this.rootNdx = this.convert(val);
     }
 
     public void resize() {
