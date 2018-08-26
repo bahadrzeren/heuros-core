@@ -4,7 +4,7 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Airport extends AbstractModel implements AirportView {
 
-	private String code;
+	private String code = null;
 
 	private boolean hb = false;
 	private boolean nonHb = true;

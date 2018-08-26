@@ -19,10 +19,10 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 
 	private static Logger logger = Logger.getLogger(DutyGenerator.class);
 
-	private List<Leg> legs;
-	private OneDimIndexInt<Leg> legConnectionIndex;
-	private ModelFactory<Duty> dutyFactory;
-	private DutyRuleContext dutyRuleContext;
+	private List<Leg> legs = null;
+	private OneDimIndexInt<Leg> legConnectionIndex = null;
+	private ModelFactory<Duty> dutyFactory = null;
+	private DutyRuleContext dutyRuleContext = null;
 
 	private List<Duty> dl = new LinkedList<Duty>();
 

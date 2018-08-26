@@ -19,8 +19,8 @@ public class HeurosConfFactory<C> {
 
 	private static Logger logger = Logger.getLogger(HeurosConfFactory.class);
 
-	private static String defaultConfFileName = ".\\heurosConf.json";
-	private static String developmentConfFileName = ".\\src\\main\\resources\\heurosConf.json";
+	private static String defaultConfFileName = "./heurosConf.json";
+	private static String developmentConfFileName = "./src/main/resources/heurosConf.json";
 
 	/**
 	 * Factory method that creates configuration object instances.

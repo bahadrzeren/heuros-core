@@ -95,4 +95,6 @@ public interface DutyView extends View {
 	public boolean isValidHb();
 	public boolean isValidNonHb();
 	public boolean isValid(Airport hb);
+
+	public int getTotalNumOfIncludingDutiesOfTheSameLegs();
 }

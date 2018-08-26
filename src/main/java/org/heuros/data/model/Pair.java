@@ -6,7 +6,7 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Pair extends AbstractModel implements PairView {
 	
-	private List<DutyView> duties;
+	private List<DutyView> duties = null;
 
 	private AirportView homeBase = null;
 	private int blockTimeInMins = 0;

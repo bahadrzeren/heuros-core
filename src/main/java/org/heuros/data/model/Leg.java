@@ -6,23 +6,26 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Leg extends AbstractModel implements LegView {
 
-	private String carrier;
-	private int flightNo;
-	private String suffix;
-	private String dep;
-	private String arr;
-	private AirportView depAirport;
-	private AirportView arrAirport;
-	private String acType;
-	private String serviceType;
-	private LocalDateTime sobt;
-	private LocalDateTime sibt;
-	private int depOffset;
-	private int arrOffset;
+	private String carrier = null;
+	private int flightNo = 0;
+	private String suffix = null;
+	private String dep = null;
+	private String arr = null;
+	private AirportView depAirport = null;
+	private AirportView arrAirport = null;
+	private String acType = null;
+	private String serviceType = null;
+	private LocalDateTime sobt = null;
+	private LocalDateTime sibt = null;
+	private int depOffset = 0;
+	private int arrOffset = 0;
 	private int acSequence = 0;
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
+	/*
+	 * TODO Change this name as numOfIncludingDuties.
+	 */
 	private int numOfDutiesIncludes = 0;
 	private int numOfDutiesIncludesHbDep = 0;
 	private int numOfDutiesIncludesHbArr = 0;
@@ -33,6 +36,9 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
+	/*
+	 * TODO Change this name!
+	 */
 	private boolean cover = false;
 
 	private int blockTimeInMins = 0;

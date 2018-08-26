@@ -8,7 +8,7 @@ import org.heuros.core.data.base.View;
 
 public class TwoDimIndexIntXLocalDateTime<T extends View> extends TwoDimIndex<T, Integer, LocalDateTime> {
 
-	protected static LocalDateTime referenceDateTime = LocalDateTime.of(2010, Month.JANUARY, 1, 0, 0, 0, 0);
+	protected static LocalDateTime referenceDateTime = LocalDateTime.of(2012, Month.JULY, 7, 12, 30, 0, 0);
 
 	public TwoDimIndexIntXLocalDateTime(T[][][] arry) {
 		super(arry);

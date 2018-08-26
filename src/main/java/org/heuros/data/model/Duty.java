@@ -9,7 +9,7 @@ import org.heuros.core.data.base.AbstractModel;
 
 public class Duty extends AbstractModel implements DutyView, Cloneable {
 
-	private List<LegView> legs;
+	private List<LegView> legs = null;
 
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
@@ -81,6 +81,8 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private boolean validHb = true;
 	private boolean validNonHb = true;
+
+	private int totalNumOfIncludingDutiesOfTheSameLegs = 0;
 
 	@Override
     public Object clone() throws CloneNotSupportedException {
@@ -591,6 +593,19 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void setValidNonHb(boolean validNonHb) {
 		this.validNonHb = validNonHb;
 	}
+
+	public int getTotalNumOfIncludingDutiesOfTheSameLegs() {
+		return totalNumOfIncludingDutiesOfTheSameLegs;
+	}
+
+	public void setTotalNumOfIncludingDutiesOfTheSameLegs(int totalNumOfIncludingDutiesOfTheSameLegs) {
+		this.totalNumOfIncludingDutiesOfTheSameLegs = totalNumOfIncludingDutiesOfTheSameLegs;
+	}
+
+	public void incTotalNumOfIncludingDutiesOfTheSameLegs(int totalNumOfIncludingDutiesOfTheSameLegs) {
+		this.totalNumOfIncludingDutiesOfTheSameLegs += totalNumOfIncludingDutiesOfTheSameLegs;
+	}
+
 	/*
 	 * TODO HB
 	 */

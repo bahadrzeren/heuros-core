@@ -6,7 +6,7 @@ import org.heuros.core.rule.intf.Aggregator;
 
 public class AggregatorProxy<P extends Model, C extends View> implements Aggregator<P, C> {
 
-	private Aggregator<P, C> aggregatorImpl;
+	private Aggregator<P, C> aggregatorImpl = null;
 
 	public AggregatorProxy(Aggregator<P, C> aggregatorImpl) {
 		this.aggregatorImpl = aggregatorImpl;

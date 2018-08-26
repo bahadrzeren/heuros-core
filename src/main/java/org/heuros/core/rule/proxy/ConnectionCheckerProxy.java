@@ -6,7 +6,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 
 public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker<V> {
 
-	private RuleRepository<ConnectionChecker<V>> repo;
+	private RuleRepository<ConnectionChecker<V>> repo = null;
 
 	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<V>> repo) {
 		this.repo = repo;

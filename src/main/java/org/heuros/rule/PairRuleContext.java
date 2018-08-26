@@ -40,14 +40,14 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 
 	private static Logger logger = Logger.getLogger(PairRuleContext.class);
 
-	protected Aggregator<Pair, DutyView> aggregatorImpl;
+	protected Aggregator<Pair, DutyView> aggregatorImpl = null;
 	protected StarterCheckerRepository<PairView, DutyView> starterCheckerRepo = new StarterCheckerRepository<PairView, DutyView>();
 	protected ConnectionCheckerRepository<PairView> connectionCheckerRepo = new ConnectionCheckerRepository<PairView>();
 	protected ExtensibilityCheckerRepository<PairView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<PairView>();
 	protected AppendabilityCheckerRepository<PairView, DutyView> appendabilityCheckerRepo = new AppendabilityCheckerRepository<PairView, DutyView>();
 	protected ValidatorRepository<PairView> validatorRepo = new ValidatorRepository<PairView>();
 
-	protected AggregatorProxy<Pair, DutyView> aggregatorProxy;
+	protected AggregatorProxy<Pair, DutyView> aggregatorProxy = null;
 	protected StarterCheckerProxy<PairView, DutyView> starterCheckerProxy = new StarterCheckerProxy<PairView, DutyView>(this.starterCheckerRepo);
 	protected ConnectionCheckerProxy<PairView> connectionCheckerProxy = new ConnectionCheckerProxy<PairView>(this.connectionCheckerRepo);
 	protected ExtensibilityCheckerProxy<PairView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<PairView>(this.extensibilityCheckerRepo);

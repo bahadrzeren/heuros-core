@@ -7,7 +7,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 public class AppendabilityCheckerProxy<P extends View, C extends View>
 								implements AppendabilityChecker<P, C> {
 
-	private RuleRepository<AppendabilityChecker<P, C>> repo;
+	private RuleRepository<AppendabilityChecker<P, C>> repo = null;
 
 	public AppendabilityCheckerProxy(RuleRepository<AppendabilityChecker<P, C>> repo) {
 		this.repo = repo;

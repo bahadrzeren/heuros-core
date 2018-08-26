@@ -7,7 +7,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 public class ExtensibilityCheckerProxy<M extends View>
 								implements ExtensibilityChecker<M> {
 
-	private RuleRepository<ExtensibilityChecker<M>> repo;
+	private RuleRepository<ExtensibilityChecker<M>> repo = null;
 
 	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<M>> repo) {
 		this.repo = repo;

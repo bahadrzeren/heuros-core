@@ -7,7 +7,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 public class StarterCheckerProxy<P extends View, C extends View>
 								implements StarterChecker<P, C> {
 
-	private RuleRepository<StarterChecker<P, C>> repo;
+	private RuleRepository<StarterChecker<P, C>> repo = null;
 
 	public StarterCheckerProxy(RuleRepository<StarterChecker<P, C>> repo) {
 		this.repo = repo;

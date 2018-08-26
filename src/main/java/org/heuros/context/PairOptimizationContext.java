@@ -30,43 +30,43 @@ public class PairOptimizationContext {
 
 	private static Logger logger = Logger.getLogger(PairOptimizationContext.class);
 
-	private AirportFactory airportFactory;
-	private AirportRepository airportRepository;
-	private AirportRuleContext airportRuleContext;
+	private AirportFactory airportFactory = null;
+	private AirportRepository airportRepository = null;
+	private AirportRuleContext airportRuleContext = null;
 
-	private LegFactory legFactory;
-	private LegRepository legRepository;
-	private LegRuleContext legRuleContext;
-	private OneDimIndexInt<Leg> connectionLegsIndex;
+	private LegFactory legFactory = null;
+	private LegRepository legRepository = null;
+	private LegRuleContext legRuleContext = null;
+	private OneDimIndexInt<Leg> connectionLegsIndex = null;
 	public OneDimIndexInt<Leg> getConnectionLegsIndex() {
 		return this.connectionLegsIndex;
 	}
 
-	private DutyFactory dutyFactory;
-	private DutyRepository dutyRepository;
-	private DutyRuleContext dutyRuleContext;
+	private DutyFactory dutyFactory = null;
+	private DutyRepository dutyRepository = null;
+	private DutyRuleContext dutyRuleContext = null;
 	/*
 	 * TODO HB impl will be changed!
 	 */
-	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx;
-	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx;
-	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime;
-	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime;
+	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx = null;
+	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime = null;
+	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime = null;
 	public OneDimIndexInt<DutyView> getHbDepDutyIndexByLegNdx() {
 		return hbDepDutyIndexByLegNdx;
 	}
 	public OneDimIndexInt<DutyView> getHbDepHbArrDutyIndexByLegNdx() {
 		return hbDepHbArrDutyIndexByLegNdx;
 	}
-	public TwoDimIndexIntXLocalDateTime<DutyView> getNonHbArrDutyIndexByDepAirportNdxBrieftime() {
+	public TwoDimIndexIntXLocalDateTime<DutyView> getDutyIndexByDepAirportNdxBrieftime() {
 		return dutyIndexByDepAirportNdxBrieftime;
 	}
 	public TwoDimIndexIntXLocalDateTime<DutyView> getHbArrDutyIndexByDepAirportNdxBrieftime() {
 		return hbArrDutyIndexByDepAirportNdxBrieftime;
 	}
 
-	private PairFactory pairFactory;
-	private PairRuleContext pairRuleContext;
+	private PairFactory pairFactory = null;
+	private PairRuleContext pairRuleContext = null;
 
 	public AirportFactory getAirportFactory() {
 		return airportFactory;
@@ -204,6 +204,7 @@ public class PairOptimizationContext {
 
 		this.connectionLegsIndex = new OneDimIndexInt<Leg>(new Leg[legs.size()][0]);
 
+		int numOfActiveLegs = 0;
 		int numOfConnectionsChecked = 0;
 		int numOfConnectionsIndexed = 0;
 		for (int i = 0; i < legs.size(); i++) {
@@ -221,10 +222,13 @@ public class PairOptimizationContext {
 					}
 				}
 			}
+			if (pl.isCover())
+				numOfActiveLegs++;
 		}
-		PairOptimizationContext.logger.info(numOfConnectionsChecked + " numbers of leg connections are checked!");
-		PairOptimizationContext.logger.info(numOfConnectionsIndexed + " numbers of leg connections are found!");
-		PairOptimizationContext.logger.info(this.connectionLegsIndex.getNumOfIndexedElements() + " numbers of leg connections are indexed!");
+		PairOptimizationContext.logger.info(numOfActiveLegs + " number of active legs found!");
+		PairOptimizationContext.logger.info(numOfConnectionsChecked + " number of leg connections are checked!");
+		PairOptimizationContext.logger.info(numOfConnectionsIndexed + " number of leg connections are found!");
+		PairOptimizationContext.logger.info(this.connectionLegsIndex.getNumOfIndexedElements() + " number of leg connections are indexed!");
 	}
 
 	public void registerDuties(List<Duty> duties) {
@@ -267,29 +271,29 @@ public class PairOptimizationContext {
 					leg.incNumOfDutiesIncludesNonHbArr();
 				if (hbDep) {
 					this.hbDepDutyIndexByLegNdx.add(leg.getNdx(), d);
-//if (this.hbDepDutyIndexByLegNdx.getArray(leg.getNdx())[this.hbDepDutyIndexByLegNdx.getArray(leg.getNdx()).length - 1] != d)
-//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
 					if (hbArr) {
 						this.hbDepHbArrDutyIndexByLegNdx.add(leg.getNdx(), d);
-//if (this.hbDepHbArrDutyIndexByLegNdx.getArray(leg.getNdx())[this.hbDepHbArrDutyIndexByLegNdx.getArray(leg.getNdx()).length - 1] != d)
-//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
 					}
 				}
 			});
+
+			/*
+			 * Set leg related accumulators.
+			 */
+			d.getLegs().forEach((l) -> {
+				d.incTotalNumOfIncludingDutiesOfTheSameLegs(l.getNumOfDutiesIncludes());
+			});
+
 			this.dutyRepository.addToRepo(d);
 			/*
 			 * TODO HB impl will be changed!
 			 */
 			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
-//if (this.dutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb())[this.dutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb()).length - 1] != d)
-//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
 			if (hbArr) {
 				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
-//if (this.hbArrDutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb())[this.hbArrDutyIndexByDepAirportNdxBrieftime.getArray(depAirportNdx, d.getBriefTimeHb()).length - 1] != d)
-//System.out.println("XXXXXXXXXXXXXXXXXXXXX");
 			}
 		}); 
 
-		PairOptimizationContext.logger.info("Duties are registered and indexed!");
+		PairOptimizationContext.logger.info("All duties are registered and indexed!");
 	}
 }

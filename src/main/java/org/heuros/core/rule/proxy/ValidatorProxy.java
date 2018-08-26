@@ -6,7 +6,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 
 public class ValidatorProxy<V extends View> implements Validator<V> {
 
-	private RuleRepository<Validator<V>> repo;
+	private RuleRepository<Validator<V>> repo = null;
 
 	public ValidatorProxy(RuleRepository<Validator<V>> repo) {
 		this.repo = repo;

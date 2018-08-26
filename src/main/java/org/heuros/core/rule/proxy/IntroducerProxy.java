@@ -6,7 +6,7 @@ import org.heuros.core.rule.repo.RuleRepository;
 
 public class IntroducerProxy<M extends Model> implements Introducer<M> {
 
-	private RuleRepository<Introducer<M>> repo;
+	private RuleRepository<Introducer<M>> repo = null;
 
 	public IntroducerProxy(RuleRepository<Introducer<M>> repo) {
 		this.repo = repo;

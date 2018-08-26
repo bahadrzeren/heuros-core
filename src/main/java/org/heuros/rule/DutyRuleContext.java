@@ -40,14 +40,14 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 
 	private static Logger logger = Logger.getLogger(DutyRuleContext.class);
 
-	protected Aggregator<Duty, LegView> aggregatorImpl;
+	protected Aggregator<Duty, LegView> aggregatorImpl = null;
 	protected StarterCheckerRepository<DutyView, LegView> starterCheckerRepo = new StarterCheckerRepository<DutyView, LegView>();
 	protected ExtensibilityCheckerRepository<DutyView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView>();
 	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
 	protected AppendabilityCheckerRepository<DutyView, LegView> appendabilityCheckerRepo = new AppendabilityCheckerRepository<DutyView, LegView>();
 	protected ValidatorRepository<DutyView> validatorRepo = new ValidatorRepository<DutyView>();
 
-	protected AggregatorProxy<Duty, LegView> aggregatorProxy;
+	protected AggregatorProxy<Duty, LegView> aggregatorProxy = null;
 	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = new StarterCheckerProxy<DutyView, LegView>(this.starterCheckerRepo);
 	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView>(this.extensibilityCheckerRepo);
 	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo);
