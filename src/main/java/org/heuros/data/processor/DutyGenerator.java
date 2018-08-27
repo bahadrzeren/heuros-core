@@ -60,17 +60,29 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		while (i < this.legs.size()) {
 			Leg l = this.legs.get(i);
 
+//if (l.getFlightNo() == 453)
+//System.out.println();
+
 //			if (!(f.getScheduledOffblockUtc().before(firstDayEnd) && f.getDepAirport()._nonHb())) {
 				if (l.isCover() || l.isDeadheadable()) {
 					if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(l)) {
 
 						dutyRuleContext.getAggregatorImpl().append(d, l);
 
+						/*
+						 * TODO Terminator rule!
+						 */
 						if (dutyRuleContext.getValidatorProxy().isValid(d)) {
 							try {
 								dl.add((Duty) d.clone());
-								if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d))
-									examineDutyFW(d, l);
+							} catch (CloneNotSupportedException e) {
+								logger.error(e);
+								return null;
+							}
+						}
+						if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
+							try {
+								examineDutyFW(d, l);
 							} catch (CloneNotSupportedException e) {
 								logger.error(e);
 								return null;

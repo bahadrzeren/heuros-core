@@ -48,10 +48,14 @@ public class PairOptimizationContext {
 	/*
 	 * TODO HB impl will be changed!
 	 */
+	private OneDimIndexInt<DutyView> dutyIndexByLegNdx = null;
 	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx = null;
 	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
 	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime = null;
 	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime = null;
+	public OneDimIndexInt<DutyView> getDutyIndexByLegNdx() {
+		return dutyIndexByLegNdx;
+	}
 	public OneDimIndexInt<DutyView> getHbDepDutyIndexByLegNdx() {
 		return hbDepDutyIndexByLegNdx;
 	}
@@ -209,6 +213,8 @@ public class PairOptimizationContext {
 		int numOfConnectionsIndexed = 0;
 		for (int i = 0; i < legs.size(); i++) {
 			Leg pl = legs.get(i);
+//if (pl.getNdx() == 991)
+//System.out.println(pl);
 			for (int j = i + 1; j < legs.size(); j++) {
 				Leg nl = legs.get(j);
 				if (pl.getArrAirport().getNdx() == nl.getDepAirport().getNdx()) {
@@ -237,6 +243,7 @@ public class PairOptimizationContext {
 
 		int secondNdxSize = 50 * 24;	//	In a one month period there is around flight legs of 50 days.
 
+		this.dutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
 		this.hbDepDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
 		this.hbDepHbArrDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
 		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
@@ -269,6 +276,7 @@ public class PairOptimizationContext {
 					leg.incNumOfDutiesIncludesHbArr();
 				else
 					leg.incNumOfDutiesIncludesNonHbArr();
+				this.dutyIndexByLegNdx.add(leg.getNdx(), d);
 				if (hbDep) {
 					this.hbDepDutyIndexByLegNdx.add(leg.getNdx(), d);
 					if (hbArr) {

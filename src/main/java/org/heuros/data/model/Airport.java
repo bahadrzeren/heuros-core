@@ -156,4 +156,9 @@ public class Airport extends AbstractModel implements AirportView {
 	public void setLegConnectionExceptionStation(boolean legConnectionExceptionStation) {
 		this.legConnectionExceptionStation = legConnectionExceptionStation;
 	}
+
+	@Override
+	public String toString() {
+		return this.code;
+	}
 }

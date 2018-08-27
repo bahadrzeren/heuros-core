@@ -2,10 +2,13 @@ package org.heuros.data.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.heuros.core.data.base.View;
 
 public interface DutyView extends View {
+
+	public List<LegView> getLegs();
 
 	public LegView getFirstLeg();
 	public LegView getLastLeg();

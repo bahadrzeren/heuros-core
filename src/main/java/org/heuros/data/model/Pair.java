@@ -254,4 +254,11 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfErDuties(int numOfErDuties) {
 		this.numOfErDuties += numOfErDuties;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		this.duties.forEach((d) -> sb.append(d).append("\n"));
+		return sb.toString();
+	}
 }

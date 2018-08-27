@@ -277,7 +277,8 @@ public class Leg extends AbstractModel implements LegView {
 
 	@Override
 	public String toString() {
-		return new StringBuilder(carrier)
+		return new StringBuilder(String.valueOf(ndx))
+					.append(",").append(carrier)
 					.append(",").append(flightNo)
 					.append(",").append(suffix)
 					.append(",").append(dep)

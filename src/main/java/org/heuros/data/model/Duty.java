@@ -669,4 +669,11 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		this.legs.forEach((l) -> sb.append(l).append("\n"));
+		return sb.toString();
+	}
 }
