@@ -9,7 +9,7 @@ import org.heuros.core.data.base.View;
  * 
  * @author bahadrzeren
  *
- * @param <W extends Wrapper<M>, M extends Model> Class type of the final data that will be reported.
+ * @param <V> Type of the instances to be reported.
  */
 public interface Reporter<V extends View> {
 	public void reportData(List<V> data);

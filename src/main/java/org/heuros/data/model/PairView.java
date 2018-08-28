@@ -2,6 +2,12 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Getter only class used in rule implementations to access Pair instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public interface PairView extends View {
 
 	public AirportView getHomeBase();

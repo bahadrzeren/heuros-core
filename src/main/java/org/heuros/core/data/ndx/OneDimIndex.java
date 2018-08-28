@@ -4,6 +4,13 @@ import java.util.Arrays;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Abstract Index class to store data on one dimensinal array for indexed and fast access.
+ * @author bahadrzeren
+ *
+ * @param <T> Type of the instances to be indexed.
+ * @param <N> Type of the indexing metric (integer, datetime etc.).
+ */
 public abstract class OneDimIndex<T extends View, N> {
 
     protected int rootNdx = 0;
@@ -35,12 +42,12 @@ public abstract class OneDimIndex<T extends View, N> {
     public abstract int convert(N value);
 
 	public void incDimensionSize(N dimensionNdx) {
-    	int relNdx = this.convert(dimensionNdx);	//	dimensionNdx - this.rootNdx;
+    	int relNdx = this.convert(dimensionNdx);
         this.dimensionLengthNdxs[relNdx]++;
     }
 
     public boolean add(N dimensionNdx, T obj) {
-        int relNdx = this.convert(dimensionNdx);	//	dimensionNdx - this.rootNdx;
+        int relNdx = this.convert(dimensionNdx);
         if ((relNdx >= this.dataArray.length) || (relNdx < 0)) return false;
         if ((this.dataArray[relNdx].length == 0) || (this.dataArray[relNdx][this.dataArray[relNdx].length - 1] != null)) {
 	        this.dataArray[relNdx] = Arrays.copyOf(this.dataArray[relNdx], this.dataArray[relNdx].length + 1);
@@ -54,7 +61,7 @@ public abstract class OneDimIndex<T extends View, N> {
     }
 
     public T[] getArray(N dimensionNdx) {
-    	int relNdx = this.convert(dimensionNdx);	//	dimensionNdx - this.rootNdx;
+    	int relNdx = this.convert(dimensionNdx);
     	if ((this.dataArray.length > (relNdx)) && (relNdx >= 0))
     		return this.dataArray[relNdx];
     	else

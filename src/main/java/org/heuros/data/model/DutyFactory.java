@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import org.heuros.core.data.base.AbstractModelFactory;
 
+/**
+ * Factory class used for creating Duty instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class DutyFactory extends AbstractModelFactory<Duty> {
 
 	@Override

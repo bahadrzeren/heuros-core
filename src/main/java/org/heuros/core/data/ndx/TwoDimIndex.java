@@ -4,6 +4,15 @@ import java.util.Arrays;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Abstract Index class to store data on two dimensinal array for indexed and fast access.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <T> Type of the instances to be indexed.
+ * @param <N> Type of the first indexing metric (integer, datetime etc.).
+ * @param <D> Type of the second indexing metric (integer, datetime etc.).
+ */
 public abstract class TwoDimIndex<T extends View, N, D> {
 
 	protected int rootNdxN = 0;

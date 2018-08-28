@@ -6,9 +6,20 @@ import java.time.temporal.ChronoUnit;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Implementation of the two dimensional Integer and datetime index.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <T> Type of the instances to be indexed.
+ */
 public class TwoDimIndexIntXLocalDateTime<T extends View> extends TwoDimIndex<T, Integer, LocalDateTime> {
 
-	protected static LocalDateTime referenceDateTime = LocalDateTime.of(2012, Month.JULY, 7, 12, 30, 0, 0);
+	/**
+	 * ReferenceDateTime is used to obtain integer (hourly) values for each datetime inputs 
+	 * by calculating duration between referenceDateTime and input datetime.
+	 */
+	protected static LocalDateTime referenceDateTime = LocalDateTime.of(2013, Month.DECEMBER, 1, 0, 0, 0, 0);
 
 	public TwoDimIndexIntXLocalDateTime(T[][][] arry) {
 		super(arry);

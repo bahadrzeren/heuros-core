@@ -1,5 +1,11 @@
 package org.heuros.exception;
 
+/**
+ * Root class for Heuros specific exceptions.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class HeurosException extends Exception {
 
 	/**

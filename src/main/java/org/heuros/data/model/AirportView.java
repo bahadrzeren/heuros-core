@@ -2,6 +2,12 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Getter only class used in rule implementations to access Airport instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public interface AirportView extends View {
 	public String getCode();
 

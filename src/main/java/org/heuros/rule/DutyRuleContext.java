@@ -31,6 +31,12 @@ import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
+/**
+ * Facade pattern to be used all kind of Duty model related rule operations.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 											StarterCheckerRuleContext<DutyView, LegView>,
 											ExtensibilityCheckerRuleContext<DutyView>,

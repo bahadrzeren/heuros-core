@@ -9,6 +9,12 @@ import org.heuros.data.model.Airport;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
+/**
+ * Facade pattern to be used all kind of Airport model related rule operations.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class AirportRuleContext implements IntroducerRuleContext<Airport> {
 
 	protected IntroducerRepository<Airport> introducerRepo = new IntroducerRepository<Airport>();

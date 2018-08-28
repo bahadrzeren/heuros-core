@@ -4,6 +4,15 @@ import org.heuros.core.data.base.View;
 import org.heuros.core.rule.intf.AppendabilityChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
+/**
+ * Proxy class for AppendabilityChecker rule implementations.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <P> Type of the parent model instances.
+ * @param <C> Type of the child model instances.
+ * @see AppendabilityChecker
+ */
 public class AppendabilityCheckerProxy<P extends View, C extends View>
 								implements AppendabilityChecker<P, C> {
 

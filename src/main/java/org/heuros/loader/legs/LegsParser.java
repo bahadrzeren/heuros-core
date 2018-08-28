@@ -12,6 +12,12 @@ import org.heuros.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
+/**
+ * Class that parses *.legs files and generates list of Leg instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class LegsParser extends TextFileReader<Leg> {
 
 	private static String datetimePattern = "yyyy-MM-dd'T'HH:mm";

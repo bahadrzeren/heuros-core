@@ -6,6 +6,12 @@ import org.heuros.core.base.Reporter;
 import org.heuros.data.model.LegView;
 import org.heuros.util.TextFileWriter;
 
+/**
+ * Exports list of Leg instances to a CVS file.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class LegCsvReporter implements Reporter<LegView> {
 
 	private String outputFileName = null;

@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Getter only class used in rule implementations to access Leg instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public interface LegView extends View {
 	public String getCarrier();
 	public int getFlightNo();

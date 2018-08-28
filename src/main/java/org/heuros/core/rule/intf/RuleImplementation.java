@@ -5,6 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Annotation class used to flag rule implementations and provide some metadata.
+ * 
+ * @author bahadrzeren
+ *
+ */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
 public @interface RuleImplementation {

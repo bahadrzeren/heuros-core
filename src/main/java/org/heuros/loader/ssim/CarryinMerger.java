@@ -17,7 +17,7 @@ import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
- * Carry-in file parser class that is used to merge carry-in data with the associated flight legs.
+ * Carry-in file parser class that is used to merge carry-in data with the associated Legs.
  * 
  * @author bahadrzeren
  *

@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import org.heuros.core.data.base.AbstractModelFactory;
 
+/**
+ * Factory class used for creating Pair instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class PairFactory extends AbstractModelFactory<Pair> {
 
 	@Override

@@ -8,6 +8,15 @@ import org.heuros.core.rule.intf.Rule;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
+/**
+ * Abstract implementation of the RuleRepository.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <R> Type of the rule interfaces those implementations will be stored.
+ * @see RuleRepository
+ * 
+ */
 public class AbstractRuleRepository<R> implements RuleRepository<R> {
 
 	private Logger logger = Logger.getLogger(AbstractRuleRepository.class);

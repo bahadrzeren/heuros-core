@@ -4,6 +4,14 @@ import org.heuros.core.data.base.View;
 import org.heuros.core.rule.intf.ConnectionChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
+/**
+ * Proxy class for ConnectionChecker rule implementations.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <V> Type of the model instances that connectivityCheck will be applied to.
+ * @see ConnectionChecker
+ */
 public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker<V> {
 
 	private RuleRepository<ConnectionChecker<V>> repo = null;

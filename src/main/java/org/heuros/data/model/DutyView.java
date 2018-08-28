@@ -6,6 +6,12 @@ import java.util.List;
 
 import org.heuros.core.data.base.View;
 
+/**
+ * Getter only class used in rule implementations to access Duty instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public interface DutyView extends View {
 
 	public List<LegView> getLegs();

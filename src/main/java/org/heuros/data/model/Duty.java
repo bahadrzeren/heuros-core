@@ -7,6 +7,12 @@ import java.util.List;
 
 import org.heuros.core.data.base.AbstractModel;
 
+/**
+ * Model class for Duty instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private List<LegView> legs = null;

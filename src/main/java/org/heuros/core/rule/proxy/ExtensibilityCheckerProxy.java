@@ -4,6 +4,14 @@ import org.heuros.core.data.base.View;
 import org.heuros.core.rule.intf.ExtensibilityChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
+/**
+ * Proxy class for ExtensibilityChecker rule implementations.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <M> Type of the model instances that extensibility check will be applied to.
+ * @see ExtensibilityChecker
+ */
 public class ExtensibilityCheckerProxy<M extends View>
 								implements ExtensibilityChecker<M> {
 

@@ -14,6 +14,12 @@ import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
+/**
+ * Facade pattern to be used all kind of Leg model related rule operations.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class LegRuleContext implements IntroducerRuleContext<Leg>,
 										ConnectionCheckerRuleContext<LegView>{
 

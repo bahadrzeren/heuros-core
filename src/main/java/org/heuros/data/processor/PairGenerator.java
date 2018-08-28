@@ -1,5 +1,11 @@
 package org.heuros.data.processor;
 
+/**
+ * Incomplete Pair generator!
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class PairGenerator {
 
 //	private int fNdxFrom = 0;

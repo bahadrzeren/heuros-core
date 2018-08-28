@@ -26,32 +26,66 @@ import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LegRuleContext;
 import org.heuros.rule.PairRuleContext;
 
+/**
+ * Facade pattern to be used in Crew Pairing Optimization projects.
+ * Includes Airport, Leg, Duty and Pairing related factories, repositories, indexes, rule contexts etc.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class PairOptimizationContext {
 
 	private static Logger logger = Logger.getLogger(PairOptimizationContext.class);
 
+	/**
+	 * Airport model related classes.
+	 */
 	private AirportFactory airportFactory = null;
 	private AirportRepository airportRepository = null;
 	private AirportRuleContext airportRuleContext = null;
 
+	/**
+	 * Flight leg model related classes.
+	 */
 	private LegFactory legFactory = null;
 	private LegRepository legRepository = null;
 	private LegRuleContext legRuleContext = null;
+	/**
+	 * Index class used to obtain next possible leg connections of a particular leg.
+	 */
 	private OneDimIndexInt<Leg> connectionLegsIndex = null;
 	public OneDimIndexInt<Leg> getConnectionLegsIndex() {
 		return this.connectionLegsIndex;
 	}
 
+	/**
+	 * Duty model related classes.
+	 */
 	private DutyFactory dutyFactory = null;
 	private DutyRepository dutyRepository = null;
 	private DutyRuleContext dutyRuleContext = null;
 	/*
 	 * TODO HB impl will be changed!
 	 */
+	/**
+	 * Index class used to obtain duties that include a particular leg.
+	 */
 	private OneDimIndexInt<DutyView> dutyIndexByLegNdx = null;
+	/**
+	 * Index class used to obtain hb departed duties that include a particular leg.
+	 */
 	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx = null;
+	/**
+	 * Index class used to obtain hb departed and hb arrival duties that include a particular leg.
+	 */
 	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
+	/**
+	 * Index class used to obtain duties that departs from a particular airport and time (hour).
+	 */
 	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime = null;
+	/**
+	 * Index class used to obtain hb arrival duties that departs from a particular airport and time (hour).
+	 */
 	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime = null;
 	public OneDimIndexInt<DutyView> getDutyIndexByLegNdx() {
 		return dutyIndexByLegNdx;
@@ -69,6 +103,9 @@ public class PairOptimizationContext {
 		return hbArrDutyIndexByDepAirportNdxBrieftime;
 	}
 
+	/**
+	 * Pair model related classes.
+	 */
 	private PairFactory pairFactory = null;
 	private PairRuleContext pairRuleContext = null;
 
@@ -150,6 +187,13 @@ public class PairOptimizationContext {
 		return this;
 	}
 
+	/**
+	 * Registers all the rule implementation classes provided by the list parameter on the related ruleContext classes.
+	 * 
+	 * @param rules List of rule implementation classes to be registered.
+	 * @throws RuleRegistrationMatchingException
+	 * @throws RuleAnnotationIsMissing
+	 */
 	public void registerRules(List<Rule> rules) throws RuleRegistrationMatchingException, RuleAnnotationIsMissing {
 		for (Rule r : rules) {
 			try {
@@ -171,6 +215,13 @@ public class PairOptimizationContext {
 		}
 	}
 
+	/**
+	 * Gets airport by airport code.
+	 * If not found a new one is created and registered on the airportRepository.
+	 * 
+	 * @param airportCode Code of the airport to be fetched or created/registered.
+	 * @return Airport instance requested.
+	 */
 	private Airport getAirport(String airportCode) {
 		Airport ap = this.airportRepository.getAirport(airportCode);
 		if (ap == null) {
@@ -183,6 +234,12 @@ public class PairOptimizationContext {
 		return ap;
 	}
 
+	/**
+	 * Registers the leg instance on the repository.
+	 * 
+	 * @param l Leg instance to register.
+	 * @return
+	 */
 	private boolean registerLeg(Leg l) {
 		if (this.legRuleContext.getIntroducerProxy().introduce(l)) {
 			this.legRepository.addToRepo(l);
@@ -191,6 +248,13 @@ public class PairOptimizationContext {
 		return false;
 	}
 
+	/**
+	 * Registers leg instances and airports where the legs arrives or departs and generates necessary index class instances to be used later on.
+	 * 
+	 * @param legs Leg instances to register.
+	 * @param dataPeriodStartInc Minimum allowed departure dateTime of the legs to be registered.
+	 * @param maxLegConnectionTimeInMins Maximum leg connection time for legs to be connected each other in a duty.
+	 */
 	public void registerAirportsAndLegs(List<Leg> legs, LocalDateTime dataPeriodStartInc, int maxLegConnectionTimeInMins) {
 		legs.forEach((l) -> {
 			l.setDepAirport(this.getAirport(l.getDep()));
@@ -200,23 +264,20 @@ public class PairOptimizationContext {
 					logger.warn("Leg " + l + " is ignored!");	//	Flight legs that are not going to be used.
 			}
 		});
-		this.buildLegConnectionIndex(maxLegConnectionTimeInMins);
-	}
 
-	private void buildLegConnectionIndex(int maxLegConnectionTimeInMins) {
-		List<Leg> legs = this.legRepository.getModels();
+		List<Leg> ls = this.legRepository.getModels();
 
-		this.connectionLegsIndex = new OneDimIndexInt<Leg>(new Leg[legs.size()][0]);
+		this.connectionLegsIndex = new OneDimIndexInt<Leg>(new Leg[ls.size()][0]);
 
 		int numOfActiveLegs = 0;
 		int numOfConnectionsChecked = 0;
 		int numOfConnectionsIndexed = 0;
-		for (int i = 0; i < legs.size(); i++) {
-			Leg pl = legs.get(i);
+		for (int i = 0; i < ls.size(); i++) {
+			Leg pl = ls.get(i);
 //if (pl.getNdx() == 991)
 //System.out.println(pl);
-			for (int j = i + 1; j < legs.size(); j++) {
-				Leg nl = legs.get(j);
+			for (int j = i + 1; j < ls.size(); j++) {
+				Leg nl = ls.get(j);
 				if (pl.getArrAirport().getNdx() == nl.getDepAirport().getNdx()) {
 					int connTime = (int) ChronoUnit.MINUTES.between(pl.getSibt(), nl.getSobt());
 					if (connTime > maxLegConnectionTimeInMins)
@@ -237,6 +298,11 @@ public class PairOptimizationContext {
 		PairOptimizationContext.logger.info(this.connectionLegsIndex.getNumOfIndexedElements() + " number of leg connections are indexed!");
 	}
 
+	/**
+	 * Registers duty instances on the dutyRepository and generates necessary index class instances to be used later on.
+	 * 
+	 * @param duties Duty instances to register.
+	 */
 	public void registerDuties(List<Duty> duties) {
 		List<Leg> legs = this.legRepository.getModels();
 		List<Airport> airports = this.airportRepository.getModels();

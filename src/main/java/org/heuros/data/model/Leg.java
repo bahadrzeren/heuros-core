@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 
 import org.heuros.core.data.base.AbstractModel;
 
+/**
+ * Model class for Leg instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class Leg extends AbstractModel implements LegView {
 
 	private String carrier = null;

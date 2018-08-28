@@ -1,5 +1,11 @@
 package org.heuros.exception;
 
+/**
+ * Exception thrown when input file/line could not be parsed.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class InputParseException extends HeurosException {
 	/**
 	 * 

@@ -4,6 +4,15 @@ import org.heuros.core.data.base.Model;
 import org.heuros.core.data.base.View;
 import org.heuros.core.rule.intf.Aggregator;
 
+/**
+ * Proxy class for Aggregator rule implementations.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <P> Type of the parent model instances.
+ * @param <C> Type of the child model instances.
+ * @see Aggregator
+ */
 public class AggregatorProxy<P extends Model, C extends View> implements Aggregator<P, C> {
 
 	private Aggregator<P, C> aggregatorImpl = null;

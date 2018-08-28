@@ -2,6 +2,12 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.AbstractModelFactory;
 
+/**
+ * Factory class used for creating Airport instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class AirportFactory extends AbstractModelFactory<Airport> {
 
 	@Override

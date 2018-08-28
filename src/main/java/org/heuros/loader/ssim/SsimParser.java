@@ -17,7 +17,7 @@ import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
- * SSIM file parser class that is used to extract leg data.
+ * SSIM file parser class that is used to extract Leg data.
  * 
  * @author bahadrzeren
  *

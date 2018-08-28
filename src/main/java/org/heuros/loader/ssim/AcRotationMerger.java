@@ -19,7 +19,7 @@ import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
 
 /**
- * Rotation file parser class that is used to merge AC tail assignment data with the associated flight legs.
+ * Rotation file parser class that is used to merge AC tail assignment data with the associated Legs.
  * 
  * @author bahadrzeren
  *

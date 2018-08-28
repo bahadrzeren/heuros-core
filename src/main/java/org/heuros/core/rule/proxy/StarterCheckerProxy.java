@@ -4,6 +4,15 @@ import org.heuros.core.data.base.View;
 import org.heuros.core.rule.intf.StarterChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
+/**
+ * Proxy class for StarterChecker rule implementations.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <P> Type of the parent model instances.
+ * @param <C> Type of the child model instances.
+ * @see StarterChecker
+ */
 public class StarterCheckerProxy<P extends View, C extends View>
 								implements StarterChecker<P, C> {
 

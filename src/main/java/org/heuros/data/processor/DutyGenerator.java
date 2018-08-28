@@ -15,6 +15,13 @@ import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.rule.DutyRuleContext;
 
+/**
+ * Duty generator.
+ * Genetrates list if all valid duties by checking all Leg connections via legConnectionIndex.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class DutyGenerator implements Processor<LegView, Duty> {
 
 	private static Logger logger = Logger.getLogger(DutyGenerator.class);

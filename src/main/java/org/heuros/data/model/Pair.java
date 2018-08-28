@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.heuros.core.data.base.AbstractModel;
 
+/**
+ * Model class for Pair instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class Pair extends AbstractModel implements PairView {
 	
 	private List<DutyView> duties = null;

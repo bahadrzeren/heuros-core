@@ -2,6 +2,12 @@ package org.heuros.data.model;
 
 import org.heuros.core.data.base.AbstractModel;
 
+/**
+ * Model class for Airport instances.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class Airport extends AbstractModel implements AirportView {
 
 	private String code = null;

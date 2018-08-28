@@ -12,6 +12,12 @@ import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LazyDutyValidator;
 import org.heuros.rule.LegRuleContext;
 
+/**
+ * General purpose class used for calling rule specific methods and functional interface implementations.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class RuleUtil {
 
 	public static ImplementationChecker<Rule, Class<?>> implChecker = (ruleImpl, intfClass, genericTypes) -> {

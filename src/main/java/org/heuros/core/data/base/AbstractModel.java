@@ -1,5 +1,12 @@
 package org.heuros.core.data.base;
 
+/**
+ * Abstract implementation of Model interface.
+ * 
+ * @author bahadrzeren
+ * 
+ * @see Model
+ */
 public abstract class AbstractModel implements Model {
 
 	protected int ndx = -1;

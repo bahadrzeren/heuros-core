@@ -5,6 +5,13 @@ import java.util.List;
 
 import org.heuros.core.data.base.Model;
 
+/**
+ * Abstract implementation for the model repositories.
+ * 
+ * @author bahadrzeren
+ *
+ * @param <M> Type of the model. Airport, Leg, Duty etc..
+ */
 public abstract class AbstractDataRepository<M extends Model> implements DataRepository<M> {
 
 	protected List<M> list = new ArrayList<M>();

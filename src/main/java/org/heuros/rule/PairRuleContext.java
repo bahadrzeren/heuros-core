@@ -31,6 +31,12 @@ import org.heuros.data.model.Pair;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
 
+/**
+ * Facade pattern to be used all kind of Pair model related rule operations.
+ * 
+ * @author bahadrzeren
+ *
+ */
 public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 											StarterCheckerRuleContext<PairView, DutyView>,
 											ExtensibilityCheckerRuleContext<PairView>,
