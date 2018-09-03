@@ -12,5 +12,5 @@ import org.heuros.core.data.base.View;
  * @param <C> Type of the child class.
  */
 public interface StarterChecker<P extends View, C extends View> extends Rule {
-	public boolean canBeStarter(C model);
+	public boolean canBeStarter(C model, int hbNdx);
 }

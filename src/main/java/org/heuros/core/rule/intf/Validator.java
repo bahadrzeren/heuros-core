@@ -10,5 +10,5 @@ import org.heuros.core.data.base.View;
  * @param <M> Type of the model instances to be validated.
  */
 public interface Validator<M extends View> extends Rule {
-	public boolean isValid(M m);
+	public boolean isValid(M m, int hbNdx);
 }
