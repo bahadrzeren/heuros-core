@@ -67,19 +67,25 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		while (i < this.legs.size()) {
 			Leg l = this.legs.get(i);
 
-//if (l.getFlightNo() == 453)
-//System.out.println();
-
 //			if (!(f.getScheduledOffblockUtc().before(firstDayEnd) && f.getDepAirport()._nonHb())) {
 				if (l.isCover() || l.isDeadheadable()) {
-					if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(l)) {
+					/*
+					 * Duty starter check does not need any HB control therefore -1 is used.
+					 */
+					if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(l, -1)) {
 
-						dutyRuleContext.getAggregatorImpl().append(d, l);
+						/*
+						 * Duty leg aggregator does not need any HB control therefore -1 is used.
+						 */
+						dutyRuleContext.getAggregatorImpl().append(d, l, -1);
 
 						/*
 						 * TODO Terminator rule!
 						 */
-						if (dutyRuleContext.getValidatorProxy().isValid(d)) {
+						/*
+						 * Duty validator does not need any HB control therefore -1 is used.
+						 */
+						if (dutyRuleContext.getValidatorProxy().isValid(d, -1)) {
 							try {
 								dl.add((Duty) d.clone());
 							} catch (CloneNotSupportedException e) {
@@ -87,7 +93,10 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 								return null;
 							}
 						}
-						if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
+						/*
+						 * Duty extensibility checker does not need any HB control therefore -1 is used.
+						 */
+						if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
 							try {
 								examineDutyFW(d, l);
 							} catch (CloneNotSupportedException e) {
@@ -96,7 +105,10 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 							}
 						}
 
-						dutyRuleContext.getAggregatorImpl().removeLast(d);
+						/*
+						 * Duty leg aggregator does not need any HB control therefore -1 is used.
+						 */
+						dutyRuleContext.getAggregatorImpl().removeLast(d, -1);
 					}
 				}
 //			}
@@ -131,19 +143,34 @@ public class DutyGenerator implements Processor<LegView, Duty> {
                 	/*
                 	 * We already checked legs connectibility on LegConnectionIndex generation phase.
                 	 */
-                    if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l)) {
+					/*
+					 * Duty leg appendability checker does not need any HB control therefore -1 is used.
+					 */
+                	if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l, -1)) {
 
-                    	dutyRuleContext.getAggregatorImpl().append(d, l);
+						/*
+						 * Duty leg aggregator does not need any HB control therefore -1 is used.
+						 */
+                    	dutyRuleContext.getAggregatorImpl().append(d, l, -1);
 
-	                    if (dutyRuleContext.getValidatorProxy().isValid(d)) {
+						/*
+						 * Duty validator does not need any HB control therefore -1 is used.
+						 */
+	                    if (dutyRuleContext.getValidatorProxy().isValid(d, -1)) {
 	                    	dl.add((Duty) d.clone());
 	                    }
 
-	                    if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
+						/*
+						 * Duty extensibility checker does not need any HB control therefore -1 is used.
+						 */
+	                    if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
                    			examineDutyFW(d, l);
 	                    }
 
-	                    dutyRuleContext.getAggregatorImpl().removeLast(d);
+						/*
+						 * Duty leg aggregator does not need any HB control therefore -1 is used.
+						 */
+	                    dutyRuleContext.getAggregatorImpl().removeLast(d, -1);
                     }
     			}
             }

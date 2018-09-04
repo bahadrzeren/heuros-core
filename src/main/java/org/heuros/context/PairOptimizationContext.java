@@ -274,8 +274,6 @@ public class PairOptimizationContext {
 		int numOfConnectionsIndexed = 0;
 		for (int i = 0; i < ls.size(); i++) {
 			Leg pl = ls.get(i);
-//if (pl.getNdx() == 991)
-//System.out.println(pl);
 			for (int j = i + 1; j < ls.size(); j++) {
 				Leg nl = ls.get(j);
 				if (pl.getArrAirport().getNdx() == nl.getDepAirport().getNdx()) {
@@ -283,7 +281,10 @@ public class PairOptimizationContext {
 					if (connTime > maxLegConnectionTimeInMins)
 						break;
 					numOfConnectionsChecked++;
-					if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl)) {
+					/*
+					 * Leg connection check does not need any HB control therefore -1 is used.
+					 */
+					if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl, -1)) {
 						this.connectionLegsIndex.add(pl.getNdx(), nl);
 						numOfConnectionsIndexed++;
 					}

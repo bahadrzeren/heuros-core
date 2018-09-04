@@ -55,16 +55,19 @@ public class RuleUtil {
 		if (nl == null)
 			return false;
 		LegView pl;
-		if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl)) {
+		/*
+		 * Duty rule level does not need any HB control therefore -1 is used.
+		 */
+		if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl, -1)) {
 			dutyRuleContext.getAggregatorImpl().reset(d);
-			dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
+			dutyRuleContext.getAggregatorImpl().softAppend(d, nl, -1);
 			for (int i = 1; i < d.getLegs().size(); i++) {
 				pl = nl;
 				nl = d.getLegs().get(i);
-				if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl)) {
-					if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d)) {
-						if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl)) {
-							dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
+				if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl, -1)) {
+					if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
+						if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl, -1)) {
+							dutyRuleContext.getAggregatorImpl().softAppend(d, nl, -1);
 						} else
 							return false;
 					} else
@@ -72,7 +75,7 @@ public class RuleUtil {
 				} else
 					return false;
 			}
-			if (dutyRuleContext.getValidatorProxy().isValid(d))
+			if (dutyRuleContext.getValidatorProxy().isValid(d, -1))
 				return true;
 		}
 		return false;

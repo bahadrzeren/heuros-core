@@ -21,9 +21,9 @@ public class ValidatorProxy<V extends View> implements Validator<V> {
 	}
 
 	@Override
-	public boolean isValid(V m) {
+	public boolean isValid(V m, int hbNdx) {
 		for (int i = 0; i < this.repo.getRules().size(); i++) {
-			if (!this.repo.getRules().get(i).isValid(m))
+			if (!this.repo.getRules().get(i).isValid(m, hbNdx))
 				return false;
 		}
 		return true;

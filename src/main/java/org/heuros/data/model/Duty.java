@@ -31,7 +31,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int numOfAgDg = 0;
 	private int numOfSpecialFlights = 0;
 
-	private int numOfAnyHomebaseTouch = 0;
+//	private int numOfAnyHomebaseTouch = 0;
 	private int numOfDomTouch = 0;
 	private int numOfIntTouch = 0;
 
@@ -39,54 +39,54 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private int longConnDiff = 0;
 
-	private LocalDateTime briefTimeHb = null;
-	private LocalDateTime briefTimeNonHb = null;
+//	private LocalDateTime briefTimeHb = null;
+//	private LocalDateTime briefTimeNonHb = null;
 	private LocalDateTime debriefTime = null;
 
-	private LocalDateTime briefDayBeginningHb = null;
-	private LocalDateTime briefDayBeginningNonHb = null;
+//	private LocalDateTime briefDayBeginningHb = null;
+//	private LocalDateTime briefDayBeginningNonHb = null;
 	private LocalDateTime debriefDayEnding = null;
 
-	private LocalDate briefDayHb = null;
-	private LocalDate briefDayNonHb = null;
+//	private LocalDate briefDayHb = null;
+//	private LocalDate briefDayNonHb = null;
 	private LocalDate debriefDay = null;
 
-	private int briefDurationInMinsHb = 0;
-	private int briefDurationInMinsNonHb = 0;
+//	private int briefDurationInMinsHb = 0;
+//	private int briefDurationInMinsNonHb = 0;
 	private int debriefDurationInMins = 0;
 
-	private int dutyDurationInMinsHb = 0;
-	private int dutyDurationInMinsNonHb = 0;
+//	private int dutyDurationInMinsHb = 0;
+//	private int dutyDurationInMinsNonHb = 0;
 
-	private int numOfDaysTouchedHb = 0;
-	private int numOfDaysTouchedNonHb = 0;
+//	private int numOfDaysTouchedHb = 0;
+//	private int numOfDaysTouchedNonHb = 0;
 
 	private boolean er = false;
 
-	private int restDurationInMinsHbToHb = 0;
-	private int restDurationInMinsHbToNonHb = 0;
-	private int restDurationInMinsNonHbToHb = 0;
-	private int restDurationInMinsNonHbToNonHb = 0;
+//	private int restDurationInMinsHbToHb = 0;
+//	private int restDurationInMinsHbToNonHb = 0;
+//	private int restDurationInMinsNonHbToHb = 0;
+//	private int restDurationInMinsNonHbToNonHb = 0;
 
-	private LocalDateTime nextBriefTimeHbToHb = null;
-	private LocalDateTime nextBriefTimeHbToNonHb = null;
-	private LocalDateTime nextBriefTimeNonHbToHb = null;
-	private LocalDateTime nextBriefTimeNonHbToNonHb = null;
+//	private LocalDateTime nextBriefTimeHbToHb = null;
+//	private LocalDateTime nextBriefTimeHbToNonHb = null;
+//	private LocalDateTime nextBriefTimeNonHbToHb = null;
+//	private LocalDateTime nextBriefTimeNonHbToNonHb = null;
 
-	private int augmentedHb = 0;
-	private int augmentedNonHb = 0;
+//	private int augmentedHb = 0;
+//	private int augmentedNonHb = 0;
 
 	private boolean international = false;
-	private boolean earlyHb = false;
-	private boolean earlyNonHb = false;
-	private boolean hardHb = false;
-	private boolean hardNonHb = false;
+//	private boolean earlyHb = false;
+//	private boolean earlyNonHb = false;
+//	private boolean hardHb = false;
+//	private boolean hardNonHb = false;
 
 	private int[] longestBlockTimesInMins = new int[15];
 	private int longestBlockTimeInMins = 0;
 
-	private boolean validHb = true;
-	private boolean validNonHb = true;
+//	private boolean validHb = true;
+//	private boolean validNonHb = true;
 
 	private int totalNumOfIncludingDutiesOfTheSameLegs = 0;
 
