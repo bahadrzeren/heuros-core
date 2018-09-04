@@ -58,7 +58,7 @@ public class RuleContextTest extends TestCase {
 
     /**
      * Test LegIntroducer rule registration.
-     * Other repositories must not include the rule that implements Introducer interface only. 
+     * Other repositories must not include the rule that implements just Introducer interface.
      */
     public void testLegIntroducerRegistration()
     {
@@ -79,8 +79,7 @@ public class RuleContextTest extends TestCase {
     }
 
     /**
-     * Test Leg Introducer and ConnectionChecker rule registration.
-     * Validator repository must not include the rule.
+     * Test Leg Introducer and ConnectionChecker implementer rule registration.
      */
     public void testLegIntroducerAndConnectionCheckerRegistration()
     {
@@ -102,7 +101,7 @@ public class RuleContextTest extends TestCase {
 
     /**
      * Test Duty rule registration.
-     * Since the rule implements all the interfaces, all repos must have the rule.
+     * Since the rule does not implement StarterChecker and Aggregator interfaces repos of those classes must be zero.
      */
     public void testDutyRuleRegistration()
     {
@@ -116,6 +115,8 @@ public class RuleContextTest extends TestCase {
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getAppendabilityCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getValidatorRepo().getRules().size() == 1);
+    		assertTrue(context.getStarterCheckerRepo().getRules().size() == 0);
+    		assertTrue(context.getAggregatorImpl() == null);
 
     	} catch (Exception ex) {
     		ex.printStackTrace();
