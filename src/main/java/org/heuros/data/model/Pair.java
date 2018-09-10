@@ -14,7 +14,8 @@ public class Pair extends AbstractModel implements PairView {
 	
 	private List<DutyView> duties = null;
 
-	private AirportView homeBase = null;
+	private int hbNdx = -1;
+
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
 	private int blockTimeInMinsPassive = 0;
@@ -82,11 +83,11 @@ public class Pair extends AbstractModel implements PairView {
 		this.duties = duties;
 	}
 
-	public AirportView getHomeBase() {
-		return homeBase;
+	public int getHbNdx() {
+		return hbNdx;
 	}
-	public void setHomeBase(AirportView homeBase) {
-		this.homeBase = homeBase;
+	public void setHbNdx(int hbNdx) {
+		this.hbNdx = hbNdx;
 	}
 
 	public int getBlockTimeInMins() {

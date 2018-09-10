@@ -10,7 +10,7 @@ import org.heuros.core.data.base.View;
  */
 public interface PairView extends View {
 
-	public AirportView getHomeBase();
+	public int getHbNdx();
 
 	public DutyView getFirstDuty();
 	public DutyView getLastDuty();
