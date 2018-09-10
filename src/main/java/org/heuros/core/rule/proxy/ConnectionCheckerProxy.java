@@ -12,12 +12,15 @@ import org.heuros.core.rule.repo.RuleRepository;
  * @param <V> Type of the model instances that connectivityCheck will be applied to.
  * @see ConnectionChecker
  */
-public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker<V> {
+public class ConnectionCheckerProxy<V extends View> implements ConnectionCheckerPro<V> {
 
 	private RuleRepository<ConnectionChecker<V>> repo = null;
 
-	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<V>> repo) {
+	private int numOfBases = 0;
+
+	public ConnectionCheckerProxy(RuleRepository<ConnectionChecker<V>> repo, int numOfBases) {
 		this.repo = repo;
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -26,5 +29,14 @@ public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker
 			if (!this.repo.getRules().get(i).areConnectable(prevModel, nextModel, hbNdx))
 				return false;
 		return true;
+	}
+
+	@Override
+	public int areConnectable(V prevModel, V nextModel) {
+		int res = 0;
+		for (int i = 0; i < this.numOfBases; i++)
+			if (this.areConnectable(prevModel, nextModel, i))
+				res |= (1 << i);
+		return res;
 	}
 }

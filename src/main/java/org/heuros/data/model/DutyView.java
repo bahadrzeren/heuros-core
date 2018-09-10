@@ -36,74 +36,39 @@ public interface DutyView extends View {
 	public int getNumOfAgDg();
 	public int getNumOfSpecialFlights();
 
-	public int getNumOfAnyHomebaseTouch();
 	public int getNumOfDomTouch();
 	public int getNumOfIntTouch();
+
+	public int getNumOfAnyHomebaseTouch();
+	public int getNumOfHomebaseTouch(int hbNdx);
 
 	public int getNumOfAcChanges();
 
 	public int getLongConnDiff();
 
-	public int getBriefDurationInMinsHb();
-	public int getBriefDurationInMinsNonHb();
-	public int getBriefDurationInMins(Airport hb);
-	public int getDebriefDurationInMins();
-
-	public LocalDateTime getBriefTimeHb();
-	public LocalDateTime getBriefTimeNonHb();
-	public LocalDateTime getBriefTime(Airport hb);
-	public LocalDateTime getDebriefTime();
-
-	public LocalDateTime getBriefDayBeginningHb();
-	public LocalDateTime getBriefDayBeginningNonHb();
-	public LocalDateTime getBriefDayBeginning(Airport hb);
-	public LocalDateTime getDebriefDayEnding();
-
-	public LocalDate getBriefDayHb();
-	public LocalDate getBriefDayNonHb();
-	public LocalDate getBriefDay(Airport hb);
-	public LocalDate getDebriefDay();
-
-	public int getDutyDurationInMinsHb();
-	public int getDutyDurationInMinsNonHb();
-	public int getDutyDurationInMins(Airport hb);
-
-	public int getNumOfDaysTouchedHb();
-	public int getNumOfDaysTouchedNonHb();
-	public int getNumOfDaysTouched(Airport hb);
-
 	public boolean isEr();
-
-	public int getRestDurationInMinsHbToHb();
-	public int getRestDurationInMinsHbToNonHb();
-	public int getRestDurationInMinsNonHbToHb();
-	public int getRestDurationInMinsNonHbToNonHb();
-	public int getRestDurationInMins(Airport hb);
-
-	public LocalDateTime getNextBriefTimeHbToHb();
-	public LocalDateTime getNextBriefTimeHbToNonHb();
-	public LocalDateTime getNextBriefTimeNonHbToHb();
-	public LocalDateTime getNextBriefTimeNonHbToNonHb();
-	public LocalDateTime getNextBriefTimeHbTo(Airport hb);
-
-	public int getAugmentedHb();
-	public int getAugmentedNonHb();
-	public int getAugmented(Airport hb);
-
 	public boolean isInternational();
-	public boolean isEarlyHb();
-	public boolean isEarlyNonHb();
-	public boolean isEarly(Airport hb);
-	public boolean isHardHb();
-	public boolean isHardNonHb();
-	public boolean isHard(Airport hb);
-
 	public int[] getLongestBlockTimesInMins();
 	public int getLongestBlockTimeInMins();
 
-	public boolean isValidHb();
-	public boolean isValidNonHb();
-	public boolean isValid(Airport hb);
+	public int getBriefDurationInMins(int hbNdx);
+	public LocalDateTime getBriefTime(int hbNdx);
+	public LocalDateTime getBriefDayBeginning(int hbNdx);
+	public LocalDate getBriefDay(int hbNdx);
+
+	public int getDebriefDurationInMins(int hbNdx);
+	public LocalDateTime getDebriefTime(int hbNdx);
+	public LocalDateTime getDebriefDayEnding(int hbNdx);
+	public LocalDate getDebriefDay(int hbNdx);
+
+	public int getDutyDurationInMins(int hbNdx);
+	public int getNumOfDaysTouched(int hbNdx);
+	public int getRestDurationInMins(int hbNdx);
+	public LocalDateTime getNextBriefTime(int hbNdx);
+	public int getAugmented(int hbNdx);
+	public boolean isEarly(int hbNdx);
+	public boolean isHard(int hbNdx);
+	public boolean isValid(int hbNdx);
 
 	public int getTotalNumOfIncludingDutiesOfTheSameLegs();
 }

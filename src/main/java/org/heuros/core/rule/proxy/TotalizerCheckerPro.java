@@ -1,6 +1,7 @@
-package org.heuros.core.rule.intf;
+package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.View;
+import org.heuros.core.rule.intf.TotalizerChecker;
 
 /**
  * Rule interface used to check whether an model instance is valid.
@@ -9,6 +10,6 @@ import org.heuros.core.data.base.View;
  *
  * @param <M> Type of the model instances to be validated.
  */
-public interface Validator<M extends View> extends Rule {
-	public boolean isValid(M m, int hbNdx);
+public interface TotalizerCheckerPro<M extends View> extends TotalizerChecker<M> {
+	public int isValid(M m);
 }

@@ -72,12 +72,14 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty starter check does not need any HB control therefore -1 is used.
 					 */
-					if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(l, -1)) {
+					int validStarter = dutyRuleContext.getStarterCheckerProxy().canBeStarter(l);
+
+					if (validStarter > 0) {
 
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-						dutyRuleContext.getAggregatorImpl().append(d, l, -1);
+						dutyRuleContext.getAggregatorImpl().append(d, l);
 
 						/*
 						 * TODO Terminator rule!
@@ -85,7 +87,8 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.
 						 */
-						if (dutyRuleContext.getValidatorProxy().isValid(d, -1)) {
+						int validTotalizer = dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+						if ((validStarter & validTotalizer) > 0) {
 							try {
 								dl.add((Duty) d.clone());
 							} catch (CloneNotSupportedException e) {
@@ -96,9 +99,10 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty extensibility checker does not need any HB control therefore -1 is used.
 						 */
-						if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
+						int validExtensible = dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+						if ((validStarter & validExtensible) > 0) {
 							try {
-								examineDutyFW(d, l);
+								examineDutyFW(d, l, validStarter & validExtensible);
 							} catch (CloneNotSupportedException e) {
 								logger.error(e);
 								return null;
@@ -108,7 +112,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-						dutyRuleContext.getAggregatorImpl().removeLast(d, -1);
+						dutyRuleContext.getAggregatorImpl().removeLast(d);
 					}
 				}
 //			}
@@ -131,7 +135,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		return this.dl;
 	}
 
-    private void examineDutyFW(Duty d, LegView lastLegOfTheDuty) throws CloneNotSupportedException {
+    private void examineDutyFW(Duty d, LegView lastLegOfTheDuty, int validationStatus) throws CloneNotSupportedException {
 
         Leg[] connLs = legConnectionIndex.getArray(lastLegOfTheDuty.getNdx());
 
@@ -146,31 +150,34 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg appendability checker does not need any HB control therefore -1 is used.
 					 */
-                	if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l, -1)) {
+                	int validAppendable = validationStatus & dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l);
+                	if (validAppendable > 0) {
 
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-                    	dutyRuleContext.getAggregatorImpl().append(d, l, -1);
+                    	dutyRuleContext.getAggregatorImpl().append(d, l);
 
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.
 						 */
-	                    if (dutyRuleContext.getValidatorProxy().isValid(d, -1)) {
+                    	int validTotalizer = validAppendable & dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+	                    if (validTotalizer > 0) {
 	                    	dl.add((Duty) d.clone());
 	                    }
 
 						/*
 						 * Duty extensibility checker does not need any HB control therefore -1 is used.
 						 */
-	                    if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
-                   			examineDutyFW(d, l);
+	                    int validExtensible = validAppendable & dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+	                    if (validExtensible > 0) {
+                   			examineDutyFW(d, l, validExtensible);
 	                    }
 
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-	                    dutyRuleContext.getAggregatorImpl().removeLast(d, -1);
+	                    dutyRuleContext.getAggregatorImpl().removeLast(d);
                     }
     			}
             }

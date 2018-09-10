@@ -6,25 +6,25 @@ import org.heuros.core.rule.ConnectionCheckerRuleContext;
 import org.heuros.core.rule.ExtensibilityCheckerRuleContext;
 import org.heuros.core.rule.StarterCheckerRuleContext;
 import org.heuros.core.rule.AppendabilityCheckerRuleContext;
-import org.heuros.core.rule.ValidatorRuleContext;
+import org.heuros.core.rule.TotalizerCheckerRuleContext;
 import org.heuros.core.rule.intf.Aggregator;
 import org.heuros.core.rule.intf.AppendabilityChecker;
 import org.heuros.core.rule.intf.ConnectionChecker;
 import org.heuros.core.rule.intf.ExtensibilityChecker;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.core.rule.intf.StarterChecker;
-import org.heuros.core.rule.intf.Validator;
+import org.heuros.core.rule.intf.TotalizerChecker;
 import org.heuros.core.rule.proxy.AggregatorProxy;
 import org.heuros.core.rule.proxy.ConnectionCheckerProxy;
 import org.heuros.core.rule.proxy.ExtensibilityCheckerProxy;
 import org.heuros.core.rule.proxy.StarterCheckerProxy;
 import org.heuros.core.rule.proxy.AppendabilityCheckerProxy;
-import org.heuros.core.rule.proxy.ValidatorProxy;
+import org.heuros.core.rule.proxy.TotalizerCheckerProxy;
 import org.heuros.core.rule.repo.ConnectionCheckerRepository;
 import org.heuros.core.rule.repo.ExtensibilityCheckerRepository;
 import org.heuros.core.rule.repo.StarterCheckerRepository;
 import org.heuros.core.rule.repo.AppendabilityCheckerRepository;
-import org.heuros.core.rule.repo.ValidatorRepository;
+import org.heuros.core.rule.repo.TotalizerCheckerRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.LegView;
@@ -42,27 +42,33 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 											ExtensibilityCheckerRuleContext<DutyView>,
 											ConnectionCheckerRuleContext<DutyView>,
 											AppendabilityCheckerRuleContext<DutyView, LegView>,
-											ValidatorRuleContext<DutyView> {
+											TotalizerCheckerRuleContext<DutyView> {
 
 	private static Logger logger = Logger.getLogger(DutyRuleContext.class);
+
+	private int numOfBases = 0;
 
 	protected Aggregator<Duty, LegView> aggregatorImpl = null;
 	protected StarterCheckerRepository<DutyView, LegView> starterCheckerRepo = new StarterCheckerRepository<DutyView, LegView>();
 	protected ExtensibilityCheckerRepository<DutyView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView>();
 	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
 	protected AppendabilityCheckerRepository<DutyView, LegView> appendabilityCheckerRepo = new AppendabilityCheckerRepository<DutyView, LegView>();
-	protected ValidatorRepository<DutyView> validatorRepo = new ValidatorRepository<DutyView>();
+	protected TotalizerCheckerRepository<DutyView> totalizerCheckerRepo = new TotalizerCheckerRepository<DutyView>();
 
 	protected AggregatorProxy<Duty, LegView> aggregatorProxy = null;
-	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = new StarterCheckerProxy<DutyView, LegView>(this.starterCheckerRepo);
-	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView>(this.extensibilityCheckerRepo);
-	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo);
-	protected AppendabilityCheckerProxy<DutyView, LegView> appendabilityCheckerProxy = new AppendabilityCheckerProxy<DutyView, LegView>(this.appendabilityCheckerRepo);
-	protected ValidatorProxy<DutyView> validatorProxy = new ValidatorProxy<DutyView>(this.validatorRepo);
+	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = new StarterCheckerProxy<DutyView, LegView>(this.starterCheckerRepo, this.numOfBases);
+	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView>(this.extensibilityCheckerRepo, this.numOfBases);
+	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo, this.numOfBases);
+	protected AppendabilityCheckerProxy<DutyView, LegView> appendabilityCheckerProxy = new AppendabilityCheckerProxy<DutyView, LegView>(this.appendabilityCheckerRepo, this.numOfBases);
+	protected TotalizerCheckerProxy<DutyView> totalizerCheckerProxy = new TotalizerCheckerProxy<DutyView>(this.totalizerCheckerRepo, this.numOfBases);
 
 	private static Class<?>[] dutyViewClass = {DutyView.class};
 	private static Class<?>[] dutyLegViewClasses = {Duty.class, LegView.class};
 	private static Class<?>[] dutyViewLegViewClasses = {DutyView.class, LegView.class};
+
+	public DutyRuleContext(int numOfBases) {
+		this.numOfBases = numOfBases;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -78,8 +84,8 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 			res += this.registerConnectionCheckerRule((ConnectionChecker<DutyView>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class, dutyViewLegViewClasses))
 			res += this.registerAppendabilityCheckerRule((AppendabilityChecker<DutyView, LegView>) rule);
-		if (RuleUtil.implChecker.isImplemented(rule, Validator.class, dutyViewClass))
-			res += this.registerValidatorRule((Validator<DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, TotalizerChecker.class, dutyViewClass))
+			res += this.registerTotalizerCheckerRule((TotalizerChecker<DutyView>) rule);
 		return res;
 	}
 
@@ -100,8 +106,8 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 			res += this.connectionCheckerRepo.removeRule((ConnectionChecker<DutyView>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, AppendabilityChecker.class, dutyViewLegViewClasses))
 			res += this.appendabilityCheckerRepo.removeRule((AppendabilityChecker<DutyView, LegView>) rule);
-		if (RuleUtil.implChecker.isImplemented(rule, Validator.class,dutyViewClass))
-			res += this.validatorRepo.removeRule((Validator<DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, TotalizerChecker.class,dutyViewClass))
+			res += this.totalizerCheckerRepo.removeRule((TotalizerChecker<DutyView>) rule);
 		return res;
 	}
 
@@ -207,21 +213,21 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	}
 
 	/*
-	 * Validator context impl.
+	 * TotalizerChecker context impl.
 	 */
 	@Override
-	public int registerValidatorRule(Validator<DutyView> rule) throws RuleAnnotationIsMissing {
-		return this.validatorRepo.registerRule(rule);
+	public int registerTotalizerCheckerRule(TotalizerChecker<DutyView> rule) throws RuleAnnotationIsMissing {
+		return this.totalizerCheckerRepo.registerRule(rule);
 	}
 
 	@Override
-	public ValidatorRepository<DutyView> getValidatorRepo() {
-		return this.validatorRepo;
+	public TotalizerCheckerRepository<DutyView> getTotalizerCheckerRepo() {
+		return this.totalizerCheckerRepo;
 	}
 
 	@Override
-	public ValidatorProxy<DutyView> getValidatorProxy() {
-		return this.validatorProxy;
+	public TotalizerCheckerProxy<DutyView> getTotalizerCheckerProxy() {
+		return this.totalizerCheckerProxy;
 	}
 
 }

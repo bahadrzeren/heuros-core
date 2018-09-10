@@ -22,13 +22,13 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	}
 
 	@Override
-	public void append(P p, C c, int hbNdx) {
-		this.aggregatorImpl.append(p, c, hbNdx);
+	public void append(P p, C c) {
+		this.aggregatorImpl.append(p, c);
 	}
 
 	@Override
-	public C removeLast(P p, int hbNdx) {
-		return this.aggregatorImpl.removeLast(p, hbNdx);
+	public C removeLast(P p) {
+		return this.aggregatorImpl.removeLast(p);
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	}
 
 	@Override
-	public void reCalculate(P p, int hbNdx) {
-		this.aggregatorImpl.reCalculate(p, hbNdx);
+	public void reCalculate(P p) {
+		this.aggregatorImpl.reCalculate(p);
 	}
 
 	@Override
-	public void softAppend(P p, C c, int hbNdx) {
-		this.aggregatorImpl.softAppend(p, c, hbNdx);
+	public void softAppend(P p, C c) {
+		this.aggregatorImpl.softAppend(p, c);
 	}
 }

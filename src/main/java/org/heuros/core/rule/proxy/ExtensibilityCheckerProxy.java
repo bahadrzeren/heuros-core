@@ -13,12 +13,15 @@ import org.heuros.core.rule.repo.RuleRepository;
  * @see ExtensibilityChecker
  */
 public class ExtensibilityCheckerProxy<M extends View>
-								implements ExtensibilityChecker<M> {
+								implements ExtensibilityCheckerPro<M> {
 
 	private RuleRepository<ExtensibilityChecker<M>> repo = null;
 
-	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<M>> repo) {
+	private int numOfBases = 0;
+
+	public ExtensibilityCheckerProxy(RuleRepository<ExtensibilityChecker<M>> repo, int numOfBases) {
 		this.repo = repo;
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -27,5 +30,14 @@ public class ExtensibilityCheckerProxy<M extends View>
 			if (!this.repo.getRules().get(i).isExtensible(m, hbNdx))
 				return false;
 		return true;
+	}
+
+	@Override
+	public int isExtensible(M model) {
+		int res = 0;
+		for (int i = 0; i < this.numOfBases; i++)
+			if (this.isExtensible(model, i))
+				res |= (1 << i);
+		return res;
 	}
 }

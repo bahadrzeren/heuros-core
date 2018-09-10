@@ -317,10 +317,10 @@ public class PairOptimizationContext {
 		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
 
 		/*
-		 * TODO HB impl will be changed!
+		 * Choose first homebase brieftime for the index roots!
 		 */
-		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTimeHb().minusHours(1));
-		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTimeHb().minusHours(1));
+		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
+		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
 
 		duties.forEach((d) -> {
 			/*
@@ -361,11 +361,11 @@ public class PairOptimizationContext {
 
 			this.dutyRepository.addToRepo(d);
 			/*
-			 * TODO HB impl will be changed!
+			 * Choose first homebase brieftime for the index roots!
 			 */
-			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
+			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
 			if (hbArr) {
-				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTimeHb(), d);
+				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
 			}
 		}); 
 

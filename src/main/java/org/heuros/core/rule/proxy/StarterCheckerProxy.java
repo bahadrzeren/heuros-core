@@ -14,12 +14,15 @@ import org.heuros.core.rule.repo.RuleRepository;
  * @see StarterChecker
  */
 public class StarterCheckerProxy<P extends View, C extends View>
-								implements StarterChecker<P, C> {
+								implements StarterCheckerPro<P, C> {
 
 	private RuleRepository<StarterChecker<P, C>> repo = null;
 
-	public StarterCheckerProxy(RuleRepository<StarterChecker<P, C>> repo) {
+	private int numOfBases = 0;
+
+	public StarterCheckerProxy(RuleRepository<StarterChecker<P, C>> repo, int numOfBases) {
 		this.repo = repo;
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -28,5 +31,14 @@ public class StarterCheckerProxy<P extends View, C extends View>
 			if (!this.repo.getRules().get(i).canBeStarter(childModel, hbNdx))
 				return false;
 		return true;
+	}
+
+	@Override
+	public int canBeStarter(C model) {
+		int res = 0;
+		for (int i = 0; i < this.numOfBases; i++)
+			if (this.canBeStarter(model, i))
+				res |= (1 << i);
+		return res;
 	}
 }

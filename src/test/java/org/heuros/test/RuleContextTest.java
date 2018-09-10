@@ -42,7 +42,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testRuleAnnotationMissingCase()
     {
-    	LegRuleContext context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext(1);
 
     	Rule rule = new LegRuleWithoutAnnotation();
 
@@ -62,7 +62,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerRegistration()
     {
-    	LegRuleContext context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext(1);
 
     	Rule rule = new LegIntroducer();
 
@@ -83,7 +83,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegIntroducerAndConnectionCheckerRegistration()
     {
-    	LegRuleContext context = new LegRuleContext();
+    	LegRuleContext context = new LegRuleContext(1);
 
     	Rule rule = new LegRuleExtended();
 
@@ -105,7 +105,7 @@ public class RuleContextTest extends TestCase {
      */
     public void testDutyRuleRegistration()
     {
-    	DutyRuleContext context = new DutyRuleContext();
+    	DutyRuleContext context = new DutyRuleContext(1);
 
     	Rule rule = new DutyRuleFull();
 
@@ -129,8 +129,8 @@ public class RuleContextTest extends TestCase {
      */
     public void testLegAndDutyRules()
     {
-    	LegRuleContext legContext = new LegRuleContext();
-    	DutyRuleContext dutyContext = new DutyRuleContext();
+    	LegRuleContext legContext = new LegRuleContext(1);
+    	DutyRuleContext dutyContext = new DutyRuleContext(1);
 
     	Rule legRule = new LegRuleExtended();
     	Rule dutyRule = new DutyRuleFull();

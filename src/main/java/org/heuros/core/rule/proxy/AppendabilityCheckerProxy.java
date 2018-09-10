@@ -14,12 +14,15 @@ import org.heuros.core.rule.repo.RuleRepository;
  * @see AppendabilityChecker
  */
 public class AppendabilityCheckerProxy<P extends View, C extends View>
-								implements AppendabilityChecker<P, C> {
+								implements AppendabilityCheckerPro<P, C> {
 
 	private RuleRepository<AppendabilityChecker<P, C>> repo = null;
 
-	public AppendabilityCheckerProxy(RuleRepository<AppendabilityChecker<P, C>> repo) {
+	private int numOfBases = 0;
+
+	public AppendabilityCheckerProxy(RuleRepository<AppendabilityChecker<P, C>> repo, int numOfBases) {
 		this.repo = repo;
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -28,5 +31,14 @@ public class AppendabilityCheckerProxy<P extends View, C extends View>
 			if (!this.repo.getRules().get(i).isAppendable(parentModel, childModel, hbNdx))
 				return false;
 		return true;
+	}
+
+	@Override
+	public int isAppendable(P p, C c) {
+		int res = 0;
+		for (int i = 0; i < this.numOfBases; i++)
+			if (this.isAppendable(p, c, i))
+				res |= (1 << i);
+		return res;
 	}
 }

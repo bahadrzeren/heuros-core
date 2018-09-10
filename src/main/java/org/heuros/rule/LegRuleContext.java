@@ -23,14 +23,20 @@ import org.heuros.util.RuleUtil;
 public class LegRuleContext implements IntroducerRuleContext<Leg>,
 										ConnectionCheckerRuleContext<LegView>{
 
+	private int numOfBases = 0;
+
 	protected IntroducerRepository<Leg> introducerRepo = new IntroducerRepository<Leg>();
 	protected ConnectionCheckerRepository<LegView> connectionCheckerRepo = new ConnectionCheckerRepository<LegView>();
 
 	protected IntroducerProxy<Leg> introducerProxy = new IntroducerProxy<Leg>(this.introducerRepo);
-	protected ConnectionCheckerProxy<LegView> connectionCheckerProxy = new ConnectionCheckerProxy<LegView>(this.connectionCheckerRepo);
+	protected ConnectionCheckerProxy<LegView> connectionCheckerProxy = new ConnectionCheckerProxy<LegView>(this.connectionCheckerRepo, this.numOfBases);
 
 	private static Class<?>[] legClass = {Leg.class};
 	private static Class<?>[] legViewClass = {LegView.class};
+
+	public LegRuleContext(int numOfBases) {
+		this.numOfBases = numOfBases;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
