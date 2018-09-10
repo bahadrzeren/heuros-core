@@ -10,7 +10,15 @@ import org.heuros.data.model.Duty;
  */
 @FunctionalInterface
 public interface LazyDutyValidator {
-	public boolean validateDuty(Duty d,
+	/**
+	 * Validates duties from scratch.
+	 * 
+	 * @param d Duty instance to validate.
+	 * @param legRuleContext
+	 * @param dutyRuleContext
+	 * @return Bitwise validation vector that stores validation status for all bases.
+	 */
+	public int validateDuty(Duty d,
 								LegRuleContext legRuleContext,
 								DutyRuleContext dutyRuleContext);
 }

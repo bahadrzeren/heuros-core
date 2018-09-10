@@ -46,39 +46,42 @@ public class RuleUtil {
 															LegRuleContext legRuleContext,
 															DutyRuleContext dutyRuleContext) -> {
 		if (d == null)
-			return false;
+			return 0;
 		if (d.getLegs() == null)
-			return false;
+			return 0;
 		if (d.getLegs().size() == 0)
-			return false;
+			return 0;
 		LegView nl = d.getLegs().get(0);
 		if (nl == null)
-			return false;
+			return 0;
 		LegView pl;
 		/*
 		 * Duty rule level does not need any HB control therefore -1 is used.
 		 */
-		if (dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl, -1)) {
+		int bitwiseValid = dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl);
+		if (bitwiseValid > 0) {
 			dutyRuleContext.getAggregatorImpl().reset(d);
-			dutyRuleContext.getAggregatorImpl().softAppend(d, nl, -1);
+			dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
 			for (int i = 1; i < d.getLegs().size(); i++) {
 				pl = nl;
 				nl = d.getLegs().get(i);
-				if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl, -1)) {
-					if (dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d, -1)) {
-						if (dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl, -1)) {
-							dutyRuleContext.getAggregatorImpl().softAppend(d, nl, -1);
+				bitwiseValid &= legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl);
+				if (bitwiseValid > 0) {
+					bitwiseValid &= dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+					if (bitwiseValid > 0) {
+						bitwiseValid &= dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl);
+						if (bitwiseValid > 0) {
+							dutyRuleContext.getAggregatorImpl().softAppend(d, nl);
 						} else
-							return false;
+							return 0;
 					} else
-						return false;
+						return 0;
 				} else
-					return false;
+					return 0;
 			}
-			if (dutyRuleContext.getValidatorProxy().isValid(d, -1))
-				return true;
+			bitwiseValid &= dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
 		}
-		return false;
+		return bitwiseValid;
 	};
 
 }

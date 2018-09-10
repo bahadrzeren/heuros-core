@@ -67,55 +67,53 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		while (i < this.legs.size()) {
 			Leg l = this.legs.get(i);
 
-//			if (!(f.getScheduledOffblockUtc().before(firstDayEnd) && f.getDepAirport()._nonHb())) {
-				if (l.isCover() || l.isDeadheadable()) {
+			if (l.isCover() || l.isDeadheadable()) {
+				/*
+				 * Duty starter check does not need any HB control therefore -1 is used.
+				 */
+				int bitwiseValidStarter = dutyRuleContext.getStarterCheckerProxy().canBeStarter(l);
+
+				if (bitwiseValidStarter > 0) {
+
 					/*
-					 * Duty starter check does not need any HB control therefore -1 is used.
+					 * Duty leg aggregator does not need any HB control therefore -1 is used.
 					 */
-					int validStarter = dutyRuleContext.getStarterCheckerProxy().canBeStarter(l);
+					dutyRuleContext.getAggregatorImpl().append(d, l);
 
-					if (validStarter > 0) {
-
-						/*
-						 * Duty leg aggregator does not need any HB control therefore -1 is used.
-						 */
-						dutyRuleContext.getAggregatorImpl().append(d, l);
-
-						/*
-						 * TODO Terminator rule!
-						 */
-						/*
-						 * Duty validator does not need any HB control therefore -1 is used.
-						 */
-						int validTotalizer = dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
-						if ((validStarter & validTotalizer) > 0) {
-							try {
-								dl.add((Duty) d.clone());
-							} catch (CloneNotSupportedException e) {
-								logger.error(e);
-								return null;
-							}
+					/*
+					 * TODO Terminator rule!
+					 */
+					/*
+					 * Duty validator does not need any HB control therefore -1 is used.
+					 */
+					int bitwiseValidTotalizer = dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+					if ((bitwiseValidStarter & bitwiseValidTotalizer) > 0) {
+						try {
+							dl.add((Duty) d.clone());
+						} catch (CloneNotSupportedException e) {
+							logger.error(e);
+							return null;
 						}
-						/*
-						 * Duty extensibility checker does not need any HB control therefore -1 is used.
-						 */
-						int validExtensible = dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
-						if ((validStarter & validExtensible) > 0) {
-							try {
-								examineDutyFW(d, l, validStarter & validExtensible);
-							} catch (CloneNotSupportedException e) {
-								logger.error(e);
-								return null;
-							}
-						}
-
-						/*
-						 * Duty leg aggregator does not need any HB control therefore -1 is used.
-						 */
-						dutyRuleContext.getAggregatorImpl().removeLast(d);
 					}
+					/*
+					 * Duty extensibility checker does not need any HB control therefore -1 is used.
+					 */
+					int bitwiseValidExtensible = dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+					if ((bitwiseValidStarter & bitwiseValidExtensible) > 0) {
+						try {
+							examineDutyFW(d, l, bitwiseValidStarter & bitwiseValidExtensible);
+						} catch (CloneNotSupportedException e) {
+							logger.error(e);
+							return null;
+						}
+					}
+
+					/*
+					 * Duty leg aggregator does not need any HB control therefore -1 is used.
+					 */
+					dutyRuleContext.getAggregatorImpl().removeLast(d);
 				}
-//			}
+			}
 
 			if (l.getSobt().isAfter(dayEnd)) {
 				/*
@@ -135,7 +133,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		return this.dl;
 	}
 
-    private void examineDutyFW(Duty d, LegView lastLegOfTheDuty, int validationStatus) throws CloneNotSupportedException {
+    private void examineDutyFW(Duty d, LegView lastLegOfTheDuty, int bitwiseValidationStatus) throws CloneNotSupportedException {
 
         Leg[] connLs = legConnectionIndex.getArray(lastLegOfTheDuty.getNdx());
 
@@ -150,8 +148,8 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg appendability checker does not need any HB control therefore -1 is used.
 					 */
-                	int validAppendable = validationStatus & dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l);
-                	if (validAppendable > 0) {
+                	int bitwiseValidAppendable = bitwiseValidationStatus & dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l);
+                	if (bitwiseValidAppendable > 0) {
 
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
@@ -161,17 +159,17 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.
 						 */
-                    	int validTotalizer = validAppendable & dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
-	                    if (validTotalizer > 0) {
+                    	int bitwiseValidTotalizer = bitwiseValidAppendable & dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+	                    if (bitwiseValidTotalizer > 0) {
 	                    	dl.add((Duty) d.clone());
 	                    }
 
 						/*
 						 * Duty extensibility checker does not need any HB control therefore -1 is used.
 						 */
-	                    int validExtensible = validAppendable & dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
-	                    if (validExtensible > 0) {
-                   			examineDutyFW(d, l, validExtensible);
+	                    int bitwiseValidExtensible = bitwiseValidAppendable & dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+	                    if (bitwiseValidExtensible > 0) {
+                   			examineDutyFW(d, l, bitwiseValidExtensible);
 	                    }
 
 						/*
