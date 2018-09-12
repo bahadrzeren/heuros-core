@@ -26,9 +26,9 @@ public class AppendabilityCheckerProxy<P extends View, C extends View>
 	}
 
 	@Override
-	public boolean isAppendable(P parentModel, C childModel, int hbNdx) {
+	public boolean isAppendable(int hbNdx, P parentModel, C childModel) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).isAppendable(parentModel, childModel, hbNdx))
+			if (!this.repo.getRules().get(i).isAppendable(hbNdx, parentModel, childModel))
 				return false;
 		return true;
 	}
@@ -37,7 +37,7 @@ public class AppendabilityCheckerProxy<P extends View, C extends View>
 	public int isAppendable(P p, C c) {
 		int res = 0;
 		for (int i = 0; i < this.numOfBases; i++)
-			if (this.isAppendable(p, c, i))
+			if (this.isAppendable(i, p, c))
 				res |= (1 << i);
 		return res;
 	}

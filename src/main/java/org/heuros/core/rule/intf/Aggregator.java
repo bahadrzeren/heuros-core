@@ -43,6 +43,8 @@ public interface Aggregator<P extends Model, C extends View> extends Rule {
 	 * Recalculates parent class instance's aggregated parameters.
 	 * 
 	 * @param p Parent instance to recalculate aggregation parameters.
+	 * 
+	 * @return Returns false if the calculation could not be done.
 	 */
-	public void reCalculate(P p);
+	public boolean reCalculate(P p);
 }

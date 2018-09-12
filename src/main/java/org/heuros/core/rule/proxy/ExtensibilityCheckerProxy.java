@@ -25,9 +25,9 @@ public class ExtensibilityCheckerProxy<M extends View>
 	}
 
 	@Override
-	public boolean isExtensible(M m, int hbNdx) {
+	public boolean isExtensible(int hbNdx, M m) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).isExtensible(m, hbNdx))
+			if (!this.repo.getRules().get(i).isExtensible(hbNdx, m))
 				return false;
 		return true;
 	}
@@ -36,7 +36,7 @@ public class ExtensibilityCheckerProxy<M extends View>
 	public int isExtensible(M model) {
 		int res = 0;
 		for (int i = 0; i < this.numOfBases; i++)
-			if (this.isExtensible(model, i))
+			if (this.isExtensible(i, model))
 				res |= (1 << i);
 		return res;
 	}

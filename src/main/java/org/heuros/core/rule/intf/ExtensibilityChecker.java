@@ -11,5 +11,5 @@ import org.heuros.core.data.base.View;
  * @param <M> Type of the model instance that extensibility status will be checked.
  */
 public interface ExtensibilityChecker<M extends View> extends Rule {
-	public boolean isExtensible(M model, int hbNdx);
+	public boolean isExtensible(int hbNdx, M model);
 }

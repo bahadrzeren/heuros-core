@@ -11,8 +11,11 @@ import org.heuros.core.data.base.View;
 public interface AirportView extends View {
 	public String getCode();
 
-	public boolean isHb();
-	public boolean isNonHb();
+	public boolean isAnyHb();
+	public boolean isAnyNonHb();
+	public int getHbNdx();
+	public boolean isHb(int hbNdx);
+	public boolean isNonHb(int hbNdx);
 	public boolean isDomestic();
 	public boolean isInternational();
 

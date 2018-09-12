@@ -24,9 +24,9 @@ public class TotalizerCheckerProxy<V extends View> implements TotalizerCheckerPr
 	}
 
 	@Override
-	public boolean isValid(V m, int hbNdx) {
+	public boolean isValid(int hbNdx, V m) {
 		for (int i = 0; i < this.repo.getRules().size(); i++) {
-			if (!this.repo.getRules().get(i).isValid(m, hbNdx))
+			if (!this.repo.getRules().get(i).isValid(hbNdx, m))
 				return false;
 		}
 		return true;
@@ -36,7 +36,7 @@ public class TotalizerCheckerProxy<V extends View> implements TotalizerCheckerPr
 	public int isValid(V m) {
 		int res = 0;
 		for (int i = 0; i < this.numOfBases; i++)
-			if (this.isValid(m, i))
+			if (this.isValid(i, m))
 				res |= (1 << i);
 		return res;
 	}

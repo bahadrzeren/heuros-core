@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.OneDimIndexInt;
+import org.heuros.core.data.ndx.TwoDimIndexIntXInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.data.model.Airport;
@@ -64,9 +65,6 @@ public class PairOptimizationContext {
 	private DutyFactory dutyFactory = null;
 	private DutyRepository dutyRepository = null;
 	private DutyRuleContext dutyRuleContext = null;
-	/*
-	 * TODO HB impl will be changed!
-	 */
 	/**
 	 * Index class used to obtain duties that include a particular leg.
 	 */
@@ -74,11 +72,11 @@ public class PairOptimizationContext {
 	/**
 	 * Index class used to obtain hb departed duties that include a particular leg.
 	 */
-	private OneDimIndexInt<DutyView> hbDepDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<DutyView> hbDepDutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain hb departed and hb arrival duties that include a particular leg.
 	 */
-	private OneDimIndexInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain duties that departs from a particular airport and time (hour).
 	 */
@@ -90,10 +88,10 @@ public class PairOptimizationContext {
 	public OneDimIndexInt<DutyView> getDutyIndexByLegNdx() {
 		return dutyIndexByLegNdx;
 	}
-	public OneDimIndexInt<DutyView> getHbDepDutyIndexByLegNdx() {
+	public TwoDimIndexIntXInt<DutyView> getHbDepDutyIndexByLegNdx() {
 		return hbDepDutyIndexByLegNdx;
 	}
-	public OneDimIndexInt<DutyView> getHbDepHbArrDutyIndexByLegNdx() {
+	public TwoDimIndexIntXInt<DutyView> getHbDepHbArrDutyIndexByLegNdx() {
 		return hbDepHbArrDutyIndexByLegNdx;
 	}
 	public TwoDimIndexIntXLocalDateTime<DutyView> getDutyIndexByDepAirportNdxBrieftime() {
@@ -284,7 +282,7 @@ public class PairOptimizationContext {
 					/*
 					 * Leg connection check does not need any HB control therefore -1 is used.
 					 */
-					if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl, -1)) {
+					if (legRuleContext.getConnectionCheckerProxy().areConnectable(-1, pl, nl)) {
 						this.connectionLegsIndex.add(pl.getNdx(), nl);
 						numOfConnectionsIndexed++;
 					}
@@ -304,15 +302,15 @@ public class PairOptimizationContext {
 	 * 
 	 * @param duties Duty instances to register.
 	 */
-	public void registerDuties(List<Duty> duties) {
+	public void registerDuties(List<Duty> duties, int numOfBases) {
 		List<Leg> legs = this.legRepository.getModels();
 		List<Airport> airports = this.airportRepository.getModels();
 
 		int secondNdxSize = 50 * 24;	//	In a one month period there is around flight legs of 50 days.
 
 		this.dutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
-		this.hbDepDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
-		this.hbDepHbArrDutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
+		this.hbDepDutyIndexByLegNdx = new TwoDimIndexIntXInt<DutyView>(new DutyView[numOfBases][legs.size()][0]);
+		this.hbDepHbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<DutyView>(new DutyView[numOfBases][legs.size()][0]);
 		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
 		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
 
@@ -323,18 +321,14 @@ public class PairOptimizationContext {
 		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
 
 		duties.forEach((d) -> {
-			/*
-			 * TODO HB impl will be changed!
-			 */
 			int depAirportNdx = d.getFirstDepAirport().getNdx();
-			boolean hbDep = d.getFirstDepAirport().isHb();
-			boolean hbArr = d.getLastArrAirport().isHb();
+			int depHbNdx = d.getFirstDepAirport().getHbNdx();
+			int arrHbNdx = d.getLastArrAirport().getHbNdx();
+			boolean hbDep = d.getFirstDepAirport().isAnyHb();
+			boolean hbArr = d.getLastArrAirport().isAnyHb();
 			d.getLegs().forEach((l) -> {
 				Leg leg = (Leg) l;
 				leg.incNumOfDutiesIncludes();
-				/*
-				 * TODO HB impl will be changed!
-				 */
 				if (hbDep)
 					leg.incNumOfDutiesIncludesHbDep();
 				else
@@ -345,9 +339,9 @@ public class PairOptimizationContext {
 					leg.incNumOfDutiesIncludesNonHbArr();
 				this.dutyIndexByLegNdx.add(leg.getNdx(), d);
 				if (hbDep) {
-					this.hbDepDutyIndexByLegNdx.add(leg.getNdx(), d);
-					if (hbArr) {
-						this.hbDepHbArrDutyIndexByLegNdx.add(leg.getNdx(), d);
+					this.hbDepDutyIndexByLegNdx.add(depHbNdx, leg.getNdx(), d);
+					if (hbArr && (depHbNdx == arrHbNdx)) {
+						this.hbDepHbArrDutyIndexByLegNdx.add(arrHbNdx, leg.getNdx(), d);
 					}
 				}
 			});

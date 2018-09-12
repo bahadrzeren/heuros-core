@@ -18,7 +18,7 @@ public class DutyRuleFull implements Introducer<Duty>,
 										TotalizerChecker<DutyView> {
 
 	@Override
-	public boolean areConnectable(DutyView prevModel, DutyView nextModel, int hbNdx) {
+	public boolean areConnectable(int hbNdx, DutyView prevModel, DutyView nextModel) {
 		return true;
 	}
 
@@ -28,12 +28,12 @@ public class DutyRuleFull implements Introducer<Duty>,
 	}
 
 	@Override
-	public boolean isValid(DutyView m, int hbNdx) {
+	public boolean isValid(int hbNdx, DutyView m) {
 		return true;
 	}
 
 	@Override
-	public boolean isAppendable(DutyView parentModel, LegView childModel, int hbNdx) {
+	public boolean isAppendable(int hbNdx, DutyView parentModel, LegView childModel) {
 		return true;
 	}
 

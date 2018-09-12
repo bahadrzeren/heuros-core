@@ -37,8 +37,8 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	}
 
 	@Override
-	public void reCalculate(P p) {
-		this.aggregatorImpl.reCalculate(p);
+	public boolean reCalculate(P p) {
+		return this.aggregatorImpl.reCalculate(p);
 	}
 
 	@Override

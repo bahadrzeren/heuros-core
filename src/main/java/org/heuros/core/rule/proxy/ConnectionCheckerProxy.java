@@ -24,9 +24,9 @@ public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker
 	}
 
 	@Override
-	public boolean areConnectable(V prevModel, V nextModel, int hbNdx) {
+	public boolean areConnectable(int hbNdx, V prevModel, V nextModel) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).areConnectable(prevModel, nextModel, hbNdx))
+			if (!this.repo.getRules().get(i).areConnectable(hbNdx, prevModel, nextModel))
 				return false;
 		return true;
 	}
@@ -35,7 +35,7 @@ public class ConnectionCheckerProxy<V extends View> implements ConnectionChecker
 	public int areConnectable(V prevModel, V nextModel) {
 		int res = 0;
 		for (int i = 0; i < this.numOfBases; i++)
-			if (this.areConnectable(prevModel, nextModel, i))
+			if (this.areConnectable(i, prevModel, nextModel))
 				res |= (1 << i);
 		return res;
 	}

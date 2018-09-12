@@ -12,10 +12,17 @@ import org.heuros.core.data.base.AbstractModelFactory;
  */
 public class PairFactory extends AbstractModelFactory<Pair> {
 
+	private int numOfBases = 0;
+
+	public PairFactory(int numOfBases) {
+		this.numOfBases = numOfBases;
+	}
+
 	@Override
 	public Pair generateModel() {
 		Pair p = new Pair();
 		p.setDuties(new ArrayList<DutyView>());
+		p.setPairHbSpecs(new PairHbSpec[this.numOfBases]);
 		return p;
 	}
 

@@ -26,9 +26,9 @@ public class StarterCheckerProxy<P extends View, C extends View>
 	}
 
 	@Override
-	public boolean canBeStarter(C childModel, int hbNdx) {
+	public boolean canBeStarter(int hbNdx, C childModel) {
 		for (int i = 0; i < this.repo.getRules().size(); i++)
-			if (!this.repo.getRules().get(i).canBeStarter(childModel, hbNdx))
+			if (!this.repo.getRules().get(i).canBeStarter(hbNdx, childModel))
 				return false;
 		return true;
 	}
@@ -37,7 +37,7 @@ public class StarterCheckerProxy<P extends View, C extends View>
 	public int canBeStarter(C model) {
 		int res = 0;
 		for (int i = 0; i < this.numOfBases; i++)
-			if (this.canBeStarter(model, i))
+			if (this.canBeStarter(i, model))
 				res |= (1 << i);
 		return res;
 	}

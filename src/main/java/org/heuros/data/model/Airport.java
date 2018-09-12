@@ -12,8 +12,7 @@ public class Airport extends AbstractModel implements AirportView {
 
 	private String code = null;
 
-	private boolean hb = false;
-	private boolean nonHb = true;
+	private int hbNdx = -1;
 	private boolean domestic = false;
 	private boolean international = true;
 
@@ -41,20 +40,28 @@ public class Airport extends AbstractModel implements AirportView {
 		return this.getNdx() == ap.getNdx();
 	}
 
-	public boolean isHb() {
-		return hb;
+	public boolean isAnyHb() {
+		return hbNdx >= 0;
 	}
 
-	public void setHb(boolean hb) {
-		this.hb = hb;
+	public boolean isAnyNonHb() {
+		return hbNdx < 0;
 	}
 
-	public boolean isNonHb() {
-		return nonHb;
+	public boolean isHb(int hbNdx) {
+		return (hbNdx >= 0) && this.hbNdx == hbNdx;
 	}
 
-	public void setNonHb(boolean nonHb) {
-		this.nonHb = nonHb;
+	public boolean isNonHb(int hbNdx) {
+		return this.hbNdx != hbNdx;
+	}
+
+	public int getHbNdx() {
+		return hbNdx;
+	}
+
+	public void setHbNdx(int hbNdx) {
+		this.hbNdx = hbNdx;
 	}
 
 	public boolean isDomestic() {

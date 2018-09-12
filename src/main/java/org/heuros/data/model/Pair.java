@@ -14,8 +14,6 @@ public class Pair extends AbstractModel implements PairView {
 	
 	private List<DutyView> duties = null;
 
-	private int hbNdx = -1;
-
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
 	private int blockTimeInMinsPassive = 0;
@@ -24,17 +22,49 @@ public class Pair extends AbstractModel implements PairView {
 	private int numOfLegsPassive = 0;
 	private int numOfLegsIntToDom = 0;
 	private int numOfLegsDomToInt = 0;
-	private int briefDurationInMins = 0;
-	private int dutyDurationInMins = 0;
-	private int debriefDurationInMins = 0;
-	private int restDurationInMins = 0;
-	private int numOfDaysTouched = 0;
 	private int numOfDuties = 0;
 	private int numOfInternationalDuties = 0;
-	private int numOfEarlyDuties = 0;
-	private int numOfHardDuties = 0;
-	private int numOfAugmentedDuties = 0;
 	private int numOfErDuties = 0;
+
+	private PairHbSpec[] pairHbSpecs = null;
+	public PairHbSpec[] getPairHbSpecs() {
+		return pairHbSpecs;
+	}
+	public void setPairHbSpecs(PairHbSpec[] pairHbSpecs) {
+		this.pairHbSpecs = pairHbSpecs;
+	}
+
+	@Override
+	public boolean isComplete() {
+		return this.getFirstDepAirport().isAnyHb()
+				&& (this.getFirstDepAirport().getHbNdx() == this.getLastArrAirport().getHbNdx());
+	}
+	@Override
+	public int getHbNdx() {
+		if (this.isComplete())
+			return this.getFirstDepAirport().getHbNdx();
+		return -1;
+	}
+	@Override
+	public int getDepHbNdx() {
+		if (this.getFirstDepAirport().isAnyHb())
+			return this.getFirstDepAirport().getHbNdx();
+		return -1;
+	}
+	@Override
+	public int getArrHbNdx() {
+		if (this.getLastArrAirport().isAnyHb())
+			return this.getLastArrAirport().getHbNdx();
+		return -1;
+	}
+	@Override
+	public boolean isHbDep(int hbNdx) {
+		return this.getFirstDepAirport().isAnyHb() && (this.getFirstDepAirport().getHbNdx() == hbNdx); 
+	}
+	@Override
+	public boolean isHbArr(int hbNdx) {
+		return this.getLastArrAirport().isAnyHb() && (this.getLastArrAirport().getHbNdx() == hbNdx);
+	}
 
 	public void append(DutyView dutyView) {
 		this.duties.add(dutyView);
@@ -44,31 +74,37 @@ public class Pair extends AbstractModel implements PairView {
 			return this.duties.remove(this.numOfDuties - 1);
 		return null;
 	}
+	@Override
 	public DutyView getFirstDuty() {
 		if (this.numOfDuties > 0)
 			return this.duties.get(0);
 		return null;
 	}
+	@Override
 	public DutyView getLastDuty() {
 		if (this.numOfDuties > 0)
 			return this.duties.get(this.numOfDuties - 1);
 		return null;		
 	}
+	@Override
 	public LegView getFirstLeg() {
 		if (this.numOfDuties > 0)
 			return getFirstDuty().getFirstLeg();
 		return null;
 	}
+	@Override
 	public LegView getLastLeg() {
 		if (this.numOfDuties > 0)
 			return getLastDuty().getLastLeg();
 		return null;
 	}
+	@Override
 	public AirportView getFirstDepAirport() {
 		if (this.numOfDuties > 0)
 			return getFirstDuty().getFirstDepAirport();
 		return null;
 	}
+	@Override
 	public AirportView getLastArrAirport() {
 		if (this.numOfDuties > 0)
 			return getLastDuty().getLastArrAirport();
@@ -83,13 +119,7 @@ public class Pair extends AbstractModel implements PairView {
 		this.duties = duties;
 	}
 
-	public int getHbNdx() {
-		return hbNdx;
-	}
-	public void setHbNdx(int hbNdx) {
-		this.hbNdx = hbNdx;
-	}
-
+	@Override
 	public int getBlockTimeInMins() {
 		return blockTimeInMins;
 	}
@@ -99,6 +129,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incBlockTimeInMins(int blockTimeInMins) {
 		this.blockTimeInMins += blockTimeInMins;
 	}
+	@Override
 	public int getBlockTimeInMinsActive() {
 		return blockTimeInMinsActive;
 	}
@@ -108,6 +139,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incBlockTimeInMinsActive(int blockTimeInMinsActive) {
 		this.blockTimeInMinsActive += blockTimeInMinsActive;
 	}
+	@Override
 	public int getBlockTimeInMinsPassive() {
 		return blockTimeInMinsPassive;
 	}
@@ -117,6 +149,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incBlockTimeInMinsPassive(int blockTimeInMinsPassive) {
 		this.blockTimeInMinsPassive += blockTimeInMinsPassive;
 	}
+	@Override
 	public int getNumOfLegs() {
 		return numOfLegs;
 	}
@@ -126,6 +159,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfLegs(int numOfLegs) {
 		this.numOfLegs += numOfLegs;
 	}
+	@Override
 	public int getNumOfLegsActive() {
 		return numOfLegsActive;
 	}
@@ -135,6 +169,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfLegsActive(int numOfLegsActive) {
 		this.numOfLegsActive += numOfLegsActive;
 	}
+	@Override
 	public int getNumOfLegsPassive() {
 		return numOfLegsPassive;
 	}
@@ -144,6 +179,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfLegsPassive(int numOfLegsPassive) {
 		this.numOfLegsPassive += numOfLegsPassive;
 	}
+	@Override
 	public int getNumOfLegsIntToDom() {
 		return numOfLegsIntToDom;
 	}
@@ -153,6 +189,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfLegsIntToDom(int numOfLegsIntToDom) {
 		this.numOfLegsIntToDom += numOfLegsIntToDom;
 	}
+	@Override
 	public int getNumOfLegsDomToInt() {
 		return numOfLegsDomToInt;
 	}
@@ -162,51 +199,57 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfLegsDomToInt(int numOfLegsDomToInt) {
 		this.numOfLegsDomToInt += numOfLegsDomToInt;
 	}
-	public int getBriefDurationInMins() {
-		return briefDurationInMins;
+	@Override
+	public int getBriefDurationInMins(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getBriefDurationInMins();
 	}
-	public void setBriefDurationInMins(int briefDurationInMins) {
-		this.briefDurationInMins = briefDurationInMins;
+	public void setBriefDurationInMins(int hbNdx, int briefDurationInMins) {
+		this.pairHbSpecs[hbNdx].setBriefDurationInMins(briefDurationInMins);
 	}
-	public void incBriefDurationInMins(int briefDurationInMins) {
-		this.briefDurationInMins += briefDurationInMins;
+	public void incBriefDurationInMins(int hbNdx, int briefDurationInMins) {
+		this.pairHbSpecs[hbNdx].incBriefDurationInMins(briefDurationInMins);
 	}
-	public int getDutyDurationInMins() {
-		return dutyDurationInMins;
+	@Override
+	public int getDutyDurationInMins(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getDutyDurationInMins();
 	}
-	public void setDutyDurationInMins(int dutyDurationInMins) {
-		this.dutyDurationInMins = dutyDurationInMins;
+	public void setDutyDurationInMins(int hbNdx, int dutyDurationInMins) {
+		this.pairHbSpecs[hbNdx].setDutyDurationInMins(dutyDurationInMins);
 	}
-	public void incDutyDurationInMins(int dutyDurationInMins) {
-		this.dutyDurationInMins += dutyDurationInMins;
+	public void incDutyDurationInMins(int hbNdx, int dutyDurationInMins) {
+		this.pairHbSpecs[hbNdx].incDutyDurationInMins(dutyDurationInMins);
 	}
-	public int getDebriefDurationInMins() {
-		return debriefDurationInMins;
+	@Override
+	public int getDebriefDurationInMins(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getDebriefDurationInMins();
 	}
-	public void setDebriefDurationInMins(int debriefDurationInMins) {
-		this.debriefDurationInMins = debriefDurationInMins;
+	public void setDebriefDurationInMins(int hbNdx, int debriefDurationInMins) {
+		this.pairHbSpecs[hbNdx].setDebriefDurationInMins(debriefDurationInMins);
 	}
-	public void incDebriefDurationInMins(int debriefDurationInMins) {
-		this.debriefDurationInMins += debriefDurationInMins;
+	public void incDebriefDurationInMins(int hbNdx, int debriefDurationInMins) {
+		this.pairHbSpecs[hbNdx].incDebriefDurationInMins(debriefDurationInMins);
 	}
-	public int getRestDurationInMins() {
-		return restDurationInMins;
+	@Override
+	public int getRestDurationInMins(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getRestDurationInMins();
 	}
-	public void setRestDurationInMins(int restDurationInMins) {
-		this.restDurationInMins = restDurationInMins;
+	public void setRestDurationInMins(int hbNdx, int restDurationInMins) {
+		this.pairHbSpecs[hbNdx].setRestDurationInMins(restDurationInMins);
 	}
-	public void incRestDurationInMins(int restDurationInMins) {
-		this.restDurationInMins += restDurationInMins;
+	public void incRestDurationInMins(int hbNdx, int restDurationInMins) {
+		this.pairHbSpecs[hbNdx].incRestDurationInMins(restDurationInMins);
 	}
-	public int getNumOfDaysTouched() {
-		return numOfDaysTouched;
+	@Override
+	public int getNumOfDaysTouched(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getNumOfDaysTouched();
 	}
-	public void setNumOfDaysTouched(int numOfDaysTouched) {
-		this.numOfDaysTouched = numOfDaysTouched;
+	public void setNumOfDaysTouched(int hbNdx, int numOfDaysTouched) {
+		this.pairHbSpecs[hbNdx].setNumOfDaysTouched(numOfDaysTouched);
 	}
-	public void incNumOfDaysTouched(int numOfDaysTouched) {
-		this.numOfDaysTouched += numOfDaysTouched;
+	public void incNumOfDaysTouched(int hbNdx, int numOfDaysTouched) {
+		this.pairHbSpecs[hbNdx].incNumOfDaysTouched(numOfDaysTouched);
 	}
+	@Override
 	public int getNumOfDuties() {
 		return numOfDuties;
 	}
@@ -216,6 +259,7 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfDuties(int numOfDuties) {
 		this.numOfDuties += numOfDuties;
 	}
+	@Override
 	public int getNumOfInternationalDuties() {
 		return numOfInternationalDuties;
 	}
@@ -225,33 +269,37 @@ public class Pair extends AbstractModel implements PairView {
 	public void incNumOfInternationalDuties(int numOfInternationalDuties) {
 		this.numOfInternationalDuties += numOfInternationalDuties;
 	}
-	public int getNumOfEarlyDuties() {
-		return numOfEarlyDuties;
+	@Override
+	public int getNumOfEarlyDuties(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getNumOfEarlyDuties();
 	}
-	public void setNumOfEarlyDuties(int numOfEarlyDuties) {
-		this.numOfEarlyDuties = numOfEarlyDuties;
+	public void setNumOfEarlyDuties(int hbNdx, int numOfEarlyDuties) {
+		this.pairHbSpecs[hbNdx].setNumOfEarlyDuties(numOfEarlyDuties);
 	}
-	public void incNumOfEarlyDuties(int numOfEarlyDuties) {
-		this.numOfEarlyDuties += numOfEarlyDuties;
+	public void incNumOfEarlyDuties(int hbNdx, int numOfEarlyDuties) {
+		this.pairHbSpecs[hbNdx].incNumOfEarlyDuties(numOfEarlyDuties);
 	}
-	public int getNumOfHardDuties() {
-		return numOfHardDuties;
+	@Override
+	public int getNumOfHardDuties(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getNumOfHardDuties();
 	}
-	public void setNumOfHardDuties(int numOfHardDuties) {
-		this.numOfHardDuties = numOfHardDuties;
+	public void setNumOfHardDuties(int hbNdx, int numOfHardDuties) {
+		this.pairHbSpecs[hbNdx].setNumOfHardDuties(numOfHardDuties);
 	}
-	public void incNumOfHardDuties(int numOfHardDuties) {
-		this.numOfHardDuties += numOfHardDuties;
+	public void incNumOfHardDuties(int hbNdx, int numOfHardDuties) {
+		this.pairHbSpecs[hbNdx].incNumOfHardDuties(numOfHardDuties);
 	}
-	public int getNumOfAugmentedDuties() {
-		return numOfAugmentedDuties;
+	@Override
+	public int getNumOfAugmentedDuties(int hbNdx) {
+		return this.pairHbSpecs[hbNdx].getNumOfAugmentedDuties();
 	}
-	public void setNumOfAugmentedDuties(int numOfAugmentedDuties) {
-		this.numOfAugmentedDuties = numOfAugmentedDuties;
+	public void setNumOfAugmentedDuties(int hbNdx, int numOfAugmentedDuties) {
+		this.pairHbSpecs[hbNdx].setNumOfAugmentedDuties(numOfAugmentedDuties);
 	}
-	public void incNumOfAugmentedDuties(int numOfAugmentedDuties) {
-		this.numOfAugmentedDuties += numOfAugmentedDuties;
+	public void incNumOfAugmentedDuties(int hbNdx, int numOfAugmentedDuties) {
+		this.pairHbSpecs[hbNdx].incNumOfAugmentedDuties(numOfAugmentedDuties);
 	}
+	@Override
 	public int getNumOfErDuties() {
 		return numOfErDuties;
 	}

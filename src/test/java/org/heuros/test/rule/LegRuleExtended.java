@@ -13,7 +13,7 @@ public class LegRuleExtended implements Introducer<Leg>,
 											ConnectionChecker<LegView> {
 
 	@Override
-	public boolean areConnectable(LegView prevModel, LegView nextModel, int hbNdx) {
+	public boolean areConnectable(int hbNdx, LegView prevModel, LegView nextModel) {
 		return true;
 	}
 

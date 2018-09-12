@@ -11,7 +11,7 @@ import org.heuros.core.data.base.View;
  * @param <M> Type of the model instances that those connectability is checked.
  */
 public interface ConnectionChecker<M extends View> extends Rule {
-	public boolean areConnectable(M prevModel, 
-									M nextModel, 
-									int hbNdx);
+	public boolean areConnectable(int hbNdx, 
+									M prevModel, 
+									M nextModel);
 }
