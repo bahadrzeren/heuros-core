@@ -23,6 +23,8 @@ public class DutyFactory extends AbstractModelFactory<Duty> {
 		Duty d = new Duty();
 		d.setLegs(new ArrayList<LegView>());
 		d.setDutyHbSpecs(new DutyHbSpec[this.numOfBases]);
+		for (int i = 0; i < this.numOfBases; i++)
+			d.getDutyHbSpecs()[i] = new DutyHbSpec();
 		return d;
 	}
 

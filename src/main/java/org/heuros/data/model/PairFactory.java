@@ -23,6 +23,8 @@ public class PairFactory extends AbstractModelFactory<Pair> {
 		Pair p = new Pair();
 		p.setDuties(new ArrayList<DutyView>());
 		p.setPairHbSpecs(new PairHbSpec[this.numOfBases]);
+		for (int i = 0; i < this.numOfBases; i++)
+			p.getPairHbSpecs()[i] = new PairHbSpec();
 		return p;
 	}
 
