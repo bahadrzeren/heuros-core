@@ -10,5 +10,5 @@ import org.heuros.core.data.base.View;
  * @param <M> Type of the model instances to be validated.
  */
 public interface TotalizerChecker<M extends View> extends Rule {
-	public boolean isValid(int hbNdx, M m);
+	public boolean acceptable(int hbNdx, M m);
 }

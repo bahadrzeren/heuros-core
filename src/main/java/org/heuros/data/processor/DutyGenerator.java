@@ -86,7 +86,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty validator does not need any HB control therefore -1 is used.
 					 */
-					int bitwiseValidTotalizer = dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+					int bitwiseValidTotalizer = dutyRuleContext.getTotalizerCheckerProxy().acceptable(d);
 					if ((bitwiseValidStarter & bitwiseValidTotalizer) > 0) {
 						try {
 							dl.add((Duty) d.clone());
@@ -159,7 +159,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.
 						 */
-                    	int bitwiseValidTotalizer = bitwiseValidAppendable & dutyRuleContext.getTotalizerCheckerProxy().isValid(d);
+                    	int bitwiseValidTotalizer = bitwiseValidAppendable & dutyRuleContext.getTotalizerCheckerProxy().acceptable(d);
 	                    if (bitwiseValidTotalizer > 0) {
 	                    	dl.add((Duty) d.clone());
 	                    }

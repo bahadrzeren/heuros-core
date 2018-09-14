@@ -11,5 +11,5 @@ import org.heuros.core.rule.intf.TotalizerChecker;
  * @param <M> Type of the model instances to be validated.
  */
 public interface TotalizerCheckerPro<M extends View> extends TotalizerChecker<M> {
-	public int isValid(M m);
+	public int acceptable(M m);
 }

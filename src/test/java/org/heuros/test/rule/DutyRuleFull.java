@@ -28,7 +28,7 @@ public class DutyRuleFull implements Introducer<Duty>,
 	}
 
 	@Override
-	public boolean isValid(int hbNdx, DutyView m) {
+	public boolean acceptable(int hbNdx, DutyView m) {
 		return true;
 	}
 
