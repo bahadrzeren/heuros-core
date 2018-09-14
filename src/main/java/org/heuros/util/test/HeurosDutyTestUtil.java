@@ -11,16 +11,16 @@ public class HeurosDutyTestUtil {
 	private static DutyFactory dutyFactory = null;
 	private static DutyRuleContext dutyRuleContext = null;
 
-	public static boolean initializeDutyContext(Rule dutyLegAggregator, int numOfBases) {
+	public static DutyRuleContext initializeDutyContext(Rule dutyLegAggregator, int numOfBases) {
 		HeurosDutyTestUtil.dutyFactory = new DutyFactory(numOfBases);
 		HeurosDutyTestUtil.dutyRuleContext = new DutyRuleContext(numOfBases);
 		try {
 			HeurosDutyTestUtil.dutyRuleContext.registerRule(dutyLegAggregator);
     	} catch (Exception ex) {
     		ex.printStackTrace();
-    		return false;
+    		return null;
     	}
-    	return true;
+    	return HeurosDutyTestUtil.dutyRuleContext;
 	}
 
 	public static Duty generateDutyInstance(Leg[] legs) {
@@ -29,5 +29,9 @@ public class HeurosDutyTestUtil {
     		HeurosDutyTestUtil.dutyRuleContext.getAggregatorProxy().append(dutyInstance, leg);
 		}
     	return dutyInstance;
+	}
+
+	public static boolean reCalculateDutyInstance(Duty d) {
+		return HeurosDutyTestUtil.dutyRuleContext.getAggregatorProxy().reCalculate(d);
 	}
 }

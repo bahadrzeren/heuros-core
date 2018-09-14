@@ -10,16 +10,16 @@ public class HeurosAirportTestUtil {
 	private static AirportFactory apFactory = null;
 	private static AirportRuleContext apRuleContext = null;
 
-	public static boolean initializeAirportContext(Rule apIntroducer) {
+	public static AirportRuleContext initializeAirportContext(Rule apIntroducer) {
 		HeurosAirportTestUtil.apFactory = new AirportFactory();
 		HeurosAirportTestUtil.apRuleContext = new AirportRuleContext();
     	try {
     		HeurosAirportTestUtil.apRuleContext.registerRule(apIntroducer);
     	} catch (Exception ex) {
     		ex.printStackTrace();
-    		return false;
+    		return null;
     	}
-    	return true;
+    	return HeurosAirportTestUtil.apRuleContext;
 	}
 
 	public static Airport generateAirportInstance(String apCode) {
