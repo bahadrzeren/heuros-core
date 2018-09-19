@@ -279,10 +279,7 @@ public class PairOptimizationContext {
 					if (connTime > maxLegConnectionTimeInMins)
 						break;
 					numOfConnectionsChecked++;
-					/*
-					 * Leg connection check does not need any HB control therefore -1 is used.
-					 */
-					if (legRuleContext.getConnectionCheckerProxy().areConnectable(-1, pl, nl)) {
+					if (legRuleContext.getConnectionCheckerProxy().areConnectable(pl, nl) > 0) {
 						this.connectionLegsIndex.add(pl.getNdx(), nl);
 						numOfConnectionsIndexed++;
 					}

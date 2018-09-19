@@ -49,18 +49,18 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 	private int numOfBases = 0;
 
 	protected Aggregator<Pair, DutyView> aggregatorImpl = null;
-	protected StarterCheckerRepository<PairView, DutyView> starterCheckerRepo = new StarterCheckerRepository<PairView, DutyView>();
-	protected ConnectionCheckerRepository<PairView> connectionCheckerRepo = new ConnectionCheckerRepository<PairView>();
-	protected ExtensibilityCheckerRepository<PairView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<PairView>();
-	protected AppendabilityCheckerRepository<PairView, DutyView> appendabilityCheckerRepo = new AppendabilityCheckerRepository<PairView, DutyView>();
-	protected TotalizerCheckerRepository<PairView> totalizerCheckerRepo = new TotalizerCheckerRepository<PairView>();
+	protected StarterCheckerRepository<PairView, DutyView> starterCheckerRepo = null;
+	protected ConnectionCheckerRepository<PairView> connectionCheckerRepo = null;
+	protected ExtensibilityCheckerRepository<PairView> extensibilityCheckerRepo = null;
+	protected AppendabilityCheckerRepository<PairView, DutyView> appendabilityCheckerRepo = null;
+	protected TotalizerCheckerRepository<PairView> totalizerCheckerRepo = null;
 
 	protected AggregatorProxy<Pair, DutyView> aggregatorProxy = null;
-	protected StarterCheckerProxy<PairView, DutyView> starterCheckerProxy = new StarterCheckerProxy<PairView, DutyView>(this.starterCheckerRepo, this.numOfBases);
-	protected ConnectionCheckerProxy<PairView> connectionCheckerProxy = new ConnectionCheckerProxy<PairView>(this.connectionCheckerRepo, this.numOfBases);
-	protected ExtensibilityCheckerProxy<PairView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<PairView>(this.extensibilityCheckerRepo, this.numOfBases);
-	protected AppendabilityCheckerProxy<PairView, DutyView> appendabilityCheckerProxy = new AppendabilityCheckerProxy<PairView, DutyView>(this.appendabilityCheckerRepo, this.numOfBases);
-	protected TotalizerCheckerProxy<PairView> totalizerCheckerProxy = new TotalizerCheckerProxy<PairView>(this.totalizerCheckerRepo, this.numOfBases);
+	protected StarterCheckerProxy<PairView, DutyView> starterCheckerProxy = null;
+	protected ConnectionCheckerProxy<PairView> connectionCheckerProxy = null;
+	protected ExtensibilityCheckerProxy<PairView> extensibilityCheckerProxy = null;
+	protected AppendabilityCheckerProxy<PairView, DutyView> appendabilityCheckerProxy = null;
+	protected TotalizerCheckerProxy<PairView> totalizerCheckerProxy = null;
 
 	private static Class<?>[] pairViewClass = {PairView.class};
 	private static Class<?>[] pairDutyViewClasses = {Pair.class, DutyView.class};
@@ -68,6 +68,16 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 
 	public PairRuleContext(int numOfBases) {
 		this.numOfBases = numOfBases;
+		starterCheckerRepo = new StarterCheckerRepository<PairView, DutyView>();
+		connectionCheckerRepo = new ConnectionCheckerRepository<PairView>();
+		extensibilityCheckerRepo = new ExtensibilityCheckerRepository<PairView>();
+		appendabilityCheckerRepo = new AppendabilityCheckerRepository<PairView, DutyView>();
+		totalizerCheckerRepo = new TotalizerCheckerRepository<PairView>();
+		starterCheckerProxy = new StarterCheckerProxy<PairView, DutyView>(this.starterCheckerRepo, this.numOfBases);
+		connectionCheckerProxy = new ConnectionCheckerProxy<PairView>(this.connectionCheckerRepo, this.numOfBases);
+		extensibilityCheckerProxy = new ExtensibilityCheckerProxy<PairView>(this.extensibilityCheckerRepo, this.numOfBases);
+		appendabilityCheckerProxy = new AppendabilityCheckerProxy<PairView, DutyView>(this.appendabilityCheckerRepo, this.numOfBases);
+		totalizerCheckerProxy = new TotalizerCheckerProxy<PairView>(this.totalizerCheckerRepo, this.numOfBases);
 	}
 
 	@SuppressWarnings("unchecked")

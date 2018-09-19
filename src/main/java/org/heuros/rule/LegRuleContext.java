@@ -25,17 +25,21 @@ public class LegRuleContext implements IntroducerRuleContext<Leg>,
 
 	private int numOfBases = 0;
 
-	protected IntroducerRepository<Leg> introducerRepo = new IntroducerRepository<Leg>();
-	protected ConnectionCheckerRepository<LegView> connectionCheckerRepo = new ConnectionCheckerRepository<LegView>();
+	protected IntroducerRepository<Leg> introducerRepo = null;
+	protected ConnectionCheckerRepository<LegView> connectionCheckerRepo = null;
 
-	protected IntroducerProxy<Leg> introducerProxy = new IntroducerProxy<Leg>(this.introducerRepo);
-	protected ConnectionCheckerProxy<LegView> connectionCheckerProxy = new ConnectionCheckerProxy<LegView>(this.connectionCheckerRepo, this.numOfBases);
+	protected IntroducerProxy<Leg> introducerProxy = null;
+	protected ConnectionCheckerProxy<LegView> connectionCheckerProxy = null;
 
 	private static Class<?>[] legClass = {Leg.class};
 	private static Class<?>[] legViewClass = {LegView.class};
 
 	public LegRuleContext(int numOfBases) {
 		this.numOfBases = numOfBases;
+		this.introducerRepo = new IntroducerRepository<Leg>();
+		this.connectionCheckerRepo = new ConnectionCheckerRepository<LegView>();
+		this.introducerProxy = new IntroducerProxy<Leg>(this.introducerRepo);
+		this.connectionCheckerProxy = new ConnectionCheckerProxy<LegView>(this.connectionCheckerRepo, this.numOfBases);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -49,18 +49,18 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	private int numOfBases = 0;
 
 	protected Aggregator<Duty, LegView> aggregatorImpl = null;
-	protected StarterCheckerRepository<DutyView, LegView> starterCheckerRepo = new StarterCheckerRepository<DutyView, LegView>();
-	protected ExtensibilityCheckerRepository<DutyView> extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView>();
-	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
-	protected AppendabilityCheckerRepository<DutyView, LegView> appendabilityCheckerRepo = new AppendabilityCheckerRepository<DutyView, LegView>();
-	protected TotalizerCheckerRepository<DutyView> totalizerCheckerRepo = new TotalizerCheckerRepository<DutyView>();
+	protected StarterCheckerRepository<DutyView, LegView> starterCheckerRepo = null;
+	protected ExtensibilityCheckerRepository<DutyView> extensibilityCheckerRepo = null;
+	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = null;
+	protected AppendabilityCheckerRepository<DutyView, LegView> appendabilityCheckerRepo = null;
+	protected TotalizerCheckerRepository<DutyView> totalizerCheckerRepo = null;
 
 	protected AggregatorProxy<Duty, LegView> aggregatorProxy = null;
-	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = new StarterCheckerProxy<DutyView, LegView>(this.starterCheckerRepo, this.numOfBases);
-	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView>(this.extensibilityCheckerRepo, this.numOfBases);
-	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo, this.numOfBases);
-	protected AppendabilityCheckerProxy<DutyView, LegView> appendabilityCheckerProxy = new AppendabilityCheckerProxy<DutyView, LegView>(this.appendabilityCheckerRepo, this.numOfBases);
-	protected TotalizerCheckerProxy<DutyView> totalizerCheckerProxy = new TotalizerCheckerProxy<DutyView>(this.totalizerCheckerRepo, this.numOfBases);
+	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = null;
+	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = null;
+	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = null;
+	protected AppendabilityCheckerProxy<DutyView, LegView> appendabilityCheckerProxy = null;
+	protected TotalizerCheckerProxy<DutyView> totalizerCheckerProxy = null;
 
 	private static Class<?>[] dutyViewClass = {DutyView.class};
 	private static Class<?>[] dutyLegViewClasses = {Duty.class, LegView.class};
@@ -68,6 +68,17 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 
 	public DutyRuleContext(int numOfBases) {
 		this.numOfBases = numOfBases;
+		this.starterCheckerRepo = new StarterCheckerRepository<DutyView, LegView>();
+		this.extensibilityCheckerRepo = new ExtensibilityCheckerRepository<DutyView>();
+		this.connectionCheckerRepo = new ConnectionCheckerRepository<DutyView>();
+		this.appendabilityCheckerRepo = new AppendabilityCheckerRepository<DutyView, LegView>();
+		this.totalizerCheckerRepo = new TotalizerCheckerRepository<DutyView>();
+
+		this.starterCheckerProxy = new StarterCheckerProxy<DutyView, LegView>(this.starterCheckerRepo, this.numOfBases);
+		this.extensibilityCheckerProxy = new ExtensibilityCheckerProxy<DutyView>(this.extensibilityCheckerRepo, this.numOfBases);
+		this.connectionCheckerProxy = new ConnectionCheckerProxy<DutyView>(this.connectionCheckerRepo, this.numOfBases);
+		this.appendabilityCheckerProxy = new AppendabilityCheckerProxy<DutyView, LegView>(this.appendabilityCheckerRepo, this.numOfBases);
+		this.totalizerCheckerProxy = new TotalizerCheckerProxy<DutyView>(this.totalizerCheckerRepo, this.numOfBases);
 	}
 
 	@SuppressWarnings("unchecked")
