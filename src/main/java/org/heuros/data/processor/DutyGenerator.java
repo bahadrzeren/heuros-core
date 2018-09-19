@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.base.Processor;
-import org.heuros.core.data.base.ModelFactory;
 import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
@@ -28,7 +27,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 
 	private List<Leg> legs = null;
 	private OneDimIndexInt<Leg> legConnectionIndex = null;
-	private ModelFactory<Duty> dutyFactory = null;
+	private int numOfBases = 0;
 	private DutyRuleContext dutyRuleContext = null;
 
 	private List<Duty> dl = new LinkedList<Duty>();
@@ -43,8 +42,8 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 		return this;
 	}
 
-	public DutyGenerator setDutyFactory(ModelFactory<Duty> dutyFactory) {
-		this.dutyFactory = dutyFactory;
+	public DutyGenerator setNumOfBases(int numOfBases) {
+		this.numOfBases = numOfBases;
 		return this;
 	}
 
@@ -55,7 +54,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 
 	@Override
 	public List<Duty> proceed() {
-		Duty d = this.dutyFactory.generateModel();
+		Duty d = Duty.newInstance(this.numOfBases);
 
 		/*
 		 * TODO Day start time must be parametric.
@@ -72,7 +71,6 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 				 * Duty starter check does not need any HB control therefore -1 is used.
 				 */
 				int bitwiseValidStarter = dutyRuleContext.getStarterCheckerProxy().canBeStarter(l);
-
 				if (bitwiseValidStarter > 0) {
 
 					/*
@@ -86,9 +84,11 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty validator does not need any HB control therefore -1 is used.
 					 */
-					int bitwiseValidTotalizer = dutyRuleContext.getFinalCheckerProxy().acceptable(d);
-					if ((bitwiseValidStarter & bitwiseValidTotalizer) > 0) {
+					int bitwiseValidTotalizer = bitwiseValidStarter & dutyRuleContext.getFinalCheckerProxy().acceptable(d);
+					if (bitwiseValidTotalizer > 0) {
 						try {
+							d.setValid(bitwiseValidTotalizer);
+							d.setValidated(true);
 							dl.add((Duty) d.clone());
 						} catch (CloneNotSupportedException e) {
 							logger.error(e);
@@ -98,10 +98,10 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty extensibility checker does not need any HB control therefore -1 is used.
 					 */
-					int bitwiseValidExtensible = dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
-					if ((bitwiseValidStarter & bitwiseValidExtensible) > 0) {
+					int bitwiseValidExtensible = bitwiseValidStarter & dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
+					if (bitwiseValidExtensible > 0) {
 						try {
-							examineDutyFW(d, l, bitwiseValidStarter & bitwiseValidExtensible);
+							examineDutyFW(d, l, bitwiseValidExtensible);
 						} catch (CloneNotSupportedException e) {
 							logger.error(e);
 							return null;
@@ -161,6 +161,8 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						 */
                     	int bitwiseValidTotalizer = bitwiseValidAppendable & dutyRuleContext.getFinalCheckerProxy().acceptable(d);
 	                    if (bitwiseValidTotalizer > 0) {
+	                    	d.setValid(bitwiseValidTotalizer);
+	                    	d.setValidated(true);
 	                    	dl.add((Duty) d.clone());
 	                    }
 

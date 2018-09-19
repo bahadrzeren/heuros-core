@@ -49,6 +49,9 @@ public class Leg extends AbstractModel implements LegView {
 
 	private int blockTimeInMins = 0;
 
+	private Leg() {
+	}
+
 	public String getCarrier() {
 		return carrier;
 	}
@@ -299,5 +302,9 @@ public class Leg extends AbstractModel implements LegView {
 					.append(",").append(needsCockpitCrew)
 					.append(",").append(needsCabinCrew)
 					.toString();
+	}
+
+	public static Leg newInstance() {
+		return new Leg();
 	}
 }

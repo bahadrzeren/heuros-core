@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegFactory;
 import org.heuros.loader.legs.LegsParser;
 
 import junit.framework.Test;
@@ -45,7 +44,7 @@ public class LegsParseTest
     public void testLegsLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
-    	LegsParser legsParser = new LegsParser(legs, new LegFactory(), null);
+    	LegsParser legsParser = new LegsParser(legs, null);
     	try {
 			legsParser.parseLine(LegsParseTest.sampleLegsLine);
 		} catch (Exception e) {

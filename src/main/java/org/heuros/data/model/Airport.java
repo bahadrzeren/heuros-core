@@ -28,6 +28,9 @@ public class Airport extends AbstractModel implements AirportView {
 	private int groupId = 0;
 	private boolean legConnectionExceptionStation = false;
 
+	private Airport() {
+	}
+
 	public String getCode() {
 		return code;
 	}
@@ -173,5 +176,11 @@ public class Airport extends AbstractModel implements AirportView {
 	@Override
 	public String toString() {
 		return this.code;
+	}
+
+	public static Airport newInstance(String airportCode) {
+		Airport airport = new Airport();
+		airport.setCode(airportCode);
+		return airport;
 	}
 }

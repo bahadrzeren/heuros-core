@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
@@ -26,8 +25,8 @@ public class LegsParser extends TextFileReader<Leg> {
 																			Locale.ENGLISH)
 																		.withZone(ZoneOffset.UTC);
 
-	public LegsParser(List<Leg> list, ModelFactory<Leg> modelFactory, File textFile) {
-		super(list, modelFactory, textFile);
+	public LegsParser(List<Leg> list, File textFile) {
+		super(list, textFile);
 	}
 
 	@Override
@@ -35,7 +34,7 @@ public class LegsParser extends TextFileReader<Leg> {
 
 		String[] st = s.split(",");
 
-		Leg leg = this.modelFactory.generateModel();
+		Leg leg = Leg.newInstance();
 
 		leg.setCarrier(st[0]);
 		leg.setFlightNo(Integer.valueOf(st[1]));

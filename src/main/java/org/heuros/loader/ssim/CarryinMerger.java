@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.function.Predicate;
 
-import org.heuros.core.data.base.ModelFactory;
 import org.heuros.data.model.Leg;
 import org.heuros.exception.InputParseException;
 import org.heuros.util.TextFileReader;
@@ -31,8 +30,8 @@ public class CarryinMerger extends TextFileReader<Leg> {
 																			.toFormatter(Locale.ENGLISH)
 																			.withZone(ZoneOffset.UTC);
 
-	public CarryinMerger(List<Leg> list, ModelFactory<Leg> modelFactory, File textFile) {
-		super(list, modelFactory, textFile);
+	public CarryinMerger(List<Leg> list, File textFile) {
+		super(list, textFile);
 	}
 
 	@Override

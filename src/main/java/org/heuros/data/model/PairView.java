@@ -17,20 +17,20 @@ public interface PairView extends View {
 	 * @return homebase ndx of the pairing.
 	 */
 	public int getHbNdx();
-	/**
-	 * Returns the homebase ndx fo departure airport if it is really a homebase.
-	 * 
-	 * @return homebase ndx of the departure airport.
-	 */
-	public int getDepHbNdx();
-	/**
-	 * Returns the homebase ndx fo arrival airport if it is really a homebase.
-	 * 
-	 * @return homebase ndx of the arrival airport.
-	 */
-	public int getArrHbNdx();
-	public boolean isHbDep(int hbNdx);
-	public boolean isHbArr(int hbNdx);
+//	/**
+//	 * Returns the homebase ndx of departure airport if it is really a homebase.
+//	 * 
+//	 * @return homebase ndx of the departure airport.
+//	 */
+//	public int getDepHbNdx();
+//	/**
+//	 * Returns the homebase ndx of arrival airport if it is really a homebase.
+//	 * 
+//	 * @return homebase ndx of the arrival airport.
+//	 */
+//	public int getArrHbNdx();
+//	public boolean isHbDep(int hbNdx);
+//	public boolean isHbArr(int hbNdx);
 
 	public DutyView getFirstDuty();
 	public DutyView getLastDuty();
@@ -51,16 +51,27 @@ public interface PairView extends View {
 
 	public int getNumOfDuties();
 
-	public int getBriefDurationInMins(int hbNdx);
-	public int getDutyDurationInMins(int hbNdx);
-	public int getDebriefDurationInMins(int hbNdx);
-	public int getRestDurationInMins(int hbNdx);
+//	public int getBriefDurationInMins(int hbNdx);
+//	public int getDutyDurationInMins(int hbNdx);
+//	public int getDebriefDurationInMins(int hbNdx);
+//	public int getRestDurationInMins(int hbNdx);
+//
+//	public int getNumOfDaysTouched(int hbNdx);
+//
+//	public int getNumOfEarlyDuties(int hbNdx);
+//	public int getNumOfHardDuties(int hbNdx);
+//	public int getNumOfAugmentedDuties(int hbNdx);
 
-	public int getNumOfDaysTouched(int hbNdx);
+	public int getBriefDurationInMins();
+	public int getDutyDurationInMins();
+	public int getDebriefDurationInMins();
+	public int getRestDurationInMins();
 
-	public int getNumOfEarlyDuties(int hbNdx);
-	public int getNumOfHardDuties(int hbNdx);
-	public int getNumOfAugmentedDuties(int hbNdx);
+	public int getNumOfDaysTouched();
+
+	public int getNumOfEarlyDuties();
+	public int getNumOfHardDuties();
+	public int getNumOfAugmentedDuties();
 
 	public int getNumOfInternationalDuties();
 	public int getNumOfErDuties();

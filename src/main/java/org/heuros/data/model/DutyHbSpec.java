@@ -21,6 +21,7 @@ public class DutyHbSpec implements Cloneable {
 	private int augmented = 0;
 	private boolean early = false;
 	private boolean hard = false;
+
 	private boolean valid = false;
 
 	@Override

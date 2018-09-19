@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.data.base.Model;
-import org.heuros.core.data.base.ModelFactory;
 import org.heuros.exception.InputParseException;
 
 /**
@@ -23,11 +22,9 @@ public abstract class TextFileReader<T extends Model> {
 
 	protected File textFile = null;
 	protected List<T> list = null;
-	protected ModelFactory<T> modelFactory = null;
 
-	public TextFileReader(List<T> list, ModelFactory<T> modelFactory, File textFile) {
+	public TextFileReader(List<T> list, File textFile) {
 		this.list = list;
-		this.modelFactory = modelFactory;
 		this.textFile = textFile;
 	}
 

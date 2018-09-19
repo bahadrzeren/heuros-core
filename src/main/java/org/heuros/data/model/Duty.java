@@ -56,6 +56,11 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		this.dutyHbSpecs = dutyHbSpec;
 	}
 
+	private boolean validated = false;
+
+	private Duty() {
+	}
+
 	@Override
     public Object clone() throws CloneNotSupportedException {
         Duty d = (Duty) super.clone();
@@ -336,13 +341,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 
 	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		this.legs.forEach((l) -> sb.append(l).append("\n"));
-		return sb.toString();
-	}
-
-	@Override
 	public int getNumOfHomebaseTouch(int hbNdx) {
 		return this.dutyHbSpecs[hbNdx].getNumOfHomebaseTouch();
 	}
@@ -471,10 +469,38 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 
 	@Override
+	public boolean isValidated() {
+		return validated;
+	}
+	public void setValidated(boolean validated) {
+		this.validated = validated;
+	}
+
+	@Override
 	public boolean isValid(int hbNdx) {
 		return this.dutyHbSpecs[hbNdx].isValid();
 	}
 	public void setValid(int hbNdx, boolean valid) {
 		this.dutyHbSpecs[hbNdx].setValid(valid);
+	}
+	public void setValid(int validationVector) {
+		for (int i = 0; i < this.dutyHbSpecs.length; i++)
+			this.dutyHbSpecs[i].setValid((validationVector & (1 << i)) > 0);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		this.legs.forEach((l) -> sb.append(l).append("\n"));
+		return sb.toString();
+	}
+
+	public static Duty newInstance(int numOfBases) {
+		Duty d = new Duty();
+		d.setLegs(new ArrayList<LegView>());
+		d.setDutyHbSpecs(new DutyHbSpec[numOfBases]);
+		for (int i = 0; i < numOfBases; i++)
+			d.getDutyHbSpecs()[i] = new DutyHbSpec();
+		return d;
 	}
 }

@@ -10,13 +10,9 @@ import org.heuros.core.data.ndx.TwoDimIndexIntXInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.data.model.Airport;
-import org.heuros.data.model.AirportFactory;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyFactory;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegFactory;
-import org.heuros.data.model.PairFactory;
 import org.heuros.data.repo.AirportRepository;
 import org.heuros.data.repo.DutyRepository;
 import org.heuros.data.repo.LegRepository;
@@ -41,14 +37,12 @@ public class PairOptimizationContext {
 	/**
 	 * Airport model related classes.
 	 */
-	private AirportFactory airportFactory = null;
 	private AirportRepository airportRepository = null;
 	private AirportRuleContext airportRuleContext = null;
 
 	/**
 	 * Flight leg model related classes.
 	 */
-	private LegFactory legFactory = null;
 	private LegRepository legRepository = null;
 	private LegRuleContext legRuleContext = null;
 	/**
@@ -62,7 +56,6 @@ public class PairOptimizationContext {
 	/**
 	 * Duty model related classes.
 	 */
-	private DutyFactory dutyFactory = null;
 	private DutyRepository dutyRepository = null;
 	private DutyRuleContext dutyRuleContext = null;
 	/**
@@ -104,16 +97,8 @@ public class PairOptimizationContext {
 	/**
 	 * Pair model related classes.
 	 */
-	private PairFactory pairFactory = null;
 	private PairRuleContext pairRuleContext = null;
 
-	public AirportFactory getAirportFactory() {
-		return airportFactory;
-	}
-	public PairOptimizationContext setAirportFactory(AirportFactory airportFactory) {
-		this.airportFactory = airportFactory;
-		return this;
-	}
 	public AirportRepository getAirportRepository() {
 		return airportRepository;
 	}
@@ -126,13 +111,6 @@ public class PairOptimizationContext {
 	}
 	public PairOptimizationContext setAirportRuleContext(AirportRuleContext airportRuleContext) {
 		this.airportRuleContext = airportRuleContext;
-		return this;
-	}
-	public LegFactory getLegFactory() {
-		return legFactory;
-	}
-	public PairOptimizationContext setLegFactory(LegFactory legFactory) {
-		this.legFactory = legFactory;
 		return this;
 	}
 	public LegRepository getLegRepository() {
@@ -149,13 +127,6 @@ public class PairOptimizationContext {
 		this.legRuleContext = legRuleContext;
 		return this;
 	}
-	public DutyFactory getDutyFactory() {
-		return dutyFactory;
-	}
-	public PairOptimizationContext setDutyFactory(DutyFactory dutyFactory) {
-		this.dutyFactory = dutyFactory;
-		return this;
-	}
 	public DutyRepository getDutyRepository() {
 		return dutyRepository;
 	}
@@ -168,13 +139,6 @@ public class PairOptimizationContext {
 	}
 	public PairOptimizationContext setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
-	public PairFactory getPairFactory() {
-		return pairFactory;
-	}
-	public PairOptimizationContext setPairFactory(PairFactory pairFactory) {
-		this.pairFactory = pairFactory;
 		return this;
 	}
 	public PairRuleContext getPairRuleContext() {
@@ -223,7 +187,7 @@ public class PairOptimizationContext {
 	private Airport getAirport(String airportCode) {
 		Airport ap = this.airportRepository.getAirport(airportCode);
 		if (ap == null) {
-			ap = this.airportFactory.generateModel(airportCode);
+			ap = Airport.newInstance(airportCode);
 			if (this.airportRuleContext.getIntroducerProxy().introduce(ap))
 				this.airportRepository.addToRepo(ap);
 			else

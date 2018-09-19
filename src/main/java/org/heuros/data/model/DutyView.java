@@ -68,6 +68,8 @@ public interface DutyView extends View {
 	public int getAugmented(int hbNdx);
 	public boolean isEarly(int hbNdx);
 	public boolean isHard(int hbNdx);
+
+	public boolean isValidated();
 	public boolean isValid(int hbNdx);
 
 	public int getTotalNumOfIncludingDutiesOfTheSameLegs();
