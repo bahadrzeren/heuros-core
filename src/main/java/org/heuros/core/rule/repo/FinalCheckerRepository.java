@@ -1,7 +1,7 @@
 package org.heuros.core.rule.repo;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.intf.TotalizerChecker;
+import org.heuros.core.rule.intf.FinalChecker;
 
 /**
  * Repository class for Validator rule implementations.
@@ -9,8 +9,8 @@ import org.heuros.core.rule.intf.TotalizerChecker;
  * @author bahadrzeren
  *
  * @param <V> Type of the model instances that the stored rule implementations will be applied to.
- * @see TotalizerChecker
+ * @see FinalChecker
  */
-public class TotalizerCheckerRepository<V extends View>
-						extends AbstractRuleRepository<TotalizerChecker<V>> {
+public class FinalCheckerRepository<V extends View>
+						extends AbstractRuleRepository<FinalChecker<V>> {
 }

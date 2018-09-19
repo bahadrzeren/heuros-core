@@ -114,7 +114,7 @@ public class RuleContextTest extends TestCase {
 
     		assertTrue(context.getConnectionCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getAppendabilityCheckerRepo().getRules().size() == 1);
-    		assertTrue(context.getTotalizerCheckerRepo().getRules().size() == 1);
+    		assertTrue(context.getFinalCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getStarterCheckerRepo().getRules().size() == 0);
     		assertTrue(context.getAggregatorImpl() == null);
 
@@ -147,6 +147,6 @@ public class RuleContextTest extends TestCase {
 		assertTrue(legContext.getConnectionCheckerProxy().areConnectable(-1, null, null));
 		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(-1, null, null));
 		assertTrue(dutyContext.getAppendabilityCheckerProxy().isAppendable(-1, null, null));
-		assertTrue(dutyContext.getTotalizerCheckerProxy().acceptable(-1, null));
+		assertTrue(dutyContext.getFinalCheckerProxy().acceptable(-1, null));
     }
 }

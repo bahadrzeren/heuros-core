@@ -79,7 +79,7 @@ public class RuleUtil {
 				} else
 					return 0;
 			}
-			bitwiseValid &= dutyRuleContext.getTotalizerCheckerProxy().acceptable(d);
+			bitwiseValid &= dutyRuleContext.getFinalCheckerProxy().acceptable(d);
 		}
 		return bitwiseValid;
 	};

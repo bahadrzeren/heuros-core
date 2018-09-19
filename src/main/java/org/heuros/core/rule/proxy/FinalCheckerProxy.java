@@ -1,7 +1,7 @@
 package org.heuros.core.rule.proxy;
 
 import org.heuros.core.data.base.View;
-import org.heuros.core.rule.intf.TotalizerChecker;
+import org.heuros.core.rule.intf.FinalChecker;
 import org.heuros.core.rule.repo.RuleRepository;
 
 /**
@@ -10,15 +10,15 @@ import org.heuros.core.rule.repo.RuleRepository;
  * @author bahadrzeren
  *
  * @param <V> Type of the model instances that will be validated.
- * @see TotalizerChecker
+ * @see FinalChecker
  */
-public class TotalizerCheckerProxy<V extends View> implements TotalizerCheckerPro<V> {
+public class FinalCheckerProxy<V extends View> implements FinalCheckerPro<V> {
 
-	private RuleRepository<TotalizerChecker<V>> repo = null;
+	private RuleRepository<FinalChecker<V>> repo = null;
 
 	private int numOfBases = 0;
 
-	public TotalizerCheckerProxy(RuleRepository<TotalizerChecker<V>> repo, int numOfBases) {
+	public FinalCheckerProxy(RuleRepository<FinalChecker<V>> repo, int numOfBases) {
 		this.repo = repo;
 		this.numOfBases = numOfBases;
 	}

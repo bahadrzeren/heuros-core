@@ -4,7 +4,7 @@ import org.heuros.core.rule.intf.AppendabilityChecker;
 import org.heuros.core.rule.intf.ConnectionChecker;
 import org.heuros.core.rule.intf.Introducer;
 import org.heuros.core.rule.intf.RuleImplementation;
-import org.heuros.core.rule.intf.TotalizerChecker;
+import org.heuros.core.rule.intf.FinalChecker;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.LegView;
@@ -15,7 +15,7 @@ import org.heuros.data.model.LegView;
 public class DutyRuleFull implements Introducer<Duty>,
 										ConnectionChecker<DutyView>, 
 										AppendabilityChecker<DutyView, LegView>, 
-										TotalizerChecker<DutyView> {
+										FinalChecker<DutyView> {
 
 	@Override
 	public boolean areConnectable(int hbNdx, DutyView prevModel, DutyView nextModel) {
