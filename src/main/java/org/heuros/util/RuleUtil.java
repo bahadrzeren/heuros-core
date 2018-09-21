@@ -61,7 +61,7 @@ public class RuleUtil {
 		int bitwiseValid = dutyRuleContext.getStarterCheckerProxy().canBeStarter(nl);
 		if (bitwiseValid > 0) {
 			dutyRuleContext.getAggregatorProxy().reset(d);
-			dutyRuleContext.getAggregatorProxy().softAppend(d, nl);
+			dutyRuleContext.getAggregatorProxy().softAppendFw(d, nl);
 			for (int i = 1; i < d.getLegs().size(); i++) {
 				pl = nl;
 				nl = d.getLegs().get(i);
@@ -71,7 +71,7 @@ public class RuleUtil {
 					if (bitwiseValid > 0) {
 						bitwiseValid &= dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl, true);
 						if (bitwiseValid > 0) {
-							dutyRuleContext.getAggregatorProxy().softAppend(d, nl);
+							dutyRuleContext.getAggregatorProxy().softAppendFw(d, nl);
 						} else
 							return 0;
 					} else

@@ -74,12 +74,20 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
         return d;
     }
 
-	public void append(LegView leg) {
+	public void appendFw(LegView leg) {
 		this.legs.add(leg);
-	}
+}
+	public void appendBw(LegView leg) {
+		this.legs.add(0, leg);
+}
 	public LegView removeLast() {
 		if (this.numOfLegs > 0)
 			return this.legs.remove(this.numOfLegs - 1);
+		return null;
+	}
+	public LegView removeFirst() {
+		if (this.numOfLegs > 0)
+			return this.legs.remove(0);
 		return null;
 	}
 	@Override

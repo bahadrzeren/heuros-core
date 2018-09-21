@@ -18,7 +18,8 @@ public interface Aggregator<P extends Model, C extends View> extends Rule {
 	 * @param p Parent class instance.
 	 * @param c Child class instance.
 	 */
-	public void append(P p, C c);
+	public void appendFw(P p, C c);
+	public void appendBw(P p, C c);
 	/**
 	 * Calculates and incorporates c's contribution on p without changing p's content.
 	 * Mainly used for rule check without changing p's content.
@@ -26,13 +27,15 @@ public interface Aggregator<P extends Model, C extends View> extends Rule {
 	 * @param p Parent class instance.
 	 * @param c Child class instance.
 	 */
-	public void softAppend(P p, C c);
+	public void softAppendFw(P p, C c);
+	public void softAppendBw(P p, C c);
 	/**
 	 * Removes the last child from the p's content and calculates and removes c's contribution on p.
 	 * 
 	 * @param p Parent class instance.
 	 */
 	public C removeLast(P p);
+	public C removeFirst(P p);
 	/**
 	 * Resets parent class instance's aggregated parameters.
 	 * 

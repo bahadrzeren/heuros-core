@@ -76,7 +76,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg aggregator does not need any HB control therefore -1 is used.
 					 */
-					dutyRuleContext.getAggregatorProxy().append(d, l);
+					dutyRuleContext.getAggregatorProxy().appendFw(d, l);
 
 					/*
 					 * TODO Terminator rule!
@@ -154,7 +154,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-                    	dutyRuleContext.getAggregatorProxy().append(d, l);
+                    	dutyRuleContext.getAggregatorProxy().appendFw(d, l);
 
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.

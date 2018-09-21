@@ -93,12 +93,20 @@ public class Pair extends AbstractModel implements PairView {
 //		return this.getLastArrAirport().isAnyHb() && (this.getLastArrAirport().getHbNdx() == hbNdx);
 //	}
 
-	public void append(DutyView dutyView) {
+	public void appendFw(DutyView dutyView) {
 		this.duties.add(dutyView);
+	}
+	public void appendBw(DutyView dutyView) {
+		this.duties.add(0, dutyView);
 	}
 	public DutyView removeLast() {
 		if (this.numOfDuties > 0)
 			return this.duties.remove(this.numOfDuties - 1);
+		return null;
+	}
+	public DutyView removeFirst() {
+		if (this.numOfDuties > 0)
+			return this.duties.remove(0);
 		return null;
 	}
 	@Override

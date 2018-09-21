@@ -74,7 +74,7 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 	    	if (d.isHbDep(this.hbNdx)
 	    			&& d.isValid(this.hbNdx)) {
 	    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
-	    			this.pairRuleContext.getAggregatorProxy().append(p, d);
+	    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
 	    			if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
 	    				if (p.isComplete(this.hbNdx)) {
 	    					/*
@@ -118,7 +118,7 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 					if (nd.isValid(this.hbNdx)) {
 						if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, ld, nd)) {
 							if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, nd, true)) {
-								pairRuleContext.getAggregatorProxy().append(p, nd);
+								pairRuleContext.getAggregatorProxy().appendFw(p, nd);
 
 				    			if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
 				    				if (p.isComplete(this.hbNdx)) {
