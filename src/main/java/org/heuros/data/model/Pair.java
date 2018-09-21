@@ -56,6 +56,12 @@ public class Pair extends AbstractModel implements PairView {
 				&& (this.getFirstDepAirport().getHbNdx() == this.getLastArrAirport().getHbNdx());
 	}
 	@Override
+	public boolean isComplete(int hbNdx) {
+		return (this.numOfDuties > 0)
+				&& this.getFirstDepAirport().isHb(hbNdx)
+				&& this.getLastArrAirport().isHb(hbNdx);
+	}
+	@Override
 	public int getHbNdx() {
 //		if (this.isComplete())
 //			return this.getFirstDepAirport().getHbNdx();

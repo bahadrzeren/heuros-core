@@ -29,6 +29,8 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
+	private double score = 0.0;
+
 	/*
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
@@ -180,12 +182,46 @@ public class Leg extends AbstractModel implements LegView {
 		this.needsCabinCrew = needsCabinCrew;
 	}
 
+	public boolean isAnyHbDep() {
+		return this.depAirport.isAnyHb();
+	}
+	public boolean isAnyHbArr() {
+		return this.arrAirport.isAnyHb();
+	}
+	public boolean isAnyNonHbDep() {
+		return this.depAirport.isAnyNonHb();
+	}
+	public boolean isAnyNonHbArr() {
+		return this.arrAirport.isAnyNonHb();
+	}
+	public boolean isHbDep(int hbNdx) {
+		return this.depAirport.isHb(hbNdx);
+	}
+	public boolean isHbArr(int hbNdx) {
+		return this.arrAirport.isHb(hbNdx);
+	}
+	public boolean isNonHbDep(int hbNdx) {
+		return this.depAirport.isNonHb(hbNdx);
+	}
+	public boolean isNonHbArr(int hbNdx) {
+		return this.arrAirport.isNonHb(hbNdx);
+	}
+
+
 	public boolean isInFleet() {
 		return inFleet;
 	}
 
 	public void setInFleet(boolean inFleet) {
 		this.inFleet = inFleet;
+	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
 	}
 
 	public int getNumOfDutiesIncludes() {

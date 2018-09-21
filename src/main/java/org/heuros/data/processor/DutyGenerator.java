@@ -76,7 +76,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg aggregator does not need any HB control therefore -1 is used.
 					 */
-					dutyRuleContext.getAggregatorImpl().append(d, l);
+					dutyRuleContext.getAggregatorProxy().append(d, l);
 
 					/*
 					 * TODO Terminator rule!
@@ -111,7 +111,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg aggregator does not need any HB control therefore -1 is used.
 					 */
-					dutyRuleContext.getAggregatorImpl().removeLast(d);
+					dutyRuleContext.getAggregatorProxy().removeLast(d);
 				}
 			}
 
@@ -154,7 +154,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-                    	dutyRuleContext.getAggregatorImpl().append(d, l);
+                    	dutyRuleContext.getAggregatorProxy().append(d, l);
 
 						/*
 						 * Duty validator does not need any HB control therefore -1 is used.
@@ -177,7 +177,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 						/*
 						 * Duty leg aggregator does not need any HB control therefore -1 is used.
 						 */
-	                    dutyRuleContext.getAggregatorImpl().removeLast(d);
+	                    dutyRuleContext.getAggregatorProxy().removeLast(d);
                     }
     			}
             }

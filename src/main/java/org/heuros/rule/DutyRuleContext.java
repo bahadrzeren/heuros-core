@@ -136,10 +136,10 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 		return 0;
 	}
 
-	@Override
-	public Aggregator<Duty, LegView> getAggregatorImpl() {
-		return this.aggregatorImpl;
-	}
+//	@Override
+//	public Aggregator<Duty, LegView> getAggregatorImpl() {
+//		return this.aggregatorImpl;
+//	}
 
 	@Override
 	public AggregatorProxy<Duty, LegView> getAggregatorProxy() {

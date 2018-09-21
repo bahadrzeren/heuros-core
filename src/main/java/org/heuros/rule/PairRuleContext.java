@@ -136,10 +136,10 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 		return 0;
 	}
 
-	@Override
-	public Aggregator<Pair, DutyView> getAggregatorImpl() {
-		return this.aggregatorImpl;
-	}
+//	@Override
+//	public Aggregator<Pair, DutyView> getAggregatorImpl() {
+//		return this.aggregatorImpl;
+//	}
 
 	@Override
 	public AggregatorProxy<Pair, DutyView> getAggregatorProxy() {

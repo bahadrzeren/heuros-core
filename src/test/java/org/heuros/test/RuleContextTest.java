@@ -116,7 +116,7 @@ public class RuleContextTest extends TestCase {
     		assertTrue(context.getAppendabilityCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getFinalCheckerRepo().getRules().size() == 1);
     		assertTrue(context.getStarterCheckerRepo().getRules().size() == 0);
-    		assertTrue(context.getAggregatorImpl() == null);
+    		assertTrue(context.getAggregatorProxy() == null);
 
     	} catch (Exception ex) {
     		ex.printStackTrace();

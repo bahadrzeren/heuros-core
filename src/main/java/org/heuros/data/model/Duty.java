@@ -113,6 +113,31 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		return null;
 	}
 
+	public boolean isAnyHbDep() {
+		return this.getFirstDepAirport().isAnyHb();
+	}
+	public boolean isAnyHbArr() {
+		return this.getLastArrAirport().isAnyHb();
+	}
+	public boolean isAnyNonHbDep() {
+		return this.getFirstDepAirport().isAnyNonHb();
+	}
+	public boolean isAnyNonHbArr() {
+		return this.getLastArrAirport().isAnyNonHb();
+	}
+	public boolean isHbDep(int hbNdx) {
+		return this.getFirstDepAirport().isHb(hbNdx);
+	}
+	public boolean isHbArr(int hbNdx) {
+		return this.getLastArrAirport().isHb(hbNdx);
+	}
+	public boolean isNonHbDep(int hbNdx) {
+		return this.getFirstDepAirport().isNonHb(hbNdx);
+	}
+	public boolean isNonHbArr(int hbNdx) {
+		return this.getLastArrAirport().isNonHb(hbNdx);
+	}
+
 	@Override
 	public List<LegView> getLegs() {
 		return legs;

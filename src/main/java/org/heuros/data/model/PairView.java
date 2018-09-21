@@ -11,6 +11,7 @@ import org.heuros.core.data.base.View;
 public interface PairView extends View {
 
 	public boolean isComplete();
+	public boolean isComplete(int hbNdx);
 	/**
 	 * Returns the ndx if homebase if pairing is complete.
 	 * 

@@ -22,6 +22,15 @@ public interface DutyView extends View {
 	public AirportView getFirstDepAirport();
 	public AirportView getLastArrAirport();
 
+	public boolean isAnyHbDep();
+	public boolean isAnyHbArr();
+	public boolean isAnyNonHbDep();
+	public boolean isAnyNonHbArr();
+	public boolean isHbDep(int hbNdx);
+	public boolean isHbArr(int hbNdx);
+	public boolean isNonHbDep(int hbNdx);
+	public boolean isNonHbArr(int hbNdx);
+
 	public int getBlockTimeInMins();
 	public int getBlockTimeInMinsActive();
 	public int getBlockTimeInMinsPassive();

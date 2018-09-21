@@ -28,6 +28,15 @@ public interface LegView extends View {
 	public boolean isNeedsCockpitCrew();
 	public boolean isNeedsCabinCrew();
 
+	public boolean isAnyHbDep();
+	public boolean isAnyHbArr();
+	public boolean isAnyNonHbDep();
+	public boolean isAnyNonHbArr();
+	public boolean isHbDep(int hbNdx);
+	public boolean isHbArr(int hbNdx);
+	public boolean isNonHbDep(int hbNdx);
+	public boolean isNonHbArr(int hbNdx);
+
 	public boolean isInFleet();
 	public boolean isDeadheadable();
 	public boolean isSpecialFlight();
@@ -37,6 +46,8 @@ public interface LegView extends View {
 	public int getBlockTimeInMins();
 
 	public boolean hasAcChangeWith(LegView nl);
+
+	public double getScore();
 
 	/*
 	 * TODO HB impl will be changed!
