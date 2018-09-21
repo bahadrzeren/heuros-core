@@ -33,7 +33,7 @@ public class DutyRuleFull implements Introducer<Duty>,
 	}
 
 	@Override
-	public boolean isAppendable(int hbNdx, DutyView parentModel, LegView childModel) {
+	public boolean isAppendable(int hbNdx, DutyView parentModel, LegView childModel, boolean fw) {
 		return true;
 	}
 

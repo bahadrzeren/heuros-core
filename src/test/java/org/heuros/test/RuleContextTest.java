@@ -146,7 +146,7 @@ public class RuleContextTest extends TestCase {
 		assertTrue(legContext.getIntroducerProxy().introduce(null));
 		assertTrue(legContext.getConnectionCheckerProxy().areConnectable(-1, null, null));
 		assertTrue(dutyContext.getConnectionCheckerProxy().areConnectable(-1, null, null));
-		assertTrue(dutyContext.getAppendabilityCheckerProxy().isAppendable(-1, null, null));
+		assertTrue(dutyContext.getAppendabilityCheckerProxy().isAppendable(-1, null, null, true));
 		assertTrue(dutyContext.getFinalCheckerProxy().acceptable(-1, null));
     }
 }

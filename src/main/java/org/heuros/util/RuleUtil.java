@@ -69,7 +69,7 @@ public class RuleUtil {
 				if (bitwiseValid > 0) {
 					bitwiseValid &= dutyRuleContext.getExtensibilityCheckerProxy().isExtensible(d);
 					if (bitwiseValid > 0) {
-						bitwiseValid &= dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl);
+						bitwiseValid &= dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, nl, true);
 						if (bitwiseValid > 0) {
 							dutyRuleContext.getAggregatorProxy().softAppend(d, nl);
 						} else

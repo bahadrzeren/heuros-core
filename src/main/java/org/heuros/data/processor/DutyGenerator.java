@@ -148,7 +148,7 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 					/*
 					 * Duty leg appendability checker does not need any HB control therefore -1 is used.
 					 */
-                	int bitwiseValidAppendable = bitwiseValidationStatus & dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l);
+                	int bitwiseValidAppendable = bitwiseValidationStatus & dutyRuleContext.getAppendabilityCheckerProxy().isAppendable(d, l, true);
                 	if (bitwiseValidAppendable > 0) {
 
 						/*

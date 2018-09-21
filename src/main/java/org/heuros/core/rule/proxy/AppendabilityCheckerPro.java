@@ -13,5 +13,5 @@ import org.heuros.core.rule.intf.AppendabilityChecker;
  * @param <C> Type of the child class.
  */
 public interface AppendabilityCheckerPro<P extends View, C extends View> extends AppendabilityChecker<P, C> {
-	public int isAppendable(P p, C c);
+	public int isAppendable(P p, C c, boolean fw);
 }

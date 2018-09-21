@@ -11,7 +11,6 @@ import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.data.model.Airport;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.repo.AirportRepository;
 import org.heuros.data.repo.DutyRepository;
@@ -61,36 +60,36 @@ public class PairOptimizationContext {
 	/**
 	 * Index class used to obtain duties that include a particular leg.
 	 */
-	private OneDimIndexInt<DutyView> dutyIndexByLegNdx = null;
+	private OneDimIndexInt<Duty> dutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain hb departed duties that include a particular leg.
 	 */
-	private TwoDimIndexIntXInt<DutyView> hbDepDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<Duty> hbDepDutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain hb departed and hb arrival duties that include a particular leg.
 	 */
-	private TwoDimIndexIntXInt<DutyView> hbDepHbArrDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<Duty> hbDepHbArrDutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain duties that departs from a particular airport and time (hour).
 	 */
-	private TwoDimIndexIntXLocalDateTime<DutyView> dutyIndexByDepAirportNdxBrieftime = null;
+	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 	/**
 	 * Index class used to obtain hb arrival duties that departs from a particular airport and time (hour).
 	 */
-	private TwoDimIndexIntXLocalDateTime<DutyView> hbArrDutyIndexByDepAirportNdxBrieftime = null;
-	public OneDimIndexInt<DutyView> getDutyIndexByLegNdx() {
+	private TwoDimIndexIntXLocalDateTime<Duty> hbArrDutyIndexByDepAirportNdxBrieftime = null;
+	public OneDimIndexInt<Duty> getDutyIndexByLegNdx() {
 		return dutyIndexByLegNdx;
 	}
-	public TwoDimIndexIntXInt<DutyView> getHbDepDutyIndexByLegNdx() {
+	public TwoDimIndexIntXInt<Duty> getHbDepDutyIndexByLegNdx() {
 		return hbDepDutyIndexByLegNdx;
 	}
-	public TwoDimIndexIntXInt<DutyView> getHbDepHbArrDutyIndexByLegNdx() {
+	public TwoDimIndexIntXInt<Duty> getHbDepHbArrDutyIndexByLegNdx() {
 		return hbDepHbArrDutyIndexByLegNdx;
 	}
-	public TwoDimIndexIntXLocalDateTime<DutyView> getDutyIndexByDepAirportNdxBrieftime() {
+	public TwoDimIndexIntXLocalDateTime<Duty> getDutyIndexByDepAirportNdxBrieftime() {
 		return dutyIndexByDepAirportNdxBrieftime;
 	}
-	public TwoDimIndexIntXLocalDateTime<DutyView> getHbArrDutyIndexByDepAirportNdxBrieftime() {
+	public TwoDimIndexIntXLocalDateTime<Duty> getHbArrDutyIndexByDepAirportNdxBrieftime() {
 		return hbArrDutyIndexByDepAirportNdxBrieftime;
 	}
 
@@ -269,11 +268,11 @@ public class PairOptimizationContext {
 
 		int secondNdxSize = 50 * 24;	//	In a one month period there is around flight legs of 50 days.
 
-		this.dutyIndexByLegNdx = new OneDimIndexInt<DutyView>(new DutyView[legs.size()][0]);
-		this.hbDepDutyIndexByLegNdx = new TwoDimIndexIntXInt<DutyView>(new DutyView[numOfBases][legs.size()][0]);
-		this.hbDepHbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<DutyView>(new DutyView[numOfBases][legs.size()][0]);
-		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
-		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<DutyView>(new DutyView[airports.size()][secondNdxSize][0]);
+		this.dutyIndexByLegNdx = new OneDimIndexInt<Duty>(new Duty[legs.size()][0]);
+		this.hbDepDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
+		this.hbDepHbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
+		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
+		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
 
 		/*
 		 * Choose first homebase brieftime for the index roots!
