@@ -20,9 +20,15 @@ public class LegsLoader implements Loader<Leg> {
 	private static Logger logger = Logger.getLogger(LegsLoader.class);
 
 	private String legsFileName = null;
+	private int numOfBases = 0;
 
 	public LegsLoader setLegsFileName(String legsFileName) {
 		this.legsFileName = legsFileName;
+		return this;
+	}
+
+	public LegsLoader setNumOfBases(int numOfBases) {
+		this.numOfBases = numOfBases;
 		return this;
 	}
 
@@ -37,7 +43,7 @@ public class LegsLoader implements Loader<Leg> {
 			 * Parse ssim.
 			 */
 			List<Leg> legs = new ArrayList<Leg>();
-			LegsParser legsParser = new LegsParser(legs, legsFile);
+			LegsParser legsParser = new LegsParser(legs, legsFile, this.numOfBases);
 			if (legsParser.parseTextFile() == 0) {
 				logger.info("Legs file processed successfully!");
 				logger.info(legs.size() + " number of legs extracted.");

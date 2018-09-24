@@ -22,6 +22,7 @@ public class SsimLoader implements Loader<Leg> {
 	private String ssimFileName = null;
 	private String acRotationFileName = null;
 	private String carryInFileName = null;
+	private int numOfBases = 0;
 
 	public SsimLoader setSsimFileName(String ssimFileName) {
 		this.ssimFileName = ssimFileName;
@@ -35,6 +36,11 @@ public class SsimLoader implements Loader<Leg> {
 
 	public SsimLoader setCarryInFileName(String carryInFileName) {
 		this.carryInFileName = carryInFileName;
+		return this;
+	}
+
+	public SsimLoader setNumOfBases(int numOfBases) {
+		this.numOfBases = numOfBases;
 		return this;
 	}
 
@@ -57,7 +63,7 @@ public class SsimLoader implements Loader<Leg> {
 					 * Parse ssim.
 					 */
 					List<Leg> legs = new ArrayList<Leg>();
-					SsimParser ssimParser = new SsimParser(legs, ssimFile);
+					SsimParser ssimParser = new SsimParser(legs, ssimFile, this.numOfBases);
 					if (ssimParser.parseTextFile() == 0) {
 						logger.info("Ssim file processed successfully!");
 						logger.info(legs.size() + " number of legs extracted.");

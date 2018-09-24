@@ -25,8 +25,11 @@ public class LegsParser extends TextFileReader<Leg> {
 																			Locale.ENGLISH)
 																		.withZone(ZoneOffset.UTC);
 
-	public LegsParser(List<Leg> list, File textFile) {
+	private int numOfBases = 0;
+
+	public LegsParser(List<Leg> list, File textFile, int numOfBases) {
 		super(list, textFile);
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -34,7 +37,7 @@ public class LegsParser extends TextFileReader<Leg> {
 
 		String[] st = s.split(",");
 
-		Leg leg = Leg.newInstance();
+		Leg leg = Leg.newInstance(this.numOfBases);
 
 		leg.setCarrier(st[0]);
 		leg.setFlightNo(Integer.valueOf(st[1]));

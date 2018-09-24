@@ -19,6 +19,7 @@ public interface DutyView extends View {
 	public LegView getFirstLeg();
 	public LegView getLastLeg();
 	public LegView getSecondToLastLeg();
+	public LegView getSecondLeg();
 	public AirportView getFirstDepAirport();
 	public AirportView getLastArrAirport();
 
@@ -57,8 +58,11 @@ public interface DutyView extends View {
 
 	public boolean isEr();
 	public boolean isInternational();
-	public int[] getLongestBlockTimesInMins();
+
+	public void setLongestBlockTimeInMins(int blockTime);
 	public int getLongestBlockTimeInMins();
+	public int removeLongestBlockTimeInMins();
+	public void removeAllLongestBlockTimeInMins();
 
 	public int getBriefDurationInMins(int hbNdx);
 	public LocalDateTime getBriefTime(int hbNdx);

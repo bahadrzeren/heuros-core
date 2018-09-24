@@ -44,7 +44,7 @@ public class SsimParseTest
     public void testSsimLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
-    	SsimParser ssimParser = new SsimParser(legs, null);
+    	SsimParser ssimParser = new SsimParser(legs, null, 2);
     	try {
 			ssimParser.parseLine(SsimParseTest.sampleSsimLine);
 		} catch (Exception e) {

@@ -51,6 +51,8 @@ public class Leg extends AbstractModel implements LegView {
 
 	private int blockTimeInMins = 0;
 
+	private LegHbSpec[] legHbSpecs = null;
+
 	private Leg() {
 	}
 
@@ -316,6 +318,32 @@ public class Leg extends AbstractModel implements LegView {
 		this.blockTimeInMins = blockTimeInMins;
 	}
 
+	public void setHasHbDepArrDutyPair(int hbNdx, boolean value) {
+		this.legHbSpecs[hbNdx].setHasHbDepArrDutyPair(value);
+	}
+	public void setHasHbDepDutyPair(int hbNdx, boolean value) {
+		this.legHbSpecs[hbNdx].setHasHbDepDutyPair(value);
+	}
+	public void setHasNonHbDutyPair(int hbNdx, boolean value) {
+		this.legHbSpecs[hbNdx].setHasNonHbDutyPair(value);
+	}
+	public void setHasHbArrDutyPair(int hbNdx, boolean value) {
+		this.legHbSpecs[hbNdx].setHasHbArrDutyPair(value);
+	}
+
+	public boolean hasHbDepArrDutyPair(int hbNdx) {
+		return this.legHbSpecs[hbNdx].isHasHbDepArrDutyPair();
+	}
+	public boolean hasHbDepDutyPair(int hbNdx) {
+		return this.legHbSpecs[hbNdx].isHasHbDepDutyPair();
+	}
+	public boolean hasNonHbDutyPair(int hbNdx) {
+		return this.legHbSpecs[hbNdx].isHasNonHbDutyPair();
+	}
+	public boolean hasHbArrDutyPair(int hbNdx) {
+		return this.legHbSpecs[hbNdx].isHasHbArrDutyPair();
+	}
+
 	public boolean hasAcChangeWith(LegView nl) {
 		return (!getAcType().equals(nl.getAcType())) || (getAcSequence() != nl.getAcSequence());
 	}
@@ -340,7 +368,11 @@ public class Leg extends AbstractModel implements LegView {
 					.toString();
 	}
 
-	public static Leg newInstance() {
-		return new Leg();
+	public static Leg newInstance(int numOfBases) {
+		Leg l = new Leg();
+		l.legHbSpecs = new LegHbSpec[numOfBases];
+		for (int i = 0; i < numOfBases; i++)
+			l.legHbSpecs[i] = new LegHbSpec();
+		return l;
 	}
 }

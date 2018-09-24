@@ -34,8 +34,11 @@ public class SsimParser extends TextFileReader<Leg> {
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(SsimParser.timePattern, Locale.ENGLISH)
 																.withZone(ZoneOffset.UTC);
 
-	public SsimParser(List<Leg> list, File textFile) {
+	private int numOfBases = 0;
+
+	public SsimParser(List<Leg> list, File textFile, int numOfBases) {
 		super(list, textFile);
+		this.numOfBases = numOfBases;
 	}
 
 	@Override
@@ -76,7 +79,7 @@ public class SsimParser extends TextFileReader<Leg> {
 									&& (days.substring(6, 7).equals("7"))));
 
 				if (add) {
-					Leg leg = Leg.newInstance();
+					Leg leg = Leg.newInstance(this.numOfBases);
 					leg.setSuffix(s.substring(1, 1).trim());
 					leg.setCarrier(s.substring(2, 5).trim());
 					leg.setFlightNo(Integer.parseInt(s.substring(5, 9).trim()));

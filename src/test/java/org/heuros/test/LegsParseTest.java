@@ -44,7 +44,7 @@ public class LegsParseTest
     public void testLegsLineParse()
     {
     	List<Leg> legs = new ArrayList<Leg>();
-    	LegsParser legsParser = new LegsParser(legs, null);
+    	LegsParser legsParser = new LegsParser(legs, null, 2);
     	try {
 			legsParser.parseLine(LegsParseTest.sampleLegsLine);
 		} catch (Exception e) {

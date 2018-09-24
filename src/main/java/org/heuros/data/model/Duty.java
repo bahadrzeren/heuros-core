@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.heuros.core.data.base.AbstractModel;
 
@@ -43,8 +44,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private boolean international = false;
 
-	private int[] longestBlockTimesInMins = new int[15];
-	private int longestBlockTimeInMins = 0;
+	private Stack<Integer> longestBlockTimesInMins = new Stack<Integer>();
 
 	private int totalNumOfIncludingDutiesOfTheSameLegs = 0;
 
@@ -61,6 +61,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private Duty() {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     public Object clone() throws CloneNotSupportedException {
         Duty d = (Duty) super.clone();
@@ -70,16 +71,16 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
             d.legs.add(this.legs.get(i));
         for (int i = 0; i < this.dutyHbSpecs.length; i++)
         	d.dutyHbSpecs[i] = (DutyHbSpec) this.dutyHbSpecs[i].clone();
-        d.longestBlockTimesInMins = this.longestBlockTimesInMins.clone();
+        d.longestBlockTimesInMins = (Stack<Integer>) this.longestBlockTimesInMins.clone();
         return d;
     }
 
 	public void appendFw(LegView leg) {
 		this.legs.add(leg);
-}
+	}
 	public void appendBw(LegView leg) {
 		this.legs.add(0, leg);
-}
+	}
 	public LegView removeLast() {
 		if (this.numOfLegs > 0)
 			return this.legs.remove(this.numOfLegs - 1);
@@ -106,6 +107,12 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public LegView getSecondToLastLeg() {
 		if (this.numOfLegs > 1)
 			return this.legs.get(this.numOfLegs - 2);
+		return null;		
+	}
+	@Override
+	public LegView getSecondLeg() {
+		if (this.numOfLegs > 1)
+			return this.legs.get(1);
 		return null;		
 	}
 	@Override
@@ -346,21 +353,24 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		this.international = international;
 	}
 
-	@Override
-	public int[] getLongestBlockTimesInMins() {
-		return longestBlockTimesInMins;
-	}
-	public void setLongestBlockTimesInMins(int[] longestBlockTimesInMins) {
-		this.longestBlockTimesInMins = longestBlockTimesInMins;
-	}
 
 	@Override
-	public int getLongestBlockTimeInMins() {
-		return longestBlockTimeInMins;
-	}
 	public void setLongestBlockTimeInMins(int longestBlockTimeInMins) {
-		this.longestBlockTimeInMins = longestBlockTimeInMins;
+		this.longestBlockTimesInMins.push(longestBlockTimeInMins);
 	}
+	@Override
+	public int getLongestBlockTimeInMins() {
+		return this.longestBlockTimesInMins.peek();
+	}
+	@Override
+	public int removeLongestBlockTimeInMins() {
+		return this.longestBlockTimesInMins.pop();
+	}
+	@Override
+	public void removeAllLongestBlockTimeInMins() {
+		this.longestBlockTimesInMins.clear();
+	}
+
 
 	@Override
 	public int getTotalNumOfIncludingDutiesOfTheSameLegs() {
@@ -532,8 +542,10 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		Duty d = new Duty();
 		d.setLegs(new ArrayList<LegView>());
 		d.setDutyHbSpecs(new DutyHbSpec[numOfBases]);
-		for (int i = 0; i < numOfBases; i++)
+		for (int i = 0; i < numOfBases; i++) {
 			d.getDutyHbSpecs()[i] = new DutyHbSpec();
+			d.getDutyHbSpecs()[i].setHbNdx(i);
+		}
 		return d;
 	}
 }

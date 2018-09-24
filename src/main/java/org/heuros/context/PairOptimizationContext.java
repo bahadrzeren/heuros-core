@@ -73,6 +73,7 @@ public class PairOptimizationContext {
 	 * Index class used to obtain duties that departs from a particular airport and time (hour).
 	 */
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
+	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime = null;
 	/**
 	 * Index class used to obtain hb arrival duties that departs from a particular airport and time (hour).
 	 */
@@ -88,6 +89,9 @@ public class PairOptimizationContext {
 	}
 	public TwoDimIndexIntXLocalDateTime<Duty> getDutyIndexByDepAirportNdxBrieftime() {
 		return dutyIndexByDepAirportNdxBrieftime;
+	}
+	public TwoDimIndexIntXLocalDateTime<Duty> getDutyIndexByArrAirportNdxNextBrieftime() {
+		return dutyIndexByArrAirportNdxNextBrieftime;
 	}
 	public TwoDimIndexIntXLocalDateTime<Duty> getHbArrDutyIndexByDepAirportNdxBrieftime() {
 		return hbArrDutyIndexByDepAirportNdxBrieftime;
@@ -272,16 +276,19 @@ public class PairOptimizationContext {
 		this.hbDepDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
 		this.hbDepHbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
 		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
+		this.dutyIndexByArrAirportNdxNextBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
 		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
 
 		/*
 		 * Choose first homebase brieftime for the index roots!
 		 */
 		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
+		this.dutyIndexByArrAirportNdxNextBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
 		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
 
 		duties.forEach((d) -> {
 			int depAirportNdx = d.getFirstDepAirport().getNdx();
+			int arrAirportNdx = d.getLastArrAirport().getNdx();
 			int depHbNdx = d.getFirstDepAirport().getHbNdx();
 			int arrHbNdx = d.getLastArrAirport().getHbNdx();
 			boolean hbDep = d.getFirstDepAirport().isAnyHb();
@@ -318,6 +325,7 @@ public class PairOptimizationContext {
 			 * Choose first homebase brieftime for the index roots!
 			 */
 			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
+			this.dutyIndexByArrAirportNdxNextBrieftime.add(arrAirportNdx, d.getNextBriefTime(0), d);
 			if (hbArr) {
 				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
 			}
