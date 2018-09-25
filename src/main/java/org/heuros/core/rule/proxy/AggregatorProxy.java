@@ -38,7 +38,7 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 
 	@Override
 	public C removeFirst(P p) {
-		return this.aggregatorImpl.removeLast(p);
+		return this.aggregatorImpl.removeFirst(p);
 	}
 
 	@Override

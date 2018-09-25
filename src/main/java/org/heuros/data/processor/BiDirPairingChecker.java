@@ -77,6 +77,11 @@ public class BiDirPairingChecker implements Callable<Boolean> {
 	}
 
 	private void setHasPairingFlag(Pair p) {
+if (!p.isComplete(this.hbNdx))
+logger.error("Pairing must be complete!");
+//if (p.getNumOfDuties() == 3)
+//logger.info("Pairing with 3 duties!");
+
 		for (int i = 0; i < p.getNumOfDuties(); i++) {
 			DutyView d = p.getDuties().get(i);
 			for (int j = 0; j < d.getNumOfLegs(); j++) {
@@ -101,118 +106,129 @@ public class BiDirPairingChecker implements Callable<Boolean> {
 
 		Pair p = Pair.newInstance(this.hbNdx);
 
-    	for (int li = 0; li < this.legs.size(); li++) {
+    	for (int li = 4007; li < this.legs.size(); li++) {
     		Leg l = this.legs.get(li);
 
-    		int pairingFound = 0;
+            if (l.isCover()) {
+            	int pairingFound = 0;
 
-    		Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
+if (l.getNdx() == 4007)
+System.out.println(pairingFound);
 
-    		if ((ds != null)
-    				&& (ds.length > 0)) {
+
+            	Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
+
+            	if ((ds != null)
+            			&& (ds.length > 0)) {
     			
-    			for (Duty d: ds) {
+            		for (Duty d: ds) {
 
-    				if (d.isValid(this.hbNdx)) {
-    					/*
-    					 * HB dep and arr.
-    					 */
-			    		if ((!l.hasHbDepArrDutyPair(this.hbNdx))
-			    				&& d.isHbDep(this.hbNdx)
-			    				&& d.isHbArr(this.hbNdx)) {
-			    			if ((pairingFound & 1) > 0)
-			    				logger.error("Pairing is already found before!");
-				    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
-					    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
-					    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
-					    			if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
-					    				if (p.isComplete(this.hbNdx)) {
-					    					/*
-					    					 * Set related leg flags!
-					    					 */
-					    					this.setHasPairingFlag(p);
-				    						pairingFound |= 1;
-					    				} else
-					    					logger.error("Pairing " + d + " must be complete!");
-					    			}
-					    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
-					    		}
-				    		}	    			
-			    		} else
+            			if (d.isValid(this.hbNdx)) {
+
+//if ((l.getNdx() == 1017) && (d.getNdx() == 7045))
+//System.out.println(pairingFound);
+
 	    					/*
-	    					 * HB dep only.
+	    					 * HB dep and arr.
 	    					 */
-				    		if ((!l.hasHbDepDutyPair(this.hbNdx))
+				    		if ((!l.hasHbDepArrDutyPair(this.hbNdx))
 				    				&& d.isHbDep(this.hbNdx)
-				    				&& d.isNonHbArr(this.hbNdx)) {
-				    			if ((pairingFound & (1 << 1)) > 0)
+				    				&& d.isHbArr(this.hbNdx)) {
+				    			if ((pairingFound & 1) > 0)
 				    				logger.error("Pairing is already found before!");
 					    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
 						    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
 						    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
-						    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-						    				if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false)) {
+						    			if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
+						    				if (p.isComplete(this.hbNdx)) {
 						    					/*
 						    					 * Set related leg flags!
 						    					 */
 						    					this.setHasPairingFlag(p);
-						    					pairingFound |= 1 << 1;
-						    				}
+					    						pairingFound |= 1;
+						    				} else
+						    					logger.error("Pairing " + d + " must be complete!");
 						    			}
 						    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 						    		}
-					    		}
-					    	} else
+					    		}	    			
+				    		} else
 		    					/*
-		    					 * Non HB dep and arr.
+		    					 * HB dep only.
 		    					 */
-					    		if ((!l.hasNonHbDutyPair(this.hbNdx))
-					    				&& d.isNonHbDep(this.hbNdx)
+					    		if ((!l.hasHbDepDutyPair(this.hbNdx))
+					    				&& d.isHbDep(this.hbNdx)
 					    				&& d.isNonHbArr(this.hbNdx)) {
-					    			if ((pairingFound & (1 << 2)) > 0)
+					    			if ((pairingFound & (1 << 1)) > 0)
 					    				logger.error("Pairing is already found before!");
-						    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
-						    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
-						    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-						    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false)) {
-						    					/*
-						    					 * Set related leg flags!
-						    					 */
-						    					this.setHasPairingFlag(p);
-						    					pairingFound |= 1 << 2;
-						    				}
-						    			}
-						    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
+						    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
+							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
+							    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
+							    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
+							    				if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false)) {
+							    					/*
+							    					 * Set related leg flags!
+							    					 */
+							    					pairingFound |= (1 << 1);
+							    				}
+							    			}
+							    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
+							    		}
 						    		}
 						    	} else
 			    					/*
-			    					 * HB arr only.
+			    					 * Non HB dep and arr.
 			    					 */
-						    		if ((!l.hasHbArrDutyPair(this.hbNdx))
+						    		if ((!l.hasNonHbDutyPair(this.hbNdx))
 						    				&& d.isNonHbDep(this.hbNdx)
-						    				&& d.isHbArr(this.hbNdx)) {
-						    			if ((pairingFound & (1 << 3)) > 0)
+						    				&& d.isNonHbArr(this.hbNdx)) {
+						    			if ((pairingFound & (1 << 2)) > 0)
 						    				logger.error("Pairing is already found before!");
 							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
 							    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 							    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-							    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true)) {
+							    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false)) {
 							    					/*
 							    					 * Set related leg flags!
 							    					 */
-							    					this.setHasPairingFlag(p);
-							    					pairingFound |= 1 << 3;
+							    					pairingFound |= (1 << 2);
 							    				}
 							    			}
 							    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
-							    		}						    			
-						    		}
-    				}
-    				if (pairingFound == 8)
-    					break;
+							    		}
+							    	} else
+				    					/*
+				    					 * HB arr only.
+				    					 */
+							    		if ((!l.hasHbArrDutyPair(this.hbNdx))
+							    				&& d.isNonHbDep(this.hbNdx)
+							    				&& d.isHbArr(this.hbNdx)) {
+							    			if ((pairingFound & (1 << 3)) > 0)
+							    				logger.error("Pairing is already found before!");
+								    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
+								    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
+								    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
+								    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true)) {
+								    					/*
+								    					 * Set related leg flags!
+								    					 */
+								    					pairingFound |= (1 << 3);
+								    				}
+								    			}
+								    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
+								    		}						    			
+							    		}
+	    				}
+
+//if ((l.getNdx() == 1017) && ((pairingFound & (1 << 2)) > 0))
+//System.out.println(pairingFound);
+
+            			if (pairingFound == 15)
+            				break;
+            		}
     			}
+        		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
 	    	}
-    		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
 		}
 
 		return true;
@@ -243,6 +259,7 @@ public class BiDirPairingChecker implements Callable<Boolean> {
 				    				if (nd.isHbArr(this.hbNdx)) {
 				    					if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
 					    					pairingFound = true;
+					    					this.setHasPairingFlag(p);
 					    				}
 					    			} else
 					    				if (nd.isNonHbArr(this.hbNdx)
@@ -311,6 +328,7 @@ public class BiDirPairingChecker implements Callable<Boolean> {
 				    				if (pd.isHbDep(this.hbNdx)) {
 				    					if (this.pairRuleContext.getFinalCheckerProxy().acceptable(this.hbNdx, p)) {
 					    					pairingFound = true;
+					    					this.setHasPairingFlag(p);
 					    				}
 					    			} else
 					    				if (pd.isNonHbDep(this.hbNdx)
@@ -329,7 +347,7 @@ public class BiDirPairingChecker implements Callable<Boolean> {
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, false))
 					    						pairingFound = true;
-					    				}									
+					    				}
 								}
 
 								pairRuleContext.getAggregatorProxy().removeFirst(p);
