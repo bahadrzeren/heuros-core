@@ -241,6 +241,10 @@ public class PairOptimizationContext {
 			Leg pl = ls.get(i);
 			for (int j = i + 1; j < ls.size(); j++) {
 				Leg nl = ls.get(j);
+
+//if ((pl.getNdx() == 900) && (nl.getNdx() == 1079))
+//	System.out.println();
+
 				if (pl.getArrAirport().getNdx() == nl.getDepAirport().getNdx()) {
 					int connTime = (int) ChronoUnit.MINUTES.between(pl.getSibt(), nl.getSobt());
 					if (connTime > maxLegConnectionTimeInMins)

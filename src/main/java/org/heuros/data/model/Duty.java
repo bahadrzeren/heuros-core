@@ -532,6 +532,14 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 
 	@Override
+	public boolean hasPairing(int hbNdx) {
+		return this.dutyHbSpecs[hbNdx].isHasPair();
+	}
+	public void setHasPairing(int hbNdx, boolean value) {
+		this.dutyHbSpecs[hbNdx].setHasPair(value);
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		this.legs.forEach((l) -> sb.append(l).append("\n"));

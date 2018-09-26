@@ -17,73 +17,80 @@ import org.heuros.data.model.Pair;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.PairRuleContext;
 
-public class BiDirPairingChecker implements Callable<Boolean> {
+public class BiDirLegPairingChecker implements Callable<Boolean> {
 
-	private static Logger logger = Logger.getLogger(BiDirPairingChecker.class);
+	private static Logger logger = Logger.getLogger(BiDirLegPairingChecker.class);
 
 	private int hbNdx = -1;
 
-	public BiDirPairingChecker(int hbNdx) {
+	public BiDirLegPairingChecker(int hbNdx) {
 		this.hbNdx = hbNdx;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
 	private int maxPairingLengthInHours = 0;
 	private List<Leg> legs = null;
+	private List<Duty> duties = null;
 	private DutyRuleContext dutyRuleContext = null;
 	private PairRuleContext pairRuleContext = null;
 	private OneDimIndexInt<Duty> dutyIndexByLegNdx = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
 
-	public BiDirPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
+	public BiDirLegPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
 		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
 		return this;
 	}
 
-	public BiDirPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
+	public BiDirLegPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
 		this.maxPairingLengthInHours = maxPairingLengthInHours;
 		return this;
 	}
 
-	public BiDirPairingChecker setLegRepository(DataRepository<Leg> legRepository) {
+	public BiDirLegPairingChecker setLegRepository(DataRepository<Leg> legRepository) {
 		this.legs = legRepository.getModels();
 		return this;
 	}
 
-	public BiDirPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
+	public BiDirLegPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
+		this.duties = dutyRepository.getModels();
+		return this;
+	}
+
+	public BiDirLegPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
 		return this;
 	}
 
-	public BiDirPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
+	public BiDirLegPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
 		this.pairRuleContext = pairRuleContext;
 		return this;
 	}
 
-	public BiDirPairingChecker setDutyIndexByLegNdx(OneDimIndexInt<Duty> dutyIndexByLegNdx) {
+	public BiDirLegPairingChecker setDutyIndexByLegNdx(OneDimIndexInt<Duty> dutyIndexByLegNdx) {
 		this.dutyIndexByLegNdx = dutyIndexByLegNdx;
 		return this;
 	}
 
-	public BiDirPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
+	public BiDirLegPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
 		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
 		return this;
 	}
 
-	public BiDirPairingChecker setDutyIndexByArrAirportNdxNextBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
+	public BiDirLegPairingChecker setDutyIndexByArrAirportNdxNextBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
 		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
 		return this;
 	}
 
 	private void setHasPairingFlag(Pair p) {
-if (!p.isComplete(this.hbNdx))
-logger.error("Pairing must be complete!");
-//if (p.getNumOfDuties() == 3)
-//logger.info("Pairing with 3 duties!");
-
+		if (!p.isComplete(this.hbNdx))
+			logger.error("Pairing must be complete!");
+		int apNdx = p.getFirstDepAirport().getNdx();
 		for (int i = 0; i < p.getNumOfDuties(); i++) {
 			DutyView d = p.getDuties().get(i);
+			if (apNdx != d.getFirstDepAirport().getNdx())
+				logger.error("Invalid spatial connection exception!");
+			apNdx = d.getLastArrAirport().getNdx();
 			for (int j = 0; j < d.getNumOfLegs(); j++) {
 				LegView lv = d.getLegs().get(j);
 				Leg l = this.legs.get(lv.getNdx());
@@ -104,26 +111,32 @@ logger.error("Pairing must be complete!");
 	@Override
 	public Boolean call() {
 
+//		boolean[] dutiesChecked = new boolean[this.duties.size()];
+
 		Pair p = Pair.newInstance(this.hbNdx);
 
-    	for (int li = 4007; li < this.legs.size(); li++) {
+    	for (int li = 0; li < this.legs.size(); li++) {
     		Leg l = this.legs.get(li);
 
             if (l.isCover()) {
             	int pairingFound = 0;
 
-if (l.getNdx() == 4007)
-System.out.println(pairingFound);
-
+//if (l.getNdx() == 197)
+//System.out.println(pairingFound);
 
             	Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
 
             	if ((ds != null)
             			&& (ds.length > 0)) {
-    			
+
             		for (Duty d: ds) {
 
-            			if (d.isValid(this.hbNdx)) {
+//if (d.getNdx() == 445)
+//System.out.println(pairingFound);
+
+            			if (d.isValid(this.hbNdx)
+//            					&& (!dutiesChecked[d.getNdx()])
+            					) {
 
 //if ((l.getNdx() == 1017) && (d.getNdx() == 7045))
 //System.out.println(pairingFound);
@@ -165,12 +178,24 @@ System.out.println(pairingFound);
 							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
 							    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
 							    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-							    				if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false)) {
+							    				if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 1)) {
 							    					/*
 							    					 * Set related leg flags!
 							    					 */
 							    					pairingFound |= (1 << 1);
-							    				}
+							    				} else
+							    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 2)) {
+								    					/*
+								    					 * Set related leg flags!
+								    					 */
+							    						pairingFound |= (1 << 1);
+								    				} else
+								    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 3)) {
+									    					/*
+									    					 * Set related leg flags!
+									    					 */
+								    						pairingFound |= (1 << 1);
+								    					}
 							    			}
 							    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 							    		}
@@ -187,12 +212,18 @@ System.out.println(pairingFound);
 							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
 							    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 							    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-							    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false)) {
+							    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false, 2)) {
 							    					/*
 							    					 * Set related leg flags!
 							    					 */
 							    					pairingFound |= (1 << 2);
-							    				}
+							    				} else
+								    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false, 3)) {
+								    					/*
+								    					 * Set related leg flags!
+								    					 */
+								    					pairingFound |= (1 << 2);
+								    				}
 							    			}
 							    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
 							    		}
@@ -208,16 +239,29 @@ System.out.println(pairingFound);
 								    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
 								    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 								    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-								    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true)) {
+								    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 1)) {
 								    					/*
 								    					 * Set related leg flags!
 								    					 */
 								    					pairingFound |= (1 << 3);
-								    				}
+								    				} else
+									    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 2)) {
+									    					/*
+									    					 * Set related leg flags!
+									    					 */
+									    					pairingFound |= (1 << 3);
+									    				} else
+										    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 3)) {
+										    					/*
+										    					 * Set related leg flags!
+										    					 */
+										    					pairingFound |= (1 << 3);
+										    				}
 								    			}
 								    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
 								    		}						    			
 							    		}
+//				    		dutiesChecked[d.getNdx()] = true;
 	    				}
 
 //if ((l.getNdx() == 1017) && ((pairingFound & (1 << 2)) > 0))
@@ -234,7 +278,12 @@ System.out.println(pairingFound);
 		return true;
 	}
 
-	private boolean examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr) {
+	private boolean examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
+
+		if (hbArr)
+			logger.error("Invalid search direction!");
+		if (dept < 1)
+			logger.error("Lack of dept!");
 
     	boolean pairingFound = false;
 
@@ -250,7 +299,11 @@ System.out.println(pairingFound);
 			if ((nextDuties != null)
 					&& (nextDuties.length > 0)) {
 				for (Duty nd: nextDuties) {
-					if (nd.isValid(this.hbNdx)) {
+					if (nd.isValid(this.hbNdx)
+							&& (((dept == 1) && nd.isHbArr(this.hbNdx))
+									|| ((dept == 2) && hbDep && nd.isNonHbArr(this.hbNdx))
+									|| ((dept == 2) && (!hbDep) && nd.isHbArr(this.hbNdx))
+									|| (dept > 2))) {
 						if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, ld, nd)) {
 							if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, nd, true)) {
 								pairRuleContext.getAggregatorProxy().appendFw(p, nd);
@@ -264,19 +317,19 @@ System.out.println(pairingFound);
 					    			} else
 					    				if (nd.isNonHbArr(this.hbNdx)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), true, false))
+					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), true, false, dept - 1))
 					    						pairingFound = true;
 					    				}
 								} else {
 				    				if (nd.isHbArr(this.hbNdx)) {
 				    					if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-				    						if (this.examinePairBW(p, fd, nd, fl, nd.getLastLeg(), false, true))
+				    						if (this.examinePairBW(p, fd, nd, fl, nd.getLastLeg(), false, true, dept - 1))
 				    							pairingFound = true;
 					    				}
 					    			} else
 					    				if (nd.isNonHbArr(this.hbNdx)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), false, false))
+					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), false, false, dept - 1))
 					    						pairingFound = true;
 					    				}									
 								}
@@ -303,9 +356,14 @@ System.out.println(pairingFound);
 		return pairingFound;
 	}
 
-	private boolean examinePairBW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr) {
+	private boolean examinePairBW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
 
-    	boolean pairingFound = false;
+		if (hbDep)
+			logger.error("Invalid search direction!");
+		if (dept < 1)
+			logger.error("Lack of dept!");
+
+		boolean pairingFound = false;
 
 		Duty[] prevDuties = null;
 
@@ -319,7 +377,11 @@ System.out.println(pairingFound);
 			if ((prevDuties != null)
 					&& (prevDuties.length > 0)) {
 				for (Duty pd: prevDuties) {
-					if (pd.isValid(this.hbNdx)) {
+					if (pd.isValid(this.hbNdx)
+							&& (((dept == 1) && pd.isHbDep(this.hbNdx))
+									|| ((dept == 2) && hbArr && pd.isNonHbDep(this.hbNdx))
+									|| ((dept == 2) && (!hbArr) && pd.isHbDep(this.hbNdx))
+									|| (dept > 2))) {
 						if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, fd)) {
 							if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, pd, false)) {
 								pairRuleContext.getAggregatorProxy().appendBw(p, pd);
@@ -333,19 +395,19 @@ System.out.println(pairingFound);
 					    			} else
 					    				if (pd.isNonHbDep(this.hbNdx)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, true))
+					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, true, dept - 1))
 					    						pairingFound = true;
 					    				}
 								} else {
 				    				if (pd.isHbDep(this.hbNdx)) {
 				    					if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-				    						if (this.examinePairFW(p, pd, ld, pd.getFirstLeg(), ll, true, false))
+				    						if (this.examinePairFW(p, pd, ld, pd.getFirstLeg(), ll, true, false, dept - 1))
 				    							pairingFound = true;
 					    				}
 					    			} else
 					    				if (pd.isNonHbDep(this.hbNdx)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, false))
+					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, false, dept - 1))
 					    						pairingFound = true;
 					    				}
 								}

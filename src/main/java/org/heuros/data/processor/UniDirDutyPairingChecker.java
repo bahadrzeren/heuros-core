@@ -14,13 +14,13 @@ import org.heuros.data.model.Pair;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.PairRuleContext;
 
-public class UniDirPairingChecker implements Callable<Boolean> {
+public class UniDirDutyPairingChecker implements Callable<Boolean> {
 
-	private static Logger logger = Logger.getLogger(UniDirPairingChecker.class);
+	private static Logger logger = Logger.getLogger(UniDirDutyPairingChecker.class);
 
 	private int hbNdx = -1;
 
-	public UniDirPairingChecker(int hbNdx) {
+	public UniDirDutyPairingChecker(int hbNdx) {
 		this.hbNdx = hbNdx;
 	}
 
@@ -31,32 +31,32 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 	private PairRuleContext pairRuleContext = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 
-	public UniDirPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
+	public UniDirDutyPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
 		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
 		return this;
 	}
 
-	public UniDirPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
+	public UniDirDutyPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
 		this.maxPairingLengthInHours = maxPairingLengthInHours;
 		return this;
 	}
 
-	public UniDirPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
+	public UniDirDutyPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
 		this.duties = dutyRepository.getModels();
 		return this;
 	}
 
-	public UniDirPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
+	public UniDirDutyPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
 		return this;
 	}
 
-	public UniDirPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
+	public UniDirDutyPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
 		this.pairRuleContext = pairRuleContext;
 		return this;
 	}
 
-	public UniDirPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
+	public UniDirDutyPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
 		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
 		return this;
 	}
@@ -85,7 +85,7 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 	    			}
 	    			if (d.isNonHbArr(this.hbNdx)
 	    					&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-	    				numOfPairingsPossible += this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg());
+	    				numOfPairingsPossible += this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), 2);
 	    			}
 	    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 	    		}
@@ -99,7 +99,7 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 		return true;
 	}
 
-	private int examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll) {
+	private int examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, int dept) {
 
     	int numOfPairingsPossible = 0;
 
@@ -115,7 +115,10 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 			if ((nextDuties != null)
 					&& (nextDuties.length > 0)) {
 				for (Duty nd: nextDuties) {
-					if (nd.isValid(this.hbNdx)) {
+					if (nd.isValid(this.hbNdx)
+							&& (((dept == 1) && nd.isHbArr(this.hbNdx))
+									|| ((dept == 2) && nd.isNonHbArr(this.hbNdx))
+									|| (dept > 2))) {
 						if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, ld, nd)) {
 							if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, nd, true)) {
 								pairRuleContext.getAggregatorProxy().appendFw(p, nd);
@@ -131,7 +134,7 @@ public class UniDirPairingChecker implements Callable<Boolean> {
 
 				    			if (nd.isNonHbArr(this.hbNdx)
 				    					&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
-				    				numOfPairingsPossible += this.examinePairFW(p, fd, nd, fl, nd.getLastLeg());
+				    				numOfPairingsPossible += this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), dept - 1);
 				    			}
 
 								pairRuleContext.getAggregatorProxy().removeLast(p);

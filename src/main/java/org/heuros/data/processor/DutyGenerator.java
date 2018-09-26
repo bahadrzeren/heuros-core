@@ -67,6 +67,9 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 			Leg l = this.legs.get(i);
 
 			if (l.isCover() || l.isDeadheadable()) {
+//if (l.getNdx() == 900)
+//System.out.println();
+
 				/*
 				 * Duty starter check does not need any HB control therefore -1 is used.
 				 */

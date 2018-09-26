@@ -24,6 +24,8 @@ public class DutyHbSpec implements Cloneable {
 
 	private boolean valid = false;
 
+	private boolean hasPair = false;
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
@@ -142,5 +144,11 @@ public class DutyHbSpec implements Cloneable {
 	}
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+	public boolean isHasPair() {
+		return hasPair;
+	}
+	public void setHasPair(boolean hasPair) {
+		this.hasPair = hasPair;
 	}
 }
