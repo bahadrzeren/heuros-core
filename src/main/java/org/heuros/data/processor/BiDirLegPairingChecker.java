@@ -22,9 +22,11 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 	private static Logger logger = Logger.getLogger(BiDirLegPairingChecker.class);
 
 	private int hbNdx = -1;
+	private LocalDateTime coverPeriodEndExc = null;
 
-	public BiDirLegPairingChecker(int hbNdx) {
+	public BiDirLegPairingChecker(int hbNdx, LocalDateTime coverPeriodEndExc) {
 		this.hbNdx = hbNdx;
+		this.coverPeriodEndExc = coverPeriodEndExc;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
@@ -111,17 +113,26 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 	@Override
 	public Boolean call() {
 
-//		boolean[] dutiesChecked = new boolean[this.duties.size()];
+		boolean[] dutiesChecked = new boolean[this.duties.size()];
 
 		Pair p = Pair.newInstance(this.hbNdx);
 
-    	for (int li = 0; li < this.legs.size(); li++) {
+		for (int li = 0; li < this.legs.size(); li++) {
     		Leg l = this.legs.get(li);
 
-            if (l.isCover()) {
-            	int pairingFound = 0;
+            if (l.isCover()
+            		&& l.getSobt().isBefore(coverPeriodEndExc)) {
+//            	int pairingFound = 0;
+//            	if (l.hasHbDepArrDutyPair(this.hbNdx))
+//            		pairingFound += 1;
+//            	if (l.hasHbDepDutyPair(this.hbNdx))
+//            		pairingFound += 2;
+//            	if (l.hasNonHbDutyPair(this.hbNdx))
+//            		pairingFound += 4;
+//            	if (l.hasHbArrDutyPair(this.hbNdx))
+//            		pairingFound += 8;
 
-//if (l.getNdx() == 197)
+//if (l.getNdx() == 40745)
 //System.out.println(pairingFound);
 
             	Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
@@ -135,8 +146,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 //System.out.println(pairingFound);
 
             			if (d.isValid(this.hbNdx)
-//            					&& (!dutiesChecked[d.getNdx()])
-            					) {
+            					&& (!dutiesChecked[d.getNdx()])) {
 
 //if ((l.getNdx() == 1017) && (d.getNdx() == 7045))
 //System.out.println(pairingFound);
@@ -147,8 +157,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 				    		if ((!l.hasHbDepArrDutyPair(this.hbNdx))
 				    				&& d.isHbDep(this.hbNdx)
 				    				&& d.isHbArr(this.hbNdx)) {
-				    			if ((pairingFound & 1) > 0)
-				    				logger.error("Pairing is already found before!");
+//				    			if ((pairingFound & 1) > 0)
+//				    				logger.error("Pairing is already found before!");
 					    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
 						    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
 						    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
@@ -158,13 +168,14 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 						    					 * Set related leg flags!
 						    					 */
 						    					this.setHasPairingFlag(p);
-					    						pairingFound |= 1;
+//					    						pairingFound |= 1;
 						    				} else
 						    					logger.error("Pairing " + d + " must be complete!");
 						    			}
 						    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 						    		}
-					    		}	    			
+					    		}
+					    		dutiesChecked[d.getNdx()] = true;
 				    		} else
 		    					/*
 		    					 * HB dep only.
@@ -172,8 +183,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 					    		if ((!l.hasHbDepDutyPair(this.hbNdx))
 					    				&& d.isHbDep(this.hbNdx)
 					    				&& d.isNonHbArr(this.hbNdx)) {
-					    			if ((pairingFound & (1 << 1)) > 0)
-					    				logger.error("Pairing is already found before!");
+//					    			if ((pairingFound & (1 << 1)) > 0)
+//					    				logger.error("Pairing is already found before!");
 						    		if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, d)) {
 							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, true)) {
 							    			this.pairRuleContext.getAggregatorProxy().appendFw(p, d);
@@ -182,24 +193,25 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 							    					/*
 							    					 * Set related leg flags!
 							    					 */
-							    					pairingFound |= (1 << 1);
+//							    					pairingFound |= (1 << 1);
 							    				} else
 							    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 2)) {
 								    					/*
 								    					 * Set related leg flags!
 								    					 */
-							    						pairingFound |= (1 << 1);
+//							    						pairingFound |= (1 << 1);
 								    				} else
 								    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 3)) {
 									    					/*
 									    					 * Set related leg flags!
 									    					 */
-								    						pairingFound |= (1 << 1);
+//								    						pairingFound |= (1 << 1);
 								    					}
 							    			}
 							    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 							    		}
 						    		}
+						    		dutiesChecked[d.getNdx()] = true;
 						    	} else
 			    					/*
 			    					 * Non HB dep and arr.
@@ -207,8 +219,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 						    		if ((!l.hasNonHbDutyPair(this.hbNdx))
 						    				&& d.isNonHbDep(this.hbNdx)
 						    				&& d.isNonHbArr(this.hbNdx)) {
-						    			if ((pairingFound & (1 << 2)) > 0)
-						    				logger.error("Pairing is already found before!");
+//						    			if ((pairingFound & (1 << 2)) > 0)
+//						    				logger.error("Pairing is already found before!");
 							    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
 							    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 							    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
@@ -216,17 +228,18 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 							    					/*
 							    					 * Set related leg flags!
 							    					 */
-							    					pairingFound |= (1 << 2);
+//							    					pairingFound |= (1 << 2);
 							    				} else
 								    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false, 3)) {
 								    					/*
 								    					 * Set related leg flags!
 								    					 */
-								    					pairingFound |= (1 << 2);
+//								    					pairingFound |= (1 << 2);
 								    				}
 							    			}
 							    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
 							    		}
+							    		dutiesChecked[d.getNdx()] = true;
 							    	} else
 				    					/*
 				    					 * HB arr only.
@@ -234,8 +247,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 							    		if ((!l.hasHbArrDutyPair(this.hbNdx))
 							    				&& d.isNonHbDep(this.hbNdx)
 							    				&& d.isHbArr(this.hbNdx)) {
-							    			if ((pairingFound & (1 << 3)) > 0)
-							    				logger.error("Pairing is already found before!");
+//							    			if ((pairingFound & (1 << 3)) > 0)
+//							    				logger.error("Pairing is already found before!");
 								    		if (this.pairRuleContext.getAppendabilityCheckerProxy().isAppendable(this.hbNdx, p, d, false)) {
 								    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 								    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
@@ -243,32 +256,32 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 								    					/*
 								    					 * Set related leg flags!
 								    					 */
-								    					pairingFound |= (1 << 3);
+//								    					pairingFound |= (1 << 3);
 								    				} else
 									    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 2)) {
 									    					/*
 									    					 * Set related leg flags!
 									    					 */
-									    					pairingFound |= (1 << 3);
+//									    					pairingFound |= (1 << 3);
 									    				} else
 										    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 3)) {
 										    					/*
 										    					 * Set related leg flags!
 										    					 */
-										    					pairingFound |= (1 << 3);
+//										    					pairingFound |= (1 << 3);
 										    				}
 								    			}
 								    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
-								    		}						    			
+								    		}
+								    		dutiesChecked[d.getNdx()] = true;
 							    		}
-//				    		dutiesChecked[d.getNdx()] = true;
 	    				}
 
 //if ((l.getNdx() == 1017) && ((pairingFound & (1 << 2)) > 0))
 //System.out.println(pairingFound);
 
-            			if (pairingFound == 15)
-            				break;
+//            			if (pairingFound == 15)
+//            				break;
             		}
     			}
         		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));

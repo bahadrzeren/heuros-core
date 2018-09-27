@@ -20,9 +20,11 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 	private static Logger logger = Logger.getLogger(BiDirDutyPairingChecker.class);
 
 	private int hbNdx = -1;
+	private LocalDateTime dutyProcessPeriodEndExc = null;
 
-	public BiDirDutyPairingChecker(int hbNdx) {
+	public BiDirDutyPairingChecker(int hbNdx, LocalDateTime dutyProcessPeriodEndExc) {
 		this.hbNdx = hbNdx;
+		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
@@ -105,7 +107,8 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
     		Duty d = this.duties.get(di);
 
     		if (d.isValid(this.hbNdx)
-    				&& (!d.hasPairing(this.hbNdx))) {
+    				&& (!d.hasPairing(this.hbNdx))
+    				&& d.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)) {
 				/*
 				 * HB dep and arr.
 				 */
@@ -139,8 +142,8 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 				    				if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 1)) {
 				    				} else
 				    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 2)) {
-//								    				} else
-//								    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 3)) {
+					    				} else
+					    					if (this.examinePairFW(p, d, d, d.getFirstLeg(), d.getLastLeg(), true, false, 3)) {
 					    					}
 				    			}
 				    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
@@ -156,7 +159,9 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 				    			this.pairRuleContext.getAggregatorProxy().appendBw(p, d);
 				    			if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 				    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false, 2)) {
-				    				}
+				    				} else
+					    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, false, 3)) {
+					    				}
 				    			}
 				    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
 				    		}
@@ -172,8 +177,8 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 					    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 1)) {
 					    				} else
 						    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 2)) {
-//									    				} else
-//										    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 3)) {
+						    				} else
+							    				if (this.examinePairBW(p, d, d, d.getFirstLeg(), d.getLastLeg(), false, true, 3)) {
 							    				}
 					    			}
 					    			this.pairRuleContext.getAggregatorProxy().removeFirst(p);
