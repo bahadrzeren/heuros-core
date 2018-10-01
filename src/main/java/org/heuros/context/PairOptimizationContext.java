@@ -62,30 +62,41 @@ public class PairOptimizationContext {
 	 */
 	private OneDimIndexInt<Duty> dutyIndexByLegNdx = null;
 	/**
+	 * Index class used to obtain hb departed and hb arrival duties that include a particular leg.
+	 */
+	private TwoDimIndexIntXInt<Duty> hbDepArrDutyIndexByLegNdx = null;
+	/**
 	 * Index class used to obtain hb departed duties that include a particular leg.
 	 */
 	private TwoDimIndexIntXInt<Duty> hbDepDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<Duty> nonHbDutyIndexByLegNdx = null;
 	/**
-	 * Index class used to obtain hb departed and hb arrival duties that include a particular leg.
+	 * Index class used to obtain hb departed duties that include a particular leg.
 	 */
-	private TwoDimIndexIntXInt<Duty> hbDepHbArrDutyIndexByLegNdx = null;
+	private TwoDimIndexIntXInt<Duty> hbArrDutyIndexByLegNdx = null;
 	/**
 	 * Index class used to obtain duties that departs from a particular airport and time (hour).
 	 */
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime = null;
-	/**
-	 * Index class used to obtain hb arrival duties that departs from a particular airport and time (hour).
-	 */
-	private TwoDimIndexIntXLocalDateTime<Duty> hbArrDutyIndexByDepAirportNdxBrieftime = null;
+//	/**
+//	 * Index class used to obtain hb arrival duties that departs from a particular airport and time (hour).
+//	 */
+//	private TwoDimIndexIntXLocalDateTime<Duty> hbArrDutyIndexByDepAirportNdxBrieftime = null;
 	public OneDimIndexInt<Duty> getDutyIndexByLegNdx() {
 		return dutyIndexByLegNdx;
+	}
+	public TwoDimIndexIntXInt<Duty> getHbDepArrDutyIndexByLegNdx() {
+		return hbDepArrDutyIndexByLegNdx;
 	}
 	public TwoDimIndexIntXInt<Duty> getHbDepDutyIndexByLegNdx() {
 		return hbDepDutyIndexByLegNdx;
 	}
-	public TwoDimIndexIntXInt<Duty> getHbDepHbArrDutyIndexByLegNdx() {
-		return hbDepHbArrDutyIndexByLegNdx;
+	public TwoDimIndexIntXInt<Duty> getNonHbDutyIndexByLegNdx() {
+		return nonHbDutyIndexByLegNdx;
+	}
+	public TwoDimIndexIntXInt<Duty> getHbArrDutyIndexByLegNdx() {
+		return hbArrDutyIndexByLegNdx;
 	}
 	public TwoDimIndexIntXLocalDateTime<Duty> getDutyIndexByDepAirportNdxBrieftime() {
 		return dutyIndexByDepAirportNdxBrieftime;
@@ -93,9 +104,9 @@ public class PairOptimizationContext {
 	public TwoDimIndexIntXLocalDateTime<Duty> getDutyIndexByArrAirportNdxNextBrieftime() {
 		return dutyIndexByArrAirportNdxNextBrieftime;
 	}
-	public TwoDimIndexIntXLocalDateTime<Duty> getHbArrDutyIndexByDepAirportNdxBrieftime() {
-		return hbArrDutyIndexByDepAirportNdxBrieftime;
-	}
+//	public TwoDimIndexIntXLocalDateTime<Duty> getHbArrDutyIndexByDepAirportNdxBrieftime() {
+//		return hbArrDutyIndexByDepAirportNdxBrieftime;
+//	}
 
 	/**
 	 * Pair model related classes.
@@ -274,47 +285,58 @@ public class PairOptimizationContext {
 		List<Leg> legs = this.legRepository.getModels();
 		List<Airport> airports = this.airportRepository.getModels();
 
+		/*
+		 * TODO Single base assumption!!!
+		 */
+		int hbNdx = 0;
+
 		int secondNdxSize = 50 * 24;	//	In a one month period there is around flight legs of 50 days.
 
 		this.dutyIndexByLegNdx = new OneDimIndexInt<Duty>(new Duty[legs.size()][0]);
+		this.hbDepArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
 		this.hbDepDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
-		this.hbDepHbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
+		this.nonHbDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
+		this.hbArrDutyIndexByLegNdx = new TwoDimIndexIntXInt<Duty>(new Duty[numOfBases][legs.size()][0]);
 		this.dutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
 		this.dutyIndexByArrAirportNdxNextBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
-		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
+//		this.hbArrDutyIndexByDepAirportNdxBrieftime = new TwoDimIndexIntXLocalDateTime<Duty>(new Duty[airports.size()][secondNdxSize][0]);
 
 		/*
 		 * Choose first homebase brieftime for the index roots!
 		 */
-		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
-		this.dutyIndexByArrAirportNdxNextBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
-		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(0).minusHours(1));
+		this.dutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(hbNdx).minusHours(1));
+		this.dutyIndexByArrAirportNdxNextBrieftime.setRootNdxD(duties.get(0).getBriefTime(hbNdx).minusHours(1));
+//		this.hbArrDutyIndexByDepAirportNdxBrieftime.setRootNdxD(duties.get(0).getBriefTime(hbNdx).minusHours(1));
 
 		duties.forEach((d) -> {
 			int depAirportNdx = d.getFirstDepAirport().getNdx();
 			int arrAirportNdx = d.getLastArrAirport().getNdx();
 			int depHbNdx = d.getFirstDepAirport().getHbNdx();
 			int arrHbNdx = d.getLastArrAirport().getHbNdx();
-			boolean hbDep = d.getFirstDepAirport().isAnyHb();
-			boolean hbArr = d.getLastArrAirport().isAnyHb();
+//			boolean hbDep = d.getFirstDepAirport().isAnyHb();
+//			boolean hbArr = d.getLastArrAirport().isAnyHb();
 			d.getLegs().forEach((l) -> {
 				Leg leg = (Leg) l;
 				leg.incNumOfDutiesIncludes();
-				if (hbDep)
-					leg.incNumOfDutiesIncludesHbDep();
-				else
-					leg.incNumOfDutiesIncludesNonHbDep();
-				if (hbArr)
-					leg.incNumOfDutiesIncludesHbArr();
-				else
-					leg.incNumOfDutiesIncludesNonHbArr();
 				this.dutyIndexByLegNdx.add(leg.getNdx(), d);
-				if (hbDep) {
-					this.hbDepDutyIndexByLegNdx.add(depHbNdx, leg.getNdx(), d);
-					if (hbArr && (depHbNdx == arrHbNdx)) {
-						this.hbDepHbArrDutyIndexByLegNdx.add(arrHbNdx, leg.getNdx(), d);
+//				for (int hbNdx = 0; hbNdx < numOfBases; hbNdx++) {
+					if (d.getFirstDepAirport().isHb(hbNdx)) {
+						leg.incNumOfDutiesIncludesHbDep(hbNdx);
+						this.hbDepDutyIndexByLegNdx.add(hbNdx, leg.getNdx(), d);
+						if (d.getLastArrAirport().isHb(hbNdx) && (depHbNdx == arrHbNdx)) {
+							this.hbDepArrDutyIndexByLegNdx.add(hbNdx, leg.getNdx(), d);
+						}
+					} else {
+						leg.incNumOfDutiesIncludesNonHbDep(hbNdx);
+						if (d.getLastArrAirport().isNonHb(hbNdx))
+							this.nonHbDutyIndexByLegNdx.add(hbNdx, leg.getNdx(), d);
 					}
-				}
+					if (d.getLastArrAirport().isHb(hbNdx)) {
+						leg.incNumOfDutiesIncludesHbArr(hbNdx);
+						this.hbArrDutyIndexByLegNdx.add(hbNdx, leg.getNdx(), d);
+					} else
+						leg.incNumOfDutiesIncludesNonHbArr(hbNdx);
+//				}
 			});
 
 			/*
@@ -328,11 +350,11 @@ public class PairOptimizationContext {
 			/*
 			 * Choose first homebase brieftime for the index roots!
 			 */
-			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
-			this.dutyIndexByArrAirportNdxNextBrieftime.add(arrAirportNdx, d.getNextBriefTime(0), d);
-			if (hbArr) {
-				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(0), d);
-			}
+			this.dutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(hbNdx), d);
+			this.dutyIndexByArrAirportNdxNextBrieftime.add(arrAirportNdx, d.getNextBriefTime(hbNdx), d);
+//			if (hbArr) {
+//				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(hbNdx), d);
+//			}
 		}); 
 
 		PairOptimizationContext.logger.info("All duties are registered and indexed!");

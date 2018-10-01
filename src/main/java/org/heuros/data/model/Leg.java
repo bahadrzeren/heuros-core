@@ -35,10 +35,6 @@ public class Leg extends AbstractModel implements LegView {
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
 	private int numOfDutiesIncludes = 0;
-	private int numOfDutiesIncludesHbDep = 0;
-	private int numOfDutiesIncludesHbArr = 0;
-	private int numOfDutiesIncludesNonHbDep = 0;
-	private int numOfDutiesIncludesNonHbArr = 0;
 
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
@@ -238,52 +234,52 @@ public class Leg extends AbstractModel implements LegView {
 		this.numOfDutiesIncludes++;
 	}
 
-	public int getNumOfDutiesIncludesHbDep() {
-		return numOfDutiesIncludesHbDep;
+	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
+		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbDep();
 	}
 
-	public void setNumOfDutiesIncludesHbDep(int numOfDutiesIncludesHbDep) {
-		this.numOfDutiesIncludesHbDep = numOfDutiesIncludesHbDep;
+	public void setNumOfDutiesIncludesHbDep(int hbNdx, int numOfDutiesIncludesHbDep) {
+		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbDep(numOfDutiesIncludesHbDep);
 	}
 
-	public void incNumOfDutiesIncludesHbDep() {
-		this.numOfDutiesIncludesHbDep++;
+	public void incNumOfDutiesIncludesHbDep(int hbNdx) {
+		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbDep();
 	}
 
-	public int getNumOfDutiesIncludesHbArr() {
-		return numOfDutiesIncludesHbArr;
+	public int getNumOfDutiesIncludesHbArr(int hbNdx) {
+		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbArr();
 	}
 
-	public void setNumOfDutiesIncludesHbArr(int numOfDutiesIncludesHbArr) {
-		this.numOfDutiesIncludesHbArr = numOfDutiesIncludesHbArr;
+	public void setNumOfDutiesIncludesHbArr(int hbNdx, int numOfDutiesIncludesHbArr) {
+		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbArr(numOfDutiesIncludesHbArr);
 	}
 
-	public void incNumOfDutiesIncludesHbArr() {
-		this.numOfDutiesIncludesHbArr++;
+	public void incNumOfDutiesIncludesHbArr(int hbNdx) {
+		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbArr();
 	}
 
-	public int getNumOfDutiesIncludesNonHbDep() {
-		return numOfDutiesIncludesNonHbDep;
+	public int getNumOfDutiesIncludesNonHbDep(int hbNdx) {
+		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbDep();
 	}
 
-	public void setNumOfDutiesIncludesNonHbDep(int numOfDutiesIncludesNonHbDep) {
-		this.numOfDutiesIncludesNonHbDep = numOfDutiesIncludesNonHbDep;
+	public void setNumOfDutiesIncludesNonHbDep(int hbNdx, int numOfDutiesIncludesNonHbDep) {
+		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbDep(numOfDutiesIncludesNonHbDep);
 	}
 
-	public void incNumOfDutiesIncludesNonHbDep() {
-		this.numOfDutiesIncludesNonHbDep++;
+	public void incNumOfDutiesIncludesNonHbDep(int hbNdx) {
+		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbDep();
 	}
 
-	public int getNumOfDutiesIncludesNonHbArr() {
-		return numOfDutiesIncludesNonHbArr;
+	public int getNumOfDutiesIncludesNonHbArr(int hbNdx) {
+		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbArr();
 	}
 
-	public void setNumOfDutiesIncludesNonHbArr(int numOfDutiesIncludesNonHbArr) {
-		this.numOfDutiesIncludesNonHbArr = numOfDutiesIncludesNonHbArr;
+	public void setNumOfDutiesIncludesNonHbArr(int hbNdx, int numOfDutiesIncludesNonHbArr) {
+		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbArr(numOfDutiesIncludesNonHbArr);
 	}
 
-	public void incNumOfDutiesIncludesNonHbArr() {
-		this.numOfDutiesIncludesNonHbArr++;
+	public void incNumOfDutiesIncludesNonHbArr(int hbNdx) {
+		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbArr();
 	}
 
 	public boolean isDeadheadable() {

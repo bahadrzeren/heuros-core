@@ -58,8 +58,8 @@ public interface LegView extends View {
 	 * TODO HB impl will be changed!
 	 */
 	public int getNumOfDutiesIncludes();
-	public int getNumOfDutiesIncludesHbDep();
-	public int getNumOfDutiesIncludesHbArr();
-	public int getNumOfDutiesIncludesNonHbDep();
-	public int getNumOfDutiesIncludesNonHbArr();
+	public int getNumOfDutiesIncludesHbDep(int hbNdx);
+	public int getNumOfDutiesIncludesHbArr(int hbNdx);
+	public int getNumOfDutiesIncludesNonHbDep(int hbNdx);
+	public int getNumOfDutiesIncludesNonHbArr(int hbNdx);
 }
