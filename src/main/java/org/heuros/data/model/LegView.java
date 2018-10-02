@@ -49,6 +49,7 @@ public interface LegView extends View {
 
 	public double getScore();
 
+	public boolean hasPair(int hbNdx);
 	public boolean hasHbDepArrDutyPair(int hbNdx);
 	public boolean hasHbDepDutyPair(int hbNdx);
 	public boolean hasNonHbDutyPair(int hbNdx);

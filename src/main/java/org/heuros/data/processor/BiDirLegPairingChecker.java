@@ -96,6 +96,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 			for (int j = 0; j < d.getNumOfLegs(); j++) {
 				LegView lv = d.getLegs().get(j);
 				Leg l = this.legs.get(lv.getNdx());
+				l.setHasPair(this.hbNdx, true);
 				if (p.getNumOfDuties() == 1) {
 					l.setHasHbDepArrDutyPair(this.hbNdx, true);
 				} else

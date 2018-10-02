@@ -314,6 +314,9 @@ public class Leg extends AbstractModel implements LegView {
 		this.blockTimeInMins = blockTimeInMins;
 	}
 
+	public void setHasPair(int hbNdx, boolean value) {
+		this.legHbSpecs[hbNdx].setHasPair(value);
+	}
 	public void setHasHbDepArrDutyPair(int hbNdx, boolean value) {
 		this.legHbSpecs[hbNdx].setHasHbDepArrDutyPair(value);
 	}
@@ -327,6 +330,9 @@ public class Leg extends AbstractModel implements LegView {
 		this.legHbSpecs[hbNdx].setHasHbArrDutyPair(value);
 	}
 
+	public boolean hasPair(int hbNdx) {
+		return this.legHbSpecs[hbNdx].isHasPair();
+	}
 	public boolean hasHbDepArrDutyPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasHbDepArrDutyPair();
 	}

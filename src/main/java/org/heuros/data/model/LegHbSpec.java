@@ -6,6 +6,7 @@ public class LegHbSpec {
 	private int numOfDutiesIncludesNonHbDep = 0;
 	private int numOfDutiesIncludesNonHbArr = 0;
 
+	private boolean hasPair = false;
 	private boolean hasHbDepArrDutyPair = false;
 	private boolean hasHbDepDutyPair = false;
 	private boolean hasNonHbDutyPair = false;
@@ -48,6 +49,12 @@ public class LegHbSpec {
 		this.numOfDutiesIncludesNonHbArr++;
 	}
 
+	public boolean isHasPair() {
+		return hasPair;
+	}
+	public void setHasPair(boolean hasPair) {
+		this.hasPair = hasPair;
+	}
 	public boolean isHasHbDepArrDutyPair() {
 		return hasHbDepArrDutyPair;
 	}
