@@ -2,7 +2,11 @@ package org.heuros.data;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.OneDimIndexInt;
@@ -12,6 +16,7 @@ import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
+import org.heuros.data.model.Pair;
 import org.heuros.data.repo.DutyRepository;
 import org.heuros.data.repo.LegRepository;
 import org.heuros.rule.DutyRuleContext;
@@ -144,5 +149,54 @@ public class PairingPricingNetwork {
     			PairingPricingNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfConnections + "/" + totalNumOfConnections + " connections found!");
     		}
     	}
+	}
+
+	private void addToPartialNetwork(List<HashSet<Integer>> partialNet, Duty duty) {
+		HashSet<Integer> list = partialNet.get(duty.getNdx());
+	}
+
+	public List<HashSet<Integer>> generatePartialNetwork(Duty[] duties) {
+
+		List<HashSet<Integer>> partialNet = new ArrayList<HashSet<Integer>>(this.duties.size());
+
+		for (Duty duty: duties) {
+
+			LegView fl = duty.getFirstLeg();
+			LegView ll = duty.getLastLeg();
+
+			if (duty.isHbDep(this.hbNdx)) {
+				if (duty.isHbArr(this.hbNdx)) {
+					partialNet[duty.getNdx()]
+				} else {
+//					bestSoFar = this.fwNetworkSearch(duty, numOfCoveringsInDuties, blockTimeOfCoveringsInDuties);
+				}
+			} else
+				if (heuristicNo > 0) {
+					if (duty.isHbArr(this.hbNdx)) {
+						
+					} else {
+						
+					}
+				}
+		}
+
+	}
+
+	private QualityMetric fwNetworkSearch(Pair p,
+			QualityMetric bestSoFar,
+			Duty fd, 
+			Duty ld, 
+			LegView fl, 
+			LegView ll, 
+			boolean hbDep, 
+			boolean hbArr, 
+			int dept,
+			int[] numOfCoveringsInDuties,
+			int[] blockTimeOfCoveringsInDuties) {
+		LegView[] nextLegs = this.dutyNetwork.getNextBriefLegIndexByDutyNdx().getArray(duty.getNdx());
+		for (LegView leg : nextLegs) {
+			DutyView[] nextDuties = this.dutyNetwork.getDutyIndexByDepLegNdx().getArray(leg.getNdx());
+			nextDuties.
+		}
 	}
 }
