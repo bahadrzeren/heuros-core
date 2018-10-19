@@ -88,7 +88,7 @@ public class PairingPricingNetwork {
 	}
 
 	public void buildNetwork() {
-		
+
 		dutyIndexByDepLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
 		dutyIndexByArrLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
 		nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
@@ -110,7 +110,10 @@ public class PairingPricingNetwork {
     			dutyIndexByArrLegNdx.add(pdArrLeg.getNdx(), pd);
 
     			boolean hbDep = pdDepLeg.getDepAirport().isHb(this.hbNdx);
-    			int dept = this.maxPairingLengthInDays;
+    			/*
+    			 * According to ChronoUnit.DAYS.between calculation, from 4 days up to 5 days gives difference gives 4 days as a return value!
+    			 */
+    			int dept = this.maxPairingLengthInDays - 1;
     			if (!hbDep)
     				dept--;
 
@@ -128,8 +131,8 @@ public class PairingPricingNetwork {
     			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
     			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
 	    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
-	        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx)) <= dept))
-	        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx)) <= dept - 1))) {
+	        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
+	        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
 		        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
 		        						nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
 		        						prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
@@ -151,52 +154,71 @@ public class PairingPricingNetwork {
     	}
 	}
 
-	private void addToPartialNetwork(List<HashSet<Integer>> partialNet, Duty duty) {
-		HashSet<Integer> list = partialNet.get(duty.getNdx());
-	}
+	public PartialPairingPricingNetwork generatePartialNetwork(int heuristicNo, Duty[] sourceDuties) {
 
-	public List<HashSet<Integer>> generatePartialNetwork(Duty[] duties) {
+		PartialPairingPricingNetwork partialNet = new PartialPairingPricingNetwork(this.duties.size());
 
-		List<HashSet<Integer>> partialNet = new ArrayList<HashSet<Integer>>(this.duties.size());
-
-		for (Duty duty: duties) {
-
-			LegView fl = duty.getFirstLeg();
-			LegView ll = duty.getLastLeg();
+		for (Duty duty: sourceDuties) {
 
 			if (duty.isHbDep(this.hbNdx)) {
 				if (duty.isHbArr(this.hbNdx)) {
-					partialNet[duty.getNdx()]
+					partialNet.addDuty(null, duty);
 				} else {
-//					bestSoFar = this.fwNetworkSearch(duty, numOfCoveringsInDuties, blockTimeOfCoveringsInDuties);
+					this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
 				}
 			} else
 				if (heuristicNo > 0) {
 					if (duty.isHbArr(this.hbNdx)) {
-						
+						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
 					} else {
 						
 					}
 				}
 		}
 
+		return partialNet;
 	}
 
-	private QualityMetric fwNetworkSearch(Pair p,
-			QualityMetric bestSoFar,
-			Duty fd, 
-			Duty ld, 
-			LegView fl, 
-			LegView ll, 
-			boolean hbDep, 
-			boolean hbArr, 
-			int dept,
-			int[] numOfCoveringsInDuties,
-			int[] blockTimeOfCoveringsInDuties) {
-		LegView[] nextLegs = this.dutyNetwork.getNextBriefLegIndexByDutyNdx().getArray(duty.getNdx());
+	private boolean fwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView pd, DutyView root, int dept) {
+		boolean res = false;
+		LegView[] nextLegs = this.nextBriefLegIndexByDutyNdx.getArray(pd.getNdx());
 		for (LegView leg : nextLegs) {
-			DutyView[] nextDuties = this.dutyNetwork.getDutyIndexByDepLegNdx().getArray(leg.getNdx());
-			nextDuties.
+			DutyView[] nextDuties = this.dutyIndexByDepLegNdx.getArray(leg.getNdx());
+			for (DutyView nd: nextDuties) {
+				if (((dept == 2) && root.isHbDep(this.hbNdx))
+						|| (dept > 2)) {
+					if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
+						res = true;
+						partialNet.addDuty(pd, nd);
+					}
+				} else
+					if (nd.isHbArr(this.hbNdx)
+							&& root.isHbDep(this.hbNdx)) {
+						res = true;
+						partialNet.addDuty(pd, nd);
+					}
+			}
 		}
+		return res;
+	}
+
+	private boolean bwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView nd, DutyView root, int dept) {
+		boolean res = false;
+		LegView[] prevLegs = this.prevDebriefLegIndexByDutyNdx.getArray(nd.getNdx());
+		for (LegView leg : prevLegs) {
+			DutyView[] prevDuties = this.dutyIndexByArrLegNdx.getArray(leg.getNdx());
+			for (DutyView pd: prevDuties) {
+				if (((dept == 2) && root.isHbArr(this.hbNdx))
+						|| (dept > 2)) {
+					partialNet.addDuty(pd, nd);
+					this.bwNetworkSearch(partialNet, pd, root, dept - 1);
+				} else
+					if (pd.isHbDep(this.hbNdx)
+							&& root.isHbArr(this.hbNdx)) {
+						partialNet.addDuty(pd, nd);
+					}
+			}
+		}
+		return res;
 	}
 }
