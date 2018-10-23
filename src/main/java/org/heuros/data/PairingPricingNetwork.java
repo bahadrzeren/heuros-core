@@ -2,11 +2,7 @@ package org.heuros.data;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.OneDimIndexInt;
@@ -16,7 +12,6 @@ import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
-import org.heuros.data.model.Pair;
 import org.heuros.data.repo.DutyRepository;
 import org.heuros.data.repo.LegRepository;
 import org.heuros.rule.DutyRuleContext;
@@ -111,7 +106,8 @@ public class PairingPricingNetwork {
 
     			boolean hbDep = pdDepLeg.getDepAirport().isHb(this.hbNdx);
     			/*
-    			 * According to ChronoUnit.DAYS.between calculation, from 4 days up to 5 days gives difference gives 4 days as a return value!
+    			 * According to ChronoUnit.DAYS.between calculation, from 4 days up to 5 days gives difference of 4 days as a return value!
+    			 * For nonHbDep and nonHbArr duty connections it limits the combined duration of two duties with 2 days!!!!!
     			 */
     			int dept = this.maxPairingLengthInDays - 1;
     			if (!hbDep)
@@ -156,22 +152,25 @@ public class PairingPricingNetwork {
 
 	public PartialPairingPricingNetwork generatePartialNetwork(int heuristicNo, Duty[] sourceDuties) {
 
-		PartialPairingPricingNetwork partialNet = new PartialPairingPricingNetwork(this.duties.size());
+		PartialPairingPricingNetwork partialNet = new PartialPairingPricingNetwork(this.duties);
 
 		for (Duty duty: sourceDuties) {
 
 			if (duty.isHbDep(this.hbNdx)) {
 				if (duty.isHbArr(this.hbNdx)) {
-					partialNet.addDuty(null, duty);
-				} else {
-					this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
-				}
+					partialNet.addSourceDuty(duty);
+				} else 
+					if (heuristicNo > 0) {
+						if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1))
+							partialNet.addSourceDuty(duty);
+					}
 			} else
 				if (heuristicNo > 0) {
 					if (duty.isHbArr(this.hbNdx)) {
 						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
 					} else {
-						
+						this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
+						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
 					}
 				}
 		}
@@ -185,17 +184,16 @@ public class PairingPricingNetwork {
 		for (LegView leg : nextLegs) {
 			DutyView[] nextDuties = this.dutyIndexByDepLegNdx.getArray(leg.getNdx());
 			for (DutyView nd: nextDuties) {
-				if (((dept == 2) && root.isHbDep(this.hbNdx))
-						|| (dept > 2)) {
-					if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
-						res = true;
-						partialNet.addDuty(pd, nd);
-					}
+				if (nd.isHbArr(this.hbNdx)) {
+					partialNet.addDuty(pd, nd);
+					res = true;
 				} else
-					if (nd.isHbArr(this.hbNdx)
-							&& root.isHbDep(this.hbNdx)) {
-						res = true;
-						partialNet.addDuty(pd, nd);
+					if (dept > 1) {
+//						root.isHbDep(this.hbNdx)
+						if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
+							res = true;
+							partialNet.addDuty(pd, nd);
+						}
 					}
 			}
 		}
@@ -208,14 +206,17 @@ public class PairingPricingNetwork {
 		for (LegView leg : prevLegs) {
 			DutyView[] prevDuties = this.dutyIndexByArrLegNdx.getArray(leg.getNdx());
 			for (DutyView pd: prevDuties) {
-				if (((dept == 2) && root.isHbArr(this.hbNdx))
-						|| (dept > 2)) {
+				if (pd.isHbDep(this.hbNdx)) {
+					partialNet.addSourceDuty(pd);
 					partialNet.addDuty(pd, nd);
-					this.bwNetworkSearch(partialNet, pd, root, dept - 1);
+					res = true;
 				} else
-					if (pd.isHbDep(this.hbNdx)
-							&& root.isHbArr(this.hbNdx)) {
-						partialNet.addDuty(pd, nd);
+					if (dept > 1) {
+//						root.isHbArr(this.hbNdx)
+						if (this.bwNetworkSearch(partialNet, pd, root, dept - 1)) {
+							res = true;
+							partialNet.addDuty(pd, nd);
+						}
 					}
 			}
 		}
