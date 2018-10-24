@@ -15,6 +15,7 @@ import org.heuros.data.model.LegView;
 import org.heuros.data.repo.DutyRepository;
 import org.heuros.data.repo.LegRepository;
 import org.heuros.rule.DutyRuleContext;
+import org.heuros.rule.PairRuleContext;
 
 public class PairingPricingNetwork {
 
@@ -32,6 +33,7 @@ public class PairingPricingNetwork {
 	private List<Duty> duties = null;
 
 	private DutyRuleContext dutyRuleContext = null;
+	private PairRuleContext pairRuleContext = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 //	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
 
@@ -50,6 +52,10 @@ public class PairingPricingNetwork {
 
 	public PairingPricingNetwork setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
+		return this;
+	}
+	public PairingPricingNetwork setPairRuleContext(PairRuleContext pairRuleContext) {
+		this.pairRuleContext = pairRuleContext;
 		return this;
 	}
 	public PairingPricingNetwork setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
@@ -158,19 +164,23 @@ public class PairingPricingNetwork {
 
 			if (duty.isHbDep(this.hbNdx)) {
 				if (duty.isHbArr(this.hbNdx)) {
-					partialNet.addSourceDuty(duty);
+					if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty))
+						partialNet.addSourceDuty(duty);
 				} else 
 					if (heuristicNo > 0) {
-						if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1))
-							partialNet.addSourceDuty(duty);
+						if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty)) {
+							if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1)) {
+								partialNet.addSourceDuty(duty);
+							}
+						}
 					}
 			} else
 				if (heuristicNo > 0) {
 					if (duty.isHbArr(this.hbNdx)) {
 						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
 					} else {
-						this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
-						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
+						if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2))
+							this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
 					}
 				}
 		}
@@ -184,17 +194,19 @@ public class PairingPricingNetwork {
 		for (LegView leg : nextLegs) {
 			DutyView[] nextDuties = this.dutyIndexByDepLegNdx.getArray(leg.getNdx());
 			for (DutyView nd: nextDuties) {
-				if (nd.isHbArr(this.hbNdx)) {
-					partialNet.addDuty(pd, nd);
-					res = true;
-				} else
-					if (dept > 1) {
-//						root.isHbDep(this.hbNdx)
-						if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
-							res = true;
-							partialNet.addDuty(pd, nd);
+				if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+					if (nd.isHbArr(this.hbNdx)) {
+						partialNet.addDuty(pd, nd);
+						res = true;
+					} else
+						if (dept > 1) {
+//							root.isHbDep(this.hbNdx)
+							if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
+								res = true;
+								partialNet.addDuty(pd, nd);
+							}
 						}
-					}
+				}
 			}
 		}
 		return res;
@@ -206,18 +218,22 @@ public class PairingPricingNetwork {
 		for (LegView leg : prevLegs) {
 			DutyView[] prevDuties = this.dutyIndexByArrLegNdx.getArray(leg.getNdx());
 			for (DutyView pd: prevDuties) {
-				if (pd.isHbDep(this.hbNdx)) {
-					partialNet.addSourceDuty(pd);
-					partialNet.addDuty(pd, nd);
-					res = true;
-				} else
-					if (dept > 1) {
-//						root.isHbArr(this.hbNdx)
-						if (this.bwNetworkSearch(partialNet, pd, root, dept - 1)) {
-							res = true;
+				if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+					if (pd.isHbDep(this.hbNdx)) {
+						if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, pd)) {
 							partialNet.addDuty(pd, nd);
+							partialNet.addSourceDuty(pd);
+							res = true;
 						}
-					}
+					} else
+						if (dept > 1) {
+//							root.isHbArr(this.hbNdx)
+							if (this.bwNetworkSearch(partialNet, pd, root, dept - 1)) {
+								res = true;
+								partialNet.addDuty(pd, nd);
+							}
+						}
+				}
 			}
 		}
 		return res;
