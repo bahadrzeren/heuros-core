@@ -55,6 +55,17 @@ public abstract class OneDimUniqueIndex<T extends View, N> {
         this.dimensionLengthNdxs[relNdx]++;
     }
 
+    public boolean check(N dimensionNdx, Integer objNdx) {
+        int relNdx = this.convert(dimensionNdx);
+        if ((relNdx >= this.dataArray.length) || (relNdx < 0)) return false;
+        Set<Integer> set = hsArry.get(relNdx);
+        if (set != null) {
+        	if (set.contains(objNdx))
+        		return true;
+        }
+        return false;
+    }
+
     public boolean add(N dimensionNdx, Integer objNdx, T obj) {
         int relNdx = this.convert(dimensionNdx);
         if ((relNdx >= this.dataArray.length) || (relNdx < 0)) return false;

@@ -233,18 +233,21 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 					    				}
 					    			} else
 					    				if (nd.isNonHbArr(this.hbNdx)
+					    						&& (dept > 1)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), true, false, dept - 1))
 					    						pairingFound = true;
 					    				}
 								} else {
 				    				if (nd.isHbArr(this.hbNdx)) {
-				    					if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
+				    					if ((dept > 1)
+				    							&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 				    						if (this.examinePairBW(p, fd, nd, fl, nd.getLastLeg(), false, true, dept - 1))
 				    							pairingFound = true;
 					    				}
 					    			} else
 					    				if (nd.isNonHbArr(this.hbNdx)
+					    						&& (dept > 1)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 					    					if (this.examinePairFW(p, fd, nd, fl, nd.getLastLeg(), false, false, dept - 1))
 					    						pairingFound = true;
@@ -311,18 +314,21 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 					    				}
 					    			} else
 					    				if (pd.isNonHbDep(this.hbNdx)
+					    						&& (dept > 1)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, true, dept - 1))
 					    						pairingFound = true;
 					    				}
 								} else {
 				    				if (pd.isHbDep(this.hbNdx)) {
-				    					if (this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
+				    					if ((dept > 1)
+				    							&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 				    						if (this.examinePairFW(p, pd, ld, pd.getFirstLeg(), ll, true, false, dept - 1))
 				    							pairingFound = true;
 					    				}
 					    			} else
 					    				if (pd.isNonHbDep(this.hbNdx)
+					    						&& (dept > 1)
 					    						&& this.pairRuleContext.getExtensibilityCheckerProxy().isExtensible(this.hbNdx, p)) {
 					    					if (this.examinePairBW(p, pd, ld, pd.getFirstLeg(), ll, false, false, dept - 1))
 					    						pairingFound = true;

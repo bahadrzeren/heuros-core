@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 
@@ -19,14 +20,21 @@ public class PartialPairingPricingNetwork {
 	private Set<Integer> sourceDuties = null;
 	private List<HashSet<Integer>> dutyConnections = null;
 
+	private int[] sourceDutyArray = null;
+	private int[][] dutyConnectionArray = null;
+	
+
 	public PartialPairingPricingNetwork(List<Duty> duties) {
 		this.duties = duties;
 		this.sourceDuties = new HashSet<Integer>();
 		this.dutyConnections = new ArrayList<HashSet<Integer>>(this.duties.size());
+		this.sourceDutyArray = new int[0];
+		this.dutyConnectionArray = new int[this.duties.size()][0];
 	}
 
 	public void addSourceDuty(DutyView d) {
-		this.sourceDuties.add(d.getNdx());
+		if (this.sourceDuties.add(d.getNdx()))
+			this.sourceDutyArray = ArrayUtils.add(this.sourceDutyArray, d.getNdx());
 	}
 
 	public void addDuty(DutyView pd, DutyView nd) {
@@ -35,18 +43,31 @@ public class PartialPairingPricingNetwork {
 			nextDutyNdxs = new HashSet<Integer>();
 			this.dutyConnections.set(pd.getNdx(), nextDutyNdxs);
 		}
-		nextDutyNdxs.add(nd.getNdx());
+		if (nextDutyNdxs.add(nd.getNdx()))
+			dutyConnectionArray[pd.getNdx()] = ArrayUtils.add(dutyConnectionArray[pd.getNdx()], nd.getNdx());
 	}
 
-	public Set<Integer> getSourceDuties() {
-		return this.sourceDuties;
+//	public Set<Integer> getSourceDuties() {
+//		return this.sourceDuties;
+//	}
+//
+//	public List<HashSet<Integer>> getDutyConnections() {
+//		return this.dutyConnections;
+//	}
+//
+//	public Set<Integer> getNextDuties(DutyView pd) {
+//		return this.dutyConnections.get(pd.getNdx());
+//	}
+
+	public int[] getSourceDuties() {
+		return this.sourceDutyArray;
 	}
 
-	public List<HashSet<Integer>> getDutyConnections() {
-		return this.dutyConnections;
+	public int[][] getDutyConnections() {
+		return this.dutyConnectionArray;
 	}
 
-	public Set<Integer> getNextDuties(DutyView pd) {
-		return this.dutyConnections.get(pd.getNdx());
+	public int[] getNextDuties(DutyView pd) {
+		return this.dutyConnectionArray[pd.getNdx()];
 	}
 }

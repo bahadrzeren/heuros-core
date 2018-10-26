@@ -128,20 +128,23 @@ public class PairingPricingNetwork {
     				if ((nextDuties != null)
     						&& (nextDuties.length > 0)) {
     					for (Duty nd: nextDuties) {
-    						if (nd.isValid(this.hbNdx)
-    			    				&& nd.hasPairing(this.hbNdx)
-    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
-    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
-	    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
-	        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
-	        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
-		        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
-		        						nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
-		        						prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
-		        						numOfConnections++;
-		        						totalNumOfConnections++;
+    						if ((!nextBriefLegIndexByDutyNdx.check(pd.getNdx(), nd.getFirstLeg().getNdx()))
+    								|| (!prevDebriefLegIndexByDutyNdx.check(nd.getNdx(), pd.getLastLeg().getNdx()))) {
+	    						if (nd.isValid(this.hbNdx)
+	    			    				&& nd.hasPairing(this.hbNdx)
+	    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
+	    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+		    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
+		        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
+		        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
+			        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
+			        						nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
+			        						prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
+			        						numOfConnections++;
+			        						totalNumOfConnections++;
+			        					}
 		        					}
-	        					}
+	    						}
     						}
     					}
     				}
@@ -159,66 +162,74 @@ public class PairingPricingNetwork {
 	public PartialPairingPricingNetwork generatePartialNetwork(int heuristicNo, Duty[] sourceDuties) {
 
 		PartialPairingPricingNetwork partialNet = new PartialPairingPricingNetwork(this.duties);
+		int[] maxSearchDept = new int[this.duties.size()];
 
 		for (Duty duty: sourceDuties) {
 
-			if (duty.isHbDep(this.hbNdx)) {
-				if (duty.isHbArr(this.hbNdx)) {
-					if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty))
-						partialNet.addSourceDuty(duty);
-				} else 
-					if (heuristicNo > 0) {
-						if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty)) {
-							if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1)) {
-								partialNet.addSourceDuty(duty);
+			if (duty.isValid(this.hbNdx)) {
+				if (duty.isHbDep(this.hbNdx)) {
+					if (duty.isHbArr(this.hbNdx)) {
+						if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty))
+							partialNet.addSourceDuty(duty);
+					} else 
+						if (heuristicNo > 0) {
+							if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, duty)) {
+								if (this.fwNetworkSearch(partialNet, duty, maxSearchDept, this.maxPairingLengthInDays - 1)) {
+									partialNet.addSourceDuty(duty);
+								}
 							}
 						}
+				} else
+					if (heuristicNo > 0) {
+						if (duty.isHbArr(this.hbNdx)) {
+							this.bwNetworkSearch(partialNet, duty, maxSearchDept, this.maxPairingLengthInDays - 1);
+						} else {
+							if (this.fwNetworkSearch(partialNet, duty, maxSearchDept, this.maxPairingLengthInDays - 2))
+								this.bwNetworkSearch(partialNet, duty, maxSearchDept, this.maxPairingLengthInDays - 2);
+						}
 					}
-			} else
-				if (heuristicNo > 0) {
-					if (duty.isHbArr(this.hbNdx)) {
-						this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 1);
-					} else {
-						if (this.fwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2))
-							this.bwNetworkSearch(partialNet, duty, duty, this.maxPairingLengthInDays - 2);
-					}
-				}
+			}
 		}
 
 		return partialNet;
 	}
 
-	private boolean fwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView pd, DutyView root, int dept) {
+	private boolean fwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView pd, int[] maxSearchDept, int dept) {
 		boolean res = false;
 		LegView[] nextLegs = this.nextBriefLegIndexByDutyNdx.getArray(pd.getNdx());
 		for (LegView leg : nextLegs) {
 			DutyView[] nextDuties = this.dutyIndexByDepLegNdx.getArray(leg.getNdx());
 			for (DutyView nd: nextDuties) {
-				if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+				if (nd.isValid(this.hbNdx)
+						&& (maxSearchDept[nd.getNdx()] < dept)
+						&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
 					if (nd.isHbArr(this.hbNdx)) {
 						partialNet.addDuty(pd, nd);
 						res = true;
 					} else
 						if (dept > 1) {
 //							root.isHbDep(this.hbNdx)
-							if (this.fwNetworkSearch(partialNet, nd, root, dept - 1)) {
+							if (this.fwNetworkSearch(partialNet, nd, maxSearchDept, dept - 1)) {
 								res = true;
 								partialNet.addDuty(pd, nd);
 							}
 						}
+					maxSearchDept[nd.getNdx()] = dept;
 				}
 			}
 		}
 		return res;
 	}
 
-	private boolean bwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView nd, DutyView root, int dept) {
+	private boolean bwNetworkSearch(PartialPairingPricingNetwork partialNet, DutyView nd, int[] maxSearchDept, int dept) {
 		boolean res = false;
 		LegView[] prevLegs = this.prevDebriefLegIndexByDutyNdx.getArray(nd.getNdx());
 		for (LegView leg : prevLegs) {
 			DutyView[] prevDuties = this.dutyIndexByArrLegNdx.getArray(leg.getNdx());
 			for (DutyView pd: prevDuties) {
-				if (this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+				if (pd.isValid(this.hbNdx)
+						&& (maxSearchDept[pd.getNdx()] < dept)
+						&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
 					if (pd.isHbDep(this.hbNdx)) {
 						if (this.pairRuleContext.getStarterCheckerProxy().canBeStarter(this.hbNdx, pd)) {
 							partialNet.addDuty(pd, nd);
@@ -228,11 +239,12 @@ public class PairingPricingNetwork {
 					} else
 						if (dept > 1) {
 //							root.isHbArr(this.hbNdx)
-							if (this.bwNetworkSearch(partialNet, pd, root, dept - 1)) {
+							if (this.bwNetworkSearch(partialNet, pd, maxSearchDept, dept - 1)) {
 								res = true;
 								partialNet.addDuty(pd, nd);
 							}
 						}
+					maxSearchDept[pd.getNdx()] = dept;
 				}
 			}
 		}
