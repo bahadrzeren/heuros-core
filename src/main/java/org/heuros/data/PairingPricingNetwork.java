@@ -95,10 +95,12 @@ public class PairingPricingNetwork {
 		nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
 		prevDebriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
 
-		int totalNumOfConnections = 0;
+		int totalNumOfDutyToDutyConnections = 0;
+		int totalNumOfDutyToLegConnections = 0;
 
 		for (int di = 0; di < this.duties.size(); di++) {
-			int numOfConnections = 0;
+			int numOfDutyToDutyConnections = 0;
+			int numOfDutyToLegConnections = 0;
     		Duty pd = this.duties.get(di);
     		if (pd.isValid(this.hbNdx)
     				&& pd.hasPairing(this.hbNdx)
@@ -138,10 +140,14 @@ public class PairingPricingNetwork {
 		        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
 		        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
 			        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
-			        						nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
-			        						prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
-			        						numOfConnections++;
-			        						totalNumOfConnections++;
+			        						boolean added = nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
+			        						added = added || prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
+			        						if (added) {
+			        							numOfDutyToLegConnections++;
+			        							totalNumOfDutyToLegConnections++;
+			        						}
+			        						numOfDutyToDutyConnections++;
+			        						totalNumOfDutyToDutyConnections++;
 			        					}
 		        					}
 	    						}
@@ -154,7 +160,8 @@ public class PairingPricingNetwork {
     				if (hourCounter > this.maxIdleTimeInAPairInHours)
     					break;
     			}
-    			PairingPricingNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfConnections + "/" + totalNumOfConnections + " connections found!");
+    			PairingPricingNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfDutyToDutyConnections + "/" + totalNumOfDutyToDutyConnections + " d2d, " +
+													numOfDutyToLegConnections + "/" + totalNumOfDutyToLegConnections + " d2l connections found!");
     		}
     	}
 	}

@@ -83,10 +83,11 @@ public abstract class OneDimUniqueIndex<T extends View, N> {
 	        	this.dataArray[relNdx][this.dimensionLengthNdxs[relNdx]] = obj;
 	        	this.dimensionLengthNdxs[relNdx]++;
 	        }
-        }
 
-        indexedElementCount++;
-        return true;
+	        indexedElementCount++;
+	        return true;
+        }
+        return false;
     }
 
     public T[] getArray(N dimensionNdx) {
