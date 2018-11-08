@@ -11,7 +11,7 @@ import org.heuros.core.data.base.AbstractModel;
  * @author bahadrzeren
  *
  */
-public class Pair extends AbstractModel implements PairView {
+public class Pair extends AbstractModel implements PairView, Cloneable {
 	
 	private int hbNdx = -1;
 
@@ -48,6 +48,15 @@ public class Pair extends AbstractModel implements PairView {
 
 	private Pair() {
 	}
+
+	@Override
+    public Object clone() throws CloneNotSupportedException {
+        Pair p = (Pair) super.clone();
+        p.duties = new ArrayList<DutyView>(this.duties.size());
+        for (int i = 0; i < this.duties.size(); i++)
+            p.duties.add(this.duties.get(i));
+        return p;
+    }
 
 	@Override
 	public boolean isComplete() {
