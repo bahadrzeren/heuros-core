@@ -2,6 +2,8 @@ package org.heuros.data;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -89,17 +91,19 @@ public class DutyLegOvernightConnNetwork {
 
 	public void buildNetwork() {
 
+    	logger.info("Duty network building phase is started!");
+
 		dutyIndexByDepLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
 		dutyIndexByArrLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
 		nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
 		prevDebriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
 
-		int totalNumOfDutyToDutyConnections = 0;
-		int totalNumOfDutyToLegConnections = 0;
+//		int totalNumOfDutyToDutyConnections = 0;
+//		int totalNumOfDutyToLegConnections = 0;
 
 		for (int di = 0; di < this.duties.size(); di++) {
-			int numOfDutyToDutyConnections = 0;
-			int numOfDutyToLegConnections = 0;
+//			int numOfDutyToDutyConnections = 0;
+//			int numOfDutyToLegConnections = 0;
     		Duty pd = this.duties.get(di);
     		if (pd.isValid(this.hbNdx)
     				&& pd.hasPairing(this.hbNdx)
@@ -142,14 +146,16 @@ public class DutyLegOvernightConnNetwork {
 		        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
 		        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
 			        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
-			        						boolean added = nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
-			        						added = added || prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
-			        						if (added) {
-			        							numOfDutyToLegConnections++;
-			        							totalNumOfDutyToLegConnections++;
-			        						}
-			        						numOfDutyToDutyConnections++;
-			        						totalNumOfDutyToDutyConnections++;
+//			        						boolean added = 
+			        								nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
+//			        						added = added || 
+			        								prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
+//			        						if (added) {
+//			        							numOfDutyToLegConnections++;
+//			        							totalNumOfDutyToLegConnections++;
+//			        						}
+//			        						numOfDutyToDutyConnections++;
+//			        						totalNumOfDutyToDutyConnections++;
 			        					}
 		        					}
 	    						}
@@ -162,9 +168,47 @@ public class DutyLegOvernightConnNetwork {
     				if (hourCounter > this.maxIdleTimeInAPairInHours)
     					break;
     			}
-    			DutyLegOvernightConnNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfDutyToDutyConnections + "/" + totalNumOfDutyToDutyConnections + " d2d, " +
-													numOfDutyToLegConnections + "/" + totalNumOfDutyToLegConnections + " d2l connections found!");
+//    			DutyLegOvernightConnNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfDutyToDutyConnections + "/" + totalNumOfDutyToDutyConnections + " d2d, " +
+//													numOfDutyToLegConnections + "/" + totalNumOfDutyToLegConnections + " d2l connections found!");
     		}
     	}
+
+		logger.info("Duty network building phase finished!");
+
+		for (int di = 0; di < this.duties.size(); di++) {
+//			dutyIndexByDepLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
+//			dutyIndexByArrLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
+//			nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
+//			prevDebriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
+
+			LegView[] nextLegs = nextBriefLegIndexByDutyNdx.getArray(di);
+			Arrays.parallelSort(nextLegs, new Comparator<LegView>() {
+				@Override
+				public int compare(LegView a, LegView b) {
+					if (a.getNdx() < b.getNdx())
+						return -1;
+					else
+						if (a.getNdx() > b.getNdx())
+							return 1;
+					return 0;
+				}
+			});
+
+			LegView[] prevLegs = prevDebriefLegIndexByDutyNdx.getArray(di);
+			Arrays.parallelSort(prevLegs, new Comparator<LegView>() {
+				@Override
+				public int compare(LegView a, LegView b) {
+					if (a.getSibt().isAfter(b.getSibt()))
+						return -1;
+					else
+						if (a.getSibt().isBefore(b.getSibt()))
+							return 1;
+					return 0;
+				}
+			});
+
+		}
+
+		logger.info("Duty network is ordered!");
 	}
 }

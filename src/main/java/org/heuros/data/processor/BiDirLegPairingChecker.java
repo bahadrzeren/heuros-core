@@ -114,6 +114,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 	@Override
 	public Boolean call() {
 
+    	logger.info("Leg pairing generation check is started!");
+
 		boolean[] dutiesChecked = new boolean[this.duties.size()];
 
 		Pair p = Pair.newInstance(this.hbNdx);
@@ -285,9 +287,11 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 //            				break;
             		}
     			}
-        		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
+//        		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
 	    	}
 		}
+
+    	logger.info("Leg pairing generation check finished!");
 
 		return true;
 	}

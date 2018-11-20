@@ -101,6 +101,8 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 	@Override
 	public Boolean call() {
 
+		logger.info("Duty pairing generation check is started!");
+
 		Pair p = Pair.newInstance(this.hbNdx);
 
     	for (int di = 0; di < this.duties.size(); di++) {
@@ -189,8 +191,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 //if ((l.getNdx() == 1017) && ((pairingFound & (1 << 2)) > 0))
 //System.out.println(pairingFound);
 
-    		logger.info(d.getNdx() + " - " + d.hasPairing(this.hbNdx));
+//    		logger.info(d.getNdx() + " - " + d.hasPairing(this.hbNdx));
 		}
+
+    	logger.info("Duty pairing generation check finished!");
 
 		return true;
 	}

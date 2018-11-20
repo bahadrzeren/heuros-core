@@ -1,9 +1,7 @@
 package org.heuros.core.data.ndx;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.heuros.core.data.base.View;
@@ -22,15 +20,17 @@ public abstract class OneDimUniqueIndex<T extends View, N> {
 
     protected T[][] dataArray = null;
     protected int[] dimensionLengthNdxs = null;
-    protected List<Set<Integer>> hsArry = null;
+//    protected List<Set<Integer>> hsArry = null;
+    protected Object[] hsArry = null;
 
 	public OneDimUniqueIndex(T[][] arry) {
         this.dataArray = arry;
         this.dimensionLengthNdxs = new int[arry.length];
-        this.hsArry = new ArrayList<Set<Integer>>();        
-        for (int i = 0; i < arry.length; i++) {
-        	this.hsArry.add(null);
-        }
+//        this.hsArry = new ArrayList<Set<Integer>>();        
+//        for (int i = 0; i < arry.length; i++) {
+//        	this.hsArry.add(null);
+//        }
+        this.hsArry = new Object[arry.length];
     }
 
     public int getRootNdx() {
@@ -55,10 +55,12 @@ public abstract class OneDimUniqueIndex<T extends View, N> {
         this.dimensionLengthNdxs[relNdx]++;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean check(N dimensionNdx, Integer objNdx) {
         int relNdx = this.convert(dimensionNdx);
         if ((relNdx >= this.dataArray.length) || (relNdx < 0)) return false;
-        Set<Integer> set = hsArry.get(relNdx);
+//        Set<Integer> set = hsArry.get(relNdx);
+		Set<Integer> set = (Set<Integer>) hsArry[relNdx];
         if (set != null) {
         	if (set.contains(objNdx))
         		return true;
@@ -66,13 +68,16 @@ public abstract class OneDimUniqueIndex<T extends View, N> {
         return false;
     }
 
-    public boolean add(N dimensionNdx, Integer objNdx, T obj) {
+    @SuppressWarnings("unchecked")
+	public boolean add(N dimensionNdx, Integer objNdx, T obj) {
         int relNdx = this.convert(dimensionNdx);
         if ((relNdx >= this.dataArray.length) || (relNdx < 0)) return false;
-        Set<Integer> set = hsArry.get(relNdx);
+//        Set<Integer> set = hsArry.get(relNdx);
+        Set<Integer> set = (Set<Integer>) hsArry[relNdx];
         if (set == null) {
         	set = new HashSet<Integer>();
-        	hsArry.set(relNdx, set);
+//        	hsArry.set(relNdx, set);
+        	hsArry[relNdx] = set;
         }
 
         if (set.add(objNdx)) {
