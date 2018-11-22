@@ -260,8 +260,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 
 								pairRuleContext.getAggregatorProxy().removeLast(p);
 
-								if (pairingFound)
+								if (pairingFound) {
+									ld.setNextFirstConnectionDuty(nd);
 									break;
+								}
 							}
 						}
 					}
@@ -341,8 +343,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 
 								pairRuleContext.getAggregatorProxy().removeFirst(p);
 
-								if (pairingFound)
+								if (pairingFound) {
+									pd.setNextFirstConnectionDuty(ld);
 									break;
+								}
 							}
 						}
 					}

@@ -58,6 +58,8 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private boolean validated = false;
 
+	private Duty nextFirstConnectionDuty;
+
 	private Duty() {
 	}
 
@@ -517,6 +519,13 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 	public void setValidated(boolean validated) {
 		this.validated = validated;
+	}
+
+	public Duty getNextFirstConnectionDuty() {
+		return nextFirstConnectionDuty;
+	}
+	public void setNextFirstConnectionDuty(Duty nextFirstConnectionDuty) {
+		this.nextFirstConnectionDuty = nextFirstConnectionDuty;
 	}
 
 	@Override
