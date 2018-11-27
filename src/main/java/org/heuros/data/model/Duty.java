@@ -58,8 +58,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private boolean validated = false;
 
-	private Duty nextFirstConnectionDuty;
-
 	private Duty() {
 	}
 
@@ -521,13 +519,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		this.validated = validated;
 	}
 
-	public Duty getNextFirstConnectionDuty() {
-		return nextFirstConnectionDuty;
-	}
-	public void setNextFirstConnectionDuty(Duty nextFirstConnectionDuty) {
-		this.nextFirstConnectionDuty = nextFirstConnectionDuty;
-	}
-
 	@Override
 	public boolean isValid(int hbNdx) {
 		return this.dutyHbSpecs[hbNdx].isValid();
@@ -546,6 +537,24 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 	public void setHasPairing(int hbNdx, boolean value) {
 		this.dutyHbSpecs[hbNdx].setHasPair(value);
+	}
+
+	@Override
+	public void setMinNextBriefTime(int hbNdx, LocalDateTime minNextBriefTime) {
+		this.dutyHbSpecs[hbNdx].setMinNextBriefTime(minNextBriefTime);
+	}
+	@Override
+	public LocalDateTime getMinNextBriefTime(int hbNdx) {
+		return this.dutyHbSpecs[hbNdx].getMinNextBriefTime();
+	}
+
+	@Override
+	public void setMinPrevDebriefTime(int hbNdx, LocalDateTime minPrevDebriefTime) {
+		this.dutyHbSpecs[hbNdx].setMinPrevDebriefTime(minPrevDebriefTime);
+	}
+	@Override
+	public LocalDateTime getMinPrevDebriefTime(int hbNdx) {
+		return this.dutyHbSpecs[hbNdx].getMinPrevDebriefTime();
 	}
 
 	@Override

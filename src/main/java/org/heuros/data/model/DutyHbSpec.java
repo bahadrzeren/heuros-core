@@ -26,6 +26,9 @@ public class DutyHbSpec implements Cloneable {
 
 	private boolean hasPair = false;
 
+	private LocalDateTime minNextBriefTime = null;
+	private LocalDateTime minPrevDebriefTime = null;
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
@@ -150,5 +153,17 @@ public class DutyHbSpec implements Cloneable {
 	}
 	public void setHasPair(boolean hasPair) {
 		this.hasPair = hasPair;
+	}
+	public LocalDateTime getMinNextBriefTime() {
+		return minNextBriefTime;
+	}
+	public void setMinNextBriefTime(LocalDateTime minNextBriefTime) {
+		this.minNextBriefTime = minNextBriefTime;
+	}
+	public LocalDateTime getMinPrevDebriefTime() {
+		return minPrevDebriefTime;
+	}
+	public void setMinPrevDebriefTime(LocalDateTime minPrevDebriefTime) {
+		this.minPrevDebriefTime = minPrevDebriefTime;
 	}
 }

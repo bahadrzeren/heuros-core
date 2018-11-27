@@ -88,4 +88,9 @@ public interface DutyView extends View {
 	public int getTotalNumOfIncludingDutiesOfTheSameLegs();
 
 	public boolean hasPairing(int hbNdx);
+
+	public void setMinNextBriefTime(int hbNdx, LocalDateTime minPrevDebriefTime);
+	public LocalDateTime getMinNextBriefTime(int hbNdx);
+	public void setMinPrevDebriefTime(int hbNdx, LocalDateTime minPrevDebriefTime);
+	public LocalDateTime getMinPrevDebriefTime(int hbNdx);
 }

@@ -27,7 +27,7 @@ public class DutyLegOvernightConnNetwork {
 	 */
 	private int hbNdx = 0;
 	private LocalDateTime dutyProcessPeriodEndExc = null;
-	private int maxIdleTimeInAPairInHours = 0;
+	private int maxNetDutySearchDeptInHours = 0;
 	private int maxPairingLengthInDays = 0;
 
 	private List<Leg> legs = null;
@@ -44,10 +44,10 @@ public class DutyLegOvernightConnNetwork {
 	private OneDimUniqueIndexInt<LegView> prevDebriefLegIndexByDutyNdx = null;
 
 	public DutyLegOvernightConnNetwork(LocalDateTime dutyProcessPeriodEndExc,
-									int maxIdleTimeInAPairInHours,
+									int maxNetDutySearchDeptInHours,
 									int maxPairingLengthInDays) {
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
-		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
+		this.maxNetDutySearchDeptInHours = maxNetDutySearchDeptInHours;
 		this.maxPairingLengthInDays = maxPairingLengthInDays;
 	}
 
@@ -125,48 +125,53 @@ public class DutyLegOvernightConnNetwork {
     				dept--;
 
     			int hourCounter = 0;
-    			LocalDateTime nextBriefTime = pd.getNextBriefTime(this.hbNdx);
+//    			LocalDateTime nextBriefTime = pd.getNextBriefTime(this.hbNdx);
+    			LocalDateTime nextBriefTime = pd.getMinNextBriefTime(this.hbNdx);
 
-    			while (true) {
-    				Duty[] nextDuties = this.dutyIndexByDepAirportNdxBrieftime.getArray(pdArrLeg.getArrAirport().getNdx(), nextBriefTime);
+				if (pd.isNonHbArr(this.hbNdx)) {
 
-    				if ((nextDuties != null)
-    						&& (nextDuties.length > 0)) {
-    					for (Duty nd: nextDuties) {
-    						if ((!nextBriefLegIndexByDutyNdx.check(pd.getNdx(), nd.getFirstLeg().getNdx()))
-    								|| (!prevDebriefLegIndexByDutyNdx.check(nd.getNdx(), pd.getLastLeg().getNdx()))) {
-	    						if (nd.isValid(this.hbNdx)
-	    			    				&& nd.hasPairing(this.hbNdx)
-	    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
-	    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
-		    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
-		    						/*
-		    						 * TODO Instead of performing minus operations all the time, debriefTime could be reduced by 1 second by default. 
-		    						 */
-		        					if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
-		        							|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
-			        					if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
-//			        						boolean added = 
-			        								nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
-//			        						added = added || 
-			        								prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
-//			        						if (added) {
-//			        							numOfDutyToLegConnections++;
-//			        							totalNumOfDutyToLegConnections++;
-//			        						}
-//			        						numOfDutyToDutyConnections++;
-//			        						totalNumOfDutyToDutyConnections++;
+    				while (true) {
+    					Duty[] nextDuties = this.dutyIndexByDepAirportNdxBrieftime.getArray(pdArrLeg.getArrAirport().getNdx(), nextBriefTime);
+
+	    				if ((nextDuties != null)
+	    						&& (nextDuties.length > 0)) {
+	    					for (Duty nd: nextDuties) {
+	    						if ((!nextBriefLegIndexByDutyNdx.check(pd.getNdx(), nd.getFirstLeg().getNdx()))
+	    								|| (!prevDebriefLegIndexByDutyNdx.check(nd.getNdx(), pd.getLastLeg().getNdx()))) {
+		    						if (nd.isValid(this.hbNdx)
+		    			    				&& nd.hasPairing(this.hbNdx)
+		    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
+		    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
+			    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
+			    						/*
+			    						 * TODO Instead of performing minus operations all the time, debriefTime could be reduced by 1 second by default. 
+			    						 */
+		        						if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
+		        								|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
+			        						if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
+//			        							boolean added = 
+			        									nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
+//			        							added = added || 
+			        									prevDebriefLegIndexByDutyNdx.add(nd.getNdx(), pd.getLastLeg().getNdx(), pd.getLastLeg());
+//			        							if (added) {
+//			        								numOfDutyToLegConnections++;
+//			        								totalNumOfDutyToLegConnections++;
+//			        							}
+//			        							numOfDutyToDutyConnections++;
+//			        							totalNumOfDutyToDutyConnections++;
+				        					}
 			        					}
-		        					}
+		    						}
 	    						}
-    						}
-    					}
-    				}
+	    					}
+	    				}
 
-    				hourCounter++;
-    				nextBriefTime = pd.getNextBriefTime(this.hbNdx).plusHours(hourCounter);
-    				if (hourCounter > this.maxIdleTimeInAPairInHours)
-    					break;
+	    				hourCounter++;
+//	    				nextBriefTime = pd.getNextBriefTime(this.hbNdx).plusHours(hourCounter);
+	    				nextBriefTime = pd.getMinNextBriefTime(this.hbNdx).plusHours(hourCounter);
+	    				if (hourCounter > this.maxNetDutySearchDeptInHours)
+	    					break;
+    				}
     			}
 //    			DutyLegOvernightConnNetwork.logger.info(pd.getNdx() + "th duty is processed and " + numOfDutyToDutyConnections + "/" + totalNumOfDutyToDutyConnections + " d2d, " +
 //													numOfDutyToLegConnections + "/" + totalNumOfDutyToLegConnections + " d2l connections found!");

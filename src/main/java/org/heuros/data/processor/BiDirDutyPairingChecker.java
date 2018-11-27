@@ -261,7 +261,12 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 								pairRuleContext.getAggregatorProxy().removeLast(p);
 
 								if (pairingFound) {
-									ld.setNextFirstConnectionDuty(nd);
+									if ((ld.getMinNextBriefTime(this.hbNdx) == null)
+											|| ld.getMinNextBriefTime(this.hbNdx).isAfter(nd.getBriefTime(this.hbNdx)))
+										ld.setMinNextBriefTime(this.hbNdx, nd.getBriefTime(this.hbNdx));
+									if ((nd.getMinPrevDebriefTime(this.hbNdx) == null)
+											|| nd.getMinPrevDebriefTime(this.hbNdx).isBefore(ld.getDebriefTime(this.hbNdx)))
+									nd.setMinPrevDebriefTime(this.hbNdx, ld.getDebriefTime(this.hbNdx));
 									break;
 								}
 							}
@@ -344,7 +349,12 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 								pairRuleContext.getAggregatorProxy().removeFirst(p);
 
 								if (pairingFound) {
-									pd.setNextFirstConnectionDuty(ld);
+									if ((pd.getMinNextBriefTime(this.hbNdx) == null)
+											|| pd.getMinNextBriefTime(this.hbNdx).isAfter(fd.getBriefTime(this.hbNdx)))
+										pd.setMinNextBriefTime(this.hbNdx, fd.getBriefTime(this.hbNdx));
+									if ((fd.getMinPrevDebriefTime(this.hbNdx) == null)
+											|| fd.getMinPrevDebriefTime(this.hbNdx).isBefore(pd.getDebriefTime(this.hbNdx)))
+										fd.setMinPrevDebriefTime(this.hbNdx, pd.getDebriefTime(this.hbNdx));
 									break;
 								}
 							}
