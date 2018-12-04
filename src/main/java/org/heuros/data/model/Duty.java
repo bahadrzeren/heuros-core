@@ -559,7 +559,13 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(ndx + "\n");
+		StringBuilder sb = new StringBuilder(ndx + 
+												", ABT:" + this.blockTimeInMinsActive + 
+												", PBT:" + this.blockTimeInMinsPassive +
+												", A#L:" + this.numOfLegsActive + 
+												", P#L:" + this.numOfLegsPassive +
+												", S#D:" + this.totalNumOfIncludingDutiesOfTheSameLegs +
+												"\n");
 		this.legs.forEach((l) -> sb.append(l).append("\n"));
 		return sb.toString();
 	}
