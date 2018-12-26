@@ -42,6 +42,11 @@ public class AggregatorProxy<P extends Model, C extends View> implements Aggrega
 	}
 
 	@Override
+	public void removeAll(P p) {
+		this.aggregatorImpl.removeAll(p);
+	}
+
+	@Override
 	public void reset(P p) {
 		this.aggregatorImpl.reset(p);
 	}

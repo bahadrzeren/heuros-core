@@ -36,6 +36,7 @@ public interface Aggregator<P extends Model, C extends View> extends Rule {
 	 */
 	public C removeLast(P p);
 	public C removeFirst(P p);
+	public void removeAll(P p);
 	/**
 	 * Resets parent class instance's aggregated parameters.
 	 * 
