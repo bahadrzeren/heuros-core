@@ -33,8 +33,8 @@ public interface PairView extends View {
 //	public boolean isHbDep(int hbNdx);
 //	public boolean isHbArr(int hbNdx);
 
-	public DutyView getFirstDuty();
-	public DutyView getLastDuty();
+	public Duty getFirstDuty();
+	public Duty getLastDuty();
 	public LegView getFirstLeg();
 	public LegView getLastLeg();
 	public AirportView getFirstDepAirport();

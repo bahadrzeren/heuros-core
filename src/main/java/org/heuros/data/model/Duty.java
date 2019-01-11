@@ -16,7 +16,7 @@ import org.heuros.core.data.base.AbstractModel;
  */
 public class Duty extends AbstractModel implements DutyView, Cloneable {
 
-	private List<LegView> legs = null;
+	private List<Leg> legs = null;
 
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
@@ -65,7 +65,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	@Override
     public Object clone() throws CloneNotSupportedException {
         Duty d = (Duty) super.clone();
-        d.legs = new ArrayList<LegView>(this.legs.size());
+        d.legs = new ArrayList<Leg>(this.legs.size());
         d.dutyHbSpecs = new DutyHbSpec[this.dutyHbSpecs.length];
         for (int i = 0; i < this.legs.size(); i++)
             d.legs.add(this.legs.get(i));
@@ -75,42 +75,42 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
         return d;
     }
 
-	public void appendFw(LegView leg) {
+	public void appendFw(Leg leg) {
 		this.legs.add(leg);
 	}
-	public void appendBw(LegView leg) {
+	public void appendBw(Leg leg) {
 		this.legs.add(0, leg);
 	}
-	public LegView removeLast() {
+	public Leg removeLast() {
 		if (this.numOfLegs > 0)
 			return this.legs.remove(this.numOfLegs - 1);
 		return null;
 	}
-	public LegView removeFirst() {
+	public Leg removeFirst() {
 		if (this.numOfLegs > 0)
 			return this.legs.remove(0);
 		return null;
 	}
 	@Override
-	public LegView getFirstLeg() {
+	public Leg getFirstLeg() {
 		if (this.numOfLegs > 0)
 			return this.legs.get(0);
 		return null;
 	}
 	@Override
-	public LegView getLastLeg() {
+	public Leg getLastLeg() {
 		if (this.numOfLegs > 0)
 			return this.legs.get(this.numOfLegs - 1);
 		return null;		
 	}
 	@Override
-	public LegView getSecondToLastLeg() {
+	public Leg getSecondToLastLeg() {
 		if (this.numOfLegs > 1)
 			return this.legs.get(this.numOfLegs - 2);
 		return null;		
 	}
 	@Override
-	public LegView getSecondLeg() {
+	public Leg getSecondLeg() {
 		if (this.numOfLegs > 1)
 			return this.legs.get(1);
 		return null;		
@@ -154,10 +154,10 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 
 	@Override
-	public List<LegView> getLegs() {
+	public List<Leg> getLegs() {
 		return legs;
 	}
-	public void setLegs(List<LegView> legs) {
+	public void setLegs(List<Leg> legs) {
 		this.legs = legs;
 	}
 
@@ -572,7 +572,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	public static Duty newInstance(int numOfBases) {
 		Duty d = new Duty();
-		d.setLegs(new ArrayList<LegView>());
+		d.setLegs(new ArrayList<Leg>());
 		d.setDutyHbSpecs(new DutyHbSpec[numOfBases]);
 		for (int i = 0; i < numOfBases; i++) {
 			d.getDutyHbSpecs()[i] = new DutyHbSpec();

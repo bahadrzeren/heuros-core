@@ -14,12 +14,12 @@ import org.heuros.core.data.base.View;
  */
 public interface DutyView extends View {
 
-	public List<LegView> getLegs();
+	public List<Leg> getLegs();
 
-	public LegView getFirstLeg();
-	public LegView getLastLeg();
-	public LegView getSecondToLastLeg();
-	public LegView getSecondLeg();
+	public Leg getFirstLeg();
+	public Leg getLastLeg();
+	public Leg getSecondToLastLeg();
+	public Leg getSecondLeg();
 	public AirportView getFirstDepAirport();
 	public AirportView getLastArrAirport();
 

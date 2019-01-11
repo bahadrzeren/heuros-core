@@ -15,7 +15,7 @@ public class Pair extends AbstractModel implements PairView, Cloneable {
 	
 	private int hbNdx = -1;
 
-	private List<DutyView> duties = null;
+	private List<Duty> duties = null;
 
 	private int blockTimeInMins = 0;
 	private int blockTimeInMinsActive = 0;
@@ -52,7 +52,7 @@ public class Pair extends AbstractModel implements PairView, Cloneable {
 	@Override
     public Object clone() throws CloneNotSupportedException {
         Pair p = (Pair) super.clone();
-        p.duties = new ArrayList<DutyView>(this.duties.size());
+        p.duties = new ArrayList<Duty>(this.duties.size());
         for (int i = 0; i < this.duties.size(); i++)
             p.duties.add(this.duties.get(i));
         return p;
@@ -102,30 +102,30 @@ public class Pair extends AbstractModel implements PairView, Cloneable {
 //		return this.getLastArrAirport().isAnyHb() && (this.getLastArrAirport().getHbNdx() == hbNdx);
 //	}
 
-	public void appendFw(DutyView duty) {
+	public void appendFw(Duty duty) {
 		this.duties.add(duty);
 	}
-	public void appendBw(DutyView duty) {
+	public void appendBw(Duty duty) {
 		this.duties.add(0, duty);
 	}
-	public DutyView removeLast() {
+	public Duty removeLast() {
 		if (this.numOfDuties > 0)
 			return this.duties.remove(this.numOfDuties - 1);
 		return null;
 	}
-	public DutyView removeFirst() {
+	public Duty removeFirst() {
 		if (this.numOfDuties > 0)
 			return this.duties.remove(0);
 		return null;
 	}
 	@Override
-	public DutyView getFirstDuty() {
+	public Duty getFirstDuty() {
 		if (this.numOfDuties > 0)
 			return this.duties.get(0);
 		return null;
 	}
 	@Override
-	public DutyView getLastDuty() {
+	public Duty getLastDuty() {
 		if (this.numOfDuties > 0)
 			return this.duties.get(this.numOfDuties - 1);
 		return null;		
@@ -155,11 +155,11 @@ public class Pair extends AbstractModel implements PairView, Cloneable {
 		return null;
 	}
 
-	public List<DutyView> getDuties() {
+	public List<Duty> getDuties() {
 		return duties;
 	}
 
-	public void setDuties(List<DutyView> duties) {
+	public void setDuties(List<Duty> duties) {
 		this.duties = duties;
 	}
 
@@ -449,7 +449,7 @@ public class Pair extends AbstractModel implements PairView, Cloneable {
 	public static Pair newInstance(int hbNdx) {
 		Pair p = new Pair();
 		p.setHbNdx(hbNdx);
-		p.setDuties(new ArrayList<DutyView>());
+		p.setDuties(new ArrayList<Duty>());
 		return p;
 	}
 }
