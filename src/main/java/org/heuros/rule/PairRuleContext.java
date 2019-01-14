@@ -26,6 +26,7 @@ import org.heuros.core.rule.repo.StarterCheckerRepository;
 import org.heuros.core.rule.repo.AppendabilityCheckerRepository;
 import org.heuros.core.rule.repo.FinalCheckerRepository;
 import org.heuros.data.model.PairView;
+import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Pair;
 import org.heuros.exception.RuleAnnotationIsMissing;
@@ -37,7 +38,7 @@ import org.heuros.util.RuleUtil;
  * @author bahadrzeren
  *
  */
-public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
+public class PairRuleContext implements AggregatorRuleContext<Pair, Duty>,
 											StarterCheckerRuleContext<PairView, DutyView>,
 											ExtensibilityCheckerRuleContext<PairView>,
 											ConnectionCheckerRuleContext<PairView>,
@@ -48,14 +49,14 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 
 	private int numOfBases = 0;
 
-	protected Aggregator<Pair, DutyView> aggregatorImpl = null;
+	protected Aggregator<Pair, Duty> aggregatorImpl = null;
 	protected StarterCheckerRepository<PairView, DutyView> starterCheckerRepo = null;
 	protected ConnectionCheckerRepository<PairView> connectionCheckerRepo = null;
 	protected ExtensibilityCheckerRepository<PairView> extensibilityCheckerRepo = null;
 	protected AppendabilityCheckerRepository<PairView, DutyView> appendabilityCheckerRepo = null;
 	protected FinalCheckerRepository<PairView> finalCheckerRepo = null;
 
-	protected AggregatorProxy<Pair, DutyView> aggregatorProxy = null;
+	protected AggregatorProxy<Pair, Duty> aggregatorProxy = null;
 	protected StarterCheckerProxy<PairView, DutyView> starterCheckerProxy = null;
 	protected ConnectionCheckerProxy<PairView> connectionCheckerProxy = null;
 	protected ExtensibilityCheckerProxy<PairView> extensibilityCheckerProxy = null;
@@ -63,7 +64,7 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 	protected FinalCheckerProxy<PairView> finalCheckerProxy = null;
 
 	private static Class<?>[] pairViewClass = {PairView.class};
-	private static Class<?>[] pairDutyViewClasses = {Pair.class, DutyView.class};
+	private static Class<?>[] pairDutyClasses = {Pair.class, Duty.class};
 	private static Class<?>[] pairViewDutyViewClasses = {PairView.class, DutyView.class};
 
 	public PairRuleContext(int numOfBases) {
@@ -84,8 +85,8 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 	@Override
 	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		int res = 0;
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyViewClasses))
-			res += this.registerAggregatorRule((Aggregator<Pair, DutyView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyClasses))
+			res += this.registerAggregatorRule((Aggregator<Pair, Duty>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class, pairViewDutyViewClasses))
 			res += this.registerStarterCheckerRule((StarterChecker<PairView, DutyView>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class, pairViewClass))
@@ -103,7 +104,7 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 	@Override
 	public int removeRule(Rule rule) {
 		int res = 0;
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyViewClasses))
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, pairDutyClasses))
 			if (this.aggregatorImpl != null) {
 				this.aggregatorImpl = null;
 				res++;
@@ -125,11 +126,11 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 	 * Aggregator context impl.
 	 */
 	@Override
-	public int registerAggregatorRule(Aggregator<Pair, DutyView> rule)
+	public int registerAggregatorRule(Aggregator<Pair, Duty> rule)
 			throws RuleAnnotationIsMissing {
 		if (this.aggregatorProxy == null) {
 			this.aggregatorImpl = rule;
-			this.aggregatorProxy = new AggregatorProxy<Pair, DutyView>(rule);
+			this.aggregatorProxy = new AggregatorProxy<Pair, Duty>(rule);
 			return 1;
 		} else
 			logger.error("Rule impl is already registered!");
@@ -142,7 +143,7 @@ public class PairRuleContext implements AggregatorRuleContext<Pair, DutyView>,
 //	}
 
 	@Override
-	public AggregatorProxy<Pair, DutyView> getAggregatorProxy() {
+	public AggregatorProxy<Pair, Duty> getAggregatorProxy() {
 		return this.aggregatorProxy;
 	}
 

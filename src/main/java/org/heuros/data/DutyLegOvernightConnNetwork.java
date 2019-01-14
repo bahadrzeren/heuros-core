@@ -11,7 +11,6 @@ import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.data.ndx.OneDimUniqueIndexInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.data.repo.DutyRepository;
@@ -38,10 +37,10 @@ public class DutyLegOvernightConnNetwork {
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 //	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
 
-	private OneDimIndexInt<DutyView> dutyIndexByDepLegNdx = null;
-	private OneDimIndexInt<DutyView> dutyIndexByArrLegNdx = null;
-	private OneDimUniqueIndexInt<LegView> nextBriefLegIndexByDutyNdx = null;
-	private OneDimUniqueIndexInt<LegView> prevDebriefLegIndexByDutyNdx = null;
+	private OneDimIndexInt<Duty> dutyIndexByDepLegNdx = null;
+	private OneDimIndexInt<Duty> dutyIndexByArrLegNdx = null;
+	private OneDimUniqueIndexInt<Leg> nextBriefLegIndexByDutyNdx = null;
+	private OneDimUniqueIndexInt<Leg> prevDebriefLegIndexByDutyNdx = null;
 
 	public DutyLegOvernightConnNetwork(LocalDateTime dutyProcessPeriodEndExc,
 									int maxNetDutySearchDeptInHours,
@@ -76,16 +75,16 @@ public class DutyLegOvernightConnNetwork {
 		return this;
 	}
 
-	public OneDimIndexInt<DutyView> getDutyIndexByDepLegNdx() {
+	public OneDimIndexInt<Duty> getDutyIndexByDepLegNdx() {
 		return dutyIndexByDepLegNdx;
 	}
-	public OneDimIndexInt<DutyView> getDutyIndexByArrLegNdx() {
+	public OneDimIndexInt<Duty> getDutyIndexByArrLegNdx() {
 		return dutyIndexByArrLegNdx;
 	}
-	public OneDimUniqueIndexInt<LegView> getNextBriefLegIndexByDutyNdx() {
+	public OneDimUniqueIndexInt<Leg> getNextBriefLegIndexByDutyNdx() {
 		return nextBriefLegIndexByDutyNdx;
 	}
-	public OneDimUniqueIndexInt<LegView> getPrevDebriefLegIndexByDutyNdx() {
+	public OneDimUniqueIndexInt<Leg> getPrevDebriefLegIndexByDutyNdx() {
 		return prevDebriefLegIndexByDutyNdx;
 	}
 
@@ -93,10 +92,10 @@ public class DutyLegOvernightConnNetwork {
 
     	logger.info("Duty network building phase is started!");
 
-		dutyIndexByDepLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
-		dutyIndexByArrLegNdx = new OneDimIndexInt<DutyView>(new DutyView[this.legs.size()][0]);
-		nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
-		prevDebriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<LegView>(new LegView[this.duties.size()][0]);
+		dutyIndexByDepLegNdx = new OneDimIndexInt<Duty>(new Duty[this.legs.size()][0]);
+		dutyIndexByArrLegNdx = new OneDimIndexInt<Duty>(new Duty[this.legs.size()][0]);
+		nextBriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<Leg>(new Leg[this.duties.size()][0]);
+		prevDebriefLegIndexByDutyNdx = new OneDimUniqueIndexInt<Leg>(new Leg[this.duties.size()][0]);
 
 //		int totalNumOfDutyToDutyConnections = 0;
 //		int totalNumOfDutyToLegConnections = 0;

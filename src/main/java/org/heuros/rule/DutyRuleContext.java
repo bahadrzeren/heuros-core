@@ -27,6 +27,7 @@ import org.heuros.core.rule.repo.AppendabilityCheckerRepository;
 import org.heuros.core.rule.repo.FinalCheckerRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.DutyView;
+import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.exception.RuleAnnotationIsMissing;
 import org.heuros.util.RuleUtil;
@@ -37,7 +38,7 @@ import org.heuros.util.RuleUtil;
  * @author bahadrzeren
  *
  */
-public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
+public class DutyRuleContext implements AggregatorRuleContext<Duty, Leg>,
 											StarterCheckerRuleContext<DutyView, LegView>,
 											ExtensibilityCheckerRuleContext<DutyView>,
 											ConnectionCheckerRuleContext<DutyView>,
@@ -48,14 +49,14 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 
 	private int numOfBases = 0;
 
-	protected Aggregator<Duty, LegView> aggregatorImpl = null;
+	protected Aggregator<Duty, Leg> aggregatorImpl = null;
 	protected StarterCheckerRepository<DutyView, LegView> starterCheckerRepo = null;
 	protected ExtensibilityCheckerRepository<DutyView> extensibilityCheckerRepo = null;
 	protected ConnectionCheckerRepository<DutyView> connectionCheckerRepo = null;
 	protected AppendabilityCheckerRepository<DutyView, LegView> appendabilityCheckerRepo = null;
 	protected FinalCheckerRepository<DutyView> finalCheckerRepo = null;
 
-	protected AggregatorProxy<Duty, LegView> aggregatorProxy = null;
+	protected AggregatorProxy<Duty, Leg> aggregatorProxy = null;
 	protected StarterCheckerProxy<DutyView, LegView> starterCheckerProxy = null;
 	protected ExtensibilityCheckerProxy<DutyView> extensibilityCheckerProxy = null;
 	protected ConnectionCheckerProxy<DutyView> connectionCheckerProxy = null;
@@ -63,7 +64,7 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	protected FinalCheckerProxy<DutyView> finalCheckerProxy = null;
 
 	private static Class<?>[] dutyViewClass = {DutyView.class};
-	private static Class<?>[] dutyLegViewClasses = {Duty.class, LegView.class};
+	private static Class<?>[] dutyLegClasses = {Duty.class, Leg.class};
 	private static Class<?>[] dutyViewLegViewClasses = {DutyView.class, LegView.class};
 
 	public DutyRuleContext(int numOfBases) {
@@ -84,8 +85,8 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	@Override
 	public int registerRule(Rule rule) throws RuleAnnotationIsMissing {
 		int res = 0;
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, dutyLegViewClasses))
-			res += this.registerAggregatorRule((Aggregator<Duty, LegView>) rule);
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, dutyLegClasses))
+			res += this.registerAggregatorRule((Aggregator<Duty, Leg>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, StarterChecker.class, dutyViewLegViewClasses))
 			res += this.registerStarterCheckerRule((StarterChecker<DutyView, LegView>) rule);
 		if (RuleUtil.implChecker.isImplemented(rule, ExtensibilityChecker.class, dutyViewClass))
@@ -103,7 +104,7 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	@Override
 	public int removeRule(Rule rule) {
 		int res = 0;
-		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, dutyLegViewClasses))
+		if (RuleUtil.implChecker.isImplemented(rule, Aggregator.class, dutyLegClasses))
 			if (this.aggregatorImpl != null) {
 				this.aggregatorImpl = null;
 				res++;
@@ -125,11 +126,11 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 	 * Aggregator context impl.
 	 */
 	@Override
-	public int registerAggregatorRule(Aggregator<Duty, LegView> rule)
+	public int registerAggregatorRule(Aggregator<Duty, Leg> rule)
 			throws RuleAnnotationIsMissing {
 		if (this.aggregatorProxy == null) {
 			this.aggregatorImpl = rule;
-			this.aggregatorProxy = new AggregatorProxy<Duty, LegView>(rule);
+			this.aggregatorProxy = new AggregatorProxy<Duty, Leg>(rule);
 			return 1;
 		} else
 			logger.error("Rule impl is already registered!");
@@ -142,7 +143,7 @@ public class DutyRuleContext implements AggregatorRuleContext<Duty, LegView>,
 //	}
 
 	@Override
-	public AggregatorProxy<Duty, LegView> getAggregatorProxy() {
+	public AggregatorProxy<Duty, Leg> getAggregatorProxy() {
 		return this.aggregatorProxy;
 	}
 

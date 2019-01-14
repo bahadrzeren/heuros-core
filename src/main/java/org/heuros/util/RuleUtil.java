@@ -7,6 +7,7 @@ import org.heuros.core.rule.fintf.RuleAnnotationGetter;
 import org.heuros.core.rule.intf.Rule;
 import org.heuros.core.rule.intf.RuleImplementation;
 import org.heuros.data.model.Duty;
+import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.LazyDutyValidator;
@@ -51,7 +52,7 @@ public class RuleUtil {
 			return 0;
 		if (d.getLegs().size() == 0)
 			return 0;
-		LegView nl = d.getLegs().get(0);
+		Leg nl = d.getLegs().get(0);
 		if (nl == null)
 			return 0;
 		LegView pl;
