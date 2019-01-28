@@ -34,7 +34,7 @@ public class Leg extends AbstractModel implements LegView {
 	/*
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
-	private int numOfDutiesIncludes = 0;
+	private int numOfIncludingDuties = 0;
 
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
@@ -48,6 +48,8 @@ public class Leg extends AbstractModel implements LegView {
 	private int blockTimeInMins = 0;
 
 	private LegHbSpec[] legHbSpecs = null;
+
+	private int numOfDutiesWoDh = 0;
 
 	private Leg() {
 	}
@@ -222,16 +224,16 @@ public class Leg extends AbstractModel implements LegView {
 		this.score = score;
 	}
 
-	public int getNumOfDutiesIncludes() {
-		return numOfDutiesIncludes;
+	public int getNumOfIncludingDuties() {
+		return numOfIncludingDuties;
 	}
 
-	public void setNumOfDutiesIncludes(int numOfDutiesIncludes) {
-		this.numOfDutiesIncludes = numOfDutiesIncludes;
+	public void setNumOfIncludingDuties(int numOfIncludingDuties) {
+		this.numOfIncludingDuties = numOfIncludingDuties;
 	}
 
-	public void incNumOfDutiesIncludes() {
-		this.numOfDutiesIncludes++;
+	public void incNumOfIncludingDuties() {
+		this.numOfIncludingDuties++;
 	}
 
 	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
@@ -313,6 +315,19 @@ public class Leg extends AbstractModel implements LegView {
 	public void setBlockTimeInMins(int blockTimeInMins) {
 		this.blockTimeInMins = blockTimeInMins;
 	}
+
+	public int getNumOfDutiesWoDh() {
+		return numOfDutiesWoDh;
+	}
+
+	public void incNumOfDutiesWoDh() {
+		this.numOfDutiesWoDh++;
+	}
+
+	public void setNumOfDutiesWoDh(int numOfDutiesWoDh) {
+		this.numOfDutiesWoDh = numOfDutiesWoDh;
+	}
+
 
 	public void setHasPair(int hbNdx, boolean value) {
 		this.legHbSpecs[hbNdx].setHasPair(value);

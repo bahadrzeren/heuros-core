@@ -317,7 +317,9 @@ public class PairOptimizationContext {
 //			boolean hbArr = d.getLastArrAirport().isAnyHb();
 			d.getLegs().forEach((l) -> {
 				Leg leg = (Leg) l;
-				leg.incNumOfDutiesIncludes();
+				leg.incNumOfIncludingDuties();
+				if (d.getNumOfLegsPassive() == 0)
+					leg.incNumOfDutiesWoDh();
 				this.dutyIndexByLegNdx.add(leg.getNdx(), d);
 //				for (int hbNdx = 0; hbNdx < numOfBases; hbNdx++) {
 					if (d.getFirstDepAirport().isHb(hbNdx)) {
@@ -339,13 +341,6 @@ public class PairOptimizationContext {
 //				}
 			});
 
-			/*
-			 * Set leg related accumulators.
-			 */
-			d.getLegs().forEach((l) -> {
-				d.incTotalNumOfIncludingDutiesOfTheSameLegs(l.getNumOfDutiesIncludes());
-			});
-
 			this.dutyRepository.addToRepo(d);
 			/*
 			 * Choose first homebase brieftime for the index roots!
@@ -356,6 +351,16 @@ public class PairOptimizationContext {
 //				this.hbArrDutyIndexByDepAirportNdxBrieftime.add(depAirportNdx, d.getBriefTime(hbNdx), d);
 //			}
 		}); 
+
+		/*
+		 * Set leg related accumulators.
+		 */
+		duties.forEach((d) -> {
+			d.getLegs().forEach((l) -> {
+				d.incTotalNumOfIncludingDutiesOfTheSameLegs(l.getNumOfIncludingDuties());
+				d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfDutiesWoDh());
+			});
+		});
 
 		PairOptimizationContext.logger.info("All duties are registered and indexed!");
 	}

@@ -86,6 +86,7 @@ public interface DutyView extends View {
 	public boolean isValid(int hbNdx);
 
 	public int getTotalNumOfIncludingDutiesOfTheSameLegs();
+	public int getTotalNumOfAlternativeDutiesWoDh();
 
 	public boolean hasPairing(int hbNdx);
 

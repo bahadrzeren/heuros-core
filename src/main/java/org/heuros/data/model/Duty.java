@@ -47,6 +47,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private Stack<Integer> longestBlockTimesInMins = new Stack<Integer>();
 
 	private int totalNumOfIncludingDutiesOfTheSameLegs = 0;
+	private int totalNumOfAlternativeDutiesWoDh = 0;
 
 	private DutyHbSpec[] dutyHbSpecs = null;
 	public DutyHbSpec[] getDutyHbSpecs() {
@@ -381,6 +382,16 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 	public void incTotalNumOfIncludingDutiesOfTheSameLegs(int totalNumOfIncludingDutiesOfTheSameLegs) {
 		this.totalNumOfIncludingDutiesOfTheSameLegs += totalNumOfIncludingDutiesOfTheSameLegs;
+	}
+
+	public int getTotalNumOfAlternativeDutiesWoDh() {
+		return totalNumOfAlternativeDutiesWoDh;
+	}
+	public void setTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
+		this.totalNumOfAlternativeDutiesWoDh = totalNumOfAlternativeDutiesWoDh;
+	}
+	public void incTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
+		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
 	}
 
 	@Override
