@@ -35,6 +35,7 @@ public class Leg extends AbstractModel implements LegView {
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
 	private int numOfIncludingDuties = 0;
+	private int numOfDutiesWoDh = 0;
 
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
@@ -48,8 +49,6 @@ public class Leg extends AbstractModel implements LegView {
 	private int blockTimeInMins = 0;
 
 	private LegHbSpec[] legHbSpecs = null;
-
-	private int numOfDutiesWoDh = 0;
 
 	private Leg() {
 	}
@@ -236,6 +235,18 @@ public class Leg extends AbstractModel implements LegView {
 		this.numOfIncludingDuties++;
 	}
 
+	public int getNumOfDutiesWoDh() {
+		return numOfDutiesWoDh;
+	}
+
+	public void incNumOfDutiesWoDh() {
+		this.numOfDutiesWoDh++;
+	}
+
+	public void setNumOfDutiesWoDh(int numOfDutiesWoDh) {
+		this.numOfDutiesWoDh = numOfDutiesWoDh;
+	}
+
 	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
 		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbDep();
 	}
@@ -316,18 +327,6 @@ public class Leg extends AbstractModel implements LegView {
 		this.blockTimeInMins = blockTimeInMins;
 	}
 
-	public int getNumOfDutiesWoDh() {
-		return numOfDutiesWoDh;
-	}
-
-	public void incNumOfDutiesWoDh() {
-		this.numOfDutiesWoDh++;
-	}
-
-	public void setNumOfDutiesWoDh(int numOfDutiesWoDh) {
-		this.numOfDutiesWoDh = numOfDutiesWoDh;
-	}
-
 
 	public void setHasPair(int hbNdx, boolean value) {
 		this.legHbSpecs[hbNdx].setHasPair(value);
@@ -382,6 +381,8 @@ public class Leg extends AbstractModel implements LegView {
 					.append(",").append(serviceType)
 					.append(",").append(needsCockpitCrew)
 					.append(",").append(needsCabinCrew)
+					.append(",").append(needsCabinCrew)
+					.append(",ZeroDh/Total#D:").append(numOfDutiesWoDh).append("/").append(numOfIncludingDuties)
 					.toString();
 	}
 
