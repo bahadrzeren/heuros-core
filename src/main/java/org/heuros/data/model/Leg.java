@@ -381,8 +381,7 @@ public class Leg extends AbstractModel implements LegView {
 					.append(",").append(serviceType)
 					.append(",").append(needsCockpitCrew)
 					.append(",").append(needsCabinCrew)
-					.append(",").append(needsCabinCrew)
-					.append(",ZeroDh/Total#D:").append(numOfDutiesWoDh).append("/").append(numOfIncludingDuties)
+					.append(", ZeroDh/Total#D:").append(numOfDutiesWoDh).append("/").append(numOfIncludingDuties)
 					.toString();
 	}
 
