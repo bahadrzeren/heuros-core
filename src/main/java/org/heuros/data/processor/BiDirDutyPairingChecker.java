@@ -196,7 +196,51 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 
     	logger.info("Duty pairing generation check finished!");
 
-		return true;
+    	/*
+    	 * Set leg accumulators for legs.
+    	 */
+		this.duties.forEach((d) -> {
+			if (d.hasPairing(hbNdx)) {
+				d.getLegs().forEach((l) -> {
+					l.incNumOfIncludingDuties();
+					if (d.getNumOfLegsPassive() == 0)
+						l.incNumOfIncludingDutiesWoDh();
+					if (d.getFirstDepAirport().isHb(hbNdx)) {
+						l.incNumOfDutiesIncludesHbDep(hbNdx);
+					} else {
+						l.incNumOfDutiesIncludesNonHbDep(hbNdx);
+					}
+					if (d.getLastArrAirport().isHb(hbNdx)) {
+						l.incNumOfDutiesIncludesHbArr(hbNdx);
+					} else
+						l.incNumOfDutiesIncludesNonHbArr(hbNdx);
+
+					/*
+					 * Activating this block generates better results!
+					 */
+//					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+				});
+			}
+		});
+		/*
+		 * Set leg accumulators for duties.
+		 */
+		duties.forEach((d) -> {
+			d.getLegs().forEach((l) -> {
+				if (l.isCover()) {
+					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
+						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
+						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+				}
+			});
+		});
+
+
+    	return true;
 	}
 
 	private boolean examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {

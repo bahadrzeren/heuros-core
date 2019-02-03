@@ -45,8 +45,6 @@ public interface LegView extends View {
 
 	public int getBlockTimeInMins();
 
-	public int getNumOfDutiesWoDh();
-
 	public boolean hasAcChangeWith(LegView nl);
 
 	public double getScore();
@@ -61,6 +59,7 @@ public interface LegView extends View {
 	 * TODO HB impl will be changed!
 	 */
 	public int getNumOfIncludingDuties();
+	public int getNumOfIncludingDutiesWoDh();
 	public int getNumOfDutiesIncludesHbDep(int hbNdx);
 	public int getNumOfDutiesIncludesHbArr(int hbNdx);
 	public int getNumOfDutiesIncludesNonHbDep(int hbNdx);

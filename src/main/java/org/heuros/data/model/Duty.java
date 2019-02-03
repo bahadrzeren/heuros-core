@@ -46,7 +46,9 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private Stack<Integer> longestBlockTimesInMins = new Stack<Integer>();
 
-	private int totalNumOfIncludingDutiesOfTheSameLegs = 0;
+	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
+	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
+	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
 	private DutyHbSpec[] dutyHbSpecs = null;
@@ -373,17 +375,34 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 
 
+
 	@Override
-	public int getTotalNumOfIncludingDutiesOfTheSameLegs() {
-		return totalNumOfIncludingDutiesOfTheSameLegs;
+	public int getMinNumOfAlternativeDuties() {
+		return minNumOfAlternativeDuties;
 	}
-	public void setTotalNumOfIncludingDutiesOfTheSameLegs(int totalNumOfIncludingDutiesOfTheSameLegs) {
-		this.totalNumOfIncludingDutiesOfTheSameLegs = totalNumOfIncludingDutiesOfTheSameLegs;
+	public void setMinNumOfAlternativeDuties(int minNumOfAlternativeDuties) {
+		this.minNumOfAlternativeDuties = minNumOfAlternativeDuties;
 	}
-	public void incTotalNumOfIncludingDutiesOfTheSameLegs(int totalNumOfIncludingDutiesOfTheSameLegs) {
-		this.totalNumOfIncludingDutiesOfTheSameLegs += totalNumOfIncludingDutiesOfTheSameLegs;
+	@Override
+	public int getMinNumOfAlternativeDutiesWoDh() {
+		return minNumOfAlternativeDutiesWoDh;
+	}
+	public void setMinNumOfAlternativeDutiesWoDh(int minNumOfAlternativeDutiesWoDh) {
+		this.minNumOfAlternativeDutiesWoDh = minNumOfAlternativeDutiesWoDh;
 	}
 
+	@Override
+	public int getTotalNumOfAlternativeDuties() {
+		return totalNumOfAlternativeDuties;
+	}
+	public void setTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
+		this.totalNumOfAlternativeDuties = totalNumOfAlternativeDuties;
+	}
+	public void incTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
+		this.totalNumOfAlternativeDuties += totalNumOfAlternativeDuties;
+	}
+
+	@Override
 	public int getTotalNumOfAlternativeDutiesWoDh() {
 		return totalNumOfAlternativeDutiesWoDh;
 	}
@@ -575,7 +594,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 												", PBT:" + this.blockTimeInMinsPassive +
 												", A#L:" + this.numOfLegsActive + 
 												", P#L:" + this.numOfLegsPassive +
-												", Alt#D:" + this.totalNumOfIncludingDutiesOfTheSameLegs +
+												", Alt#D:" + this.totalNumOfAlternativeDuties +
 												", ZeroDhAlt#D:" + this.totalNumOfAlternativeDutiesWoDh +
 												"\n");
 		this.legs.forEach((l) -> sb.append(l).append("\n"));

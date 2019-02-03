@@ -35,7 +35,7 @@ public class Leg extends AbstractModel implements LegView {
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
 	private int numOfIncludingDuties = 0;
-	private int numOfDutiesWoDh = 0;
+	private int numOfIncludingDutiesWoDh = 0;
 
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
@@ -235,16 +235,16 @@ public class Leg extends AbstractModel implements LegView {
 		this.numOfIncludingDuties++;
 	}
 
-	public int getNumOfDutiesWoDh() {
-		return numOfDutiesWoDh;
+	public int getNumOfIncludingDutiesWoDh() {
+		return numOfIncludingDutiesWoDh;
 	}
 
-	public void incNumOfDutiesWoDh() {
-		this.numOfDutiesWoDh++;
+	public void incNumOfIncludingDutiesWoDh() {
+		this.numOfIncludingDutiesWoDh++;
 	}
 
-	public void setNumOfDutiesWoDh(int numOfDutiesWoDh) {
-		this.numOfDutiesWoDh = numOfDutiesWoDh;
+	public void setNumOfIncludingDutiesWoDh(int numOfDutiesWoDh) {
+		this.numOfIncludingDutiesWoDh = numOfDutiesWoDh;
 	}
 
 	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
@@ -381,7 +381,7 @@ public class Leg extends AbstractModel implements LegView {
 					.append(",").append(serviceType)
 					.append(",").append(needsCockpitCrew)
 					.append(",").append(needsCabinCrew)
-					.append(", ZeroDh/Total#D:").append(numOfDutiesWoDh).append("/").append(numOfIncludingDuties)
+					.append(", ZeroDh/Total#D:").append(numOfIncludingDutiesWoDh).append("/").append(numOfIncludingDuties)
 					.toString();
 	}
 

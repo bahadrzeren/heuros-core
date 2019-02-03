@@ -149,6 +149,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 //System.out.println(pairingFound);
 
             			if (d.isValid(this.hbNdx)
+            					&& d.hasPairing(this.hbNdx)
             					&& (!dutiesChecked[d.getNdx()])) {
 
 //if ((l.getNdx() == 1017) && (d.getNdx() == 7045))
