@@ -48,6 +48,8 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
 	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
+	private int maxNumOfAlternativeDuties = 0;
+	private int maxNumOfAlternativeDutiesWoDh = 0;
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
@@ -390,7 +392,20 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void setMinNumOfAlternativeDutiesWoDh(int minNumOfAlternativeDutiesWoDh) {
 		this.minNumOfAlternativeDutiesWoDh = minNumOfAlternativeDutiesWoDh;
 	}
-
+	@Override
+	public int getMaxNumOfAlternativeDuties() {
+		return maxNumOfAlternativeDuties;
+	}
+	public void setMaxNumOfAlternativeDuties(int maxNumOfAlternativeDuties) {
+		this.maxNumOfAlternativeDuties = maxNumOfAlternativeDuties;
+	}
+	@Override
+	public int getMaxNumOfAlternativeDutiesWoDh() {
+		return maxNumOfAlternativeDutiesWoDh;
+	}
+	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
+		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
+	}
 	@Override
 	public int getTotalNumOfAlternativeDuties() {
 		return totalNumOfAlternativeDuties;
@@ -594,6 +609,10 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 												", PBT:" + this.blockTimeInMinsPassive +
 												", A#L:" + this.numOfLegsActive + 
 												", P#L:" + this.numOfLegsPassive +
+												", AltMin#D:" + this.minNumOfAlternativeDuties +
+												", ZeroDhAltMin#D:" + this.minNumOfAlternativeDutiesWoDh +
+												", AltMax#D:" + this.maxNumOfAlternativeDuties +
+												", ZeroDhAltMax#D:" + this.maxNumOfAlternativeDutiesWoDh +
 												", Alt#D:" + this.totalNumOfAlternativeDuties +
 												", ZeroDhAlt#D:" + this.totalNumOfAlternativeDutiesWoDh +
 												"\n");

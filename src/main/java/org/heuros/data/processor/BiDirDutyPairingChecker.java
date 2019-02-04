@@ -228,14 +228,18 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 		 */
 		duties.forEach((d) -> {
 			d.getLegs().forEach((l) -> {
-				if (l.isCover()) {
+//				if (l.isCover()) {
 					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
 					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
 					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
 						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
 					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
 						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-				}
+					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
+						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
+						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+//				}
 			});
 		});
 
