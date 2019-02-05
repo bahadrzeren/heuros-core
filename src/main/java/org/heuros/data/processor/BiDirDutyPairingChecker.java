@@ -9,8 +9,7 @@ import org.apache.log4j.Logger;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
-import org.heuros.data.model.LegView;
+import org.heuros.data.model.Leg;
 import org.heuros.data.model.Pair;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.PairRuleContext;
@@ -75,8 +74,7 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 			logger.error("Pairing must be complete!");
 		int apNdx = p.getFirstDepAirport().getNdx();
 		for (int i = 0; i < p.getNumOfDuties(); i++) {
-			DutyView dv = p.getDuties().get(i);
-			Duty d = this.duties.get(dv.getNdx());
+			Duty d = p.getDuties().get(i);
 			if (apNdx != d.getFirstDepAirport().getNdx())
 				logger.error("Invalid spatial connection exception!");
 			apNdx = d.getLastArrAirport().getNdx();
@@ -243,11 +241,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 			});
 		});
 
-
-    	return true;
+		return true;
 	}
 
-	private boolean examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
+	private boolean examinePairFW(Pair p, Duty fd, Duty ld, Leg fl, Leg ll, boolean hbDep, boolean hbArr, int dept) {
 
 		if (hbArr)
 			logger.error("Invalid search direction!");
@@ -335,7 +332,7 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 		return pairingFound;
 	}
 
-	private boolean examinePairBW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
+	private boolean examinePairBW(Pair p, Duty fd, Duty ld, Leg fl, Leg ll, boolean hbDep, boolean hbArr, int dept) {
 
 		if (hbDep)
 			logger.error("Invalid search direction!");

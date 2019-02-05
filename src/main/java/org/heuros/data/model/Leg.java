@@ -41,6 +41,8 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
+	private boolean critical = false;
+
 	/*
 	 * TODO Change this name!
 	 */
@@ -309,6 +311,14 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setSpecialFlight(boolean specialFlight) {
 		this.specialFlight = specialFlight;
+	}
+
+	public boolean isCritical() {
+		return critical;
+	}
+
+	public void setCritical(boolean critical) {
+		this.critical = critical;
 	}
 
 	public boolean isCover() {

@@ -52,6 +52,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int maxNumOfAlternativeDutiesWoDh = 0;
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
+	private Leg criticalLeg = null;
 
 	private DutyHbSpec[] dutyHbSpecs = null;
 	public DutyHbSpec[] getDutyHbSpecs() {
@@ -426,6 +427,14 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	}
 	public void incTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
 		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
+	}
+
+	@Override
+	public Leg getCriticalLeg() {
+		return criticalLeg;
+	}
+	public void setCriticalLeg(Leg criticalLeg) {
+		this.criticalLeg = criticalLeg;
 	}
 
 	@Override

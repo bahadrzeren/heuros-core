@@ -10,9 +10,7 @@ import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
-import org.heuros.data.model.DutyView;
 import org.heuros.data.model.Leg;
-import org.heuros.data.model.LegView;
 import org.heuros.data.model.Pair;
 import org.heuros.rule.DutyRuleContext;
 import org.heuros.rule.PairRuleContext;
@@ -89,13 +87,12 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 			logger.error("Pairing must be complete!");
 		int apNdx = p.getFirstDepAirport().getNdx();
 		for (int i = 0; i < p.getNumOfDuties(); i++) {
-			DutyView d = p.getDuties().get(i);
+			Duty d = p.getDuties().get(i);
 			if (apNdx != d.getFirstDepAirport().getNdx())
 				logger.error("Invalid spatial connection exception!");
 			apNdx = d.getLastArrAirport().getNdx();
 			for (int j = 0; j < d.getNumOfLegs(); j++) {
-				LegView lv = d.getLegs().get(j);
-				Leg l = this.legs.get(lv.getNdx());
+				Leg l = d.getLegs().get(j);
 				l.setHasPair(this.hbNdx, true);
 				if (p.getNumOfDuties() == 1) {
 					l.setHasHbDepArrDutyPair(this.hbNdx, true);
@@ -123,7 +120,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 		for (int li = 0; li < this.legs.size(); li++) {
     		Leg l = this.legs.get(li);
 
-            if (l.isCover()
+    		if (l.isCover()
             		&& l.getSobt().isBefore(coverPeriodEndExc)) {
 //            	int pairingFound = 0;
 //            	if (l.hasHbDepArrDutyPair(this.hbNdx))
@@ -138,7 +135,11 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 //if (l.getNdx() == 40745)
 //System.out.println(pairingFound);
 
-            	Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
+	    		int[] legAssociationVector = new int[this.legs.size()];
+	    		int numOfDuties = 0;
+	    		int maxNumOfAssociations = 0;
+
+    			Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
 
             	if ((ds != null)
             			&& (ds.length > 0)) {
@@ -279,14 +280,48 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 								    		}
 								    		dutiesChecked[d.getNdx()] = true;
 							    		}
-	    				}
 
-//if ((l.getNdx() == 1017) && ((pairingFound & (1 << 2)) > 0))
-//System.out.println(pairingFound);
-
-//            			if (pairingFound == 15)
-//            				break;
+				    		/*
+				    		 * Legs association identification!
+				    		 */
+				    		numOfDuties++;
+				    		for (int cli = 0; cli < d.getLegs().size(); cli++) {
+				    			Leg cl = d.getLegs().get(cli);
+				    			if (cl.isCover()
+				    					&& (cl.getNdx() != l.getNdx()))
+				    				legAssociationVector[cl.getNdx()]++;
+				    			if (maxNumOfAssociations < legAssociationVector[cl.getNdx()])
+				    				maxNumOfAssociations = legAssociationVector[cl.getNdx()];
+				    		}
+            			}
             		}
+
+            		/*
+            		 * Critical legs & duties identification.
+            		 */
+            		if (numOfDuties == maxNumOfAssociations) {
+			    		for (int ali = 0; ali < legAssociationVector.length; ali++) {
+			    			if (legAssociationVector[ali] == maxNumOfAssociations) {
+			    				Duty[] aDuties = this.dutyIndexByLegNdx.getArray(ali);
+			    				for (Duty aDuty : aDuties) {
+			    					if (aDuty.isValid(hbNdx)
+			    							&& aDuty.hasPairing(hbNdx)) {
+										boolean hasCriticalLeg = false;
+										for (int aldi = 0; aldi < aDuty.getLegs().size(); aldi++) {
+											if (aDuty.getLegs().get(aldi).getNdx() == l.getNdx()) {
+												hasCriticalLeg = true;
+												break;
+											}
+										}
+										if (!hasCriticalLeg) {
+											aDuty.setCriticalLeg(l);
+											l.setCritical(true);
+										}
+			    					}
+								}
+			    			}
+			    		}
+		    		}
     			}
 //        		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
 	    	}
@@ -297,7 +332,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 		return true;
 	}
 
-	private boolean examinePairFW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
+	private boolean examinePairFW(Pair p, Duty fd, Duty ld, Leg fl, Leg ll, boolean hbDep, boolean hbArr, int dept) {
 
 		if (hbArr)
 			logger.error("Invalid search direction!");
@@ -378,7 +413,7 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 		return pairingFound;
 	}
 
-	private boolean examinePairBW(Pair p, Duty fd, Duty ld, LegView fl, LegView ll, boolean hbDep, boolean hbArr, int dept) {
+	private boolean examinePairBW(Pair p, Duty fd, Duty ld, Leg fl, Leg ll, boolean hbDep, boolean hbArr, int dept) {
 
 		if (hbDep)
 			logger.error("Invalid search direction!");
