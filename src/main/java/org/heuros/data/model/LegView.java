@@ -41,14 +41,13 @@ public interface LegView extends View {
 	public boolean isDeadheadable();
 	public boolean isSpecialFlight();
 	public boolean isCritical();
+	public boolean isCriticalWoDh();
 
 	public boolean isCover();
 
 	public int getBlockTimeInMins();
 
 	public boolean hasAcChangeWith(LegView nl);
-
-	public double getScore();
 
 	public boolean hasPair(int hbNdx);
 	public boolean hasHbDepArrDutyPair(int hbNdx);

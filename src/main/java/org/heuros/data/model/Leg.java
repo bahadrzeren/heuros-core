@@ -29,8 +29,6 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
-	private double score = 0.0;
-
 	/*
 	 * TODO Change this name as numOfIncludingDuties.
 	 */
@@ -42,6 +40,7 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean specialFlight = false;
 
 	private boolean critical = false;
+	private boolean criticalWoDh = false;
 
 	/*
 	 * TODO Change this name!
@@ -217,14 +216,6 @@ public class Leg extends AbstractModel implements LegView {
 		this.inFleet = inFleet;
 	}
 
-	public double getScore() {
-		return score;
-	}
-
-	public void setScore(double score) {
-		this.score = score;
-	}
-
 	public int getNumOfIncludingDuties() {
 		return numOfIncludingDuties;
 	}
@@ -319,6 +310,14 @@ public class Leg extends AbstractModel implements LegView {
 
 	public void setCritical(boolean critical) {
 		this.critical = critical;
+	}
+
+	public boolean isCriticalWoDh() {
+		return criticalWoDh;
+	}
+
+	public void setCriticalWoDh(boolean criticalWoDh) {
+		this.criticalWoDh = criticalWoDh;
 	}
 
 	public boolean isCover() {

@@ -92,6 +92,7 @@ public interface DutyView extends View {
 	public int getTotalNumOfAlternativeDuties();
 	public int getTotalNumOfAlternativeDutiesWoDh();
 	public Leg getCriticalLeg();
+	public Leg getCriticalLegWoDh();
 
 	public boolean hasPairing(int hbNdx);
 
