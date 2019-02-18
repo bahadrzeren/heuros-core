@@ -135,13 +135,6 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 //if (l.getNdx() == 40745)
 //System.out.println(pairingFound);
 
-	    		int[] legAssociationVector = new int[this.legs.size()];
-	    		int[] legAssociationVectorWoDh = new int[this.legs.size()];
-	    		int numOfDuties = 0;
-	    		int numOfDutiesWoDh = 0;
-	    		int maxNumOfAssociations = 0;
-	    		int maxNumOfAssociationsWoDh = 0;
-
     			Duty[] ds = this.dutyIndexByLegNdx.getArray(l.getNdx());
 
             	if ((ds != null)
@@ -283,83 +276,8 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 								    		}
 								    		dutiesChecked[d.getNdx()] = true;
 							    		}
-
-				    		/*
-				    		 * Legs association identification!
-				    		 */
-				    		numOfDuties++;
-				    		if (d.getNumOfLegsPassive() == 0)
-				    			numOfDutiesWoDh++;
-				    		for (int cli = 0; cli < d.getLegs().size(); cli++) {
-				    			Leg cl = d.getLegs().get(cli);
-				    			if (cl.isCover()
-				    					&& (cl.getNdx() != l.getNdx())) {
-				    				legAssociationVector[cl.getNdx()]++;
-					    			if (d.getNumOfLegsPassive() == 0)
-					    				legAssociationVectorWoDh[cl.getNdx()]++;
-				    			}
-				    			if (maxNumOfAssociations < legAssociationVector[cl.getNdx()])
-				    				maxNumOfAssociations = legAssociationVector[cl.getNdx()];
-				    			if (maxNumOfAssociationsWoDh < legAssociationVectorWoDh[cl.getNdx()])
-				    				maxNumOfAssociationsWoDh = legAssociationVectorWoDh[cl.getNdx()];
-				    		}
             			}
             		}
-
-            		/*
-            		 * Critical legs & duties identification.
-            		 */
-            		if (numOfDuties == maxNumOfAssociations) {
-			    		for (int ali = 0; ali < legAssociationVector.length; ali++) {
-			    			if (legAssociationVector[ali] == maxNumOfAssociations) {
-			    				Duty[] aDuties = dutyIndexByLegNdx.getArray(ali);
-			    				for (Duty aDuty : aDuties) {
-			    					if (aDuty.isValid(hbNdx)
-			    							&& aDuty.hasPairing(hbNdx)) {
-										boolean hasCriticalLeg = false;
-										for (int aldi = 0; aldi < aDuty.getLegs().size(); aldi++) {
-											if (aDuty.getLegs().get(aldi).getNdx() == l.getNdx()) {
-												hasCriticalLeg = true;
-												break;
-											}
-										}
-										if (!hasCriticalLeg) {
-											aDuty.setCriticalLeg(l);
-											l.setCritical(true);
-										}
-			    					}
-								}
-			    			}
-			    		}
-		    		}
-            		if (numOfDutiesWoDh == maxNumOfAssociationsWoDh) {
-			    		for (int ali = 0; ali < legAssociationVectorWoDh.length; ali++) {
-			    			if (legAssociationVectorWoDh[ali] == maxNumOfAssociationsWoDh) {
-			    				Duty[] aDuties = dutyIndexByLegNdx.getArray(ali);
-			    				for (Duty aDuty : aDuties) {
-			    					if (aDuty.isValid(hbNdx)
-			    							&& aDuty.hasPairing(hbNdx)
-			    							/*
-			    							 * Critical duties are not necessarily DH free. 
-			    							 */
-//			    							&& (aDuty.getNumOfLegsPassive() == 0)
-			    							) {
-										boolean hasCriticalLeg = false;
-										for (int aldi = 0; aldi < aDuty.getLegs().size(); aldi++) {
-											if (aDuty.getLegs().get(aldi).getNdx() == l.getNdx()) {
-												hasCriticalLeg = true;
-												break;
-											}
-										}
-										if (!hasCriticalLeg) {
-											aDuty.setCriticalLegWoDh(l);
-											l.setCriticalWoDh(true);
-										}
-			    					}
-								}
-			    			}
-			    		}
-		    		}
     			}
 //        		logger.info(l + " - " + l.hasHbDepArrDutyPair(this.hbNdx) + " " + l.hasHbDepDutyPair(this.hbNdx) + " " + l.hasNonHbDutyPair(this.hbNdx) + " " + l.hasHbArrDutyPair(this.hbNdx));
 	    	}

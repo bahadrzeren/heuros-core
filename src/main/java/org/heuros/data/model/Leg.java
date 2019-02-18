@@ -39,8 +39,18 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
-	private boolean critical = false;
-	private boolean criticalWoDh = false;
+	/*
+	 * How many critical legs that can make it DH exist ?
+	 */
+	private int potentialDhLevel = 0;
+	/*
+	 * What is the total number of duties * legs ?
+	 */
+	private int potentialDhMagnitude = 0;
+	/*
+	 * Which legs would be DH if the is covered before ?
+	 */
+	private Leg[] dhCandidates = {null, null, null, null, null};
 
 	/*
 	 * TODO Change this name!
