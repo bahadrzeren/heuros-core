@@ -53,7 +53,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
-	private int minPotentialDhLevel = 0;
+	private int totalNumOfPotentialIndirectDhLegs = 0;
 
 	private DutyHbSpec[] dutyHbSpecs = null;
 	public DutyHbSpec[] getDutyHbSpecs() {
@@ -430,19 +430,30 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
 	}
 
+//	@Override
+//	public Leg getCriticalLeg() {
+//		return criticalLeg;
+//	}
+//	public void setCriticalLeg(Leg criticalLeg) {
+//		this.criticalLeg = criticalLeg;
+//	}
+//	@Override
+//	public Leg getCriticalLegWoDh() {
+//		return criticalLegWoDh;
+//	}
+//	public void setCriticalLegWoDh(Leg criticalLegWoDh) {
+//		this.criticalLegWoDh = criticalLegWoDh;
+//	}
+
 	@Override
-	public Leg getCriticalLeg() {
-		return criticalLeg;
+	public int getTotalNumOfPotentialIndirectDhLegs() {
+		return totalNumOfPotentialIndirectDhLegs;
 	}
-	public void setCriticalLeg(Leg criticalLeg) {
-		this.criticalLeg = criticalLeg;
+	public void incTotalNumOfPotentialIndirectDhLegs() {
+		this.totalNumOfPotentialIndirectDhLegs++;
 	}
-	@Override
-	public Leg getCriticalLegWoDh() {
-		return criticalLegWoDh;
-	}
-	public void setCriticalLegWoDh(Leg criticalLegWoDh) {
-		this.criticalLegWoDh = criticalLegWoDh;
+	public void setTotalNumOfPotentialIndirectDhLegs(int totalNumOfPotentialIndirectDhLegs) {
+		this.totalNumOfPotentialIndirectDhLegs = totalNumOfPotentialIndirectDhLegs;
 	}
 
 	@Override

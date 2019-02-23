@@ -40,8 +40,8 @@ public interface LegView extends View {
 	public boolean isInFleet();
 	public boolean isDeadheadable();
 	public boolean isSpecialFlight();
-	public boolean isCritical();
-	public boolean isCriticalWoDh();
+//	public boolean isCritical();
+//	public boolean isCriticalWoDh();
 
 	public boolean isCover();
 

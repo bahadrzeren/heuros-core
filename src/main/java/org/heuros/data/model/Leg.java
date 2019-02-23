@@ -1,6 +1,8 @@
 package org.heuros.data.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.heuros.core.data.base.AbstractModel;
 
@@ -40,17 +42,13 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean specialFlight = false;
 
 	/*
-	 * How many critical legs that can make it DH exist ?
+	 * How many critical legs that can make this leg DH exist ?
 	 */
 	private int potentialDhLevel = 0;
 	/*
-	 * What is the total number of duties * legs ?
+	 * Which legs would become potential DH if this leg is covered before ?
 	 */
-	private int potentialDhMagnitude = 0;
-	/*
-	 * Which legs would be DH if the is covered before ?
-	 */
-	private Leg[] dhCandidates = {null, null, null, null, null};
+	private List<Leg> dhCandidates = new ArrayList<Leg>();
 
 	/*
 	 * TODO Change this name!
@@ -64,284 +62,297 @@ public class Leg extends AbstractModel implements LegView {
 	private Leg() {
 	}
 
+	@Override
 	public String getCarrier() {
 		return carrier;
 	}
-
 	public void setCarrier(String carrier) {
 		this.carrier = carrier;
 	}
 
+	@Override
 	public int getFlightNo() {
 		return flightNo;
 	}
-
 	public void setFlightNo(int flightNo) {
 		this.flightNo = flightNo;
 	}
 
+	@Override
 	public String getSuffix() {
 		return suffix;
 	}
-
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
 
+	@Override
 	public String getDep() {
 		return dep;
 	}
-
 	public void setDep(String dep) {
 		this.dep = dep;
 	}
 
+	@Override
 	public String getArr() {
 		return arr;
 	}
-
 	public void setArr(String arr) {
 		this.arr = arr;
 	}
 
+	@Override
 	public AirportView getDepAirport() {
 		return depAirport;
 	}
-
 	public void setDepAirport(AirportView depAirport) {
 		this.depAirport = depAirport;
 	}
 
+	@Override
 	public AirportView getArrAirport() {
 		return arrAirport;
 	}
-
 	public void setArrAirport(AirportView arrAirport) {
 		this.arrAirport = arrAirport;
 	}
 
+	@Override
 	public String getAcType() {
 		return acType;
 	}
-
 	public void setAcType(String acType) {
 		this.acType = acType;
 	}
 
+	@Override
 	public String getServiceType() {
 		return serviceType;
 	}
-
 	public void setServiceType(String serviceType) {
 		this.serviceType = serviceType;
 	}
 
+	@Override
 	public LocalDateTime getSobt() {
 		return sobt;
 	}
-
 	public void setSobt(LocalDateTime sobt) {
 		this.sobt = sobt;
 	}
 
+	@Override
 	public LocalDateTime getSibt() {
 		return sibt;
 	}
-
 	public void setSibt(LocalDateTime sibt) {
 		this.sibt = sibt;
 	}
 
+	@Override
 	public int getDepOffset() {
 		return depOffset;
 	}
-
 	public void setDepOffset(int depOffset) {
 		this.depOffset = depOffset;
 	}
 
+	@Override
 	public int getArrOffset() {
 		return arrOffset;
 	}
-
 	public void setArrOffset(int arrOffset) {
 		this.arrOffset = arrOffset;
 	}
 
+	@Override
 	public int getAcSequence() {
 		return acSequence;
 	}
-
 	public void setAcSequence(int acSequence) {
 		this.acSequence = acSequence;
 	}
 
+	@Override
 	public boolean isNeedsCockpitCrew() {
 		return needsCockpitCrew;
 	}
-
 	public void setNeedsCockpitCrew(boolean needsCockpitCrew) {
 		this.needsCockpitCrew = needsCockpitCrew;
 	}
 
+	@Override
 	public boolean isNeedsCabinCrew() {
 		return needsCabinCrew;
 	}
-
 	public void setNeedsCabinCrew(boolean needsCabinCrew) {
 		this.needsCabinCrew = needsCabinCrew;
 	}
 
+	@Override
 	public boolean isAnyHbDep() {
 		return this.depAirport.isAnyHb();
 	}
+	@Override
 	public boolean isAnyHbArr() {
 		return this.arrAirport.isAnyHb();
 	}
+	@Override
 	public boolean isAnyNonHbDep() {
 		return this.depAirport.isAnyNonHb();
 	}
+	@Override
 	public boolean isAnyNonHbArr() {
 		return this.arrAirport.isAnyNonHb();
 	}
+	@Override
 	public boolean isHbDep(int hbNdx) {
 		return this.depAirport.isHb(hbNdx);
 	}
+	@Override
 	public boolean isHbArr(int hbNdx) {
 		return this.arrAirport.isHb(hbNdx);
 	}
+	@Override
 	public boolean isNonHbDep(int hbNdx) {
 		return this.depAirport.isNonHb(hbNdx);
 	}
+	@Override
 	public boolean isNonHbArr(int hbNdx) {
 		return this.arrAirport.isNonHb(hbNdx);
 	}
 
-
+	@Override
 	public boolean isInFleet() {
 		return inFleet;
 	}
-
 	public void setInFleet(boolean inFleet) {
 		this.inFleet = inFleet;
 	}
 
+	@Override
 	public int getNumOfIncludingDuties() {
 		return numOfIncludingDuties;
 	}
-
 	public void setNumOfIncludingDuties(int numOfIncludingDuties) {
 		this.numOfIncludingDuties = numOfIncludingDuties;
 	}
-
 	public void incNumOfIncludingDuties() {
 		this.numOfIncludingDuties++;
 	}
 
+	@Override
 	public int getNumOfIncludingDutiesWoDh() {
 		return numOfIncludingDutiesWoDh;
 	}
-
 	public void incNumOfIncludingDutiesWoDh() {
 		this.numOfIncludingDutiesWoDh++;
 	}
-
 	public void setNumOfIncludingDutiesWoDh(int numOfDutiesWoDh) {
 		this.numOfIncludingDutiesWoDh = numOfDutiesWoDh;
 	}
 
+	@Override
 	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
 		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbDep();
 	}
-
 	public void setNumOfDutiesIncludesHbDep(int hbNdx, int numOfDutiesIncludesHbDep) {
 		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbDep(numOfDutiesIncludesHbDep);
 	}
-
 	public void incNumOfDutiesIncludesHbDep(int hbNdx) {
 		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbDep();
 	}
 
+	@Override
 	public int getNumOfDutiesIncludesHbArr(int hbNdx) {
 		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbArr();
 	}
-
 	public void setNumOfDutiesIncludesHbArr(int hbNdx, int numOfDutiesIncludesHbArr) {
 		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbArr(numOfDutiesIncludesHbArr);
 	}
-
 	public void incNumOfDutiesIncludesHbArr(int hbNdx) {
 		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbArr();
 	}
 
+	@Override
 	public int getNumOfDutiesIncludesNonHbDep(int hbNdx) {
 		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbDep();
 	}
-
 	public void setNumOfDutiesIncludesNonHbDep(int hbNdx, int numOfDutiesIncludesNonHbDep) {
 		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbDep(numOfDutiesIncludesNonHbDep);
 	}
-
 	public void incNumOfDutiesIncludesNonHbDep(int hbNdx) {
 		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbDep();
 	}
 
+	@Override
 	public int getNumOfDutiesIncludesNonHbArr(int hbNdx) {
 		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbArr();
 	}
-
 	public void setNumOfDutiesIncludesNonHbArr(int hbNdx, int numOfDutiesIncludesNonHbArr) {
 		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbArr(numOfDutiesIncludesNonHbArr);
 	}
-
 	public void incNumOfDutiesIncludesNonHbArr(int hbNdx) {
 		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbArr();
 	}
 
+	@Override
 	public boolean isDeadheadable() {
 		return deadheadable;
 	}
-
 	public void setDeadheadable(boolean deadheadable) {
 		this.deadheadable = deadheadable;
 	}
 
+	@Override
 	public boolean isSpecialFlight() {
 		return specialFlight;
 	}
-
 	public void setSpecialFlight(boolean specialFlight) {
 		this.specialFlight = specialFlight;
 	}
 
-	public boolean isCritical() {
-		return critical;
+//	public boolean isCritical() {
+//		return critical;
+//	}
+//	public void setCritical(boolean critical) {
+//		this.critical = critical;
+//	}
+//	public boolean isCriticalWoDh() {
+//		return criticalWoDh;
+//	}
+//	public void setCriticalWoDh(boolean criticalWoDh) {
+//		this.criticalWoDh = criticalWoDh;
+//	}
+
+
+	public int getPotentialDhLevel() {
+		return potentialDhLevel;
+	}
+	public void setPotentialDhLevel(int potentialDhLevel) {
+		this.potentialDhLevel = potentialDhLevel;
 	}
 
-	public void setCritical(boolean critical) {
-		this.critical = critical;
+	public List<Leg> getDhCandidates() {
+		return dhCandidates;
+	}
+	public void setDhCandidates(List<Leg> dhCandidates) {
+		this.dhCandidates = dhCandidates;
 	}
 
-	public boolean isCriticalWoDh() {
-		return criticalWoDh;
-	}
-
-	public void setCriticalWoDh(boolean criticalWoDh) {
-		this.criticalWoDh = criticalWoDh;
-	}
-
+	@Override
 	public boolean isCover() {
 		return cover;
 	}
-
 	public void setCover(boolean cover) {
 		this.cover = cover;
 	}
 
+	@Override
 	public int getBlockTimeInMins() {
 		return blockTimeInMins;
 	}
-
 	public void setBlockTimeInMins(int blockTimeInMins) {
 		this.blockTimeInMins = blockTimeInMins;
 	}
@@ -363,22 +374,28 @@ public class Leg extends AbstractModel implements LegView {
 		this.legHbSpecs[hbNdx].setHasHbArrDutyPair(value);
 	}
 
+	@Override
 	public boolean hasPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasPair();
 	}
+	@Override
 	public boolean hasHbDepArrDutyPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasHbDepArrDutyPair();
 	}
+	@Override
 	public boolean hasHbDepDutyPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasHbDepDutyPair();
 	}
+	@Override
 	public boolean hasNonHbDutyPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasNonHbDutyPair();
 	}
+	@Override
 	public boolean hasHbArrDutyPair(int hbNdx) {
 		return this.legHbSpecs[hbNdx].isHasHbArrDutyPair();
 	}
 
+	@Override
 	public boolean hasAcChangeWith(LegView nl) {
 		return (!getAcType().equals(nl.getAcType())) || (getAcSequence() != nl.getAcSequence());
 	}
