@@ -1,9 +1,6 @@
 package org.heuros.data.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.heuros.core.data.base.AbstractModel;
 
 /**
@@ -41,14 +38,7 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
-	/*
-	 * How many critical legs that can make this leg DH exist ?
-	 */
-	private int potentialDhLevel = 0;
-	/*
-	 * Which legs would become potential DH if this leg is covered before ?
-	 */
-	private List<Leg> dhCandidates = new ArrayList<Leg>();
+	private boolean potentialDh = false;
 
 	/*
 	 * TODO Change this name!
@@ -327,18 +317,11 @@ public class Leg extends AbstractModel implements LegView {
 //	}
 
 
-	public int getPotentialDhLevel() {
-		return potentialDhLevel;
+	public boolean isPotentialDh() {
+		return potentialDh;
 	}
-	public void setPotentialDhLevel(int potentialDhLevel) {
-		this.potentialDhLevel = potentialDhLevel;
-	}
-
-	public List<Leg> getDhCandidates() {
-		return dhCandidates;
-	}
-	public void setDhCandidates(List<Leg> dhCandidates) {
-		this.dhCandidates = dhCandidates;
+	public void setPotentialDh(boolean potentialDh) {
+		this.potentialDh = potentialDh;
 	}
 
 	@Override

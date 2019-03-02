@@ -53,7 +53,7 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
-	private int totalNumOfPotentialIndirectDhLegs = 0;
+	private boolean dhCritical = false;
 
 	private DutyHbSpec[] dutyHbSpecs = null;
 	public DutyHbSpec[] getDutyHbSpecs() {
@@ -445,15 +445,13 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 //		this.criticalLegWoDh = criticalLegWoDh;
 //	}
 
+
 	@Override
-	public int getTotalNumOfPotentialIndirectDhLegs() {
-		return totalNumOfPotentialIndirectDhLegs;
+	public boolean isDhCritical() {
+		return dhCritical;
 	}
-	public void incTotalNumOfPotentialIndirectDhLegs() {
-		this.totalNumOfPotentialIndirectDhLegs++;
-	}
-	public void setTotalNumOfPotentialIndirectDhLegs(int totalNumOfPotentialIndirectDhLegs) {
-		this.totalNumOfPotentialIndirectDhLegs = totalNumOfPotentialIndirectDhLegs;
+	public void setDhCritical(boolean dhCritical) {
+		this.dhCritical = dhCritical;
 	}
 
 	@Override
