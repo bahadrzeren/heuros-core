@@ -53,6 +53,13 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
+	private int minNumOfAlternativeEffectiveDuties = Integer.MAX_VALUE;
+	private int minNumOfAlternativeEffectiveDutiesWoDh = Integer.MAX_VALUE;
+	private int maxNumOfAlternativeEffectiveDuties = 0;
+	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
+	private int totalNumOfAlternativeEffectiveDuties = 0;
+	private int totalNumOfAlternativeDutiesEffectiveWoDh = 0;
+
 	private boolean dhCritical = false;
 
 	private DutyHbSpec[] dutyHbSpecs = null;

@@ -34,6 +34,9 @@ public class Leg extends AbstractModel implements LegView {
 	private int numOfIncludingDuties = 0;
 	private int numOfIncludingDutiesWoDh = 0;
 
+	private int numOfIncludingEffectiveDuties = 0;
+	private int numOfIncludingEffectiveDutiesWoDh = 0;
+
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
