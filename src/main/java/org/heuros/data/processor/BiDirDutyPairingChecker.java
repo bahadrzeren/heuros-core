@@ -203,43 +203,48 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 					l.incNumOfIncludingDuties();
 					if (d.getNumOfLegsPassive() == 0)
 						l.incNumOfIncludingDutiesWoDh();
-					if (d.getFirstDepAirport().isHb(hbNdx)) {
-						l.incNumOfDutiesIncludesHbDep(hbNdx);
-					} else {
-						l.incNumOfDutiesIncludesNonHbDep(hbNdx);
-					}
-					if (d.getLastArrAirport().isHb(hbNdx)) {
-						l.incNumOfDutiesIncludesHbArr(hbNdx);
-					} else
-						l.incNumOfDutiesIncludesNonHbArr(hbNdx);
 
 					/*
-					 * Activating this block generates better results!
+					 * If blocktime is bigger than 4 hrs = 240 mins consider it as effective duty.
 					 */
-//					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-//					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+					if (d.getBlockTimeInMinsActive() >= 240) {
+						l.incNumOfIncludingEffectiveDuties();
+						if (d.getNumOfLegsPassive() == 0)
+							l.incNumOfIncludingEffectiveDutiesWoDh();
+					}
+
+//					if (d.getFirstDepAirport().isHb(hbNdx)) {
+//						l.incNumOfIncludingHbDepDuties(hbNdx);
+//					} else {
+//						l.incNumOfIncludingNonHbDepDuties(hbNdx);
+//					}
+//					if (d.getLastArrAirport().isHb(hbNdx)) {
+//						l.incNumOfIncludingHbArrDuties(hbNdx);
+//					} else {
+//						l.incNumOfIncludingNonHbArrDuties(hbNdx);
+//					}
 				});
 			}
 		});
 		/*
 		 * Set leg accumulators for duties.
 		 */
-		duties.forEach((d) -> {
-			d.getLegs().forEach((l) -> {
-//				if (l.isCover()) {
-					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
-						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
-						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
-						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
-						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-//				}
-			});
-		});
+//		duties.forEach((d) -> {
+//			d.getLegs().forEach((l) -> {
+////				if (l.isCover()) {
+//					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+//					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
+//						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
+//						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+//					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
+//						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
+//						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+////				}
+//			});
+//		});
 
 		return true;
 	}

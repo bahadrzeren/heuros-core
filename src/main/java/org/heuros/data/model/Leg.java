@@ -247,48 +247,72 @@ public class Leg extends AbstractModel implements LegView {
 	}
 
 	@Override
-	public int getNumOfDutiesIncludesHbDep(int hbNdx) {
-		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbDep();
+	public int getNumOfIncludingEffectiveDuties() {
+		return numOfIncludingEffectiveDuties;
 	}
-	public void setNumOfDutiesIncludesHbDep(int hbNdx, int numOfDutiesIncludesHbDep) {
-		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbDep(numOfDutiesIncludesHbDep);
+	public void setNumOfIncludingEffectiveDuties(int numOfIncludingEffectiveDuties) {
+		this.numOfIncludingEffectiveDuties = numOfIncludingEffectiveDuties;
 	}
-	public void incNumOfDutiesIncludesHbDep(int hbNdx) {
-		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbDep();
-	}
-
-	@Override
-	public int getNumOfDutiesIncludesHbArr(int hbNdx) {
-		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesHbArr();
-	}
-	public void setNumOfDutiesIncludesHbArr(int hbNdx, int numOfDutiesIncludesHbArr) {
-		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesHbArr(numOfDutiesIncludesHbArr);
-	}
-	public void incNumOfDutiesIncludesHbArr(int hbNdx) {
-		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesHbArr();
+	public void incNumOfIncludingEffectiveDuties() {
+		this.numOfIncludingEffectiveDuties++;
 	}
 
 	@Override
-	public int getNumOfDutiesIncludesNonHbDep(int hbNdx) {
-		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbDep();
+	public int getNumOfIncludingEffectiveDutiesWoDh() {
+		return numOfIncludingEffectiveDutiesWoDh;
 	}
-	public void setNumOfDutiesIncludesNonHbDep(int hbNdx, int numOfDutiesIncludesNonHbDep) {
-		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbDep(numOfDutiesIncludesNonHbDep);
+	public void setNumOfIncludingEffectiveDutiesWoDh(int numOfIncludingEffectiveDutiesWoDh) {
+		this.numOfIncludingEffectiveDutiesWoDh = numOfIncludingEffectiveDutiesWoDh;
 	}
-	public void incNumOfDutiesIncludesNonHbDep(int hbNdx) {
-		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbDep();
+	public void incNumOfIncludingEffectiveDutiesWoDh() {
+		this.numOfIncludingEffectiveDutiesWoDh++;
 	}
 
-	@Override
-	public int getNumOfDutiesIncludesNonHbArr(int hbNdx) {
-		return this.legHbSpecs[hbNdx].getNumOfDutiesIncludesNonHbArr();
-	}
-	public void setNumOfDutiesIncludesNonHbArr(int hbNdx, int numOfDutiesIncludesNonHbArr) {
-		this.legHbSpecs[hbNdx].setNumOfDutiesIncludesNonHbArr(numOfDutiesIncludesNonHbArr);
-	}
-	public void incNumOfDutiesIncludesNonHbArr(int hbNdx) {
-		this.legHbSpecs[hbNdx].incNumOfDutiesIncludesNonHbArr();
-	}
+
+
+//	@Override
+//	public int getNumOfIncludingHbDepDuties(int hbNdx) {
+//		return this.legHbSpecs[hbNdx].getNumOfIncludingHbDepDuties();
+//	}
+//	public void setNumOfIncludingHbDepDuties(int hbNdx, int numOfIncludingHbDepDuties) {
+//		this.legHbSpecs[hbNdx].setNumOfIncludingHbDepDuties(numOfIncludingHbDepDuties);
+//	}
+//	public void incNumOfIncludingHbDepDuties(int hbNdx) {
+//		this.legHbSpecs[hbNdx].incNumOfIncludingHbDepDuties();
+//	}
+//
+//	@Override
+//	public int getNumOfIncludingHbArrDuties(int hbNdx) {
+//		return this.legHbSpecs[hbNdx].getNumOfIncludingHbArrDuties();
+//	}
+//	public void setNumOfIncludingHbArrDuties(int hbNdx, int numOfIncludingHbArrDuties) {
+//		this.legHbSpecs[hbNdx].setNumOfIncludingHbArrDuties(numOfIncludingHbArrDuties);
+//	}
+//	public void incNumOfIncludingHbArrDuties(int hbNdx) {
+//		this.legHbSpecs[hbNdx].incNumOfIncludingHbArrDuties();
+//	}
+//
+//	@Override
+//	public int getNumOfIncludingNonHbDepDuties(int hbNdx) {
+//		return this.legHbSpecs[hbNdx].getNumOfIncludingNonHbDepDuties();
+//	}
+//	public void setNumOfIncludingNonHbDepDuties(int hbNdx, int numOfIncludingNonHbDepDuties) {
+//		this.legHbSpecs[hbNdx].setNumOfIncludingNonHbDepDuties(numOfIncludingNonHbDepDuties);
+//	}
+//	public void incNumOfIncludingNonHbDepDuties(int hbNdx) {
+//		this.legHbSpecs[hbNdx].incNumOfIncludingNonHbDepDuties();
+//	}
+//
+//	@Override
+//	public int getNumOfIncludingNonHbArrDuties(int hbNdx) {
+//		return this.legHbSpecs[hbNdx].getNumOfIncludingNonHbArrDuties();
+//	}
+//	public void setNumOfIncludingNonHbArrDuties(int hbNdx, int numOfIncludingNonHbArrDuties) {
+//		this.legHbSpecs[hbNdx].setNumOfIncludingNonHbArrDuties(numOfIncludingNonHbArrDuties);
+//	}
+//	public void incNumOfIncludingNonHbArrDuties(int hbNdx) {
+//		this.legHbSpecs[hbNdx].incNumOfIncludingNonHbArrDuties();
+//	}
 
 	@Override
 	public boolean isDeadheadable() {

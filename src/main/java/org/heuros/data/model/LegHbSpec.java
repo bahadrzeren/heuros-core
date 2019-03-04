@@ -1,10 +1,10 @@
 package org.heuros.data.model;
 
 public class LegHbSpec {
-	private int numOfDutiesIncludesHbDep = 0;
-	private int numOfDutiesIncludesHbArr = 0;
-	private int numOfDutiesIncludesNonHbDep = 0;
-	private int numOfDutiesIncludesNonHbArr = 0;
+//	private int numOfIncludingHbDepDuties = 0;
+//	private int numOfIncludingHbArrDuties = 0;
+//	private int numOfIncludingNonHbDepDuties = 0;
+//	private int numOfIncludingNonHbArrDuties = 0;
 
 	private boolean hasPair = false;
 	private boolean hasHbDepArrDutyPair = false;
@@ -12,42 +12,42 @@ public class LegHbSpec {
 	private boolean hasNonHbDutyPair = false;
 	private boolean hasHbArrDutyPair = false;
 
-	public int getNumOfDutiesIncludesHbDep() {
-		return numOfDutiesIncludesHbDep;
-	}
-	public void setNumOfDutiesIncludesHbDep(int numOfDutiesIncludesHbDep) {
-		this.numOfDutiesIncludesHbDep = numOfDutiesIncludesHbDep;
-	}
-	public void incNumOfDutiesIncludesHbDep() {
-		this.numOfDutiesIncludesHbDep++;
-	}
-	public int getNumOfDutiesIncludesHbArr() {
-		return numOfDutiesIncludesHbArr;
-	}
-	public void setNumOfDutiesIncludesHbArr(int numOfDutiesIncludesHbArr) {
-		this.numOfDutiesIncludesHbArr = numOfDutiesIncludesHbArr;
-	}
-	public void incNumOfDutiesIncludesHbArr() {
-		this.numOfDutiesIncludesHbArr++;
-	}
-	public int getNumOfDutiesIncludesNonHbDep() {
-		return numOfDutiesIncludesNonHbDep;
-	}
-	public void setNumOfDutiesIncludesNonHbDep(int numOfDutiesIncludesNonHbDep) {
-		this.numOfDutiesIncludesNonHbDep = numOfDutiesIncludesNonHbDep;
-	}
-	public void incNumOfDutiesIncludesNonHbDep() {
-		this.numOfDutiesIncludesNonHbDep++;
-	}
-	public int getNumOfDutiesIncludesNonHbArr() {
-		return numOfDutiesIncludesNonHbArr;
-	}
-	public void setNumOfDutiesIncludesNonHbArr(int numOfDutiesIncludesNonHbArr) {
-		this.numOfDutiesIncludesNonHbArr = numOfDutiesIncludesNonHbArr;
-	}
-	public void incNumOfDutiesIncludesNonHbArr() {
-		this.numOfDutiesIncludesNonHbArr++;
-	}
+//	public int getNumOfIncludingHbDepDuties() {
+//		return numOfIncludingHbDepDuties;
+//	}
+//	public void setNumOfIncludingHbDepDuties(int numOfIncludingHbDepDuties) {
+//		this.numOfIncludingHbDepDuties = numOfIncludingHbDepDuties;
+//	}
+//	public void incNumOfIncludingHbDepDuties() {
+//		this.numOfIncludingHbDepDuties++;
+//	}
+//	public int getNumOfIncludingHbArrDuties() {
+//		return numOfIncludingHbArrDuties;
+//	}
+//	public void setNumOfIncludingHbArrDuties(int numOfIncludingHbArrDuties) {
+//		this.numOfIncludingHbArrDuties = numOfIncludingHbArrDuties;
+//	}
+//	public void incNumOfIncludingHbArrDuties() {
+//		this.numOfIncludingHbArrDuties++;
+//	}
+//	public int getNumOfIncludingNonHbDepDuties() {
+//		return numOfIncludingNonHbDepDuties;
+//	}
+//	public void setNumOfIncludingNonHbDepDuties(int numOfIncludingNonHbDepDuties) {
+//		this.numOfIncludingNonHbDepDuties = numOfIncludingNonHbDepDuties;
+//	}
+//	public void incNumOfIncludingNonHbDepDuties() {
+//		this.numOfIncludingNonHbDepDuties++;
+//	}
+//	public int getNumOfIncludingNonHbArrDuties() {
+//		return numOfIncludingNonHbArrDuties;
+//	}
+//	public void setNumOfIncludingNonHbArrDuties(int numOfIncludingNonHbArrDuties) {
+//		this.numOfIncludingNonHbArrDuties = numOfIncludingNonHbArrDuties;
+//	}
+//	public void incNumOfIncludingNonHbArrDuties() {
+//		this.numOfIncludingNonHbArrDuties++;
+//	}
 
 	public boolean isHasPair() {
 		return hasPair;

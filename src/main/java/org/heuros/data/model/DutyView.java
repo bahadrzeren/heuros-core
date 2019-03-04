@@ -85,12 +85,12 @@ public interface DutyView extends View {
 	public boolean isValidated();
 	public boolean isValid(int hbNdx);
 
-	public int getMinNumOfAlternativeDuties();
-	public int getMinNumOfAlternativeDutiesWoDh();
-	public int getMaxNumOfAlternativeDuties();
-	public int getMaxNumOfAlternativeDutiesWoDh();
-	public int getTotalNumOfAlternativeDuties();
-	public int getTotalNumOfAlternativeDutiesWoDh();
+//	public int getMinNumOfAlternativeDuties();
+//	public int getMinNumOfAlternativeDutiesWoDh();
+//	public int getMaxNumOfAlternativeDuties();
+//	public int getMaxNumOfAlternativeDutiesWoDh();
+//	public int getTotalNumOfAlternativeDuties();
+//	public int getTotalNumOfAlternativeDutiesWoDh();
 
 	public boolean isDhCritical();
 

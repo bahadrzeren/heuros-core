@@ -46,19 +46,19 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private Stack<Integer> longestBlockTimesInMins = new Stack<Integer>();
 
-	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
-	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
-	private int maxNumOfAlternativeDuties = 0;
-	private int maxNumOfAlternativeDutiesWoDh = 0;
-	private int totalNumOfAlternativeDuties = 0;
-	private int totalNumOfAlternativeDutiesWoDh = 0;
-
-	private int minNumOfAlternativeEffectiveDuties = Integer.MAX_VALUE;
-	private int minNumOfAlternativeEffectiveDutiesWoDh = Integer.MAX_VALUE;
-	private int maxNumOfAlternativeEffectiveDuties = 0;
-	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
-	private int totalNumOfAlternativeEffectiveDuties = 0;
-	private int totalNumOfAlternativeDutiesEffectiveWoDh = 0;
+//	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
+//	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
+//	private int maxNumOfAlternativeDuties = 0;
+//	private int maxNumOfAlternativeDutiesWoDh = 0;
+//	private int totalNumOfAlternativeDuties = 0;
+//	private int totalNumOfAlternativeDutiesWoDh = 0;
+//
+//	private int minNumOfAlternativeEffectiveDuties = Integer.MAX_VALUE;
+//	private int minNumOfAlternativeEffectiveDutiesWoDh = Integer.MAX_VALUE;
+//	private int maxNumOfAlternativeEffectiveDuties = 0;
+//	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
+//	private int totalNumOfAlternativeEffectiveDuties = 0;
+//	private int totalNumOfAlternativeDutiesEffectiveWoDh = 0;
 
 	private boolean dhCritical = false;
 
@@ -387,70 +387,56 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 
 
-	@Override
-	public int getMinNumOfAlternativeDuties() {
-		return minNumOfAlternativeDuties;
-	}
-	public void setMinNumOfAlternativeDuties(int minNumOfAlternativeDuties) {
-		this.minNumOfAlternativeDuties = minNumOfAlternativeDuties;
-	}
-	@Override
-	public int getMinNumOfAlternativeDutiesWoDh() {
-		return minNumOfAlternativeDutiesWoDh;
-	}
-	public void setMinNumOfAlternativeDutiesWoDh(int minNumOfAlternativeDutiesWoDh) {
-		this.minNumOfAlternativeDutiesWoDh = minNumOfAlternativeDutiesWoDh;
-	}
-	@Override
-	public int getMaxNumOfAlternativeDuties() {
-		return maxNumOfAlternativeDuties;
-	}
-	public void setMaxNumOfAlternativeDuties(int maxNumOfAlternativeDuties) {
-		this.maxNumOfAlternativeDuties = maxNumOfAlternativeDuties;
-	}
-	@Override
-	public int getMaxNumOfAlternativeDutiesWoDh() {
-		return maxNumOfAlternativeDutiesWoDh;
-	}
-	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
-		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
-	}
-	@Override
-	public int getTotalNumOfAlternativeDuties() {
-		return totalNumOfAlternativeDuties;
-	}
-	public void setTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
-		this.totalNumOfAlternativeDuties = totalNumOfAlternativeDuties;
-	}
-	public void incTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
-		this.totalNumOfAlternativeDuties += totalNumOfAlternativeDuties;
-	}
-
-	@Override
-	public int getTotalNumOfAlternativeDutiesWoDh() {
-		return totalNumOfAlternativeDutiesWoDh;
-	}
-	public void setTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
-		this.totalNumOfAlternativeDutiesWoDh = totalNumOfAlternativeDutiesWoDh;
-	}
-	public void incTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
-		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
-	}
-
 //	@Override
-//	public Leg getCriticalLeg() {
-//		return criticalLeg;
+//	public int getMinNumOfAlternativeDuties() {
+//		return minNumOfAlternativeDuties;
 //	}
-//	public void setCriticalLeg(Leg criticalLeg) {
-//		this.criticalLeg = criticalLeg;
+//	public void setMinNumOfAlternativeDuties(int minNumOfAlternativeDuties) {
+//		this.minNumOfAlternativeDuties = minNumOfAlternativeDuties;
 //	}
 //	@Override
-//	public Leg getCriticalLegWoDh() {
-//		return criticalLegWoDh;
+//	public int getMinNumOfAlternativeDutiesWoDh() {
+//		return minNumOfAlternativeDutiesWoDh;
 //	}
-//	public void setCriticalLegWoDh(Leg criticalLegWoDh) {
-//		this.criticalLegWoDh = criticalLegWoDh;
+//	public void setMinNumOfAlternativeDutiesWoDh(int minNumOfAlternativeDutiesWoDh) {
+//		this.minNumOfAlternativeDutiesWoDh = minNumOfAlternativeDutiesWoDh;
 //	}
+//	@Override
+//	public int getMaxNumOfAlternativeDuties() {
+//		return maxNumOfAlternativeDuties;
+//	}
+//	public void setMaxNumOfAlternativeDuties(int maxNumOfAlternativeDuties) {
+//		this.maxNumOfAlternativeDuties = maxNumOfAlternativeDuties;
+//	}
+//	@Override
+//	public int getMaxNumOfAlternativeDutiesWoDh() {
+//		return maxNumOfAlternativeDutiesWoDh;
+//	}
+//	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
+//		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
+//	}
+//	@Override
+//	public int getTotalNumOfAlternativeDuties() {
+//		return totalNumOfAlternativeDuties;
+//	}
+//	public void setTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
+//		this.totalNumOfAlternativeDuties = totalNumOfAlternativeDuties;
+//	}
+//	public void incTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
+//		this.totalNumOfAlternativeDuties += totalNumOfAlternativeDuties;
+//	}
+//
+//	@Override
+//	public int getTotalNumOfAlternativeDutiesWoDh() {
+//		return totalNumOfAlternativeDutiesWoDh;
+//	}
+//	public void setTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
+//		this.totalNumOfAlternativeDutiesWoDh = totalNumOfAlternativeDutiesWoDh;
+//	}
+//	public void incTotalNumOfAlternativeDutiesWoDh(int totalNumOfAlternativeDutiesWoDh) {
+//		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
+//	}
+
 
 
 	@Override
@@ -642,12 +628,12 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 												", PBT:" + this.blockTimeInMinsPassive +
 												", A#L:" + this.numOfLegsActive + 
 												", P#L:" + this.numOfLegsPassive +
-												", AltMin#D:" + this.minNumOfAlternativeDuties +
-												", ZeroDhAltMin#D:" + this.minNumOfAlternativeDutiesWoDh +
-												", AltMax#D:" + this.maxNumOfAlternativeDuties +
-												", ZeroDhAltMax#D:" + this.maxNumOfAlternativeDutiesWoDh +
-												", Alt#D:" + this.totalNumOfAlternativeDuties +
-												", ZeroDhAlt#D:" + this.totalNumOfAlternativeDutiesWoDh +
+//												", AltMin#D:" + this.minNumOfAlternativeDuties +
+//												", ZeroDhAltMin#D:" + this.minNumOfAlternativeDutiesWoDh +
+//												", AltMax#D:" + this.maxNumOfAlternativeDuties +
+//												", ZeroDhAltMax#D:" + this.maxNumOfAlternativeDutiesWoDh +
+//												", Alt#D:" + this.totalNumOfAlternativeDuties +
+//												", ZeroDhAlt#D:" + this.totalNumOfAlternativeDutiesWoDh +
 												"\n");
 		this.legs.forEach((l) -> sb.append(l).append("\n"));
 		return sb.toString();

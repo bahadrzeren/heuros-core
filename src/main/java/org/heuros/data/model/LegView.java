@@ -60,8 +60,12 @@ public interface LegView extends View {
 	 */
 	public int getNumOfIncludingDuties();
 	public int getNumOfIncludingDutiesWoDh();
-	public int getNumOfDutiesIncludesHbDep(int hbNdx);
-	public int getNumOfDutiesIncludesHbArr(int hbNdx);
-	public int getNumOfDutiesIncludesNonHbDep(int hbNdx);
-	public int getNumOfDutiesIncludesNonHbArr(int hbNdx);
+
+	public int getNumOfIncludingEffectiveDuties();
+	public int getNumOfIncludingEffectiveDutiesWoDh();
+
+//	public int getNumOfIncludingHbDepDuties(int hbNdx);
+//	public int getNumOfIncludingHbArrDuties(int hbNdx);
+//	public int getNumOfIncludingNonHbDepDuties(int hbNdx);
+//	public int getNumOfIncludingNonHbArrDuties(int hbNdx);
 }
