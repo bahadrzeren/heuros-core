@@ -20,10 +20,14 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 
 	private int hbNdx = -1;
 	private LocalDateTime dutyProcessPeriodEndExc = null;
+	private int effectiveDutyBlockHourLimit = 0;
 
-	public BiDirDutyPairingChecker(int hbNdx, LocalDateTime dutyProcessPeriodEndExc) {
+	public BiDirDutyPairingChecker(int hbNdx,
+									LocalDateTime dutyProcessPeriodEndExc,
+									int effectiveDutyBlockHourLimit) {
 		this.hbNdx = hbNdx;
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
+		this.effectiveDutyBlockHourLimit = effectiveDutyBlockHourLimit;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
@@ -198,16 +202,17 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
     	 * Set leg accumulators for legs.
     	 */
 		this.duties.forEach((d) -> {
-			if (d.hasPairing(hbNdx)) {
+			if (d.hasPairing(hbNdx)
+					&& d.isValid(hbNdx)) {
 				d.getLegs().forEach((l) -> {
 					l.incNumOfIncludingDuties();
 					if (d.getNumOfLegsPassive() == 0)
 						l.incNumOfIncludingDutiesWoDh();
 
 					/*
-					 * If blocktime is bigger than 4 hrs = 240 mins consider it as effective duty.
+					 * If blocktime is bigger than effectiveDutyBlockHourLimit consider it as effective duty.
 					 */
-					if (d.getBlockTimeInMinsActive() >= 240) {
+					if (d.getBlockTimeInMinsActive() >= this.effectiveDutyBlockHourLimit) {
 						l.incNumOfIncludingEffectiveDuties();
 						if (d.getNumOfLegsPassive() == 0)
 							l.incNumOfIncludingEffectiveDutiesWoDh();
