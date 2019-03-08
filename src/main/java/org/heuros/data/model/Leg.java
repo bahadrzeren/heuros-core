@@ -41,8 +41,6 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
 
-	private boolean potentialDh = false;
-
 	/*
 	 * TODO Change this name!
 	 */
@@ -344,12 +342,6 @@ public class Leg extends AbstractModel implements LegView {
 //	}
 
 
-	public boolean isPotentialDh() {
-		return potentialDh;
-	}
-	public void setPotentialDh(boolean potentialDh) {
-		this.potentialDh = potentialDh;
-	}
 
 	@Override
 	public boolean isCover() {
