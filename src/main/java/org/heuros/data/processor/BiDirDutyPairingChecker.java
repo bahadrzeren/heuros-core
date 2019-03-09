@@ -205,29 +205,31 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 			if (d.hasPairing(hbNdx)
 					&& d.isValid(hbNdx)) {
 				d.getLegs().forEach((l) -> {
-					l.incNumOfIncludingDuties();
-					if (d.getNumOfLegsPassive() == 0)
-						l.incNumOfIncludingDutiesWoDh();
-
-					/*
-					 * If blocktime is bigger than effectiveDutyBlockHourLimit consider it as effective duty.
-					 */
-					if (d.getBlockTimeInMinsActive() >= this.effectiveDutyBlockHourLimit) {
-						l.incNumOfIncludingEffectiveDuties();
+					if (l.isCover()) {
+						l.incNumOfIncludingDuties();
 						if (d.getNumOfLegsPassive() == 0)
-							l.incNumOfIncludingEffectiveDutiesWoDh();
-					}
+							l.incNumOfIncludingDutiesWoDh();
 
-//					if (d.getFirstDepAirport().isHb(hbNdx)) {
-//						l.incNumOfIncludingHbDepDuties(hbNdx);
-//					} else {
-//						l.incNumOfIncludingNonHbDepDuties(hbNdx);
-//					}
-//					if (d.getLastArrAirport().isHb(hbNdx)) {
-//						l.incNumOfIncludingHbArrDuties(hbNdx);
-//					} else {
-//						l.incNumOfIncludingNonHbArrDuties(hbNdx);
-//					}
+						/*
+						 * If blocktime is bigger than effectiveDutyBlockHourLimit consider it as effective duty.
+						 */
+						if (d.getBlockTimeInMinsActive() >= this.effectiveDutyBlockHourLimit) {
+							l.incNumOfIncludingEffectiveDuties();
+							if (d.getNumOfLegsPassive() == 0)
+								l.incNumOfIncludingEffectiveDutiesWoDh();
+						}
+
+//						if (d.getFirstDepAirport().isHb(hbNdx)) {
+//							l.incNumOfIncludingHbDepDuties(hbNdx);
+//						} else {
+//							l.incNumOfIncludingNonHbDepDuties(hbNdx);
+//						}
+//						if (d.getLastArrAirport().isHb(hbNdx)) {
+//							l.incNumOfIncludingHbArrDuties(hbNdx);
+//						} else {
+//							l.incNumOfIncludingNonHbArrDuties(hbNdx);
+//						}
+					}
 				});
 			}
 		});
@@ -236,7 +238,7 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 		 */
 		duties.forEach((d) -> {
 			d.getLegs().forEach((l) -> {
-//				if (l.isCover()) {
+				if (l.isCover()) {
 					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
 					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
 					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
@@ -258,7 +260,7 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 						d.setMaxNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
 					if (d.getMaxNumOfAlternativeEffectiveDutiesWoDh() < l.getNumOfIncludingEffectiveDutiesWoDh())
 						d.setMaxNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
-//				}
+				}
 			});
 		});
 
