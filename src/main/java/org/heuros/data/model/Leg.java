@@ -28,14 +28,6 @@ public class Leg extends AbstractModel implements LegView {
 	private boolean needsCockpitCrew = true;
 	private boolean needsCabinCrew = true;
 
-	/*
-	 * TODO Change this name as numOfIncludingDuties.
-	 */
-	private int numOfIncludingDuties = 0;
-	private int numOfIncludingDutiesWoDh = 0;
-	private int numOfIncludingEffectiveDuties = 0;
-	private int numOfIncludingEffectiveDutiesWoDh = 0;
-
 	private boolean inFleet = false;
 	private boolean deadheadable = true;
 	private boolean specialFlight = false;
@@ -48,6 +40,14 @@ public class Leg extends AbstractModel implements LegView {
 	private int blockTimeInMins = 0;
 
 	private LegHbSpec[] legHbSpecs = null;
+
+	/*
+	 * Initial values of totalizers. 
+	 */
+	private int numOfIncludingDuties = 0;
+	private int numOfIncludingDutiesWoDh = 0;
+	private int numOfIncludingEffectiveDuties = 0;
+	private int numOfIncludingEffectiveDutiesWoDh = 0;
 
 	private Leg() {
 	}

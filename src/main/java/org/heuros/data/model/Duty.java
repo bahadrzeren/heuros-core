@@ -46,6 +46,19 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 	private Stack<Integer> longestBlockTimesInMins = new Stack<Integer>();
 
+	private DutyHbSpec[] dutyHbSpecs = null;
+	public DutyHbSpec[] getDutyHbSpecs() {
+		return dutyHbSpecs;
+	}
+	public void setDutyHbSpecs(DutyHbSpec[] dutyHbSpec) {
+		this.dutyHbSpecs = dutyHbSpec;
+	}
+
+	private boolean validated = false;
+
+	/*
+	 * Initial values of totalizers. 
+	 */
 	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
 	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
 	private int maxNumOfAlternativeDuties = 0;
@@ -59,16 +72,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
 	private int totalNumOfAlternativeEffectiveDuties = 0;
 	private int totalNumOfAlternativeEffectiveDutiesWoDh = 0;
-
-	private DutyHbSpec[] dutyHbSpecs = null;
-	public DutyHbSpec[] getDutyHbSpecs() {
-		return dutyHbSpecs;
-	}
-	public void setDutyHbSpecs(DutyHbSpec[] dutyHbSpec) {
-		this.dutyHbSpecs = dutyHbSpec;
-	}
-
-	private boolean validated = false;
 
 	private Duty() {
 	}
