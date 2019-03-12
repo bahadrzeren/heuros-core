@@ -61,15 +61,15 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	 */
 	private int minNumOfAlternativeDuties = Integer.MAX_VALUE;
 	private int minNumOfAlternativeDutiesWoDh = Integer.MAX_VALUE;
-	private int maxNumOfAlternativeDuties = 0;
-	private int maxNumOfAlternativeDutiesWoDh = 0;
+//	private int maxNumOfAlternativeDuties = 0;
+//	private int maxNumOfAlternativeDutiesWoDh = 0;
 	private int totalNumOfAlternativeDuties = 0;
 	private int totalNumOfAlternativeDutiesWoDh = 0;
 
 	private int minNumOfAlternativeEffectiveDuties = Integer.MAX_VALUE;
 	private int minNumOfAlternativeEffectiveDutiesWoDh = Integer.MAX_VALUE;
-	private int maxNumOfAlternativeEffectiveDuties = 0;
-	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
+//	private int maxNumOfAlternativeEffectiveDuties = 0;
+//	private int maxNumOfAlternativeEffectiveDutiesWoDh = 0;
 	private int totalNumOfAlternativeEffectiveDuties = 0;
 	private int totalNumOfAlternativeEffectiveDutiesWoDh = 0;
 
@@ -402,20 +402,20 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void setMinNumOfAlternativeDutiesWoDh(int minNumOfAlternativeDutiesWoDh) {
 		this.minNumOfAlternativeDutiesWoDh = minNumOfAlternativeDutiesWoDh;
 	}
-	@Override
-	public int getMaxNumOfAlternativeDuties() {
-		return maxNumOfAlternativeDuties;
-	}
-	public void setMaxNumOfAlternativeDuties(int maxNumOfAlternativeDuties) {
-		this.maxNumOfAlternativeDuties = maxNumOfAlternativeDuties;
-	}
-	@Override
-	public int getMaxNumOfAlternativeDutiesWoDh() {
-		return maxNumOfAlternativeDutiesWoDh;
-	}
-	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
-		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
-	}
+//	@Override
+//	public int getMaxNumOfAlternativeDuties() {
+//		return maxNumOfAlternativeDuties;
+//	}
+//	public void setMaxNumOfAlternativeDuties(int maxNumOfAlternativeDuties) {
+//		this.maxNumOfAlternativeDuties = maxNumOfAlternativeDuties;
+//	}
+//	@Override
+//	public int getMaxNumOfAlternativeDutiesWoDh() {
+//		return maxNumOfAlternativeDutiesWoDh;
+//	}
+//	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
+//		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
+//	}
 	@Override
 	public int getTotalNumOfAlternativeDuties() {
 		return totalNumOfAlternativeDuties;
@@ -451,20 +451,20 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void setMinNumOfAlternativeEffectiveDutiesWoDh(int minNumOfAlternativeEffectiveDutiesWoDh) {
 		this.minNumOfAlternativeEffectiveDutiesWoDh = minNumOfAlternativeEffectiveDutiesWoDh;
 	}
-	@Override
-	public int getMaxNumOfAlternativeEffectiveDuties() {
-		return maxNumOfAlternativeEffectiveDuties;
-	}
-	public void setMaxNumOfAlternativeEffectiveDuties(int maxNumOfAlternativeEffectiveDuties) {
-		this.maxNumOfAlternativeEffectiveDuties = maxNumOfAlternativeEffectiveDuties;
-	}
-	@Override
-	public int getMaxNumOfAlternativeEffectiveDutiesWoDh() {
-		return maxNumOfAlternativeEffectiveDutiesWoDh;
-	}
-	public void setMaxNumOfAlternativeEffectiveDutiesWoDh(int maxNumOfAlternativeEffectiveDutiesWoDh) {
-		this.maxNumOfAlternativeEffectiveDutiesWoDh = maxNumOfAlternativeEffectiveDutiesWoDh;
-	}
+//	@Override
+//	public int getMaxNumOfAlternativeEffectiveDuties() {
+//		return maxNumOfAlternativeEffectiveDuties;
+//	}
+//	public void setMaxNumOfAlternativeEffectiveDuties(int maxNumOfAlternativeEffectiveDuties) {
+//		this.maxNumOfAlternativeEffectiveDuties = maxNumOfAlternativeEffectiveDuties;
+//	}
+//	@Override
+//	public int getMaxNumOfAlternativeEffectiveDutiesWoDh() {
+//		return maxNumOfAlternativeEffectiveDutiesWoDh;
+//	}
+//	public void setMaxNumOfAlternativeEffectiveDutiesWoDh(int maxNumOfAlternativeEffectiveDutiesWoDh) {
+//		this.maxNumOfAlternativeEffectiveDutiesWoDh = maxNumOfAlternativeEffectiveDutiesWoDh;
+//	}
 	@Override
 	public int getTotalNumOfAlternativeEffectiveDuties() {
 		return totalNumOfAlternativeEffectiveDuties;

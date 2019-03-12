@@ -245,10 +245,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
 					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
 						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
-						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
-						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+//					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
+//						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
+//						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
 
 					d.incTotalNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
 					d.incTotalNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
@@ -256,10 +256,10 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 						d.setMinNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
 					if (d.getMinNumOfAlternativeEffectiveDutiesWoDh() > l.getNumOfIncludingEffectiveDutiesWoDh())
 						d.setMinNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
-					if (d.getMaxNumOfAlternativeEffectiveDuties() < l.getNumOfIncludingEffectiveDuties())
-						d.setMaxNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
-					if (d.getMaxNumOfAlternativeEffectiveDutiesWoDh() < l.getNumOfIncludingEffectiveDutiesWoDh())
-						d.setMaxNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
+//					if (d.getMaxNumOfAlternativeEffectiveDuties() < l.getNumOfIncludingEffectiveDuties())
+//						d.setMaxNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
+//					if (d.getMaxNumOfAlternativeEffectiveDutiesWoDh() < l.getNumOfIncludingEffectiveDutiesWoDh())
+//						d.setMaxNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
 				}
 			});
 		});

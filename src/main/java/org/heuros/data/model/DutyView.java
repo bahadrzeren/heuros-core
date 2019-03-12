@@ -87,14 +87,14 @@ public interface DutyView extends View {
 
 	public int getMinNumOfAlternativeDuties();
 	public int getMinNumOfAlternativeDutiesWoDh();
-	public int getMaxNumOfAlternativeDuties();
-	public int getMaxNumOfAlternativeDutiesWoDh();
+//	public int getMaxNumOfAlternativeDuties();
+//	public int getMaxNumOfAlternativeDutiesWoDh();
 	public int getTotalNumOfAlternativeDuties();
 	public int getTotalNumOfAlternativeDutiesWoDh();
 	public int getMinNumOfAlternativeEffectiveDuties();
 	public int getMinNumOfAlternativeEffectiveDutiesWoDh();
-	public int getMaxNumOfAlternativeEffectiveDuties();
-	public int getMaxNumOfAlternativeEffectiveDutiesWoDh();
+//	public int getMaxNumOfAlternativeEffectiveDuties();
+//	public int getMaxNumOfAlternativeEffectiveDutiesWoDh();
 	public int getTotalNumOfAlternativeEffectiveDuties();
 	public int getTotalNumOfAlternativeEffectiveDutiesWoDh();
 
