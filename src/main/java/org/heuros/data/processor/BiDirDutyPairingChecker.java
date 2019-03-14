@@ -237,31 +237,34 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 		 * Set leg accumulators for duties.
 		 */
 		duties.forEach((d) -> {
-			d.getLegs().forEach((l) -> {
-				if (l.isCover()) {
-					d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-					if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
-						d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-					if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
-						d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
-//					if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
-//						d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
-//					if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
-//						d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+			if (d.hasPairing(hbNdx)
+					&& d.isValid(hbNdx)) {
+				d.getLegs().forEach((l) -> {
+					if (l.isCover()) {
+						d.incTotalNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+						d.incTotalNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+						if (d.getMinNumOfAlternativeDuties() > l.getNumOfIncludingDuties())
+							d.setMinNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+						if (d.getMinNumOfAlternativeDutiesWoDh() > l.getNumOfIncludingDutiesWoDh())
+							d.setMinNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
+//						if (d.getMaxNumOfAlternativeDuties() < l.getNumOfIncludingDuties())
+//							d.setMaxNumOfAlternativeDuties(l.getNumOfIncludingDuties());
+//						if (d.getMaxNumOfAlternativeDutiesWoDh() < l.getNumOfIncludingDutiesWoDh())
+//							d.setMaxNumOfAlternativeDutiesWoDh(l.getNumOfIncludingDutiesWoDh());
 
-					d.incTotalNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
-					d.incTotalNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
-					if (d.getMinNumOfAlternativeEffectiveDuties() > l.getNumOfIncludingEffectiveDuties())
-						d.setMinNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
-					if (d.getMinNumOfAlternativeEffectiveDutiesWoDh() > l.getNumOfIncludingEffectiveDutiesWoDh())
-						d.setMinNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
-//					if (d.getMaxNumOfAlternativeEffectiveDuties() < l.getNumOfIncludingEffectiveDuties())
-//						d.setMaxNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
-//					if (d.getMaxNumOfAlternativeEffectiveDutiesWoDh() < l.getNumOfIncludingEffectiveDutiesWoDh())
-//						d.setMaxNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
-				}
-			});
+						d.incTotalNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
+						d.incTotalNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
+						if (d.getMinNumOfAlternativeEffectiveDuties() > l.getNumOfIncludingEffectiveDuties())
+							d.setMinNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
+						if (d.getMinNumOfAlternativeEffectiveDutiesWoDh() > l.getNumOfIncludingEffectiveDutiesWoDh())
+							d.setMinNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
+//						if (d.getMaxNumOfAlternativeEffectiveDuties() < l.getNumOfIncludingEffectiveDuties())
+//							d.setMaxNumOfAlternativeEffectiveDuties(l.getNumOfIncludingEffectiveDuties());
+//						if (d.getMaxNumOfAlternativeEffectiveDutiesWoDh() < l.getNumOfIncludingEffectiveDutiesWoDh())
+//							d.setMaxNumOfAlternativeEffectiveDutiesWoDh(l.getNumOfIncludingEffectiveDutiesWoDh());
+					}
+				});
+			}
 		});
 
 		return true;
