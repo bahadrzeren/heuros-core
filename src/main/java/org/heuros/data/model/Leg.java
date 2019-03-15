@@ -49,6 +49,11 @@ public class Leg extends AbstractModel implements LegView {
 	private int numOfIncludingEffectiveDuties = 0;
 	private int numOfIncludingEffectiveDutiesWoDh = 0;
 
+	private int numOfIncludingPairs = 0;
+	private int numOfIncludingPairsWoDh = 0;
+	private int numOfIncludingEffectivePairs = 0;
+	private int numOfIncludingEffectivePairsWoDh = 0;
+
 	private Leg() {
 	}
 
@@ -221,7 +226,8 @@ public class Leg extends AbstractModel implements LegView {
 		this.inFleet = inFleet;
 	}
 
-	@Override
+
+
 	public int getNumOfIncludingDuties() {
 		return numOfIncludingDuties;
 	}
@@ -232,18 +238,16 @@ public class Leg extends AbstractModel implements LegView {
 		this.numOfIncludingDuties++;
 	}
 
-	@Override
 	public int getNumOfIncludingDutiesWoDh() {
 		return numOfIncludingDutiesWoDh;
-	}
-	public void incNumOfIncludingDutiesWoDh() {
-		this.numOfIncludingDutiesWoDh++;
 	}
 	public void setNumOfIncludingDutiesWoDh(int numOfDutiesWoDh) {
 		this.numOfIncludingDutiesWoDh = numOfDutiesWoDh;
 	}
+	public void incNumOfIncludingDutiesWoDh() {
+		this.numOfIncludingDutiesWoDh++;
+	}
 
-	@Override
 	public int getNumOfIncludingEffectiveDuties() {
 		return numOfIncludingEffectiveDuties;
 	}
@@ -254,7 +258,6 @@ public class Leg extends AbstractModel implements LegView {
 		this.numOfIncludingEffectiveDuties++;
 	}
 
-	@Override
 	public int getNumOfIncludingEffectiveDutiesWoDh() {
 		return numOfIncludingEffectiveDutiesWoDh;
 	}
@@ -263,6 +266,48 @@ public class Leg extends AbstractModel implements LegView {
 	}
 	public void incNumOfIncludingEffectiveDutiesWoDh() {
 		this.numOfIncludingEffectiveDutiesWoDh++;
+	}
+
+
+
+	public int getNumOfIncludingPairs() {
+		return numOfIncludingPairs;
+	}
+	public void setNumOfIncludingPairs(int numOfIncludingPairs) {
+		this.numOfIncludingPairs = numOfIncludingPairs;
+	}
+	public void incNumOfIncludingPairs() {
+		this.numOfIncludingPairs++;
+	}
+
+	public int getNumOfIncludingPairsWoDh() {
+		return numOfIncludingPairsWoDh;
+	}
+	public void setNumOfIncludingPairsWoDh(int numOfIncludingPairsWoDh) {
+		this.numOfIncludingPairsWoDh = numOfIncludingPairsWoDh;
+	}
+	public void incNumOfIncludingPairsWoDh() {
+		this.numOfIncludingPairsWoDh++;
+	}
+
+	public int getNumOfIncludingEffectivePairs() {
+		return numOfIncludingEffectivePairs;
+	}
+	public void setNumOfIncludingEffectivePairs(int numOfIncludingEffectivePairs) {
+		this.numOfIncludingEffectivePairs = numOfIncludingEffectivePairs;
+	}
+	public void incNumOfIncludingEffectivePairs() {
+		this.numOfIncludingEffectivePairs++;
+	}
+
+	public int getNumOfIncludingEffectivePairsWoDh() {
+		return numOfIncludingEffectivePairsWoDh;
+	}
+	public void setNumOfIncludingEffectivePairsWoDh(int numOfIncludingEffectivePairsWoDh) {
+		this.numOfIncludingEffectivePairsWoDh = numOfIncludingEffectivePairsWoDh;
+	}
+	public void incNumOfIncludingEffectivePairsWoDh() {
+		this.numOfIncludingEffectivePairsWoDh++;
 	}
 
 
@@ -310,6 +355,8 @@ public class Leg extends AbstractModel implements LegView {
 //	public void incNumOfIncludingNonHbArrDuties(int hbNdx) {
 //		this.legHbSpecs[hbNdx].incNumOfIncludingNonHbArrDuties();
 //	}
+
+
 
 	@Override
 	public boolean isDeadheadable() {

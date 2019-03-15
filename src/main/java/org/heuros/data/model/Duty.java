@@ -388,14 +388,12 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 
 
 
-	@Override
 	public int getMinNumOfAlternativeDuties() {
 		return minNumOfAlternativeDuties;
 	}
 	public void setMinNumOfAlternativeDuties(int minNumOfAlternativeDuties) {
 		this.minNumOfAlternativeDuties = minNumOfAlternativeDuties;
 	}
-	@Override
 	public int getMinNumOfAlternativeDutiesWoDh() {
 		return minNumOfAlternativeDutiesWoDh;
 	}
@@ -416,7 +414,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 //	public void setMaxNumOfAlternativeDutiesWoDh(int maxNumOfAlternativeDutiesWoDh) {
 //		this.maxNumOfAlternativeDutiesWoDh = maxNumOfAlternativeDutiesWoDh;
 //	}
-	@Override
 	public int getTotalNumOfAlternativeDuties() {
 		return totalNumOfAlternativeDuties;
 	}
@@ -426,7 +423,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void incTotalNumOfAlternativeDuties(int totalNumOfAlternativeDuties) {
 		this.totalNumOfAlternativeDuties += totalNumOfAlternativeDuties;
 	}
-	@Override
 	public int getTotalNumOfAlternativeDutiesWoDh() {
 		return totalNumOfAlternativeDutiesWoDh;
 	}
@@ -437,14 +433,12 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 		this.totalNumOfAlternativeDutiesWoDh += totalNumOfAlternativeDutiesWoDh;
 	}
 
-	@Override
 	public int getMinNumOfAlternativeEffectiveDuties() {
 		return minNumOfAlternativeEffectiveDuties;
 	}
 	public void setMinNumOfAlternativeEffectiveDuties(int minNumOfAlternativeEffectiveDuties) {
 		this.minNumOfAlternativeEffectiveDuties = minNumOfAlternativeEffectiveDuties;
 	}
-	@Override
 	public int getMinNumOfAlternativeEffectiveDutiesWoDh() {
 		return minNumOfAlternativeEffectiveDutiesWoDh;
 	}
@@ -465,7 +459,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 //	public void setMaxNumOfAlternativeEffectiveDutiesWoDh(int maxNumOfAlternativeEffectiveDutiesWoDh) {
 //		this.maxNumOfAlternativeEffectiveDutiesWoDh = maxNumOfAlternativeEffectiveDutiesWoDh;
 //	}
-	@Override
 	public int getTotalNumOfAlternativeEffectiveDuties() {
 		return totalNumOfAlternativeEffectiveDuties;
 	}
@@ -475,7 +468,6 @@ public class Duty extends AbstractModel implements DutyView, Cloneable {
 	public void incTotalNumOfAlternativeEffectiveDuties(int totalNumOfAlternativeEffectiveDuties) {
 		this.totalNumOfAlternativeEffectiveDuties += totalNumOfAlternativeEffectiveDuties;
 	}
-	@Override
 	public int getTotalNumOfAlternativeEffectiveDutiesWoDh() {
 		return totalNumOfAlternativeEffectiveDutiesWoDh;
 	}

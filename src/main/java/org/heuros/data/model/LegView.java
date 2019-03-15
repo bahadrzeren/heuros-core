@@ -55,15 +55,15 @@ public interface LegView extends View {
 	public boolean hasNonHbDutyPair(int hbNdx);
 	public boolean hasHbArrDutyPair(int hbNdx);
 
+//	public int getNumOfIncludingDuties();
+//	public int getNumOfIncludingDutiesWoDh();
+//
+//	public int getNumOfIncludingEffectiveDuties();
+//	public int getNumOfIncludingEffectiveDutiesWoDh();
+
 	/*
 	 * TODO HB impl will be changed!
 	 */
-	public int getNumOfIncludingDuties();
-	public int getNumOfIncludingDutiesWoDh();
-
-	public int getNumOfIncludingEffectiveDuties();
-	public int getNumOfIncludingEffectiveDutiesWoDh();
-
 //	public int getNumOfIncludingHbDepDuties(int hbNdx);
 //	public int getNumOfIncludingHbArrDuties(int hbNdx);
 //	public int getNumOfIncludingNonHbDepDuties(int hbNdx);
