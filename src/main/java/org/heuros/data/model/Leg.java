@@ -289,6 +289,9 @@ public class Leg extends AbstractModel implements LegView {
 	public void incNumOfIncludingPairsWoDh() {
 		this.numOfIncludingPairsWoDh++;
 	}
+	public void decNumOfIncludingPairsWoDh() {
+		this.numOfIncludingPairsWoDh--;
+	}
 
 	public int getNumOfIncludingEffectivePairs() {
 		return numOfIncludingEffectivePairs;
@@ -299,6 +302,9 @@ public class Leg extends AbstractModel implements LegView {
 	public void incNumOfIncludingEffectivePairs() {
 		this.numOfIncludingEffectivePairs++;
 	}
+	public void decNumOfIncludingEffectivePairs() {
+		this.numOfIncludingEffectivePairs--;
+	}
 
 	public int getNumOfIncludingEffectivePairsWoDh() {
 		return numOfIncludingEffectivePairsWoDh;
@@ -308,6 +314,9 @@ public class Leg extends AbstractModel implements LegView {
 	}
 	public void incNumOfIncludingEffectivePairsWoDh() {
 		this.numOfIncludingEffectivePairsWoDh++;
+	}
+	public void decNumOfIncludingEffectivePairsWoDh() {
+		this.numOfIncludingEffectivePairsWoDh--;
 	}
 
 
