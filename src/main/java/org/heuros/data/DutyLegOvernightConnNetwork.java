@@ -44,35 +44,22 @@ public class DutyLegOvernightConnNetwork {
 
 	public DutyLegOvernightConnNetwork(LocalDateTime dutyProcessPeriodEndExc,
 									int maxNetDutySearchDeptInHours,
-									int maxPairingLengthInDays) {
+									int maxPairingLengthInDays,
+									DutyRuleContext dutyRuleContext,
+//									PairRuleContext pairRuleContext,
+									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
+//									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime,
+									LegRepository legRepository,
+									DutyRepository dutyRepository) {
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 		this.maxNetDutySearchDeptInHours = maxNetDutySearchDeptInHours;
 		this.maxPairingLengthInDays = maxPairingLengthInDays;
-	}
-
-	public DutyLegOvernightConnNetwork setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
-//	public PairPricingNetwork setPairRuleContext(PairRuleContext pairRuleContext) {
 //		this.pairRuleContext = pairRuleContext;
-//		return this;
-//	}
-	public DutyLegOvernightConnNetwork setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
 		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		return this;
-	}
-//	public PairingPricingNetwork setDutyIndexByArrAirportNdxNextBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
-//		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
-//		return this;
-//	}
-	public DutyLegOvernightConnNetwork setLegRepository(LegRepository legRepository) {
+//			this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
 		this.legs = legRepository.getModels();
-		return this;
-	}
-	public DutyLegOvernightConnNetwork setDutyRepository(DutyRepository dutyRepository) {
 		this.duties = dutyRepository.getModels();
-		return this;
 	}
 
 	public OneDimIndexInt<Duty> getDutyIndexByDepLegNdx() {

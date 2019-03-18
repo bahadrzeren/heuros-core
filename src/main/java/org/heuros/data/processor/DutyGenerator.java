@@ -32,24 +32,14 @@ public class DutyGenerator implements Processor<LegView, Duty> {
 
 	private List<Duty> dl = new LinkedList<Duty>();
 
-	public DutyGenerator setLegRepository(DataRepository<Leg> legRepository) {
+	public DutyGenerator(DataRepository<Leg> legRepository,
+							OneDimIndexInt<Leg> legConnectionIndex,
+							int numOfBases,
+							DutyRuleContext dutyRuleContext) {
 		this.legs = legRepository.getModels();
-		return this;
-	}
-
-	public DutyGenerator setLegConnectionIndex(OneDimIndexInt<Leg> legConnectionIndex) {
 		this.legConnectionIndex = legConnectionIndex;
-		return this;
-	}
-
-	public DutyGenerator setNumOfBases(int numOfBases) {
 		this.numOfBases = numOfBases;
-		return this;
-	}
-
-	public DutyGenerator setDutyRuleContext(DutyRuleContext dutyRuleContext) {
 		this.dutyRuleContext = dutyRuleContext;
-		return this;
 	}
 
 	@Override

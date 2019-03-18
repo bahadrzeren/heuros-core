@@ -83,55 +83,71 @@ public class PairOptimizationContext {
 	 */
 	private PairRuleContext pairRuleContext = null;
 
+	public PairOptimizationContext(AirportRepository airportRepository,
+									AirportRuleContext airportRuleContext,
+									LegRepository legRepository,
+									LegRuleContext legRuleContext,
+									DutyRepository dutyRepository,
+									DutyRuleContext dutyRuleContext,
+									PairRuleContext pairRuleContext) {
+		this.airportRepository = airportRepository;
+		this.airportRuleContext = airportRuleContext;
+		this.legRepository = legRepository;
+		this.legRuleContext = legRuleContext;
+		this.dutyRepository = dutyRepository;
+		this.dutyRuleContext = dutyRuleContext;
+		this.pairRuleContext = pairRuleContext;
+	}
+
 	public AirportRepository getAirportRepository() {
 		return airportRepository;
 	}
-	public PairOptimizationContext setAirportRepository(AirportRepository airportRepository) {
-		this.airportRepository = airportRepository;
-		return this;
-	}
+//	public PairOptimizationContext setAirportRepository(AirportRepository airportRepository) {
+//		this.airportRepository = airportRepository;
+//		return this;
+//	}
 	public AirportRuleContext getAirportRuleContext() {
 		return airportRuleContext;
 	}
-	public PairOptimizationContext setAirportRuleContext(AirportRuleContext airportRuleContext) {
-		this.airportRuleContext = airportRuleContext;
-		return this;
-	}
+//	public PairOptimizationContext setAirportRuleContext(AirportRuleContext airportRuleContext) {
+//		this.airportRuleContext = airportRuleContext;
+//		return this;
+//	}
 	public LegRepository getLegRepository() {
 		return legRepository;
 	}
-	public PairOptimizationContext setLegRepository(LegRepository legRepository) {
-		this.legRepository = legRepository;
-		return this;
-	}
+//	public PairOptimizationContext setLegRepository(LegRepository legRepository) {
+//		this.legRepository = legRepository;
+//		return this;
+//	}
 	public LegRuleContext getLegRuleContext() {
 		return legRuleContext;
 	}
-	public PairOptimizationContext setLegRuleContext(LegRuleContext legRuleContext) {
-		this.legRuleContext = legRuleContext;
-		return this;
-	}
+//	public PairOptimizationContext setLegRuleContext(LegRuleContext legRuleContext) {
+//		this.legRuleContext = legRuleContext;
+//		return this;
+//	}
 	public DutyRepository getDutyRepository() {
 		return dutyRepository;
 	}
-	public PairOptimizationContext setDutyRepository(DutyRepository dutyRepository) {
-		this.dutyRepository = dutyRepository;
-		return this;
-	}
+//	public PairOptimizationContext setDutyRepository(DutyRepository dutyRepository) {
+//		this.dutyRepository = dutyRepository;
+//		return this;
+//	}
 	public DutyRuleContext getDutyRuleContext() {
 		return dutyRuleContext;
 	}
-	public PairOptimizationContext setDutyRuleContext(DutyRuleContext dutyRuleContext) {
-		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
+//	public PairOptimizationContext setDutyRuleContext(DutyRuleContext dutyRuleContext) {
+//		this.dutyRuleContext = dutyRuleContext;
+//		return this;
+//	}
 	public PairRuleContext getPairRuleContext() {
 		return pairRuleContext;
 	}
-	public PairOptimizationContext setPairRuleContext(PairRuleContext pairRuleContext) {
-		this.pairRuleContext = pairRuleContext;
-		return this;
-	}
+//	public PairOptimizationContext setPairRuleContext(PairRuleContext pairRuleContext) {
+//		this.pairRuleContext = pairRuleContext;
+//		return this;
+//	}
 
 	/**
 	 * Registers all the rule implementation classes provided by the list parameter on the related ruleContext classes.

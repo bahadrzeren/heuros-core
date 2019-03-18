@@ -24,10 +24,24 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 
 	public BiDirDutyPairingChecker(int hbNdx,
 									LocalDateTime dutyProcessPeriodEndExc,
-									int effectiveDutyBlockHourLimit) {
+									int effectiveDutyBlockHourLimit,
+									int maxIdleTimeInAPairInHours,
+									int maxPairingLengthInHours,
+									DataRepository<Duty> dutyRepository,
+									DutyRuleContext dutyRuleContext,
+									PairRuleContext pairRuleContext,
+									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
+									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
 		this.hbNdx = hbNdx;
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 		this.effectiveDutyBlockHourLimit = effectiveDutyBlockHourLimit;
+		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
+		this.maxPairingLengthInHours = maxPairingLengthInHours;
+		this.duties = dutyRepository.getModels();
+		this.dutyRuleContext = dutyRuleContext;
+		this.pairRuleContext = pairRuleContext;
+		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
+		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
@@ -37,41 +51,6 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 	private PairRuleContext pairRuleContext = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
-
-	public BiDirDutyPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
-		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
-		this.maxPairingLengthInHours = maxPairingLengthInHours;
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
-		this.duties = dutyRepository.getModels();
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
-		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
-		this.pairRuleContext = pairRuleContext;
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		return this;
-	}
-
-	public BiDirDutyPairingChecker setDutyIndexByArrAirportNdxNextBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
-		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
-		return this;
-	}
 
 	private void setHasPairingFlag(Pair p) {
 		if (!p.isComplete(this.hbNdx))

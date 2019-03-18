@@ -22,9 +22,28 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 	private int hbNdx = -1;
 	private LocalDateTime coverPeriodEndExc = null;
 
-	public BiDirLegPairingChecker(int hbNdx, LocalDateTime coverPeriodEndExc) {
+	public BiDirLegPairingChecker(int hbNdx,
+									LocalDateTime coverPeriodEndExc,
+									int maxIdleTimeInAPairInHours,
+									int maxPairingLengthInHours,
+									DataRepository<Leg> legRepository,
+									DataRepository<Duty> dutyRepository,
+									DutyRuleContext dutyRuleContext,
+									PairRuleContext pairRuleContext,
+									OneDimIndexInt<Duty> dutyIndexByLegNdx,
+									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
+									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
 		this.hbNdx = hbNdx;
 		this.coverPeriodEndExc = coverPeriodEndExc;
+		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
+		this.maxPairingLengthInHours = maxPairingLengthInHours;
+		this.legs = legRepository.getModels();
+		this.duties = dutyRepository.getModels();
+		this.dutyRuleContext = dutyRuleContext;
+		this.pairRuleContext = pairRuleContext;
+		this.dutyIndexByLegNdx = dutyIndexByLegNdx;
+		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
+		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;
@@ -36,51 +55,6 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 	private OneDimIndexInt<Duty> dutyIndexByLegNdx = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
-
-	public BiDirLegPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
-		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
-		this.maxPairingLengthInHours = maxPairingLengthInHours;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setLegRepository(DataRepository<Leg> legRepository) {
-		this.legs = legRepository.getModels();
-		return this;
-	}
-
-	public BiDirLegPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
-		this.duties = dutyRepository.getModels();
-		return this;
-	}
-
-	public BiDirLegPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
-		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
-		this.pairRuleContext = pairRuleContext;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setDutyIndexByLegNdx(OneDimIndexInt<Duty> dutyIndexByLegNdx) {
-		this.dutyIndexByLegNdx = dutyIndexByLegNdx;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		return this;
-	}
-
-	public BiDirLegPairingChecker setDutyIndexByArrAirportNdxNextBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
-		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
-		return this;
-	}
 
 	private void setHasPairingFlag(Pair p) {
 		if (!p.isComplete(this.hbNdx))
