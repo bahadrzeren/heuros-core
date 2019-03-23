@@ -39,6 +39,11 @@ public class DutyLegOvernightConnNetwork {
 
 	private OneDimIndexInt<Duty> dutyIndexByDepLegNdx = null;
 	private OneDimIndexInt<Duty> dutyIndexByArrLegNdx = null;
+
+	/*
+	 * TODO Besides connection LEG information, here we must also store the max length of the connected duties.
+	 * Otherwise it is difficult to implement pairing enumerations in BiDirPairCheck and StateCalculator classes.
+	 */
 	private OneDimUniqueIndexInt<Leg> nextBriefLegIndexByDutyNdx = null;
 	private OneDimUniqueIndexInt<Leg> prevDebriefLegIndexByDutyNdx = null;
 
@@ -95,6 +100,9 @@ public class DutyLegOvernightConnNetwork {
     				&& pd.hasPairing(this.hbNdx)
     				&& pd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)) {
 
+//if (pd.getNdx() == 4863)
+//System.out.println();
+
     			LegView pdDepLeg = pd.getFirstLeg();
     			LegView pdArrLeg = pd.getLastLeg();
 
@@ -128,7 +136,12 @@ public class DutyLegOvernightConnNetwork {
 		    			    				&& nd.hasPairing(this.hbNdx)
 		    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
 		    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
-			    						boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
+
+//if ((nd.getFirstLeg().getNdx() == 5207)
+//		&& (pd.getNdx() == 22593))
+//System.out.println();
+
+		    							boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
 			    						/*
 			    						 * TODO Instead of performing minus operations all the time, debriefTime could be reduced by 1 second by default. 
 			    						 */
