@@ -83,20 +83,15 @@ public class PairOptimizationContext {
 	 */
 	private PairRuleContext pairRuleContext = null;
 
-	public PairOptimizationContext(AirportRepository airportRepository,
-									AirportRuleContext airportRuleContext,
-									LegRepository legRepository,
-									LegRuleContext legRuleContext,
-									DutyRepository dutyRepository,
-									DutyRuleContext dutyRuleContext,
-									PairRuleContext pairRuleContext) {
-		this.airportRepository = airportRepository;
-		this.airportRuleContext = airportRuleContext;
-		this.legRepository = legRepository;
-		this.legRuleContext = legRuleContext;
-		this.dutyRepository = dutyRepository;
-		this.dutyRuleContext = dutyRuleContext;
-		this.pairRuleContext = pairRuleContext;
+	public PairOptimizationContext(int numOfDomiciles) {
+
+		this.airportRepository =  new AirportRepository();
+		this.airportRuleContext = new AirportRuleContext();
+		this.legRepository = new LegRepository();
+		this.legRuleContext = new LegRuleContext(numOfDomiciles);
+		this.dutyRepository = new DutyRepository();
+		this.dutyRuleContext = new DutyRuleContext(numOfDomiciles);
+		this.pairRuleContext = new PairRuleContext(numOfDomiciles);
 	}
 
 	public AirportRepository getAirportRepository() {

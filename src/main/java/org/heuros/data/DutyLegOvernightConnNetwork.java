@@ -7,14 +7,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.heuros.context.PairOptimizationContext;
 import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.data.ndx.OneDimUniqueIndexInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.LegView;
-import org.heuros.data.repo.DutyRepository;
-import org.heuros.data.repo.LegRepository;
 import org.heuros.rule.DutyRuleContext;
 
 public class DutyLegOvernightConnNetwork {
@@ -50,21 +49,16 @@ public class DutyLegOvernightConnNetwork {
 	public DutyLegOvernightConnNetwork(LocalDateTime dutyProcessPeriodEndExc,
 									int maxNetDutySearchDeptInHours,
 									int maxPairingLengthInDays,
-									DutyRuleContext dutyRuleContext,
-//									PairRuleContext pairRuleContext,
-									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
-//									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime,
-									LegRepository legRepository,
-									DutyRepository dutyRepository) {
+									PairOptimizationContext pairOptimizationContext) {
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 		this.maxNetDutySearchDeptInHours = maxNetDutySearchDeptInHours;
 		this.maxPairingLengthInDays = maxPairingLengthInDays;
-		this.dutyRuleContext = dutyRuleContext;
-//		this.pairRuleContext = pairRuleContext;
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-//			this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
-		this.legs = legRepository.getModels();
-		this.duties = dutyRepository.getModels();
+		this.dutyRuleContext = pairOptimizationContext.getDutyRuleContext();
+//		this.pairRuleContext = pairOptimizationContext.getPairRuleContext();
+		this.dutyIndexByDepAirportNdxBrieftime = pairOptimizationContext.getDutyIndexByDepAirportNdxBrieftime();
+//		this.dutyIndexByArrAirportNdxNextBrieftime = pairOptimizationContext.getDutyIndexByArrAirportNdxNextBrieftime();
+		this.legs = pairOptimizationContext.getLegRepository().getModels();
+		this.duties = pairOptimizationContext.getDutyRepository().getModels();
 	}
 
 	public OneDimIndexInt<Duty> getDutyIndexByDepLegNdx() {

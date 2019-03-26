@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
+import org.heuros.context.PairOptimizationContext;
 import org.heuros.core.data.ndx.OneDimIndexInt;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
-import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.Pair;
@@ -26,24 +26,19 @@ public class BiDirLegPairingChecker implements Callable<Boolean> {
 									LocalDateTime coverPeriodEndExc,
 									int maxIdleTimeInAPairInHours,
 									int maxPairingLengthInHours,
-									DataRepository<Leg> legRepository,
-									DataRepository<Duty> dutyRepository,
-									DutyRuleContext dutyRuleContext,
-									PairRuleContext pairRuleContext,
-									OneDimIndexInt<Duty> dutyIndexByLegNdx,
-									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
-									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
+									PairOptimizationContext pairOptimizationContext) {
 		this.hbNdx = hbNdx;
 		this.coverPeriodEndExc = coverPeriodEndExc;
 		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
 		this.maxPairingLengthInHours = maxPairingLengthInHours;
-		this.legs = legRepository.getModels();
-		this.duties = dutyRepository.getModels();
-		this.dutyRuleContext = dutyRuleContext;
-		this.pairRuleContext = pairRuleContext;
-		this.dutyIndexByLegNdx = dutyIndexByLegNdx;
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
+
+		this.legs = pairOptimizationContext.getLegRepository().getModels();
+		this.duties = pairOptimizationContext.getDutyRepository().getModels();
+		this.dutyRuleContext = pairOptimizationContext.getDutyRuleContext();
+		this.pairRuleContext = pairOptimizationContext.getPairRuleContext();
+		this.dutyIndexByLegNdx = pairOptimizationContext.getDutyIndexByLegNdx();
+		this.dutyIndexByDepAirportNdxBrieftime = pairOptimizationContext.getDutyIndexByDepAirportNdxBrieftime();
+		this.dutyIndexByArrAirportNdxNextBrieftime = pairOptimizationContext.getDutyIndexByArrAirportNdxNextBrieftime();
 	}
 
 	private int maxIdleTimeInAPairInHours = 0;

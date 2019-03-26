@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
+import org.heuros.context.PairOptimizationContext;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
-import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.Leg;
 import org.heuros.data.model.Pair;
@@ -21,36 +21,33 @@ public class BiDirDutyPairingChecker implements Callable<Boolean> {
 	private int hbNdx = -1;
 	private LocalDateTime dutyProcessPeriodEndExc = null;
 	private int effectiveDutyBlockHourLimit = 0;
+	private int maxIdleTimeInAPairInHours = 0;
+	private int maxPairingLengthInHours = 0;
+
+	private List<Duty> duties = null;
+	private DutyRuleContext dutyRuleContext = null;
+	private PairRuleContext pairRuleContext = null;
+	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
+	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
 
 	public BiDirDutyPairingChecker(int hbNdx,
 									LocalDateTime dutyProcessPeriodEndExc,
 									int effectiveDutyBlockHourLimit,
 									int maxIdleTimeInAPairInHours,
 									int maxPairingLengthInHours,
-									DataRepository<Duty> dutyRepository,
-									DutyRuleContext dutyRuleContext,
-									PairRuleContext pairRuleContext,
-									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime,
-									TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime) {
+									PairOptimizationContext pairOptimizationContext) {
 		this.hbNdx = hbNdx;
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 		this.effectiveDutyBlockHourLimit = effectiveDutyBlockHourLimit;
 		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
 		this.maxPairingLengthInHours = maxPairingLengthInHours;
-		this.duties = dutyRepository.getModels();
-		this.dutyRuleContext = dutyRuleContext;
-		this.pairRuleContext = pairRuleContext;
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		this.dutyIndexByArrAirportNdxNextBrieftime = dutyIndexByArrAirportNdxNextBrieftime;
-	}
 
-	private int maxIdleTimeInAPairInHours = 0;
-	private int maxPairingLengthInHours = 0;
-	private List<Duty> duties = null;
-	private DutyRuleContext dutyRuleContext = null;
-	private PairRuleContext pairRuleContext = null;
-	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
-	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByArrAirportNdxNextBrieftime= null;
+		this.duties = pairOptimizationContext.getDutyRepository().getModels();
+		this.dutyRuleContext = pairOptimizationContext.getDutyRuleContext();
+		this.pairRuleContext = pairOptimizationContext.getPairRuleContext();
+		this.dutyIndexByDepAirportNdxBrieftime = pairOptimizationContext.getDutyIndexByDepAirportNdxBrieftime();
+		this.dutyIndexByArrAirportNdxNextBrieftime = pairOptimizationContext.getDutyIndexByArrAirportNdxNextBrieftime();
+	}
 
 	private void setHasPairingFlag(Pair p) {
 		if (!p.isComplete(this.hbNdx))
