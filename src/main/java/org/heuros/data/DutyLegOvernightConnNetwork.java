@@ -124,6 +124,10 @@ public class DutyLegOvernightConnNetwork {
 	    				if ((nextDuties != null)
 	    						&& (nextDuties.length > 0)) {
 	    					for (Duty nd: nextDuties) {
+//if ((pd.getNdx() == 6907)
+//	&& (nd.getNdx() == 15325))
+//System.out.println();
+
 	    						if ((!nextBriefLegIndexByDutyNdx.check(pd.getNdx(), nd.getFirstLeg().getNdx()))
 	    								|| (!prevDebriefLegIndexByDutyNdx.check(nd.getNdx(), pd.getLastLeg().getNdx()))) {
 		    						if (nd.isValid(this.hbNdx)
@@ -131,8 +135,8 @@ public class DutyLegOvernightConnNetwork {
 		    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
 		    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
 
-//if ((nd.getFirstLeg().getNdx() == 5207)
-//		&& (pd.getNdx() == 22593))
+//if ((nd.getFirstLeg().getNdx() == 2007)
+//		&& (pd.getNdx() == 6907))
 //System.out.println();
 
 		    							boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
