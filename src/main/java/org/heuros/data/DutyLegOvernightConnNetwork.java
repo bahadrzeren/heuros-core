@@ -26,7 +26,7 @@ public class DutyLegOvernightConnNetwork {
 	private int hbNdx = 0;
 	private LocalDateTime dutyProcessPeriodEndExc = null;
 	private int maxNetDutySearchDeptInHours = 0;
-	private int maxPairingLengthInDays = 0;
+//	private int maxPairingLengthInDays = 0;
 
 	private List<Leg> legs = null;
 	private List<Duty> duties = null;
@@ -48,11 +48,11 @@ public class DutyLegOvernightConnNetwork {
 
 	public DutyLegOvernightConnNetwork(LocalDateTime dutyProcessPeriodEndExc,
 									int maxNetDutySearchDeptInHours,
-									int maxPairingLengthInDays,
+//									int maxPairingLengthInDays,
 									PairOptimizationContext pairOptimizationContext) {
 		this.dutyProcessPeriodEndExc = dutyProcessPeriodEndExc;
 		this.maxNetDutySearchDeptInHours = maxNetDutySearchDeptInHours;
-		this.maxPairingLengthInDays = maxPairingLengthInDays;
+//		this.maxPairingLengthInDays = maxPairingLengthInDays;
 		this.dutyRuleContext = pairOptimizationContext.getDutyRuleContext();
 //		this.pairRuleContext = pairOptimizationContext.getPairRuleContext();
 		this.dutyIndexByDepAirportNdxBrieftime = pairOptimizationContext.getDutyIndexByDepAirportNdxBrieftime();
@@ -108,9 +108,9 @@ public class DutyLegOvernightConnNetwork {
     			 * According to ChronoUnit.DAYS.between calculation, from 4 days up to 5 days gives difference of 4 days as a return value!
     			 * For nonHbDep and nonHbArr duty connections it limits the combined duration of two duties with 2 days!!!!!
     			 */
-    			int dept = this.maxPairingLengthInDays - 1;
-    			if (!hbDep)
-    				dept--;
+//    			int dept = this.maxPairingLengthInDays - 1;
+//    			if (!hbDep)
+//    				dept--;
 
     			int hourCounter = 0;
 //    			LocalDateTime nextBriefTime = pd.getNextBriefTime(this.hbNdx);
@@ -124,8 +124,9 @@ public class DutyLegOvernightConnNetwork {
 	    				if ((nextDuties != null)
 	    						&& (nextDuties.length > 0)) {
 	    					for (Duty nd: nextDuties) {
-//if ((pd.getNdx() == 6907)
-//	&& (nd.getNdx() == 15325))
+
+//if ((pd.getNdx() == 31427)
+//	&& (nd.getNdx() == 44027))
 //System.out.println();
 
 	    						if ((!nextBriefLegIndexByDutyNdx.check(pd.getNdx(), nd.getFirstLeg().getNdx()))
@@ -135,16 +136,18 @@ public class DutyLegOvernightConnNetwork {
 		    			    				&& nd.getFirstLeg().getSobt().isBefore(this.dutyProcessPeriodEndExc)
 		    			    				&& this.dutyRuleContext.getConnectionCheckerProxy().areConnectable(this.hbNdx, pd, nd)) {
 
-//if ((nd.getFirstLeg().getNdx() == 2007)
-//		&& (pd.getNdx() == 6907))
+//if ((nd.getFirstLeg().getNdx() == 5207)
+//		&& (pd.getNdx() == 31427))
 //System.out.println();
 
 		    							boolean hbArr = nd.getLastArrAirport().isHb(this.hbNdx);
 			    						/*
 			    						 * TODO Instead of performing minus operations all the time, debriefTime could be reduced by 1 second by default. 
 			    						 */
-		        						if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
-		        								|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
+//		        						if ((hbArr && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept))
+//		        								|| ((!hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < dept - 1))) {
+		        						if ((ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < 2)
+		        								|| ((hbDep || hbArr) && (ChronoUnit.DAYS.between(pd.getBriefTime(this.hbNdx), nd.getDebriefTime(this.hbNdx).minusSeconds(1)) < 3))) {
 			        						if (ChronoUnit.MINUTES.between(pd.getNextBriefTime(this.hbNdx), nd.getBriefTime(this.hbNdx)) >= 0) {
 //			        							boolean added = 
 			        									nextBriefLegIndexByDutyNdx.add(pd.getNdx(), nd.getFirstLeg().getNdx(), nd.getFirstLeg());
