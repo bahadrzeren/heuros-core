@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
+import org.heuros.context.PairOptimizationContext;
 import org.heuros.core.data.ndx.TwoDimIndexIntXLocalDateTime;
-import org.heuros.core.data.repo.DataRepository;
 import org.heuros.data.model.Duty;
 import org.heuros.data.model.LegView;
 import org.heuros.data.model.Pair;
@@ -18,7 +18,7 @@ public class UniDirDutyPairingChecker implements Callable<Boolean> {
 
 	private static Logger logger = Logger.getLogger(UniDirDutyPairingChecker.class);
 
-	private int hbNdx = -1;
+	private int hbNdx = 0;
 
 	public UniDirDutyPairingChecker(int hbNdx) {
 		this.hbNdx = hbNdx;
@@ -31,34 +31,15 @@ public class UniDirDutyPairingChecker implements Callable<Boolean> {
 	private PairRuleContext pairRuleContext = null;
 	private TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime = null;
 
-	public UniDirDutyPairingChecker setMaxIdleTimeInAPairInHours(int maxIdleTimeInAPairInHours) {
+	public UniDirDutyPairingChecker(int maxIdleTimeInAPairInHours,
+									int maxPairingLengthInHours,
+									PairOptimizationContext pairOptimizationContext) {
 		this.maxIdleTimeInAPairInHours = maxIdleTimeInAPairInHours;
-		return this;
-	}
-
-	public UniDirDutyPairingChecker setMaxPairingLengthInHours(int maxPairingLengthInHours) {
 		this.maxPairingLengthInHours = maxPairingLengthInHours;
-		return this;
-	}
-
-	public UniDirDutyPairingChecker setDutyRepository(DataRepository<Duty> dutyRepository) {
-		this.duties = dutyRepository.getModels();
-		return this;
-	}
-
-	public UniDirDutyPairingChecker setDutyRuleContext(DutyRuleContext dutyRuleContext) {
-		this.dutyRuleContext = dutyRuleContext;
-		return this;
-	}
-
-	public UniDirDutyPairingChecker setPairRuleContext(PairRuleContext pairRuleContext) {
-		this.pairRuleContext = pairRuleContext;
-		return this;
-	}
-
-	public UniDirDutyPairingChecker setDutyIndexByDepAirportNdxBrieftime(TwoDimIndexIntXLocalDateTime<Duty> dutyIndexByDepAirportNdxBrieftime) {
-		this.dutyIndexByDepAirportNdxBrieftime = dutyIndexByDepAirportNdxBrieftime;
-		return this;
+		this.duties = pairOptimizationContext.getDutyRepository().getModels();
+		this.dutyRuleContext = pairOptimizationContext.getDutyRuleContext();
+		this.pairRuleContext = pairOptimizationContext.getPairRuleContext();
+		this.dutyIndexByDepAirportNdxBrieftime = pairOptimizationContext.getDutyIndexByDepAirportNdxBrieftime();
 	}
 
 	@Override
@@ -89,7 +70,7 @@ public class UniDirDutyPairingChecker implements Callable<Boolean> {
 	    			}
 	    			this.pairRuleContext.getAggregatorProxy().removeLast(p);
 	    		}
-		    	logger.info(d.getFirstLeg() + " - " + numOfPairingsPossible + " number of pairings is possible.");
+		    	logger.info(d.getFirstLeg() + " - " + numOfPairingsPossible + " / " + totNumOfPairingsPossible + " number of pairings is possible.");
 		    	totNumOfPairingsPossible += numOfPairingsPossible;
 	    	}
 		}
